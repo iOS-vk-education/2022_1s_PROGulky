@@ -1,0 +1,28 @@
+# Template information section
+name: puzzzik_viper
+summary: Classic Swift VIPER Module
+author: Ivan Tazenkov
+version: 1.0.0
+license: MIT
+
+# The declarations for code files
+
+code_files:
+# View layer
+- {name: View/ViewIO.swift,  path: Code/View/viewIO.swift.liquid}
+- {name: View/ViewController.swift, path: Code/View/viewcontroller.swift.liquid}
+
+# Presenter layer
+- {name: Presenter/ModuleInput.swift, path: Code/Presenter/module_input.swift.liquid}
+- {name: Presenter/Presenter.swift, path: Code/Presenter/presenter.swift.liquid}
+
+# Interactor layer
+- {name: Interactor/InteractorIO.swift, path: Code/Interactor/interactorIO.swift.liquid}
+- {name: Interactor/Interactor.swift, path: Code/Interactor/interactor.swift.liquid}
+
+# Router layer
+- {name: Router/RouterInput.swift, path: Code/Router/router_input.swift.liquid}
+- {name: Router/Router.swift, path: Code/Router/router.swift.liquid}
+
+# Configurator
+- {name: Builder.swift, path: Code/builder.swift.liquid}
