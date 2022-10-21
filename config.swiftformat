@@ -1,4 +1,4 @@
---exclude Pods, DrPillman/Generated, DrPillmanTests, DrPillmanUITests
+--exclude Pods, PROGulkyTests, PROGulkyUITests
 
 --acronyms ID,URL,UUID
 --allman false
@@ -58,6 +58,7 @@
 --smarttabs enabled
 --stripunusedargs always
 --structthreshold 0
+--swiftversion 5.7
 --tabwidth unspecified
 --trailingclosures 
 --trimwhitespace always

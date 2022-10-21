@@ -151,7 +151,6 @@
 				CFDDE708759E91C3DAAF5D4B /* Pods-PROGulkyTests.debug.xcconfig */,
 				0EE2A2A64B50B5A2E674BC1C /* Pods-PROGulkyTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -177,6 +176,8 @@
 				661A0D822902996D00312A0B /* Frameworks */,
 				661A0D832902996D00312A0B /* Resources */,
 				5A0E4B6449C266E74CD9A10C /* [CP] Embed Pods Frameworks */,
+				661A0DB82902A63800312A0B /* SwiftLint */,
+				661A0DBA2902A66700312A0B /* SwiftFormat */,
 			);
 			buildRules = (
 			);
@@ -352,6 +353,45 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PROGulky/Pods-PROGulky-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		661A0DB82902A63800312A0B /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which ${PODS_ROOT}/SwiftLint/swiftlint > /dev/null; then\n  ${PODS_ROOT}/SwiftLint/swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		661A0DBA2902A66700312A0B /* SwiftFormat */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/config.swiftformat",
+			);
+			name = SwiftFormat;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which ${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat > /dev/null; then\n  ${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat $SRCROOT --config config.swiftformat\nelse\n  echo \"warning: SwiftFormat not installed\"\nfi\n";
 		};
 		6CA58EBE8D25F699B739E8FF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
