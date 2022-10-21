@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		661A0D892902996D00312A0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0D882902996D00312A0B /* AppDelegate.swift */; };
-		661A0D8B2902996D00312A0B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0D8A2902996D00312A0B /* SceneDelegate.swift */; };
 		661A0D8D2902996D00312A0B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0D8C2902996D00312A0B /* ViewController.swift */; };
 		661A0D902902996D00312A0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 661A0D8E2902996D00312A0B /* Main.storyboard */; };
 		661A0D922902996E00312A0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 661A0D912902996E00312A0B /* Assets.xcassets */; };
@@ -38,7 +37,6 @@
 /* Begin PBXFileReference section */
 		661A0D852902996D00312A0B /* PROGulky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PROGulky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		661A0D882902996D00312A0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		661A0D8A2902996D00312A0B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		661A0D8C2902996D00312A0B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		661A0D8F2902996D00312A0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		661A0D912902996E00312A0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -100,7 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				661A0D882902996D00312A0B /* AppDelegate.swift */,
-				661A0D8A2902996D00312A0B /* SceneDelegate.swift */,
 				661A0D8C2902996D00312A0B /* ViewController.swift */,
 				661A0D8E2902996D00312A0B /* Main.storyboard */,
 				661A0D912902996E00312A0B /* Assets.xcassets */,
@@ -260,7 +257,6 @@
 			files = (
 				661A0D8D2902996D00312A0B /* ViewController.swift in Sources */,
 				661A0D892902996D00312A0B /* AppDelegate.swift in Sources */,
-				661A0D8B2902996D00312A0B /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,7 +437,6 @@
 				INFOPLIST_FILE = PROGulky/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -468,7 +463,6 @@
 				INFOPLIST_FILE = PROGulky/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
