@@ -9,5 +9,3 @@ end if Gem::Version.new(Bundler::VERSION) < Gem::Version.new('2')
 
 
 gem 'cocoapods', "~> 1.11.3"
-
-gem 'generamba', github: 'strongself/Generamba'
