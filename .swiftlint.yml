@@ -1,0 +1,23 @@
+disabled_rules:
+  - todo
+  - trailing_whitespace
+  - nesting
+  - identifier_name
+  - type_body_length
+
+excluded: 
+  - Pods
+
+included: 
+  - PROGulky
+
+line_length:
+  warning: 170
+
+function_body_length:
+  warning: 150
+  error: 200
+
+function_parameter_count:
+  warning: 10
+  error: 15
