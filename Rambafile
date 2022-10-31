@@ -2,7 +2,7 @@
 company: PROGulky
 
 ### Xcode project settings
-project_name: DrPillman
+project_name: PROGulky
 xcodeproj_path: PROGulky.xcodeproj
 
 ### Code generation settings section

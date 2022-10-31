@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1BA129F43D29AA20BFC95E44 /* Pods_PROGulky_PROGulkyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 196CD9E7D60C62C707DE1A28 /* Pods_PROGulky_PROGulkyUITests.framework */; };
+		1D19F4AB810FE4440C1F30EF /* ExcursionsListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBDDCCBBEC388912A426587C /* ExcursionsListRouter.swift */; };
+		23D03DB6FC1C2101E327923A /* ExcursionsListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35E4CDB118F933820C3DD4A3 /* ExcursionsListPresenter.swift */; };
+		41F7A17B895BE5DF38BCC83C /* ExcursionsListModuleIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB06260EF44A16D361201C7 /* ExcursionsListModuleIO.swift */; };
+		4FF78E5B66DB288D78967914 /* ExcursionsListInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D28233730CF25DD0C0AD76 /* ExcursionsListInteractorIO.swift */; };
 		661A0D892902996D00312A0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0D882902996D00312A0B /* AppDelegate.swift */; };
 		661A0D8D2902996D00312A0B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0D8C2902996D00312A0B /* ViewController.swift */; };
 		661A0D902902996D00312A0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 661A0D8E2902996D00312A0B /* Main.storyboard */; };
@@ -16,8 +20,13 @@
 		661A0DA02902996F00312A0B /* PROGulkyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0D9F2902996F00312A0B /* PROGulkyTests.swift */; };
 		661A0DAA2902996F00312A0B /* PROGulkyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0DA92902996F00312A0B /* PROGulkyUITests.swift */; };
 		661A0DAC2902996F00312A0B /* PROGulkyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0DAB2902996F00312A0B /* PROGulkyUITestsLaunchTests.swift */; };
+		94D58836216B679A692591E0 /* ExcursionsListBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA925C2590C194B399F154 /* ExcursionsListBuilder.swift */; };
+		A6870B67FEAA859C2BBA0908 /* ExcursionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D678140C434AD6CB7AD2B0DA /* ExcursionsListViewController.swift */; };
 		B5B117DD037D05E1D6A06F0A /* Pods_PROGulky.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7711D3215AEA6858BA1E5F2 /* Pods_PROGulky.framework */; };
 		C3048A21AC9F57F2A3EF80CF /* Pods_PROGulkyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BAB88022D3C14B5B7EBECB4 /* Pods_PROGulkyTests.framework */; };
+		CA16E5FF3470878ABCAD8F11 /* ExcursionsListViewIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B40B87087FB4903DCB6BD7C /* ExcursionsListViewIO.swift */; };
+		DD491B525EE911A4E7C8429F /* ExcursionsListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B18CF0E8F6610EA949BC890 /* ExcursionsListInteractor.swift */; };
+		F83E1A9F4C1F8D6516201126 /* ExcursionsListRouterInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = D666F683D015D0A8AFCCC5FA /* ExcursionsListRouterInput.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +51,9 @@
 		196CD9E7D60C62C707DE1A28 /* Pods_PROGulky_PROGulkyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PROGulky_PROGulkyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21187B8D3421F394D07BFCF9 /* Pods-PROGulky.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PROGulky.release.xcconfig"; path = "Target Support Files/Pods-PROGulky/Pods-PROGulky.release.xcconfig"; sourceTree = "<group>"; };
 		2BAB88022D3C14B5B7EBECB4 /* Pods_PROGulkyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PROGulkyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		35E4CDB118F933820C3DD4A3 /* ExcursionsListPresenter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExcursionsListPresenter.swift; sourceTree = "<group>"; };
 		58E7993CE1E9FEA6918FB4A0 /* Pods-PROGulky-PROGulkyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PROGulky-PROGulkyUITests.debug.xcconfig"; path = "Target Support Files/Pods-PROGulky-PROGulkyUITests/Pods-PROGulky-PROGulkyUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5B18CF0E8F6610EA949BC890 /* ExcursionsListInteractor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExcursionsListInteractor.swift; sourceTree = "<group>"; };
 		661A0D852902996D00312A0B /* PROGulky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PROGulky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		661A0D882902996D00312A0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		661A0D8C2902996D00312A0B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,9 +67,16 @@
 		661A0DA92902996F00312A0B /* PROGulkyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PROGulkyUITests.swift; sourceTree = "<group>"; };
 		661A0DAB2902996F00312A0B /* PROGulkyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PROGulkyUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7B75FE0EEE7FB454AF1C447E /* Pods-PROGulky-PROGulkyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PROGulky-PROGulkyUITests.release.xcconfig"; path = "Target Support Files/Pods-PROGulky-PROGulkyUITests/Pods-PROGulky-PROGulkyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		86D28233730CF25DD0C0AD76 /* ExcursionsListInteractorIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExcursionsListInteractorIO.swift; sourceTree = "<group>"; };
+		8B40B87087FB4903DCB6BD7C /* ExcursionsListViewIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExcursionsListViewIO.swift; sourceTree = "<group>"; };
 		CFDDE708759E91C3DAAF5D4B /* Pods-PROGulkyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PROGulkyTests.debug.xcconfig"; path = "Target Support Files/Pods-PROGulkyTests/Pods-PROGulkyTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D666F683D015D0A8AFCCC5FA /* ExcursionsListRouterInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExcursionsListRouterInput.swift; sourceTree = "<group>"; };
+		D678140C434AD6CB7AD2B0DA /* ExcursionsListViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExcursionsListViewController.swift; sourceTree = "<group>"; };
 		D9932DB019F3712955AC5C2B /* Pods-PROGulky.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PROGulky.debug.xcconfig"; path = "Target Support Files/Pods-PROGulky/Pods-PROGulky.debug.xcconfig"; sourceTree = "<group>"; };
+		DBDDCCBBEC388912A426587C /* ExcursionsListRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExcursionsListRouter.swift; sourceTree = "<group>"; };
 		E7711D3215AEA6858BA1E5F2 /* Pods_PROGulky.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PROGulky.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBB06260EF44A16D361201C7 /* ExcursionsListModuleIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExcursionsListModuleIO.swift; sourceTree = "<group>"; };
+		FCFA925C2590C194B399F154 /* ExcursionsListBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExcursionsListBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +107,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		065DCE724DF806C9890BDC60 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				EBB06260EF44A16D361201C7 /* ExcursionsListModuleIO.swift */,
+				35E4CDB118F933820C3DD4A3 /* ExcursionsListPresenter.swift */,
+			);
+			name = Presenter;
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		1F1A8C9B67CDC62B99A04A24 /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				86D28233730CF25DD0C0AD76 /* ExcursionsListInteractorIO.swift */,
+				5B18CF0E8F6610EA949BC890 /* ExcursionsListInteractor.swift */,
+			);
+			name = Interactor;
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		24759421C5671EEE5633FDF8 /* ExcursionsList */ = {
+			isa = PBXGroup;
+			children = (
+				502A06642192EE2D13A1E47C /* View */,
+				065DCE724DF806C9890BDC60 /* Presenter */,
+				1F1A8C9B67CDC62B99A04A24 /* Interactor */,
+				87969EF077779258DC77DF51 /* Router */,
+				FCFA925C2590C194B399F154 /* ExcursionsListBuilder.swift */,
+			);
+			name = ExcursionsList;
+			path = ExcursionsList;
+			sourceTree = "<group>";
+		};
+		502A06642192EE2D13A1E47C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8B40B87087FB4903DCB6BD7C /* ExcursionsListViewIO.swift */,
+				D678140C434AD6CB7AD2B0DA /* ExcursionsListViewController.swift */,
+			);
+			name = View;
+			path = View;
+			sourceTree = "<group>";
+		};
 		661A0D7C2902996D00312A0B = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +181,7 @@
 				661A0D912902996E00312A0B /* Assets.xcassets */,
 				661A0D932902996E00312A0B /* LaunchScreen.storyboard */,
 				661A0D962902996E00312A0B /* Info.plist */,
+				E77DD55B27C3A4DB3B1007BB /* Modules */,
 			);
 			path = PROGulky;
 			sourceTree = "<group>";
@@ -139,6 +201,16 @@
 				661A0DAB2902996F00312A0B /* PROGulkyUITestsLaunchTests.swift */,
 			);
 			path = PROGulkyUITests;
+			sourceTree = "<group>";
+		};
+		87969EF077779258DC77DF51 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				D666F683D015D0A8AFCCC5FA /* ExcursionsListRouterInput.swift */,
+				DBDDCCBBEC388912A426587C /* ExcursionsListRouter.swift */,
+			);
+			name = Router;
+			path = Router;
 			sourceTree = "<group>";
 		};
 		C2E46A047DA2A681AE087D57 /* Pods */ = {
@@ -162,6 +234,15 @@
 				2BAB88022D3C14B5B7EBECB4 /* Pods_PROGulkyTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E77DD55B27C3A4DB3B1007BB /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				24759421C5671EEE5633FDF8 /* ExcursionsList */,
+			);
+			name = Modules;
+			path = Modules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -482,6 +563,15 @@
 			files = (
 				661A0D8D2902996D00312A0B /* ViewController.swift in Sources */,
 				661A0D892902996D00312A0B /* AppDelegate.swift in Sources */,
+				CA16E5FF3470878ABCAD8F11 /* ExcursionsListViewIO.swift in Sources */,
+				A6870B67FEAA859C2BBA0908 /* ExcursionsListViewController.swift in Sources */,
+				41F7A17B895BE5DF38BCC83C /* ExcursionsListModuleIO.swift in Sources */,
+				23D03DB6FC1C2101E327923A /* ExcursionsListPresenter.swift in Sources */,
+				4FF78E5B66DB288D78967914 /* ExcursionsListInteractorIO.swift in Sources */,
+				DD491B525EE911A4E7C8429F /* ExcursionsListInteractor.swift in Sources */,
+				F83E1A9F4C1F8D6516201126 /* ExcursionsListRouterInput.swift in Sources */,
+				1D19F4AB810FE4440C1F30EF /* ExcursionsListRouter.swift in Sources */,
+				94D58836216B679A692591E0 /* ExcursionsListBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +749,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3WS598669J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PROGulky/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -686,6 +777,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3WS598669J;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PROGulky/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -709,7 +801,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CFDDE708759E91C3DAAF5D4B /* Pods-PROGulkyTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -729,7 +820,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0EE2A2A64B50B5A2E674BC1C /* Pods-PROGulkyTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -749,7 +839,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 58E7993CE1E9FEA6918FB4A0 /* Pods-PROGulky-PROGulkyUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -767,7 +856,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7B75FE0EEE7FB454AF1C447E /* Pods-PROGulky-PROGulkyUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
