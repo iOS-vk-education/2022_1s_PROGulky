@@ -10,7 +10,6 @@ import UIKit
 // MARK: - ProfileViewController
 
 final class ProfileViewController: UIViewController {
-
     var output: ProfileViewOutput!
 
     // MARK: Lifecycle

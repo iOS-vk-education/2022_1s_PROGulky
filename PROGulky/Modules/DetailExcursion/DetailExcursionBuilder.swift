@@ -11,11 +11,9 @@ import UIKit
 
 final class DetailExcursionModuleBuilder {
     func build() -> UIViewController {
-
         let viewController = DetailExcursionViewController()
         let router = DetailExcursionRouter()
         let interactor = DetailExcursionInteractor()
-
 
         let presenter = DetailExcursionPresenter(interactor: interactor, router: router)
         presenter.view = viewController

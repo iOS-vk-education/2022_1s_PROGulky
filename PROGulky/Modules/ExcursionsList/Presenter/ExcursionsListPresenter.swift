@@ -17,8 +17,7 @@ final class ExcursionsListPresenter {
     private let interactor: ExcursionsListInteractorInput
     private let router: ExcursionsListRouterInput
 
-
-    //MARK: - Lifecycle
+    // MARK: - Lifecycle
 
     init(interactor: ExcursionsListInteractorInput, router: ExcursionsListRouterInput) {
         self.interactor = interactor

@@ -7,8 +7,12 @@
 
 import Foundation
 
+// MARK: - FavouritesExcursionsInteractorOutput
+
 protocol FavouritesExcursionsInteractorOutput: AnyObject {
 }
+
+// MARK: - FavouritesExcursionsInteractorInput
 
 protocol FavouritesExcursionsInteractorInput: AnyObject {
 }

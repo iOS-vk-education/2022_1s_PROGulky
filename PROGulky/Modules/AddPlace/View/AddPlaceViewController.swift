@@ -10,7 +10,6 @@ import UIKit
 // MARK: - AddPlaceViewController
 
 final class AddPlaceViewController: UIViewController {
-
     var output: AddPlaceViewOutput!
 
     // MARK: Lifecycle

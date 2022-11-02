@@ -8,7 +8,6 @@
 // MARK: - AddPlaceInteractor
 
 final class AddPlaceInteractor {
-
     weak var output: AddPlaceInteractorOutput?
 }
 

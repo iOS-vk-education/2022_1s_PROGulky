@@ -10,7 +10,6 @@ import UIKit
 // MARK: - ExcursionsListViewController
 
 final class ExcursionsListViewController: UIViewController {
-
     var output: ExcursionsListViewOutput!
 
     // MARK: Lifecycle

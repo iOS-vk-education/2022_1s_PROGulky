@@ -11,11 +11,9 @@ import UIKit
 
 final class AddExcursionModuleBuilder {
     func build() -> UIViewController {
-
         let viewController = AddExcursionViewController()
         let router = AddExcursionRouter()
         let interactor = AddExcursionInteractor()
-
 
         let presenter = AddExcursionPresenter(interactor: interactor, router: router)
         presenter.view = viewController

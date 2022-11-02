@@ -11,11 +11,9 @@ import UIKit
 
 final class ExcursionsListModuleBuilder {
     func build() -> UIViewController {
-
         let viewController = ExcursionsListViewController()
         let router = ExcursionsListRouter()
         let interactor = ExcursionsListInteractor()
-
 
         let presenter = ExcursionsListPresenter(interactor: interactor, router: router)
         presenter.view = viewController

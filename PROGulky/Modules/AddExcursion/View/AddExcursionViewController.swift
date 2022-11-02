@@ -10,7 +10,6 @@ import UIKit
 // MARK: - AddExcursionViewController
 
 final class AddExcursionViewController: UIViewController {
-
     var output: AddExcursionViewOutput!
 
     // MARK: Lifecycle

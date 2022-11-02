@@ -7,8 +7,12 @@
 
 import Foundation
 
+// MARK: - AddExcursionInteractorOutput
+
 protocol AddExcursionInteractorOutput: AnyObject {
 }
+
+// MARK: - AddExcursionInteractorInput
 
 protocol AddExcursionInteractorInput: AnyObject {
 }

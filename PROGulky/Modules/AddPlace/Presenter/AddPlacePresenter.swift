@@ -17,8 +17,7 @@ final class AddPlacePresenter {
     private let interactor: AddPlaceInteractorInput
     private let router: AddPlaceRouterInput
 
-
-    //MARK: - Lifecycle
+    // MARK: - Lifecycle
 
     init(interactor: AddPlaceInteractorInput, router: AddPlaceRouterInput) {
         self.interactor = interactor

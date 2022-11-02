@@ -11,11 +11,9 @@ import UIKit
 
 final class AddPlaceModuleBuilder {
     func build() -> UIViewController {
-
         let viewController = AddPlaceViewController()
         let router = AddPlaceRouter()
         let interactor = AddPlaceInteractor()
-
 
         let presenter = AddPlacePresenter(interactor: interactor, router: router)
         presenter.view = viewController
