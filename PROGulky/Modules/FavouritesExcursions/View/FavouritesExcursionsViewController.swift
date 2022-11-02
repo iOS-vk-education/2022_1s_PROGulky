@@ -16,6 +16,7 @@ final class FavouritesExcursionsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .yellow
     }
 }
 
