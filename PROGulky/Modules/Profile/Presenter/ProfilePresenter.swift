@@ -17,8 +17,7 @@ final class ProfilePresenter {
     private let interactor: ProfileInteractorInput
     private let router: ProfileRouterInput
 
-
-    //MARK: - Lifecycle
+    // MARK: - Lifecycle
 
     init(interactor: ProfileInteractorInput, router: ProfileRouterInput) {
         self.interactor = interactor

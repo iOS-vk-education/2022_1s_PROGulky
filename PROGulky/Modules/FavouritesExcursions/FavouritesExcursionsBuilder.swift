@@ -11,11 +11,9 @@ import UIKit
 
 final class FavouritesExcursionsModuleBuilder {
     func build() -> UIViewController {
-
         let viewController = FavouritesExcursionsViewController()
         let router = FavouritesExcursionsRouter()
         let interactor = FavouritesExcursionsInteractor()
-
 
         let presenter = FavouritesExcursionsPresenter(interactor: interactor, router: router)
         presenter.view = viewController

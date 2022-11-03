@@ -11,11 +11,9 @@ import UIKit
 
 final class DetailPlaceModuleBuilder {
     func build() -> UIViewController {
-
         let viewController = DetailPlaceViewController()
         let router = DetailPlaceRouter()
         let interactor = DetailPlaceInteractor()
-
 
         let presenter = DetailPlacePresenter(interactor: interactor, router: router)
         presenter.view = viewController

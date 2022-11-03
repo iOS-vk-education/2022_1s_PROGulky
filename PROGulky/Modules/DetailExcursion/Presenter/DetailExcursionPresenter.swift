@@ -17,8 +17,7 @@ final class DetailExcursionPresenter {
     private let interactor: DetailExcursionInteractorInput
     private let router: DetailExcursionRouterInput
 
-
-    //MARK: - Lifecycle
+    // MARK: - Lifecycle
 
     init(interactor: DetailExcursionInteractorInput, router: DetailExcursionRouterInput) {
         self.interactor = interactor

@@ -7,8 +7,12 @@
 
 import Foundation
 
+// MARK: - DetailPlaceInteractorOutput
+
 protocol DetailPlaceInteractorOutput: AnyObject {
 }
+
+// MARK: - DetailPlaceInteractorInput
 
 protocol DetailPlaceInteractorInput: AnyObject {
 }
