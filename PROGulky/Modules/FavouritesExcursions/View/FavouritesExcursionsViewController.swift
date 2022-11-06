@@ -10,7 +10,6 @@ import UIKit
 // MARK: - FavouritesExcursionsViewController
 
 final class FavouritesExcursionsViewController: UIViewController {
-
     var output: FavouritesExcursionsViewOutput!
 
     // MARK: Lifecycle

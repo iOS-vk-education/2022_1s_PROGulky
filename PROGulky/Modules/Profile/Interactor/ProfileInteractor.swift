@@ -8,7 +8,6 @@
 // MARK: - ProfileInteractor
 
 final class ProfileInteractor {
-
     weak var output: ProfileInteractorOutput?
 }
 

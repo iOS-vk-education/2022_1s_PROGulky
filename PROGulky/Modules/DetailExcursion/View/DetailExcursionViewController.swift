@@ -10,7 +10,6 @@ import UIKit
 // MARK: - DetailExcursionViewController
 
 final class DetailExcursionViewController: UIViewController {
-
     var output: DetailExcursionViewOutput!
 
     // MARK: Lifecycle

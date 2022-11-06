@@ -10,7 +10,6 @@ import UIKit
 // MARK: - DetailPlaceViewController
 
 final class DetailPlaceViewController: UIViewController {
-
     var output: DetailPlaceViewOutput!
 
     // MARK: Lifecycle

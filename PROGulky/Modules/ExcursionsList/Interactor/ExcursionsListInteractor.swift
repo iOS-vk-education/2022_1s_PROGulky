@@ -8,7 +8,6 @@
 // MARK: - ExcursionsListInteractor
 
 final class ExcursionsListInteractor {
-
     weak var output: ExcursionsListInteractorOutput?
 }
 

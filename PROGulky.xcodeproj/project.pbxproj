@@ -53,6 +53,10 @@
 		8260001A1AB8D66D8579165D /* AddExcursionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1BBC38CBF391A504391E46 /* AddExcursionInteractor.swift */; };
 		91A3262CA89266F64C125380 /* ProfileRouterInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD05B85C1D60E44F3AA3D1A /* ProfileRouterInput.swift */; };
 		94D58836216B679A692591E0 /* ExcursionsListBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA925C2590C194B399F154 /* ExcursionsListBuilder.swift */; };
+		A5B7537F2913FBA4001D1978 /* ProfileUserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */; };
+		A5B753812913FD05001D1978 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B753802913FD05001D1978 /* MainTabBarController.swift */; };
+		A5B753832913FEE5001D1978 /* ProfileUserAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B753822913FEE5001D1978 /* ProfileUserAccountView.swift */; };
+		A5B7538529151173001D1978 /* ProfileUserAnotherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B7538429151173001D1978 /* ProfileUserAnotherView.swift */; };
 		A6870B67FEAA859C2BBA0908 /* ExcursionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D678140C434AD6CB7AD2B0DA /* ExcursionsListViewController.swift */; };
 		A6ACA2679B16F08F548F337C /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6956CF76F0FCD65BE420ABDC /* ProfileRouter.swift */; };
 		A7F41217646CB99E82D8B7BF /* FavouritesExcursionsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA660BDBC0D3D1F77E748F5 /* FavouritesExcursionsBuilder.swift */; };
@@ -156,6 +160,10 @@
 		86EEC9736F0079DB7CE3570D /* DetailExcursionPresenter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DetailExcursionPresenter.swift; sourceTree = "<group>"; };
 		8B40B87087FB4903DCB6BD7C /* ExcursionsListViewIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExcursionsListViewIO.swift; sourceTree = "<group>"; };
 		9E9D063F55E55F2E734E77F6 /* FavouritesExcursionsInteractorIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FavouritesExcursionsInteractorIO.swift; sourceTree = "<group>"; };
+		A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoHeader.swift; sourceTree = "<group>"; };
+		A5B753802913FD05001D1978 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		A5B753822913FEE5001D1978 /* ProfileUserAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserAccountView.swift; sourceTree = "<group>"; };
+		A5B7538429151173001D1978 /* ProfileUserAnotherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserAnotherView.swift; sourceTree = "<group>"; };
 		A61307FC1E7EC9C93B0BD5AF /* AddPlaceRouterInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddPlaceRouterInput.swift; sourceTree = "<group>"; };
 		AEEE1A974A7B5FD3DF4894F3 /* DetailExcursionViewIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DetailExcursionViewIO.swift; sourceTree = "<group>"; };
 		B3BE36A56BE97311C3AE8016 /* FavouritesExcursionsPresenter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FavouritesExcursionsPresenter.swift; sourceTree = "<group>"; };
@@ -221,7 +229,6 @@
 				565F7487028E8AB78853ADEE /* AddExcursionViewIO.swift */,
 				6C070CC38B9431BEF26E6225 /* AddExcursionViewController.swift */,
 			);
-			name = View;
 			path = View;
 			sourceTree = "<group>";
 		};
@@ -231,7 +238,6 @@
 				A61307FC1E7EC9C93B0BD5AF /* AddPlaceRouterInput.swift */,
 				1D000185DA434BD3A05A46D4 /* AddPlaceRouter.swift */,
 			);
-			name = Router;
 			path = Router;
 			sourceTree = "<group>";
 		};
@@ -241,7 +247,6 @@
 				EBB06260EF44A16D361201C7 /* ExcursionsListModuleIO.swift */,
 				35E4CDB118F933820C3DD4A3 /* ExcursionsListPresenter.swift */,
 			);
-			name = Presenter;
 			path = Presenter;
 			sourceTree = "<group>";
 		};
@@ -254,7 +259,6 @@
 				848E4F856B1E3180F7AB36FA /* Router */,
 				52697DF6ECE8C9DFEB65C474 /* AddExcursionBuilder.swift */,
 			);
-			name = AddExcursion;
 			path = AddExcursion;
 			sourceTree = "<group>";
 		};
@@ -264,7 +268,6 @@
 				86D28233730CF25DD0C0AD76 /* ExcursionsListInteractorIO.swift */,
 				5B18CF0E8F6610EA949BC890 /* ExcursionsListInteractor.swift */,
 			);
-			name = Interactor;
 			path = Interactor;
 			sourceTree = "<group>";
 		};
@@ -274,7 +277,6 @@
 				28C3A76D9F4A28A120949735 /* AddExcursionModuleIO.swift */,
 				BDCB9410CB4436000957EB12 /* AddExcursionPresenter.swift */,
 			);
-			name = Presenter;
 			path = Presenter;
 			sourceTree = "<group>";
 		};
@@ -287,7 +289,6 @@
 				87969EF077779258DC77DF51 /* Router */,
 				FCFA925C2590C194B399F154 /* ExcursionsListBuilder.swift */,
 			);
-			name = ExcursionsList;
 			path = ExcursionsList;
 			sourceTree = "<group>";
 		};
@@ -297,7 +298,6 @@
 				0AB897EAECCE498337BC4ECB /* DetailExcursionRouterInput.swift */,
 				F361316D32874105B04CF296 /* DetailExcursionRouter.swift */,
 			);
-			name = Router;
 			path = Router;
 			sourceTree = "<group>";
 		};
@@ -307,7 +307,6 @@
 				C546C37FB5B431E527B15F9F /* DetailExcursionInteractorIO.swift */,
 				DC3316B51118FB579813E7D6 /* DetailExcursionInteractor.swift */,
 			);
-			name = Interactor;
 			path = Interactor;
 			sourceTree = "<group>";
 		};
@@ -317,7 +316,6 @@
 				175C664D284B70C6674471E7 /* ProfileModuleIO.swift */,
 				D3913E1F7ACBA08F04736A7B /* ProfilePresenter.swift */,
 			);
-			name = Presenter;
 			path = Presenter;
 			sourceTree = "<group>";
 		};
@@ -327,7 +325,6 @@
 				6F9D40BD2E032FE9D70ED86A /* DetailPlaceInteractorIO.swift */,
 				EE2EA98119440C4C56329D11 /* DetailPlaceInteractor.swift */,
 			);
-			name = Interactor;
 			path = Interactor;
 			sourceTree = "<group>";
 		};
@@ -337,7 +334,6 @@
 				7977E1C3C99EF3BAE96BF607 /* DetailExcursionModuleIO.swift */,
 				86EEC9736F0079DB7CE3570D /* DetailExcursionPresenter.swift */,
 			);
-			name = Presenter;
 			path = Presenter;
 			sourceTree = "<group>";
 		};
@@ -347,7 +343,6 @@
 				BD6EEFD6015CEFE88D932BA2 /* FavouritesExcursionsRouterInput.swift */,
 				4B8EB9872675216E283DA2C9 /* FavouritesExcursionsRouter.swift */,
 			);
-			name = Router;
 			path = Router;
 			sourceTree = "<group>";
 		};
@@ -357,7 +352,6 @@
 				AEEE1A974A7B5FD3DF4894F3 /* DetailExcursionViewIO.swift */,
 				B434111035862A4121532B06 /* DetailExcursionViewController.swift */,
 			);
-			name = View;
 			path = View;
 			sourceTree = "<group>";
 		};
@@ -367,7 +361,6 @@
 				71283F1E308BFA9C1986FE3B /* AddPlaceModuleIO.swift */,
 				FA229A4A4C1CEF858C7D5015 /* AddPlacePresenter.swift */,
 			);
-			name = Presenter;
 			path = Presenter;
 			sourceTree = "<group>";
 		};
@@ -377,7 +370,6 @@
 				1AD05B85C1D60E44F3AA3D1A /* ProfileRouterInput.swift */,
 				6956CF76F0FCD65BE420ABDC /* ProfileRouter.swift */,
 			);
-			name = Router;
 			path = Router;
 			sourceTree = "<group>";
 		};
@@ -387,7 +379,6 @@
 				8B40B87087FB4903DCB6BD7C /* ExcursionsListViewIO.swift */,
 				D678140C434AD6CB7AD2B0DA /* ExcursionsListViewController.swift */,
 			);
-			name = View;
 			path = View;
 			sourceTree = "<group>";
 		};
@@ -400,7 +391,6 @@
 				68B2E3821D235DCCC2420D29 /* Router */,
 				2AB2410381154D2E7418FEAD /* DetailPlaceBuilder.swift */,
 			);
-			name = DetailPlace;
 			path = DetailPlace;
 			sourceTree = "<group>";
 		};
@@ -463,7 +453,6 @@
 				85C82DD792DA4E1DFF0CE66A /* FavouritesExcursionsViewIO.swift */,
 				DFAB83507AFACBB84D4D24D3 /* FavouritesExcursionsViewController.swift */,
 			);
-			name = View;
 			path = View;
 			sourceTree = "<group>";
 		};
@@ -473,7 +462,6 @@
 				82F91F0024FE1C6485A2EDED /* DetailPlaceRouterInput.swift */,
 				E94396705F19CF16A69DE045 /* DetailPlaceRouter.swift */,
 			);
-			name = Router;
 			path = Router;
 			sourceTree = "<group>";
 		};
@@ -483,7 +471,6 @@
 				59BE7B784112553130AFECE0 /* DetailPlaceModuleIO.swift */,
 				0ED23E4CF57993B76618F431 /* DetailPlacePresenter.swift */,
 			);
-			name = Presenter;
 			path = Presenter;
 			sourceTree = "<group>";
 		};
@@ -493,7 +480,6 @@
 				D3FD0DF5CE632E35200086CC /* AddPlaceInteractorIO.swift */,
 				D44CE83535DB6291F0A61EB0 /* AddPlaceInteractor.swift */,
 			);
-			name = Interactor;
 			path = Interactor;
 			sourceTree = "<group>";
 		};
@@ -506,7 +492,6 @@
 				2602C03966A7230841F4BA9A /* Router */,
 				766C351BE508C8E642036FAA /* DetailExcursionBuilder.swift */,
 			);
-			name = DetailExcursion;
 			path = DetailExcursion;
 			sourceTree = "<group>";
 		};
@@ -516,7 +501,6 @@
 				C8AD46D3F79C248744CE5F2C /* FavouritesExcursionsModuleIO.swift */,
 				B3BE36A56BE97311C3AE8016 /* FavouritesExcursionsPresenter.swift */,
 			);
-			name = Presenter;
 			path = Presenter;
 			sourceTree = "<group>";
 		};
@@ -526,7 +510,6 @@
 				1F5B31AA545F1940B51F9CFF /* AddExcursionRouterInput.swift */,
 				539079D5625F18BF3BB5D1B0 /* AddExcursionRouter.swift */,
 			);
-			name = Router;
 			path = Router;
 			sourceTree = "<group>";
 		};
@@ -536,7 +519,6 @@
 				D666F683D015D0A8AFCCC5FA /* ExcursionsListRouterInput.swift */,
 				DBDDCCBBEC388912A426587C /* ExcursionsListRouter.swift */,
 			);
-			name = Router;
 			path = Router;
 			sourceTree = "<group>";
 		};
@@ -546,7 +528,6 @@
 				37C5C1009F2BD7EC16167DB8 /* AddExcursionInteractorIO.swift */,
 				3D1BBC38CBF391A504391E46 /* AddExcursionInteractor.swift */,
 			);
-			name = Interactor;
 			path = Interactor;
 			sourceTree = "<group>";
 		};
@@ -559,7 +540,6 @@
 				05212DEA1A29CCC61CA412F0 /* Router */,
 				6D0A6B73EB276D5B7C47C018 /* AddPlaceBuilder.swift */,
 			);
-			name = AddPlace;
 			path = AddPlace;
 			sourceTree = "<group>";
 		};
@@ -569,7 +549,6 @@
 				9E9D063F55E55F2E734E77F6 /* FavouritesExcursionsInteractorIO.swift */,
 				D54451D4939712CF5EA697B2 /* FavouritesExcursionsInteractor.swift */,
 			);
-			name = Interactor;
 			path = Interactor;
 			sourceTree = "<group>";
 		};
@@ -582,7 +561,6 @@
 				4B53F239D37836506D31D45F /* Router */,
 				1EA660BDBC0D3D1F77E748F5 /* FavouritesExcursionsBuilder.swift */,
 			);
-			name = FavouritesExcursions;
 			path = FavouritesExcursions;
 			sourceTree = "<group>";
 		};
@@ -590,9 +568,11 @@
 			isa = PBXGroup;
 			children = (
 				1025773E08D8C66DE4E8F7C0 /* ProfileViewIO.swift */,
+				A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */,
 				17FE2736BBBE69AB8C7C2BB5 /* ProfileViewController.swift */,
+				A5B753822913FEE5001D1978 /* ProfileUserAccountView.swift */,
+				A5B7538429151173001D1978 /* ProfileUserAnotherView.swift */,
 			);
-			name = View;
 			path = View;
 			sourceTree = "<group>";
 		};
@@ -602,7 +582,6 @@
 				EC533E1C6329DC4D34A545D4 /* DetailPlaceViewIO.swift */,
 				30133C3588D7FEC2858EFA2E /* DetailPlaceViewController.swift */,
 			);
-			name = View;
 			path = View;
 			sourceTree = "<group>";
 		};
@@ -628,7 +607,6 @@
 				5000E24F453BFF891EE388C8 /* Router */,
 				DF1023A1984E3AD4841DB0C5 /* ProfileBuilder.swift */,
 			);
-			name = Profile;
 			path = Profile;
 			sourceTree = "<group>";
 		};
@@ -648,7 +626,6 @@
 				6DE36CAA8C99CE8FA62D79F5 /* ProfileInteractorIO.swift */,
 				4B16741CC48F86627C2AE6A8 /* ProfileInteractor.swift */,
 			);
-			name = Interactor;
 			path = Interactor;
 			sourceTree = "<group>";
 		};
@@ -658,13 +635,13 @@
 				4EC67223F3D7D3CF1456365D /* AddPlaceViewIO.swift */,
 				C02B6B548904BF9243B745D8 /* AddPlaceViewController.swift */,
 			);
-			name = View;
 			path = View;
 			sourceTree = "<group>";
 		};
 		E77DD55B27C3A4DB3B1007BB /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				A5B753802913FD05001D1978 /* MainTabBarController.swift */,
 				24759421C5671EEE5633FDF8 /* ExcursionsList */,
 				CF24E157551930C5E39C189F /* Profile */,
 				AEDD74D256D8C8E79622EDB0 /* FavouritesExcursions */,
@@ -673,7 +650,6 @@
 				9FE1DB18F9620455F84DDD0E /* AddPlace */,
 				5521AF0EED2856EFD5BFF104 /* DetailPlace */,
 			);
-			name = Modules;
 			path = Modules;
 			sourceTree = "<group>";
 		};
@@ -997,6 +973,7 @@
 				661A0D892902996D00312A0B /* AppDelegate.swift in Sources */,
 				CA16E5FF3470878ABCAD8F11 /* ExcursionsListViewIO.swift in Sources */,
 				A6870B67FEAA859C2BBA0908 /* ExcursionsListViewController.swift in Sources */,
+				A5B7538529151173001D1978 /* ProfileUserAnotherView.swift in Sources */,
 				41F7A17B895BE5DF38BCC83C /* ExcursionsListModuleIO.swift in Sources */,
 				23D03DB6FC1C2101E327923A /* ExcursionsListPresenter.swift in Sources */,
 				4FF78E5B66DB288D78967914 /* ExcursionsListInteractorIO.swift in Sources */,
@@ -1012,6 +989,7 @@
 				B997C151DD955FC5AFD51B77 /* ProfileInteractor.swift in Sources */,
 				91A3262CA89266F64C125380 /* ProfileRouterInput.swift in Sources */,
 				A6ACA2679B16F08F548F337C /* ProfileRouter.swift in Sources */,
+				A5B753812913FD05001D1978 /* MainTabBarController.swift in Sources */,
 				CBD0B55BA488383EBB017ECB /* ProfileBuilder.swift in Sources */,
 				10F870708172AC94BED055CD /* FavouritesExcursionsViewIO.swift in Sources */,
 				D881BF6CBAF8E07985F93B19 /* FavouritesExcursionsViewController.swift in Sources */,
@@ -1023,6 +1001,7 @@
 				1CBF00DD0C0FABDE6D041683 /* FavouritesExcursionsRouter.swift in Sources */,
 				A7F41217646CB99E82D8B7BF /* FavouritesExcursionsBuilder.swift in Sources */,
 				E655FF225A9C3D22426923E3 /* DetailExcursionViewIO.swift in Sources */,
+				A5B753832913FEE5001D1978 /* ProfileUserAccountView.swift in Sources */,
 				F2C92852DA10723516E8E6EF /* DetailExcursionViewController.swift in Sources */,
 				3F5656DA5D90C769DFA30064 /* DetailExcursionModuleIO.swift in Sources */,
 				EA7635CC63622276E58EC987 /* DetailExcursionPresenter.swift in Sources */,
@@ -1038,6 +1017,7 @@
 				B8F0BCCE71C38DB82043139E /* AddExcursionInteractorIO.swift in Sources */,
 				8260001A1AB8D66D8579165D /* AddExcursionInteractor.swift in Sources */,
 				EA199F26C13F660480AB25F2 /* AddExcursionRouterInput.swift in Sources */,
+				A5B7537F2913FBA4001D1978 /* ProfileUserInfoHeader.swift in Sources */,
 				299510472DBF964EB8EA7653 /* AddExcursionRouter.swift in Sources */,
 				32D4B819311BDCB18E162ECF /* AddExcursionBuilder.swift in Sources */,
 				0CDD72663D40FC7741EC5506 /* AddPlaceViewIO.swift in Sources */,

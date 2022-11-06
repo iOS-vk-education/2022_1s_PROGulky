@@ -7,8 +7,12 @@
 
 import Foundation
 
+// MARK: - ExcursionsListInteractorOutput
+
 protocol ExcursionsListInteractorOutput: AnyObject {
 }
+
+// MARK: - ExcursionsListInteractorInput
 
 protocol ExcursionsListInteractorInput: AnyObject {
 }

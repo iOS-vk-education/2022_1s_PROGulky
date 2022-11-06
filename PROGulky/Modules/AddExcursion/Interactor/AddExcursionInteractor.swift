@@ -8,7 +8,6 @@
 // MARK: - AddExcursionInteractor
 
 final class AddExcursionInteractor {
-
     weak var output: AddExcursionInteractorOutput?
 }
 

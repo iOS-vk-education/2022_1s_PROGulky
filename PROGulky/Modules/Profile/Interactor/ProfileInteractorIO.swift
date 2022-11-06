@@ -7,8 +7,12 @@
 
 import Foundation
 
+// MARK: - ProfileInteractorOutput
+
 protocol ProfileInteractorOutput: AnyObject {
 }
+
+// MARK: - ProfileInteractorInput
 
 protocol ProfileInteractorInput: AnyObject {
 }

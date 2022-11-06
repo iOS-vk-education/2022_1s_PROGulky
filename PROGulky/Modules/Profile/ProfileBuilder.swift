@@ -11,11 +11,9 @@ import UIKit
 
 final class ProfileModuleBuilder {
     func build() -> UIViewController {
-
         let viewController = ProfileViewController()
         let router = ProfileRouter()
         let interactor = ProfileInteractor()
-
 
         let presenter = ProfilePresenter(interactor: interactor, router: router)
         presenter.view = viewController

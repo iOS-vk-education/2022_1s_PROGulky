@@ -17,8 +17,7 @@ final class DetailPlacePresenter {
     private let interactor: DetailPlaceInteractorInput
     private let router: DetailPlaceRouterInput
 
-
-    //MARK: - Lifecycle
+    // MARK: - Lifecycle
 
     init(interactor: DetailPlaceInteractorInput, router: DetailPlaceRouterInput) {
         self.interactor = interactor

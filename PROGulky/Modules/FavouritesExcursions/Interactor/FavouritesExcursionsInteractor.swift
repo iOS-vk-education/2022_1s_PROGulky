@@ -8,7 +8,6 @@
 // MARK: - FavouritesExcursionsInteractor
 
 final class FavouritesExcursionsInteractor {
-
     weak var output: FavouritesExcursionsInteractorOutput?
 }
 
