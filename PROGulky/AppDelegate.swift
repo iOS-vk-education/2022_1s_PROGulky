@@ -9,15 +9,21 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    var appCoordinator: AppCoordinator?
     var window: UIWindow?
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        // Override point for customization after application launch.
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let initialViewController = storyboard.instantiateViewController(withIdentifier: "MainTabBarController")
 
-        window?.rootViewController = initialViewController
+        let tabBarController = UITabBarController()
+        tabBarController.setViewControllers([], animated: false)
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
+
+        let appCoordinator = AppCoordinator(tabBarController: tabBarController)
+        self.appCoordinator = appCoordinator
+        appCoordinator.start(animated: false)
+
         return true
     }
 }

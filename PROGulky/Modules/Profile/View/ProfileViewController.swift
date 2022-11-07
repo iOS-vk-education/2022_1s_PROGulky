@@ -18,8 +18,8 @@ final class ProfileViewController: UIViewController {
     // MARK: Lifecycle
 
     override func viewDidLoad() {
-        var userInfoHeader: UserInfoHeader!
         super.viewDidLoad()
+        var userInfoHeader: UserInfoHeader!
         configureUI()
     }
 
@@ -65,4 +65,3 @@ final class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController: ProfileViewInput {
-}

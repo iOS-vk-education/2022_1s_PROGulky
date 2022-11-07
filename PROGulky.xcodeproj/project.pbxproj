@@ -39,13 +39,17 @@
 		61FDF8207F3152E8332214CC /* AddPlaceModuleIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71283F1E308BFA9C1986FE3B /* AddPlaceModuleIO.swift */; };
 		655B60CD5F361A727A7F17AE /* DetailPlacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED23E4CF57993B76618F431 /* DetailPlacePresenter.swift */; };
 		661A0D892902996D00312A0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0D882902996D00312A0B /* AppDelegate.swift */; };
-		661A0D8D2902996D00312A0B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0D8C2902996D00312A0B /* ViewController.swift */; };
-		661A0D902902996D00312A0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 661A0D8E2902996D00312A0B /* Main.storyboard */; };
 		661A0D922902996E00312A0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 661A0D912902996E00312A0B /* Assets.xcassets */; };
 		661A0D952902996E00312A0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 661A0D932902996E00312A0B /* LaunchScreen.storyboard */; };
 		661A0DA02902996F00312A0B /* PROGulkyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0D9F2902996F00312A0B /* PROGulkyTests.swift */; };
 		661A0DAA2902996F00312A0B /* PROGulkyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0DA92902996F00312A0B /* PROGulkyUITests.swift */; };
 		661A0DAC2902996F00312A0B /* PROGulkyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0DAB2902996F00312A0B /* PROGulkyUITestsLaunchTests.swift */; };
+		6675D20B29126FD80058A4B0 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675D20A29126FD80058A4B0 /* CoordinatorProtocol.swift */; };
+		6675D20D29126FF20058A4B0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675D20C29126FF20058A4B0 /* AppCoordinator.swift */; };
+		6675D20F291270570058A4B0 /* ExcursionListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675D20E291270570058A4B0 /* ExcursionListCoordinator.swift */; };
+		6675D211291271350058A4B0 /* TabBarItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675D210291271350058A4B0 /* TabBarItemFactory.swift */; };
+		6675D213291274240058A4B0 /* FavouriteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675D212291274240058A4B0 /* FavouriteCoordinator.swift */; };
+		6675D215291274710058A4B0 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675D214291274700058A4B0 /* ProfileCoordinator.swift */; };
 		6884644A93D5EB0CEBEEE732 /* FavouritesExcursionsModuleIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD46D3F79C248744CE5F2C /* FavouritesExcursionsModuleIO.swift */; };
 		7662A63312813E510FDB7DE7 /* AddPlaceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D000185DA434BD3A05A46D4 /* AddPlaceRouter.swift */; };
 		7E3B8C8C195150120F38D847 /* DetailPlaceRouterInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F91F0024FE1C6485A2EDED /* DetailPlaceRouterInput.swift */; };
@@ -135,8 +139,6 @@
 		5B18CF0E8F6610EA949BC890 /* ExcursionsListInteractor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExcursionsListInteractor.swift; sourceTree = "<group>"; };
 		661A0D852902996D00312A0B /* PROGulky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PROGulky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		661A0D882902996D00312A0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		661A0D8C2902996D00312A0B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		661A0D8F2902996D00312A0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		661A0D912902996E00312A0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		661A0D942902996E00312A0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		661A0D962902996E00312A0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -145,6 +147,12 @@
 		661A0DA52902996F00312A0B /* PROGulkyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PROGulkyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		661A0DA92902996F00312A0B /* PROGulkyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PROGulkyUITests.swift; sourceTree = "<group>"; };
 		661A0DAB2902996F00312A0B /* PROGulkyUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PROGulkyUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6675D20A29126FD80058A4B0 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
+		6675D20C29126FF20058A4B0 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		6675D20E291270570058A4B0 /* ExcursionListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionListCoordinator.swift; sourceTree = "<group>"; };
+		6675D210291271350058A4B0 /* TabBarItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemFactory.swift; sourceTree = "<group>"; };
+		6675D212291274240058A4B0 /* FavouriteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCoordinator.swift; sourceTree = "<group>"; };
+		6675D214291274700058A4B0 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		6956CF76F0FCD65BE420ABDC /* ProfileRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
 		6C070CC38B9431BEF26E6225 /* AddExcursionViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddExcursionViewController.swift; sourceTree = "<group>"; };
 		6D0A6B73EB276D5B7C47C018 /* AddPlaceBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddPlaceBuilder.swift; sourceTree = "<group>"; };
@@ -419,13 +427,12 @@
 		661A0D872902996D00312A0B /* PROGulky */ = {
 			isa = PBXGroup;
 			children = (
+				6675D20929126F350058A4B0 /* Coordinators */,
+				E77DD55B27C3A4DB3B1007BB /* Modules */,
 				661A0D882902996D00312A0B /* AppDelegate.swift */,
-				661A0D8C2902996D00312A0B /* ViewController.swift */,
-				661A0D8E2902996D00312A0B /* Main.storyboard */,
 				661A0D912902996E00312A0B /* Assets.xcassets */,
 				661A0D932902996E00312A0B /* LaunchScreen.storyboard */,
 				661A0D962902996E00312A0B /* Info.plist */,
-				E77DD55B27C3A4DB3B1007BB /* Modules */,
 			);
 			path = PROGulky;
 			sourceTree = "<group>";
@@ -445,6 +452,19 @@
 				661A0DAB2902996F00312A0B /* PROGulkyUITestsLaunchTests.swift */,
 			);
 			path = PROGulkyUITests;
+			sourceTree = "<group>";
+		};
+		6675D20929126F350058A4B0 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				6675D20A29126FD80058A4B0 /* CoordinatorProtocol.swift */,
+				6675D20C29126FF20058A4B0 /* AppCoordinator.swift */,
+				6675D20E291270570058A4B0 /* ExcursionListCoordinator.swift */,
+				6675D210291271350058A4B0 /* TabBarItemFactory.swift */,
+				6675D212291274240058A4B0 /* FavouriteCoordinator.swift */,
+				6675D214291274700058A4B0 /* ProfileCoordinator.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		684997C51FBAD148127DBF17 /* View */ = {
@@ -768,7 +788,6 @@
 			files = (
 				661A0D952902996E00312A0B /* LaunchScreen.storyboard in Resources */,
 				661A0D922902996E00312A0B /* Assets.xcassets in Resources */,
-				661A0D902902996D00312A0B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -969,15 +988,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				661A0D8D2902996D00312A0B /* ViewController.swift in Sources */,
+				6675D20D29126FF20058A4B0 /* AppCoordinator.swift in Sources */,
 				661A0D892902996D00312A0B /* AppDelegate.swift in Sources */,
 				CA16E5FF3470878ABCAD8F11 /* ExcursionsListViewIO.swift in Sources */,
 				A6870B67FEAA859C2BBA0908 /* ExcursionsListViewController.swift in Sources */,
 				A5B7538529151173001D1978 /* ProfileUserAnotherView.swift in Sources */,
 				41F7A17B895BE5DF38BCC83C /* ExcursionsListModuleIO.swift in Sources */,
+				6675D213291274240058A4B0 /* FavouriteCoordinator.swift in Sources */,
 				23D03DB6FC1C2101E327923A /* ExcursionsListPresenter.swift in Sources */,
 				4FF78E5B66DB288D78967914 /* ExcursionsListInteractorIO.swift in Sources */,
+				6675D215291274710058A4B0 /* ProfileCoordinator.swift in Sources */,
 				DD491B525EE911A4E7C8429F /* ExcursionsListInteractor.swift in Sources */,
+				6675D20B29126FD80058A4B0 /* CoordinatorProtocol.swift in Sources */,
 				F83E1A9F4C1F8D6516201126 /* ExcursionsListRouterInput.swift in Sources */,
 				1D19F4AB810FE4440C1F30EF /* ExcursionsListRouter.swift in Sources */,
 				94D58836216B679A692591E0 /* ExcursionsListBuilder.swift in Sources */,
@@ -1021,6 +1043,7 @@
 				299510472DBF964EB8EA7653 /* AddExcursionRouter.swift in Sources */,
 				32D4B819311BDCB18E162ECF /* AddExcursionBuilder.swift in Sources */,
 				0CDD72663D40FC7741EC5506 /* AddPlaceViewIO.swift in Sources */,
+				6675D20F291270570058A4B0 /* ExcursionListCoordinator.swift in Sources */,
 				B034A94B89A9375743C132B8 /* AddPlaceViewController.swift in Sources */,
 				61FDF8207F3152E8332214CC /* AddPlaceModuleIO.swift in Sources */,
 				B0C9C9A977E77116B4F0C7A1 /* AddPlacePresenter.swift in Sources */,
@@ -1032,6 +1055,7 @@
 				36C36310E3B7177102A045F2 /* DetailPlaceViewIO.swift in Sources */,
 				39F7D4E76F289DB67B886E4F /* DetailPlaceViewController.swift in Sources */,
 				60AF57BFC01EC107BB9136A0 /* DetailPlaceModuleIO.swift in Sources */,
+				6675D211291271350058A4B0 /* TabBarItemFactory.swift in Sources */,
 				655B60CD5F361A727A7F17AE /* DetailPlacePresenter.swift in Sources */,
 				58650139389367223C2EFB8B /* DetailPlaceInteractorIO.swift in Sources */,
 				2B1C02734BC120EC3252A924 /* DetailPlaceInteractor.swift in Sources */,
@@ -1074,14 +1098,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		661A0D8E2902996D00312A0B /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				661A0D8F2902996D00312A0B /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		661A0D932902996E00312A0B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
