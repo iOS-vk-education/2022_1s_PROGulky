@@ -16,6 +16,7 @@ final class ProfilePresenter {
 
     private let interactor: ProfileInteractorInput
     private let router: ProfileRouterInput
+    private let factory = OtherViewDisplayDataFactory()
 
     // MARK: - Lifecycle
 
@@ -28,7 +29,12 @@ final class ProfilePresenter {
 extension ProfilePresenter: ProfileModuleInput {
 }
 
+// MARK: ProfileViewOutput
+
 extension ProfilePresenter: ProfileViewOutput {
+    func getAnotherDisplayData() -> ProfileUserAnotherView.DisplayData {
+        factory.setDisplayDataForOtherView(type: .other)
+    }
 }
 
 extension ProfilePresenter: ProfileInteractorOutput {

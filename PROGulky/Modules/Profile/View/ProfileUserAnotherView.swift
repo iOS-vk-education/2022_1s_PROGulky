@@ -191,4 +191,13 @@ class ProfileUserAnotherView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    struct DisplayData {
+        let text1: String
+        let text2: String
+    }
+
+    func configure(data: DisplayData) {
+        // настройка тайтлов
+    }
 }
