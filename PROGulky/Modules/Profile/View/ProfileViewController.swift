@@ -20,6 +20,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         var userInfoHeader: UserInfoHeader!
+        view.backgroundColor = .white
         configureUI()
     }
 
@@ -65,3 +66,4 @@ final class ProfileViewController: UIViewController {
 }
 
 extension ProfileViewController: ProfileViewInput {
+}
