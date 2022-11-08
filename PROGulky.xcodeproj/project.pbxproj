@@ -59,8 +59,9 @@
 		91A3262CA89266F64C125380 /* ProfileRouterInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD05B85C1D60E44F3AA3D1A /* ProfileRouterInput.swift */; };
 		94D58836216B679A692591E0 /* ExcursionsListBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA925C2590C194B399F154 /* ExcursionsListBuilder.swift */; };
 		A553F1D229199288001E679C /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D129199288001E679C /* UIColorExtension.swift */; };
+		A553F1D8291A6968001E679C /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D7291A6968001E679C /* Colors.swift */; };
+		A553F1DA291A6F27001E679C /* TextConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D9291A6F27001E679C /* TextConstants.swift */; };
 		A5B7537F2913FBA4001D1978 /* ProfileUserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */; };
-		A5B753812913FD05001D1978 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B753802913FD05001D1978 /* MainTabBarController.swift */; };
 		A5B753832913FEE5001D1978 /* ProfileUserAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B753822913FEE5001D1978 /* ProfileUserAccountView.swift */; };
 		A5B7538529151173001D1978 /* ProfileUserAnotherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B7538429151173001D1978 /* ProfileUserAnotherView.swift */; };
 		A6870B67FEAA859C2BBA0908 /* ExcursionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D678140C434AD6CB7AD2B0DA /* ExcursionsListViewController.swift */; };
@@ -172,8 +173,9 @@
 		8B40B87087FB4903DCB6BD7C /* ExcursionsListViewIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExcursionsListViewIO.swift; sourceTree = "<group>"; };
 		9E9D063F55E55F2E734E77F6 /* FavouritesExcursionsInteractorIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FavouritesExcursionsInteractorIO.swift; sourceTree = "<group>"; };
 		A553F1D129199288001E679C /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		A553F1D7291A6968001E679C /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		A553F1D9291A6F27001E679C /* TextConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextConstants.swift; sourceTree = "<group>"; };
 		A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoHeader.swift; sourceTree = "<group>"; };
-		A5B753802913FD05001D1978 /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		A5B753822913FEE5001D1978 /* ProfileUserAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserAccountView.swift; sourceTree = "<group>"; };
 		A5B7538429151173001D1978 /* ProfileUserAnotherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserAnotherView.swift; sourceTree = "<group>"; };
 		A61307FC1E7EC9C93B0BD5AF /* AddPlaceRouterInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddPlaceRouterInput.swift; sourceTree = "<group>"; };
@@ -432,6 +434,7 @@
 		661A0D872902996D00312A0B /* PROGulky */ = {
 			isa = PBXGroup;
 			children = (
+				A553F1D6291A6959001E679C /* Colors */,
 				A553F1D029199266001E679C /* Extensions */,
 				6675D20929126F350058A4B0 /* Coordinators */,
 				E77DD55B27C3A4DB3B1007BB /* Modules */,
@@ -439,6 +442,7 @@
 				661A0D912902996E00312A0B /* Assets.xcassets */,
 				661A0D932902996E00312A0B /* LaunchScreen.storyboard */,
 				661A0D962902996E00312A0B /* Info.plist */,
+				A553F1DB291A7354001E679C /* TextConstants */,
 			);
 			path = PROGulky;
 			sourceTree = "<group>";
@@ -577,6 +581,22 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		A553F1D6291A6959001E679C /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				A553F1D7291A6968001E679C /* Colors.swift */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
+		A553F1DB291A7354001E679C /* TextConstants */ = {
+			isa = PBXGroup;
+			children = (
+				A553F1D9291A6F27001E679C /* TextConstants.swift */,
+			);
+			path = TextConstants;
+			sourceTree = "<group>";
+		};
 		A74733E3B9C6F39422CC8E7B /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
@@ -675,7 +695,6 @@
 		E77DD55B27C3A4DB3B1007BB /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				A5B753802913FD05001D1978 /* MainTabBarController.swift */,
 				24759421C5671EEE5633FDF8 /* ExcursionsList */,
 				CF24E157551930C5E39C189F /* Profile */,
 				AEDD74D256D8C8E79622EDB0 /* FavouritesExcursions */,
@@ -1025,8 +1044,8 @@
 				F055DE90C634E09F51679CD7 /* ProfileInteractorIO.swift in Sources */,
 				B997C151DD955FC5AFD51B77 /* ProfileInteractor.swift in Sources */,
 				91A3262CA89266F64C125380 /* ProfileRouterInput.swift in Sources */,
+				A553F1DA291A6F27001E679C /* TextConstants.swift in Sources */,
 				A6ACA2679B16F08F548F337C /* ProfileRouter.swift in Sources */,
-				A5B753812913FD05001D1978 /* MainTabBarController.swift in Sources */,
 				CBD0B55BA488383EBB017ECB /* ProfileBuilder.swift in Sources */,
 				10F870708172AC94BED055CD /* FavouritesExcursionsViewIO.swift in Sources */,
 				D881BF6CBAF8E07985F93B19 /* FavouritesExcursionsViewController.swift in Sources */,
@@ -1047,6 +1066,7 @@
 				4F067BBCAC8AC547A90F181F /* DetailExcursionRouterInput.swift in Sources */,
 				5B52A8B4700F3BF1D6EEB611 /* DetailExcursionRouter.swift in Sources */,
 				AA0CDCA2C8678A5E183D4C84 /* DetailExcursionBuilder.swift in Sources */,
+				A553F1D8291A6968001E679C /* Colors.swift in Sources */,
 				F4A76012F97C4A709AAA3C14 /* AddExcursionViewIO.swift in Sources */,
 				0F421E73CE8F4E9691E36D01 /* AddExcursionViewController.swift in Sources */,
 				082089B7A9D25203031384D5 /* AddExcursionModuleIO.swift in Sources */,

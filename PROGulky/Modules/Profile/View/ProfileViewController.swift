@@ -19,19 +19,19 @@ final class ProfileViewController: UIViewController {
 
     private enum Constants {
         enum Title {
-            static let title = "Profile"
-            static let topOffset: CGFloat = 6
+            static let title = TextConstants.titleProfile
+            static let topOffset: CGFloat = 0
             static let height: CGFloat = 24
         }
 
         enum Header {
-            static let topOffset: CGFloat = 40
+            static let topOffset: CGFloat = 20
             static let height: CGFloat = 60
         }
 
         enum Account {
             static let topOffset: CGFloat = 32
-            static let height: CGFloat = 158
+            static let height: CGFloat = 182
             static let offset: CGFloat = 20
         }
 
@@ -46,23 +46,19 @@ final class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = CustomColor.whiteColor
         configureUI()
     }
 
-    func configureUI() {
-//        navigationController?.title = Constants.title
+    private func configureUI() {
         titleLabel.text = Constants.Title.title
-        titleLabel.textColor = .black
+        titleLabel.textColor = CustomColor.blackColor
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-//                .offset(Constants.Title.topOffset)
             make.centerX.equalToSuperview()
             make.height.equalTo(Constants.Title.height)
         }
-//        let frameUserInfoHeader = CGRect(x: 20, y: 110, width: view.frame.width, height: 60)
-//        userInfoHeader = UserInfoHeader(frame: frameUserInfoHeader)
         view.addSubview(userInfoHeader)
         userInfoHeader.snp.makeConstraints { make in
             make.top.equalTo(self.titleLabel.snp.bottom)
@@ -71,9 +67,6 @@ final class ProfileViewController: UIViewController {
             make.trailing.equalToSuperview()
             make.height.equalTo(Constants.Header.height)
         }
-
-//        let frameUserAccountView = CGRect(x: 20, y: 210, width: view.frame.width - 40, height: 158)
-//        userAccountView = ProfileUserAccountView(frame: frameUserAccountView)
         view.addSubview(userAccountView)
         userAccountView.snp.makeConstraints { make in
             make.top.equalTo(self.userInfoHeader.snp.bottom)
@@ -85,23 +78,10 @@ final class ProfileViewController: UIViewController {
             make.height.equalTo(Constants.Account.height)
         }
         userAccountView.backgroundColor = .white
-        userAccountView.layer.shadowColor = UIColor.black.cgColor
-        userAccountView.layer.shadowOpacity = 0.1
-        userAccountView.layer.shadowOffset = .zero
-        userAccountView.layer.shadowRadius = 10
         userAccountView.layer.cornerRadius = 16
-        userAccountView.layer.shadowPath = UIBezierPath(rect: userAccountView.bounds).cgPath
-
-//        let frameUserAnotherSettingsView = CGRect(x: 20, y: 400, width: view.frame.width - 40, height: 158)
-//        userAnotherSettingsView = ProfileUserAnotherView(frame: frameUserAnotherSettingsView)
 
         userAnotherSettingsView.backgroundColor = .white
-        userAnotherSettingsView.layer.shadowColor = UIColor.black.cgColor
-        userAnotherSettingsView.layer.shadowOpacity = 0.1
-        userAnotherSettingsView.layer.shadowOffset = .zero
-        userAnotherSettingsView.layer.shadowRadius = 10
         userAnotherSettingsView.layer.cornerRadius = 16
-        userAnotherSettingsView.layer.shadowPath = UIBezierPath(rect: userAccountView.bounds).cgPath
 
         view.addSubview(userAnotherSettingsView)
         userAnotherSettingsView.snp.makeConstraints { make in

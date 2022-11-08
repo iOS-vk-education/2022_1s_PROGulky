@@ -7,184 +7,266 @@
 
 import UIKit
 
-class ProfileUserAccountView: UIView {
+final class ProfileUserAccountView: UIView {
     // MARK: - add accountSettingsLabel
 
-    let accountSettingsLabel: UILabel = {
+    private let accountSettingsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Аккаунт"
+        label.text = TextConstants.titleAccount
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor(hexString: "#1D1617")
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = CustomColor.blackColor
         return label
     }()
 
     // MARK: - add personalDataSettings
 
-    let personalDataSettingsLabel: UILabel = {
+    private let personalDataSettingsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Персональные данные"
+        label.text = TextConstants.titlePersonalData
         label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = UIColor(hexString: "#7B6F72")
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = CustomColor.greyColor
         return label
     }()
 
-    let personalDataSettingsImageView: UIImageView = {
+    private let personalDataSettingsImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.translatesAutoresizingMaskIntoConstraints = false
         iv.image = UIImage(named: "Icon-Profile")
         return iv
     }()
 
-    let personalDataSettingsBtn: UIButton = {
+    private let personalDataSettingsBtn: UIButton = {
         let button = UIButton()
+        button.tag = 1
         button.setTitle("", for: .normal)
         button.setImage(UIImage(named: "Icon-Arrow"), for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
     // MARK: - add achievements
 
-    let achievementsLabel: UILabel = {
+    private let achievementsLabel: UILabel = {
         let label = UILabel()
-        label.text = "Достижения"
+        label.text = TextConstants.titleAchievements
         label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = UIColor(hexString: "#7B6F72")
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = CustomColor.greyColor
         return label
     }()
 
-    let achievementsImageView: UIImageView = {
+    private let achievementsImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.translatesAutoresizingMaskIntoConstraints = false
         iv.image = UIImage(named: "Icon-Achievement")
         return iv
     }()
 
-    let achievementsBtn: UIButton = {
+    private let achievementsBtn: UIButton = {
         let button = UIButton()
+        button.tag = 2
         button.setTitle("", for: .normal)
         button.setImage(UIImage(named: "Icon-Arrow"), for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
     // MARK: - add history
 
-    let historyLabel: UILabel = {
+    private let historyLabel: UILabel = {
         let label = UILabel()
-        label.text = "История прогулок"
+        label.text = TextConstants.titleHistory
         label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = UIColor(hexString: "#7B6F72")
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = CustomColor.greyColor
         return label
     }()
 
-    let historyImageView: UIImageView = {
+    private let historyImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.translatesAutoresizingMaskIntoConstraints = false
         iv.image = UIImage(named: "Icon-Activity")
         return iv
     }()
 
-    let historyBtn: UIButton = {
+    private let historyBtn: UIButton = {
         let button = UIButton()
+        button.tag = 3
         button.setTitle("", for: .normal)
         button.setImage(UIImage(named: "Icon-Arrow"), for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
 
-    @objc func buttonAction(sender: UIButton!) {
-        print("Button tapped")
+    // MARK: - add beGuide
+
+    private let beGuideLabel: UILabel = {
+        let label = UILabel()
+        label.text = TextConstants.titleBeGuide
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = CustomColor.greyColor
+        return label
+    }()
+
+    private let beGuideImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.image = UIImage(named: "Icon-UserBeGuide")
+        return iv
+    }()
+
+    private let beGuideBtn: UIButton = {
+        let button = UIButton()
+        button.tag = 4
+        button.setTitle("", for: .normal)
+        button.setImage(UIImage(named: "Icon-Arrow"), for: .normal)
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        return button
+    }()
+
+    @objc private func buttonAction(sender: UIButton!) {
+        switch sender.tag {
+        case 1:
+            print("Button personal data tapped")
+        case 2:
+            print("Button achievements tapped")
+        case 3:
+            print("Button history tapped")
+        case 4:
+            print("Button be guide tapped")
+        default:
+            print("Unknown button tapped")
+        }
     }
 
-//    let personalDataSettingsView: UIView = {
-//        let view = UIView()
-//        return view
-//    }()
+    private enum Constants {
+        enum TitleLabel {
+            static let topOffset: CGFloat = 20
+            static let offset: CGFloat = 16
+        }
+
+        enum ImageView {
+            static let topOffset: CGFloat = 30
+            static let imagesSize: CGFloat = 20
+        }
+
+        enum Label {
+            static let offset: CGFloat = 20
+        }
+
+        enum Button {
+            static let offset: CGFloat = -20
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        let imagesDimension: CGFloat = 20
-
         // MARK: - add accountSettingsLabel
 
         addSubview(accountSettingsLabel)
-        accountSettingsLabel.centerYAnchor.constraint(equalTo: topAnchor, constant: 30).isActive = true
-        accountSettingsLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
+        accountSettingsLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(Constants.TitleLabel.topOffset)
+            make.leading.equalToSuperview().offset(Constants.TitleLabel.offset)
+        }
 
         // MARK: - add personalDataSettings
 
         addSubview(personalDataSettingsImageView)
-        personalDataSettingsImageView.centerYAnchor.constraint(equalTo: accountSettingsLabel.bottomAnchor, constant: 25).isActive = true
-        personalDataSettingsImageView.leftAnchor.constraint(equalTo: accountSettingsLabel.leftAnchor).isActive = true
-        personalDataSettingsImageView.widthAnchor.constraint(equalToConstant: imagesDimension).isActive = true
-        personalDataSettingsImageView.heightAnchor.constraint(equalToConstant: imagesDimension).isActive = true
-        personalDataSettingsImageView.layer.cornerRadius = imagesDimension / 2
+        personalDataSettingsImageView.snp.makeConstraints { make in
+            make.top.equalTo(accountSettingsLabel).offset(Constants.ImageView.topOffset)
+            make.leading.equalTo(accountSettingsLabel)
+            make.width.equalTo(Constants.ImageView.imagesSize)
+            make.height.equalTo(Constants.ImageView.imagesSize)
+        }
 
         addSubview(personalDataSettingsLabel)
-        personalDataSettingsLabel.centerYAnchor.constraint(equalTo: personalDataSettingsImageView.centerYAnchor).isActive = true
-        personalDataSettingsLabel.leftAnchor.constraint(equalTo: personalDataSettingsImageView.rightAnchor, constant: 20).isActive = true
+        personalDataSettingsLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(personalDataSettingsImageView.snp.centerY)
+            make.leading.equalTo(personalDataSettingsImageView.snp.trailing).offset(Constants.Label.offset)
+        }
 
         addSubview(personalDataSettingsBtn)
-        personalDataSettingsBtn.centerYAnchor.constraint(equalTo: personalDataSettingsLabel.centerYAnchor).isActive = true
-        personalDataSettingsBtn.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
-        personalDataSettingsBtn.widthAnchor.constraint(equalToConstant: imagesDimension).isActive = true
-        personalDataSettingsBtn.heightAnchor.constraint(equalToConstant: imagesDimension).isActive = true
-        personalDataSettingsBtn.layer.cornerRadius = imagesDimension / 2
+        personalDataSettingsBtn.snp.makeConstraints { make in
+            make.centerY.equalTo(personalDataSettingsImageView.snp.centerY)
+            make.trailing.equalToSuperview().offset(Constants.Button.offset)
+            make.width.equalTo(Constants.ImageView.imagesSize)
+            make.height.equalTo(Constants.ImageView.imagesSize)
+        }
 
         // MARK: - add achievements
 
         addSubview(achievementsImageView)
-        achievementsImageView.centerYAnchor.constraint(equalTo: personalDataSettingsLabel.bottomAnchor, constant: 25).isActive = true
-        achievementsImageView.leftAnchor.constraint(equalTo: accountSettingsLabel.leftAnchor).isActive = true
-        achievementsImageView.widthAnchor.constraint(equalToConstant: imagesDimension).isActive = true
-        achievementsImageView.heightAnchor.constraint(equalToConstant: imagesDimension).isActive = true
-        achievementsImageView.layer.cornerRadius = imagesDimension / 2
+        achievementsImageView.snp.makeConstraints { make in
+            make.top.equalTo(personalDataSettingsLabel).offset(Constants.ImageView.topOffset)
+            make.leading.equalTo(accountSettingsLabel)
+            make.width.equalTo(Constants.ImageView.imagesSize)
+            make.height.equalTo(Constants.ImageView.imagesSize)
+        }
 
         addSubview(achievementsLabel)
-        achievementsLabel.centerYAnchor.constraint(equalTo: achievementsImageView.centerYAnchor).isActive = true
-        achievementsLabel.leftAnchor.constraint(equalTo: achievementsImageView.rightAnchor, constant: 20).isActive = true
+        achievementsLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(achievementsImageView.snp.centerY)
+            make.leading.equalTo(achievementsImageView.snp.trailing).offset(Constants.Label.offset)
+        }
 
         addSubview(achievementsBtn)
-        achievementsBtn.centerYAnchor.constraint(equalTo: achievementsLabel.centerYAnchor).isActive = true
-        achievementsBtn.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
-        achievementsBtn.widthAnchor.constraint(equalToConstant: imagesDimension).isActive = true
-        achievementsBtn.heightAnchor.constraint(equalToConstant: imagesDimension).isActive = true
-        achievementsBtn.layer.cornerRadius = imagesDimension / 2
+        achievementsBtn.snp.makeConstraints { make in
+            make.centerY.equalTo(achievementsImageView.snp.centerY)
+            make.trailing.equalToSuperview().offset(Constants.Button.offset)
+            make.width.equalTo(Constants.ImageView.imagesSize)
+            make.height.equalTo(Constants.ImageView.imagesSize)
+        }
 
         // MARK: - add history
 
         addSubview(historyImageView)
-        historyImageView.centerYAnchor.constraint(equalTo: achievementsLabel.bottomAnchor, constant: 25).isActive = true
-        historyImageView.leftAnchor.constraint(equalTo: accountSettingsLabel.leftAnchor).isActive = true
-        historyImageView.widthAnchor.constraint(equalToConstant: imagesDimension).isActive = true
-        historyImageView.heightAnchor.constraint(equalToConstant: imagesDimension).isActive = true
-        historyImageView.layer.cornerRadius = imagesDimension / 2
+        historyImageView.snp.makeConstraints { make in
+            make.top.equalTo(achievementsLabel).offset(Constants.ImageView.topOffset)
+            make.leading.equalTo(accountSettingsLabel)
+            make.width.equalTo(Constants.ImageView.imagesSize)
+            make.height.equalTo(Constants.ImageView.imagesSize)
+        }
 
         addSubview(historyLabel)
-        historyLabel.centerYAnchor.constraint(equalTo: historyImageView.centerYAnchor).isActive = true
-        historyLabel.leftAnchor.constraint(equalTo: historyImageView.rightAnchor, constant: 20).isActive = true
+        historyLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(historyImageView.snp.centerY)
+            make.leading.equalTo(historyImageView.snp.trailing).offset(Constants.Label.offset)
+        }
 
         addSubview(historyBtn)
-        historyBtn.centerYAnchor.constraint(equalTo: historyLabel.centerYAnchor).isActive = true
-        historyBtn.rightAnchor.constraint(equalTo: rightAnchor, constant: -20).isActive = true
-        historyBtn.widthAnchor.constraint(equalToConstant: imagesDimension).isActive = true
-        historyBtn.heightAnchor.constraint(equalToConstant: imagesDimension).isActive = true
-        historyBtn.layer.cornerRadius = imagesDimension / 2
+        historyBtn.snp.makeConstraints { make in
+            make.centerY.equalTo(historyImageView.snp.centerY)
+            make.trailing.equalToSuperview().offset(Constants.Button.offset)
+            make.width.equalTo(Constants.ImageView.imagesSize)
+            make.height.equalTo(Constants.ImageView.imagesSize)
+        }
+
+        // MARK: - add beGuide
+
+        addSubview(beGuideImageView)
+        beGuideImageView.snp.makeConstraints { make in
+            make.top.equalTo(historyLabel).offset(Constants.ImageView.topOffset)
+            make.leading.equalTo(accountSettingsLabel)
+            make.width.equalTo(Constants.ImageView.imagesSize)
+            make.height.equalTo(Constants.ImageView.imagesSize)
+        }
+
+        addSubview(beGuideLabel)
+        beGuideLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(beGuideImageView.snp.centerY)
+            make.leading.equalTo(beGuideImageView.snp.trailing).offset(Constants.Label.offset)
+        }
+
+        addSubview(beGuideBtn)
+        beGuideBtn.snp.makeConstraints { make in
+            make.centerY.equalTo(beGuideImageView.snp.centerY)
+            make.trailing.equalToSuperview().offset(Constants.Button.offset)
+            make.width.equalTo(Constants.ImageView.imagesSize)
+            make.height.equalTo(Constants.ImageView.imagesSize)
+        }
     }
 
     @available(*, unavailable)

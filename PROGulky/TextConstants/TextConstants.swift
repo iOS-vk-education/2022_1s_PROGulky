@@ -11,7 +11,7 @@ class TextConstants: NSObject {
     static let titleProfile = "Профиль"
     static let titleAccount = "Аккаунт"
     static let titleOthers = "Другое"
-    static let titleBeGuide = "Стать \nэкскурсоводом"
+    static let titleBeGuide = "Стать экскурсоводом"
     static let titlePersonalData = "Персональные данные"
     static let titleAchievements = "Достижения"
     static let titleHistory = "История прогулок"
