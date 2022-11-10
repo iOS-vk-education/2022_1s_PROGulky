@@ -8,6 +8,7 @@
 // MARK: - ExcursionsListViewOutput
 
 protocol ExcursionsListViewOutput: AnyObject {
+    func getExcursionsListDisplayData() -> [Excursion]
 }
 
 // MARK: - ExcursionsListViewInput
