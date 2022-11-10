@@ -7,8 +7,6 @@
 
 import UIKit
 
-// MARK: - ExcursionCellStyles
-
 class ExcursionCell: UITableViewCell {
     private let excursionImageView = UIImageView()
     private let excursionTitleLabel = VerticalAlignedLabel()

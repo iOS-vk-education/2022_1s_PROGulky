@@ -84,8 +84,6 @@ final class ExcursionsListViewController: UIViewController {
     }
 }
 
-// MARK: ExcursionsListViewInput, UITableViewDelegate, UITableViewDataSource
-
 extension ExcursionsListViewController: ExcursionsListViewInput {
 }
 
