@@ -1,5 +1,5 @@
 //
-//  ExcursionsCell.swift
+//  ExcursionCell.swift
 //  PROGulky
 //
 //  Created by Semyon Pyatkov on 06.11.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ExcursionCell: UITableViewCell {
+final class ExcursionCell: UITableViewCell {
     private let excursionImageView = UIImageView()
     private let excursionTitleLabel = VerticalAlignedLabel()
     private let excursionRatingImage = UIImageView()
@@ -33,9 +33,9 @@ class ExcursionCell: UITableViewCell {
     }
 
     func set(excursion: Excursion) {
-        excursionImageView.image = excursion.image
+        excursionImageView.image = UIImage(named: excursion.image ?? "picture")
         excursionTitleLabel.text = excursion.title
-        excursionRatingImage.image = UIImage(named: Constants.ExcursionCell.ratingImage)
+        excursionRatingImage.image = UIImage(named: ExcursionsListConstants.ExcursionCell.ratingImage)
         excursionRatingLabel.text = String(excursion.rating)
         excursionParametersLabel.text = String(excursion.parameters)
     }
@@ -51,7 +51,7 @@ class ExcursionCell: UITableViewCell {
     }
 
     private func configureImageView() {
-        excursionImageView.layer.cornerRadius = Constants.ExcursionCell.imageCornerRadius
+        excursionImageView.layer.cornerRadius = ExcursionsListConstants.ExcursionCell.imageCornerRadius
         excursionImageView.clipsToBounds = true
     }
 
@@ -59,7 +59,8 @@ class ExcursionCell: UITableViewCell {
         excursionTitleLabel.numberOfLines = 1
         excursionTitleLabel.contentMode = .bottom
         excursionTitleLabel.adjustsFontSizeToFitWidth = true
-        excursionTitleLabel.font = UIFont.systemFont(ofSize: Constants.ExcursionCell.titleFontSize, weight: Constants.ExcursionCell.titleFontWeight)
+        excursionTitleLabel.font = UIFont.systemFont(ofSize: ExcursionsListConstants.ExcursionCell.titleFontSize,
+                                                     weight: ExcursionsListConstants.ExcursionCell.titleFontWeight)
     }
 
     private func configurRatingImage() {
@@ -67,13 +68,15 @@ class ExcursionCell: UITableViewCell {
     }
 
     private func configureRatingLabel() {
-        excursionRatingLabel.font = UIFont.systemFont(ofSize: Constants.ExcursionCell.ratingFontSize, weight: Constants.ExcursionCell.ratingFontWeight)
-        excursionRatingLabel.textColor = Constants.ExcursionCell.ratingTextColor
+        excursionRatingLabel.font = UIFont.systemFont(ofSize: ExcursionsListConstants.ExcursionCell.ratingFontSize,
+                                                      weight: ExcursionsListConstants.ExcursionCell.ratingFontWeight)
+        excursionRatingLabel.textColor = ExcursionsListConstants.ExcursionCell.ratingTextColor
     }
 
     private func configureParametersLabel() {
-        excursionParametersLabel.font = UIFont.systemFont(ofSize: Constants.ExcursionCell.parametersFontSize, weight: Constants.ExcursionCell.parametersFontWeight)
-        excursionParametersLabel.textColor = Constants.ExcursionCell.parametersTextColor
+        excursionParametersLabel.font = UIFont.systemFont(ofSize: ExcursionsListConstants.ExcursionCell.parametersFontSize,
+                                                          weight: ExcursionsListConstants.ExcursionCell.parametersFontWeight)
+        excursionParametersLabel.textColor = ExcursionsListConstants.ExcursionCell.parametersTextColor
     }
 
     // MARK: constraints
@@ -89,21 +92,24 @@ class ExcursionCell: UITableViewCell {
     private func setImageConstraints() {
         excursionImageView.translatesAutoresizingMaskIntoConstraints = false
         excursionImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        excursionImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.ExcursionsListScreen.padding).isActive = true
-        excursionImageView.heightAnchor.constraint(equalToConstant: Constants.ExcursionCell.imageHeight).isActive = true
-        excursionImageView.widthAnchor.constraint(equalTo: excursionImageView.heightAnchor, multiplier: Constants.ExcursionCell.imageAspectRatio).isActive = true
+        excursionImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ExcursionsListConstants.ExcursionsListScreen.padding).isActive = true
+        excursionImageView.heightAnchor.constraint(equalToConstant: ExcursionsListConstants.ExcursionCell.imageHeight).isActive = true
+        excursionImageView.widthAnchor.constraint(equalTo: excursionImageView.heightAnchor,
+                                                  multiplier: ExcursionsListConstants.ExcursionCell.imageAspectRatio).isActive = true
     }
 
     private func setTitleLabelConstraints() {
         excursionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        excursionTitleLabel.leadingAnchor.constraint(equalTo: excursionImageView.trailingAnchor, constant: Constants.ExcursionCell.contentIndent).isActive = true
-        excursionTitleLabel.heightAnchor.constraint(equalToConstant: Constants.ExcursionCell.heightTitleFrame).isActive = true
-        excursionTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.ExcursionsListScreen.padding).isActive = true
+        excursionTitleLabel.leadingAnchor.constraint(equalTo: excursionImageView.trailingAnchor,
+                                                     constant: ExcursionsListConstants.ExcursionCell.contentIndent).isActive = true
+        excursionTitleLabel.heightAnchor.constraint(equalToConstant: ExcursionsListConstants.ExcursionCell.heightTitleFrame).isActive = true
+        excursionTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -ExcursionsListConstants.ExcursionsListScreen.padding).isActive = true
     }
 
     private func setRatingImageConstraints() {
         excursionRatingImage.translatesAutoresizingMaskIntoConstraints = false
-        excursionRatingImage.leadingAnchor.constraint(equalTo: excursionImageView.trailingAnchor, constant: Constants.ExcursionCell.contentIndent - 8).isActive = true
+        excursionRatingImage.leadingAnchor.constraint(equalTo: excursionImageView.trailingAnchor,
+                                                      constant: ExcursionsListConstants.ExcursionCell.contentIndent - 8).isActive = true
         excursionRatingImage.topAnchor.constraint(equalTo: excursionTitleLabel.bottomAnchor).isActive = true
     }
 
@@ -111,12 +117,13 @@ class ExcursionCell: UITableViewCell {
         excursionRatingLabel.translatesAutoresizingMaskIntoConstraints = false
         excursionRatingLabel.leadingAnchor.constraint(equalTo: excursionRatingImage.trailingAnchor).isActive = true
         excursionRatingLabel.topAnchor.constraint(equalTo: excursionTitleLabel.bottomAnchor,
-                                                  constant: Constants.ExcursionCell.raitingImageIndentFromTitle).isActive = true
+                                                  constant: ExcursionsListConstants.ExcursionCell.raitingImageIndentFromTitle).isActive = true
     }
 
     private func setParametersLabelConstraint() {
         excursionParametersLabel.translatesAutoresizingMaskIntoConstraints = false
-        excursionParametersLabel.leadingAnchor.constraint(equalTo: excursionImageView.trailingAnchor, constant: Constants.ExcursionCell.contentIndent).isActive = true
+        excursionParametersLabel.leadingAnchor.constraint(equalTo: excursionImageView.trailingAnchor,
+                                                          constant: ExcursionsListConstants.ExcursionCell.contentIndent).isActive = true
         excursionParametersLabel.topAnchor.constraint(equalTo: excursionRatingImage.bottomAnchor).isActive = true
     }
 }

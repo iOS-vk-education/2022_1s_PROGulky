@@ -14,19 +14,16 @@ final class ExcursionsListViewController: UIViewController {
 
     private let filterBar = ExcursionsFilterBarView(frame: .zero)
     private var excursionsTable = UITableView(frame: .zero)
-    var excursions: [Excursion] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let data = output.getExcursionsListDisplayData()
-        excursions = data
-
         setupUI()
+        output.didLoadView()
     }
 
     private func setupUI() {
-        view.backgroundColor = Constants.ExcursionsListScreen.backgroundColor
+        view.backgroundColor = ExcursionsListConstants.ExcursionsListScreen.backgroundColor
 
         setupNavBar()
         setupFilterBar()
@@ -35,7 +32,7 @@ final class ExcursionsListViewController: UIViewController {
 
     // Настройка нав бара
     private func setupNavBar() {
-        title = Constants.ExcursionsListNavBar.title
+        title = ExcursionsListConstants.ExcursionsListNavBar.title
 
         let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButton))
         navigationItem.rightBarButtonItem = rightBarButtonItem
@@ -56,7 +53,7 @@ final class ExcursionsListViewController: UIViewController {
         filterBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         filterBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         filterBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        filterBar.heightAnchor.constraint(equalToConstant: Constants.ExcursionsFilterBar.height).isActive = true
+        filterBar.heightAnchor.constraint(equalToConstant: ExcursionsListConstants.ExcursionsFilterBar.height).isActive = true
     }
 
     // Настройка таблицы с экскурсиями
@@ -65,7 +62,7 @@ final class ExcursionsListViewController: UIViewController {
 
         setTableViewDelegate()
 
-        excursionsTable.register(ExcursionCell.self, forCellReuseIdentifier: Constants.ExcursionCell.reuseId)
+        excursionsTable.register(ExcursionCell.self, forCellReuseIdentifier: ExcursionsListConstants.ExcursionCell.reuseId)
 
         setTableViewConstraints()
     }
@@ -91,18 +88,18 @@ extension ExcursionsListViewController: ExcursionsListViewInput {
 
 extension ExcursionsListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        excursions.count
+        output.itemsCount()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.ExcursionCell.reuseId) as! ExcursionCell // swiftlint:disable:this force_cast
-        let excursion = excursions[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: ExcursionsListConstants.ExcursionCell.reuseId) as! ExcursionCell // swiftlint:disable:this force_cast
+        let excursion = output.item(for: indexPath.row)
         cell.set(excursion: excursion)
 
         return cell
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        Constants.ExcursionCell.height
+        ExcursionsListConstants.ExcursionCell.height
     }
 }

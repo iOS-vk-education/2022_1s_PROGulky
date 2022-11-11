@@ -12,11 +12,11 @@ final class ExcursionsFilterBarView: UIView {
     private let selectedCityButton: UIButton = {
         let button = UIButton()
         var configuration = UIButton.Configuration.plain()
-        configuration.title = Constants.SelectedCityButton.title
-        configuration.image = UIImage(systemName: Constants.SelectedCityButton.icon)
+        configuration.title = ExcursionsListConstants.SelectedCityButton.title
+        configuration.image = UIImage(systemName: ExcursionsListConstants.SelectedCityButton.icon)
         configuration.titleAlignment = .trailing
         configuration.imagePlacement = .leading
-        configuration.imagePadding = Constants.SelectedCityButton.padding
+        configuration.imagePadding = ExcursionsListConstants.SelectedCityButton.padding
         button.configuration = configuration
         return button
     }()
@@ -25,12 +25,12 @@ final class ExcursionsFilterBarView: UIView {
     private let filterButton: UIButton = {
         let button = UIButton()
         var configuration = UIButton.Configuration.plain()
-        configuration.title = Constants.FilterButton.title
+        configuration.title = ExcursionsListConstants.FilterButton.title
         configuration.baseForegroundColor = .gray // Кнопка серая, потому что неактивная
-        configuration.image = UIImage(systemName: Constants.FilterButton.icon)
+        configuration.image = UIImage(systemName: ExcursionsListConstants.FilterButton.icon)
         configuration.titleAlignment = .leading
         configuration.imagePlacement = .trailing
-        configuration.imagePadding = Constants.FilterButton.padding
+        configuration.imagePadding = ExcursionsListConstants.FilterButton.padding
         button.configuration = configuration
         return button
     }()
@@ -47,13 +47,13 @@ final class ExcursionsFilterBarView: UIView {
     private func configureSelectedCityButtonConstraints() {
         selectedCityButton.translatesAutoresizingMaskIntoConstraints = false
         selectedCityButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        selectedCityButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.ExcursionsListScreen.padding).isActive = true
+        selectedCityButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ExcursionsListConstants.ExcursionsListScreen.padding).isActive = true
     }
 
     private func configureFilterButtonConstraints() {
         filterButton.translatesAutoresizingMaskIntoConstraints = false
         filterButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        filterButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.ExcursionsListScreen.padding).isActive = true
+        filterButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -ExcursionsListConstants.ExcursionsListScreen.padding).isActive = true
     }
 
     @available(*, unavailable)
