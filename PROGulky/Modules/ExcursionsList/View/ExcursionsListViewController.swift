@@ -23,7 +23,7 @@ final class ExcursionsListViewController: UIViewController {
     }
 
     private func setupUI() {
-        view.backgroundColor = ExcursionsListConstants.ExcursionsListScreen.backgroundColor
+        view.backgroundColor = ExcursionsListConstants.Screen.backgroundColor
 
         setupNavBar()
         setupFilterBar()

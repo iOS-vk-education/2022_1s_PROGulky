@@ -32,7 +32,7 @@ final class ExcursionCell: UITableViewCell {
         fatalError("init(coder:) has not implemeted")
     }
 
-    func set(excursion: Excursion) {
+    func set(excursion: ExcursionViewModel) {
         excursionImageView.image = UIImage(named: excursion.image ?? "picture")
         excursionTitleLabel.text = excursion.title
         excursionRatingImage.image = UIImage(named: ExcursionsListConstants.ExcursionCell.ratingImage)
@@ -92,7 +92,7 @@ final class ExcursionCell: UITableViewCell {
     private func setImageConstraints() {
         excursionImageView.translatesAutoresizingMaskIntoConstraints = false
         excursionImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        excursionImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ExcursionsListConstants.ExcursionsListScreen.padding).isActive = true
+        excursionImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ExcursionsListConstants.Screen.padding).isActive = true
         excursionImageView.heightAnchor.constraint(equalToConstant: ExcursionsListConstants.ExcursionCell.imageHeight).isActive = true
         excursionImageView.widthAnchor.constraint(equalTo: excursionImageView.heightAnchor,
                                                   multiplier: ExcursionsListConstants.ExcursionCell.imageAspectRatio).isActive = true
@@ -103,7 +103,7 @@ final class ExcursionCell: UITableViewCell {
         excursionTitleLabel.leadingAnchor.constraint(equalTo: excursionImageView.trailingAnchor,
                                                      constant: ExcursionsListConstants.ExcursionCell.contentIndent).isActive = true
         excursionTitleLabel.heightAnchor.constraint(equalToConstant: ExcursionsListConstants.ExcursionCell.heightTitleFrame).isActive = true
-        excursionTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -ExcursionsListConstants.ExcursionsListScreen.padding).isActive = true
+        excursionTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -ExcursionsListConstants.Screen.padding).isActive = true
     }
 
     private func setRatingImageConstraints() {

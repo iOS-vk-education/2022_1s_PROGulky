@@ -47,13 +47,13 @@ final class ExcursionsFilterBarView: UIView {
     private func configureSelectedCityButtonConstraints() {
         selectedCityButton.translatesAutoresizingMaskIntoConstraints = false
         selectedCityButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        selectedCityButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ExcursionsListConstants.ExcursionsListScreen.padding).isActive = true
+        selectedCityButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ExcursionsListConstants.Screen.padding).isActive = true
     }
 
     private func configureFilterButtonConstraints() {
         filterButton.translatesAutoresizingMaskIntoConstraints = false
         filterButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        filterButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -ExcursionsListConstants.ExcursionsListScreen.padding).isActive = true
+        filterButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -ExcursionsListConstants.Screen.padding).isActive = true
     }
 
     @available(*, unavailable)

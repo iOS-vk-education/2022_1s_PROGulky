@@ -38,8 +38,8 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
         excursions = factory.setExcursionsListDisplayData()
     }
 
-    func item(for index: Int) -> Excursion {
-        excursions[index]
+    func item(for index: Int) -> ExcursionViewModel {
+        factory.getExcursionViewModel(for: excursions[index])
     }
 
     func itemsCount() -> Int {

@@ -9,7 +9,7 @@ import UIKit
 
 struct ExcursionsListConstants {
     // Константы для всего экрана (падинги, цвет фотна и т. д.)
-    enum ExcursionsListScreen {
+    enum Screen {
         static let padding: CGFloat = 12
         static let backgroundColor = UIColor.white
     }

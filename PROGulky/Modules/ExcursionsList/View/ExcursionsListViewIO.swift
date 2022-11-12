@@ -10,7 +10,7 @@
 protocol ExcursionsListViewOutput: AnyObject {
     func didLoadView()
 
-    func item(for index: Int) -> Excursion
+    func item(for index: Int) -> ExcursionViewModel
 
     func itemsCount() -> Int
 }
