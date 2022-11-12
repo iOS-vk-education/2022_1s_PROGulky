@@ -34,8 +34,9 @@
 		5402F408D6CF6940CF013078 /* DetailExcursionInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C546C37FB5B431E527B15F9F /* DetailExcursionInteractorIO.swift */; };
 		545FE1AA291DA58F00890693 /* ExcursionsListConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */; };
 		545FE1AC291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */; };
+		548ABFDA29205592001CFDA9 /* Excursion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548ABFD929205592001CFDA9 /* Excursion.swift */; };
 		54A50C46291714E10042769E /* ExcursionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A50C45291714E10042769E /* ExcursionCell.swift */; };
-		54A50C482917199E0042769E /* Excursion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A50C472917199E0042769E /* Excursion.swift */; };
+		54A50C482917199E0042769E /* ExcursionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A50C472917199E0042769E /* ExcursionViewModel.swift */; };
 		54C089D3291A87FD000497FE /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C089D2291A87FD000497FE /* UIView+Extensions.swift */; };
 		54C089D5291A8AC7000497FE /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C089D4291A8AC7000497FE /* UILabel+Extensions.swift */; };
 		54C089D7291ACB76000497FE /* ExcursionsFilterBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C089D6291ACB76000497FE /* ExcursionsFilterBarView.swift */; };
@@ -138,8 +139,9 @@
 		539079D5625F18BF3BB5D1B0 /* AddExcursionRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddExcursionRouter.swift; sourceTree = "<group>"; };
 		545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsListConstants.swift; sourceTree = "<group>"; };
 		545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsListDisplayDataFactory.swift; sourceTree = "<group>"; };
+		548ABFD929205592001CFDA9 /* Excursion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Excursion.swift; sourceTree = "<group>"; };
 		54A50C45291714E10042769E /* ExcursionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionCell.swift; sourceTree = "<group>"; };
-		54A50C472917199E0042769E /* Excursion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Excursion.swift; sourceTree = "<group>"; };
+		54A50C472917199E0042769E /* ExcursionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionViewModel.swift; sourceTree = "<group>"; };
 		54C089D2291A87FD000497FE /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		54C089D4291A8AC7000497FE /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		54C089D6291ACB76000497FE /* ExcursionsFilterBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsFilterBarView.swift; sourceTree = "<group>"; };
@@ -395,11 +397,19 @@
 				8B40B87087FB4903DCB6BD7C /* ExcursionsListViewIO.swift */,
 				D678140C434AD6CB7AD2B0DA /* ExcursionsListViewController.swift */,
 				54A50C45291714E10042769E /* ExcursionCell.swift */,
-				54A50C472917199E0042769E /* Excursion.swift */,
+				54A50C472917199E0042769E /* ExcursionViewModel.swift */,
 				54C089D6291ACB76000497FE /* ExcursionsFilterBarView.swift */,
 				545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		548ABFD829205578001CFDA9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				548ABFD929205592001CFDA9 /* Excursion.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		54C089D1291A87C2000497FE /* Extensions */ = {
@@ -448,6 +458,7 @@
 		661A0D872902996D00312A0B /* PROGulky */ = {
 			isa = PBXGroup;
 			children = (
+				548ABFD829205578001CFDA9 /* Models */,
 				6675D20929126F350058A4B0 /* Coordinators */,
 				E77DD55B27C3A4DB3B1007BB /* Modules */,
 				661A0D882902996D00312A0B /* AppDelegate.swift */,
@@ -1057,6 +1068,7 @@
 				E1F490979D6E53196362D9CE /* AddExcursionPresenter.swift in Sources */,
 				B8F0BCCE71C38DB82043139E /* AddExcursionInteractorIO.swift in Sources */,
 				8260001A1AB8D66D8579165D /* AddExcursionInteractor.swift in Sources */,
+				548ABFDA29205592001CFDA9 /* Excursion.swift in Sources */,
 				EA199F26C13F660480AB25F2 /* AddExcursionRouterInput.swift in Sources */,
 				299510472DBF964EB8EA7653 /* AddExcursionRouter.swift in Sources */,
 				32D4B819311BDCB18E162ECF /* AddExcursionBuilder.swift in Sources */,
@@ -1068,7 +1080,7 @@
 				B0C9C9A977E77116B4F0C7A1 /* AddPlacePresenter.swift in Sources */,
 				5BE2E3B7FD57AD6E1FBD0D23 /* AddPlaceInteractorIO.swift in Sources */,
 				4CC686E424266FF8BF1249B4 /* AddPlaceInteractor.swift in Sources */,
-				54A50C482917199E0042769E /* Excursion.swift in Sources */,
+				54A50C482917199E0042769E /* ExcursionViewModel.swift in Sources */,
 				E72261714744A55D4417AC1C /* AddPlaceRouterInput.swift in Sources */,
 				7662A63312813E510FDB7DE7 /* AddPlaceRouter.swift in Sources */,
 				01E841AC7DA27A19B18FA460 /* AddPlaceBuilder.swift in Sources */,

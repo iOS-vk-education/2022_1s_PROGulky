@@ -10,6 +10,7 @@ import UIKit
 // MARK: - ExcursionsListDisplayDataFactoryProtocol
 
 protocol ExcursionsListDisplayDataFactoryProtocol {
+    // Заглушка, пока нет работы с сетью. Этот метод тут не нужен
     func setExcursionsListDisplayData() -> [Excursion]
 
     func getExcursionViewModel(for: Excursion) -> ExcursionViewModel
@@ -27,6 +28,7 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
         )
     }
 
+    // Заглушка, пока нет работы с сетью. Этот метод тут не нужен
     func setExcursionsListDisplayData() -> [Excursion] {
         let e1 = Excursion(
             image: nil,
