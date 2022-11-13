@@ -92,7 +92,9 @@ extension ExcursionsListViewController: UITableViewDelegate, UITableViewDataSour
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ExcursionsListConstants.ExcursionCell.reuseId) as! ExcursionCell // swiftlint:disable:this force_cast
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ExcursionsListConstants.ExcursionCell.reuseId) as? ExcursionCell else {
+            return UITableViewCell()
+        }
         let excursion = output.item(for: indexPath.row)
         cell.set(excursion: excursion)
 

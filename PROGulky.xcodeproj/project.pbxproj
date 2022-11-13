@@ -393,7 +393,6 @@
 		502A06642192EE2D13A1E47C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				54C089D1291A87C2000497FE /* Extensions */,
 				8B40B87087FB4903DCB6BD7C /* ExcursionsListViewIO.swift */,
 				D678140C434AD6CB7AD2B0DA /* ExcursionsListViewController.swift */,
 				54A50C45291714E10042769E /* ExcursionCell.swift */,
@@ -458,6 +457,7 @@
 		661A0D872902996D00312A0B /* PROGulky */ = {
 			isa = PBXGroup;
 			children = (
+				54C089D1291A87C2000497FE /* Extensions */,
 				548ABFD829205578001CFDA9 /* Models */,
 				6675D20929126F350058A4B0 /* Coordinators */,
 				E77DD55B27C3A4DB3B1007BB /* Modules */,
