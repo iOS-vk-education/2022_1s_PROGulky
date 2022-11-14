@@ -14,9 +14,23 @@ final class ExcursionsListViewController: UIViewController {
 
     // MARK: Lifecycle
 
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        view.backgroundColor = .red
+//    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        view.backgroundColor = .white
+        title = "Экскурсии"
+//            excursions = fetchData()
+//            configureTableView()
+        let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButton))
+
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+//        title = "Экскурсии"
+    }
+
+    @objc func didTapAddButton() {
     }
 }
 
