@@ -21,7 +21,6 @@ final class ExcursionsListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        title = "Экскурсии"
 //            excursions = fetchData()
 //            configureTableView()
         let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButton))

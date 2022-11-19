@@ -48,7 +48,7 @@ final class UserInfoHeader: UIView {
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().offset(Constants.offset)
             make.width.equalTo(Constants.imagesSize)
-            make.height.equalTo(Constants.imagesSize)
+            make.height.equalTo(Constants.imagesSize + 4)
         }
         addSubview(usernameLabel)
         usernameLabel.snp.makeConstraints { make in

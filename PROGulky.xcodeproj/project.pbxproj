@@ -38,7 +38,6 @@
 		60AF57BFC01EC107BB9136A0 /* DetailPlaceModuleIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BE7B784112553130AFECE0 /* DetailPlaceModuleIO.swift */; };
 		61FDF8207F3152E8332214CC /* AddPlaceModuleIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71283F1E308BFA9C1986FE3B /* AddPlaceModuleIO.swift */; };
 		655B60CD5F361A727A7F17AE /* DetailPlacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED23E4CF57993B76618F431 /* DetailPlacePresenter.swift */; };
-		6611C2722919A04F00A9952E /* OtherViewDisplayDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6611C2712919A04F00A9952E /* OtherViewDisplayDataFactory.swift */; };
 		661A0D892902996D00312A0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 661A0D882902996D00312A0B /* AppDelegate.swift */; };
 		661A0D922902996E00312A0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 661A0D912902996E00312A0B /* Assets.xcassets */; };
 		661A0D952902996E00312A0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 661A0D932902996E00312A0B /* LaunchScreen.storyboard */; };
@@ -62,8 +61,8 @@
 		A553F1D8291A6968001E679C /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D7291A6968001E679C /* Colors.swift */; };
 		A553F1DA291A6F27001E679C /* TextConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D9291A6F27001E679C /* TextConstants.swift */; };
 		A5B7537F2913FBA4001D1978 /* ProfileUserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */; };
-		A5B753832913FEE5001D1978 /* ProfileUserAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B753822913FEE5001D1978 /* ProfileUserAccountView.swift */; };
-		A5B7538529151173001D1978 /* ProfileUserAnotherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B7538429151173001D1978 /* ProfileUserAnotherView.swift */; };
+		A5D309F42928F403005D2275 /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */; };
+		A5D309F62928F66C005D2275 /* ProfileSettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D309F52928F66C005D2275 /* ProfileSettingsSection.swift */; };
 		A6870B67FEAA859C2BBA0908 /* ExcursionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D678140C434AD6CB7AD2B0DA /* ExcursionsListViewController.swift */; };
 		A6ACA2679B16F08F548F337C /* ProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6956CF76F0FCD65BE420ABDC /* ProfileRouter.swift */; };
 		A7F41217646CB99E82D8B7BF /* FavouritesExcursionsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA660BDBC0D3D1F77E748F5 /* FavouritesExcursionsBuilder.swift */; };
@@ -140,7 +139,6 @@
 		58E7993CE1E9FEA6918FB4A0 /* Pods-PROGulky-PROGulkyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PROGulky-PROGulkyUITests.debug.xcconfig"; path = "Target Support Files/Pods-PROGulky-PROGulkyUITests/Pods-PROGulky-PROGulkyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		59BE7B784112553130AFECE0 /* DetailPlaceModuleIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DetailPlaceModuleIO.swift; sourceTree = "<group>"; };
 		5B18CF0E8F6610EA949BC890 /* ExcursionsListInteractor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ExcursionsListInteractor.swift; sourceTree = "<group>"; };
-		6611C2712919A04F00A9952E /* OtherViewDisplayDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherViewDisplayDataFactory.swift; sourceTree = "<group>"; };
 		661A0D852902996D00312A0B /* PROGulky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PROGulky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		661A0D882902996D00312A0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		661A0D912902996E00312A0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -176,8 +174,8 @@
 		A553F1D7291A6968001E679C /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		A553F1D9291A6F27001E679C /* TextConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextConstants.swift; sourceTree = "<group>"; };
 		A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoHeader.swift; sourceTree = "<group>"; };
-		A5B753822913FEE5001D1978 /* ProfileUserAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserAccountView.swift; sourceTree = "<group>"; };
-		A5B7538429151173001D1978 /* ProfileUserAnotherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileUserAnotherView.swift; sourceTree = "<group>"; };
+		A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
+		A5D309F52928F66C005D2275 /* ProfileSettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsSection.swift; sourceTree = "<group>"; };
 		A61307FC1E7EC9C93B0BD5AF /* AddPlaceRouterInput.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddPlaceRouterInput.swift; sourceTree = "<group>"; };
 		AEEE1A974A7B5FD3DF4894F3 /* DetailExcursionViewIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DetailExcursionViewIO.swift; sourceTree = "<group>"; };
 		B3BE36A56BE97311C3AE8016 /* FavouritesExcursionsPresenter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FavouritesExcursionsPresenter.swift; sourceTree = "<group>"; };
@@ -329,7 +327,6 @@
 			children = (
 				175C664D284B70C6674471E7 /* ProfileModuleIO.swift */,
 				D3913E1F7ACBA08F04736A7B /* ProfilePresenter.swift */,
-				6611C2712919A04F00A9952E /* OtherViewDisplayDataFactory.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -624,8 +621,8 @@
 				1025773E08D8C66DE4E8F7C0 /* ProfileViewIO.swift */,
 				A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */,
 				17FE2736BBBE69AB8C7C2BB5 /* ProfileViewController.swift */,
-				A5B753822913FEE5001D1978 /* ProfileUserAccountView.swift */,
-				A5B7538429151173001D1978 /* ProfileUserAnotherView.swift */,
+				A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */,
+				A5D309F52928F66C005D2275 /* ProfileSettingsSection.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1025,18 +1022,17 @@
 				661A0D892902996D00312A0B /* AppDelegate.swift in Sources */,
 				CA16E5FF3470878ABCAD8F11 /* ExcursionsListViewIO.swift in Sources */,
 				A6870B67FEAA859C2BBA0908 /* ExcursionsListViewController.swift in Sources */,
-				A5B7538529151173001D1978 /* ProfileUserAnotherView.swift in Sources */,
 				41F7A17B895BE5DF38BCC83C /* ExcursionsListModuleIO.swift in Sources */,
 				6675D213291274240058A4B0 /* FavouriteCoordinator.swift in Sources */,
 				23D03DB6FC1C2101E327923A /* ExcursionsListPresenter.swift in Sources */,
 				4FF78E5B66DB288D78967914 /* ExcursionsListInteractorIO.swift in Sources */,
 				6675D215291274710058A4B0 /* ProfileCoordinator.swift in Sources */,
 				DD491B525EE911A4E7C8429F /* ExcursionsListInteractor.swift in Sources */,
-				6611C2722919A04F00A9952E /* OtherViewDisplayDataFactory.swift in Sources */,
 				6675D20B29126FD80058A4B0 /* CoordinatorProtocol.swift in Sources */,
 				F83E1A9F4C1F8D6516201126 /* ExcursionsListRouterInput.swift in Sources */,
 				1D19F4AB810FE4440C1F30EF /* ExcursionsListRouter.swift in Sources */,
 				94D58836216B679A692591E0 /* ExcursionsListBuilder.swift in Sources */,
+				A5D309F42928F403005D2275 /* ProfileSettingsCell.swift in Sources */,
 				0847232626A75B9FF101F402 /* ProfileViewIO.swift in Sources */,
 				147E3B43F41E35D149EB3E41 /* ProfileViewController.swift in Sources */,
 				C364355ABC98A250C6D85467 /* ProfileModuleIO.swift in Sources */,
@@ -1057,7 +1053,6 @@
 				1CBF00DD0C0FABDE6D041683 /* FavouritesExcursionsRouter.swift in Sources */,
 				A7F41217646CB99E82D8B7BF /* FavouritesExcursionsBuilder.swift in Sources */,
 				E655FF225A9C3D22426923E3 /* DetailExcursionViewIO.swift in Sources */,
-				A5B753832913FEE5001D1978 /* ProfileUserAccountView.swift in Sources */,
 				F2C92852DA10723516E8E6EF /* DetailExcursionViewController.swift in Sources */,
 				3F5656DA5D90C769DFA30064 /* DetailExcursionModuleIO.swift in Sources */,
 				EA7635CC63622276E58EC987 /* DetailExcursionPresenter.swift in Sources */,
@@ -1079,6 +1074,7 @@
 				299510472DBF964EB8EA7653 /* AddExcursionRouter.swift in Sources */,
 				32D4B819311BDCB18E162ECF /* AddExcursionBuilder.swift in Sources */,
 				0CDD72663D40FC7741EC5506 /* AddPlaceViewIO.swift in Sources */,
+				A5D309F62928F66C005D2275 /* ProfileSettingsSection.swift in Sources */,
 				6675D20F291270570058A4B0 /* ExcursionListCoordinator.swift in Sources */,
 				B034A94B89A9375743C132B8 /* AddPlaceViewController.swift in Sources */,
 				61FDF8207F3152E8332214CC /* AddPlaceModuleIO.swift in Sources */,
