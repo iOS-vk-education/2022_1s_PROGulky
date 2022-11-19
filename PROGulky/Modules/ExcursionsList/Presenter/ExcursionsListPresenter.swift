@@ -17,6 +17,9 @@ final class ExcursionsListPresenter {
     private let interactor: ExcursionsListInteractorInput
     private let router: ExcursionsListRouterInput
 
+    private let factory = ExcursionsListDisplayDataFactory()
+    private var excursions: [Excursion] = []
+
     // MARK: - Lifecycle
 
     init(interactor: ExcursionsListInteractorInput, router: ExcursionsListRouterInput) {
@@ -28,7 +31,20 @@ final class ExcursionsListPresenter {
 extension ExcursionsListPresenter: ExcursionsListModuleInput {
 }
 
+// MARK: ExcursionsListViewOutput
+
 extension ExcursionsListPresenter: ExcursionsListViewOutput {
+    func didLoadView() {
+        excursions = factory.setExcursionsListDisplayData()
+    }
+
+    func item(for index: Int) -> ExcursionViewModel {
+        factory.getExcursionViewModel(for: excursions[index])
+    }
+
+    func itemsCount() -> Int {
+        excursions.count
+    }
 }
 
 extension ExcursionsListPresenter: ExcursionsListInteractorOutput {
