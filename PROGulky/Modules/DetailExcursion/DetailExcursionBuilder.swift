@@ -10,12 +10,16 @@ import UIKit
 // MARK: - DetailExcursionModuleBuilder
 
 final class DetailExcursionModuleBuilder {
-    func build() -> UIViewController {
+    func build(for excursion: Excursion) -> UIViewController {
         let viewController = DetailExcursionViewController()
         let router = DetailExcursionRouter()
         let interactor = DetailExcursionInteractor()
 
-        let presenter = DetailExcursionPresenter(interactor: interactor, router: router)
+        let presenter = DetailExcursionPresenter(
+            interactor: interactor,
+            router: router,
+            excursion: excursion
+        )
         presenter.view = viewController
 
         interactor.output = presenter

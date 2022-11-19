@@ -48,8 +48,8 @@ final class ExcursionListCoordinator: CoordinatorProtocol {
 
 extension ExcursionListCoordinator: ExcursionsListModuleOutput {
     func excursionsListModuleWantsToOpenDetailExcursion(excursion: Excursion) {
-        print(excursion)
-        let detailView = DetailExcursionViewController()
+        let builder = DetailExcursionModuleBuilder()
+        let detailView = builder.build(for: excursion)
         rootNavigationController.pushViewController(detailView, animated: true)
     }
 
