@@ -426,6 +426,7 @@
 		54C089D1291A87C2000497FE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A553F1D129199288001E679C /* UIColorExtension.swift */,
 				54C089D2291A87FD000497FE /* UIView+Extensions.swift */,
 				54C089D4291A8AC7000497FE /* UILabel+Extensions.swift */,
 			);
@@ -470,7 +471,6 @@
 			isa = PBXGroup;
 			children = (
 				A553F1D6291A6959001E679C /* Colors */,
-				A553F1D029199266001E679C /* Extensions */,
 				54C089D1291A87C2000497FE /* Extensions */,
 				548ABFD829205578001CFDA9 /* Models */,
 				6675D20929126F350058A4B0 /* Coordinators */,
@@ -608,14 +608,6 @@
 				6D0A6B73EB276D5B7C47C018 /* AddPlaceBuilder.swift */,
 			);
 			path = AddPlace;
-			sourceTree = "<group>";
-		};
-		A553F1D029199266001E679C /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				A553F1D129199288001E679C /* UIColorExtension.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		A553F1D6291A6959001E679C /* Colors */ = {
