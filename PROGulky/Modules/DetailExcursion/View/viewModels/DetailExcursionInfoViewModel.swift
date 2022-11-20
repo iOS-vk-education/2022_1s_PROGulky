@@ -12,7 +12,7 @@ import Foundation
 // Даныне отображаемые в блоке с главной информацией экскрусии (блок с кнопкой в середине экрана)
 struct DetailExcursionInfoViewModel {
     var title: String
-    var rating: Double
+    var rating: String
     var numberOfPlaces: String
     var duration: String
     var distance: String

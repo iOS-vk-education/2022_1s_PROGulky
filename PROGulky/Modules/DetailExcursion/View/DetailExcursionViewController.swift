@@ -21,23 +21,22 @@ final class DetailExcursionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        output.didLoadView()
-        view.addSubviews(
-            excursionImageView,
-            detailExcursionInfoView,
-            tableView
-        )
         setupUI()
         setupConstraints()
         setDisplayData()
     }
 
     private func setDisplayData() {
-        excursionImageView.image = UIImage(named: output.image)
+        excursionImageView.image = UIImage(named: output.detailExcursionViewModel.image)
         detailExcursionInfoView.set(excursion: output.detailExcursionInfoViewModel)
     }
 
     private func setupUI() {
+        view.addSubviews(
+            excursionImageView,
+            detailExcursionInfoView,
+            tableView
+        )
         view.backgroundColor = ExcursionsListConstants.Screen.backgroundColor
 
         configureImageView()
@@ -101,11 +100,6 @@ final class DetailExcursionViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
-
-    @objc
-    private func didTapBackButton() {
-        // dismiss(animated: true)
-    }
 }
 
 // MARK: DetailExcursionViewInput
@@ -121,21 +115,27 @@ extension DetailExcursionViewController: UITableViewDelegate {
 extension DetailExcursionViewController: UITableViewDataSource {
     // Количество секций таблицы
     func numberOfSections(in tableView: UITableView) -> Int {
-        2
+        DetailExcursionConstants.TableView.Sections.allCases.count
     }
 
     // Количество ячеек в каждой секции
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        guard let section = DetailExcursionConstants.TableView.Sections(rawValue: section) else { return 0 }
+
+        switch section {
+        case .Places:
             return output.placesCount
-        } else {
-            return 1
+        case .Description:
+            return DetailExcursionConstants.TableView.Sections.DescriptionOptions.allCases.count
         }
     }
 
     // Ячейки в секции
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        guard let section = DetailExcursionConstants.TableView.Sections(rawValue: indexPath.section) else { return UITableViewCell() }
+
+        switch section {
+        case .Places:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailExcursionConstants.TableView.PlaceCell.reuseId) as? PlaceCell else {
                 return UITableViewCell()
             }
@@ -143,11 +143,11 @@ extension DetailExcursionViewController: UITableViewDataSource {
             cell.set(place: place)
 
             return cell
-        } else {
+        case .Description:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailExcursionConstants.TableView.DescriptionCell.reuseId) as? DescriptionCell else {
                 return UITableViewCell()
             }
-            let description = output.description
+            let description = output.detailExcursionViewModel.description
             cell.set(description: description)
 
             return cell
@@ -156,32 +156,21 @@ extension DetailExcursionViewController: UITableViewDataSource {
 
     // Вью заголовка секций
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: .zero)
-        let label = UILabel()
-        view.backgroundColor = DetailExcursionConstants.TableView.HeaderInSection.backgroundColor
-
-        view.addSubview(label)
-        label.textColor = DetailExcursionConstants.TableView.HeaderInSection.textColor
-        label.font = DetailExcursionConstants.TableView.HeaderInSection.font
-
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: DetailExcursionConstants.Screen.padding).isActive = true
-        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        if section == 0 {
-            label.text = DetailExcursionConstants.TableView.SectionPlacesHeader.text
-            return view
-        } else {
-            label.text = DetailExcursionConstants.TableView.SectionDescriptionHeader.text
-            return view
-        }
+        let view = DetailExcursionHeaderInSectionView()
+        // костыль чтобы избавиться от nil (подскажи как нормально сделать)
+        view.set(headerText: DetailExcursionConstants.TableView.Sections(rawValue: section)?.description ?? "")
+        return view
     }
 
-    // Размеры ячеев в секциях
+    // Высоты ячеек в секциях
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
+        guard let section = DetailExcursionConstants.TableView.Sections(rawValue: indexPath.section) else { return 0 }
+
+        switch section {
+        case .Places:
             return DetailExcursionConstants.TableView.PlaceCell.height
-        } else {
-            // Я не знаю как тут сделать автоматическую высоту ячейки под размер контента
+        case .Description:
+            // Начал решать это в DescriptionCell
             return 200
         }
     }

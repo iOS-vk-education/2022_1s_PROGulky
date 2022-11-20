@@ -81,19 +81,29 @@ struct DetailExcursionConstants {
     enum TableView {
         static let marginTop: CGFloat = 10
 
+        enum Sections: Int, CaseIterable {
+            case Places
+            case Description
+
+            var description: String {
+                switch self {
+                case .Places:
+                    return "Точки экскрусии"
+                case .Description:
+                    return "Описание"
+                }
+            }
+
+            enum DescriptionOptions: CaseIterable {
+                case DescriptionText
+            }
+        }
+
         enum HeaderInSection {
             static let marginTop: CGFloat = 20
             static let textColor = UIColor.gray
             static let backgroundColor = UIColor.white
             static let font = UIFont.systemFont(ofSize: 19, weight: UIFont.Weight.semibold)
-        }
-
-        enum SectionPlacesHeader {
-            static let text = "Точки экскрусии"
-        }
-
-        enum SectionDescriptionHeader {
-            static let text = "Описание"
         }
 
         enum PlaceCell {

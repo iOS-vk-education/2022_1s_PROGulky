@@ -13,14 +13,13 @@ final class DetailExcursionPresenter {
     // MARK: - Public Properties
 
     weak var view: DetailExcursionViewInput!
-    let excursion: Excursion
 
     // MARK: - Private Properties
 
     private let interactor: DetailExcursionInteractorInput
     private let router: DetailExcursionRouterInput
     private let factory = DetailExcursionDisplayDataFactory()
-    private var places: [Place] = []
+    private let excursion: Excursion
 
     // MARK: - Lifecycle
 
@@ -37,28 +36,20 @@ extension DetailExcursionPresenter: DetailExcursionModuleInput {
 // MARK: DetailExcursionViewOutput
 
 extension DetailExcursionPresenter: DetailExcursionViewOutput {
-    func didLoadView() {
-        places = factory.getPlaces(for: excursion)
-    }
-
     func place(for indexPath: IndexPath) -> PlaceViewModel {
-        factory.getPlaceViewModel(for: places[indexPath.row])
+        factory.getPlaceViewModel(for: excursion.places[indexPath.row])
     }
 
     var placesCount: Int {
-        places.count
+        excursion.places.count
     }
 
     var detailExcursionInfoViewModel: DetailExcursionInfoViewModel {
         factory.getDetailExcursionInfoViewModel(for: excursion)
     }
 
-    var image: String {
-        excursion.image ?? "picture"
-    }
-
-    var description: String {
-        excursion.description
+    var detailExcursionViewModel: DetailExcursionViewModel {
+        factory.getDetailExcursionViewModel(for: excursion)
     }
 }
 

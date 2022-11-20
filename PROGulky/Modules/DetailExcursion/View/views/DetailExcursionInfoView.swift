@@ -84,7 +84,7 @@ final class DetailExcursionInfoView: UIView {
     func set(excursion: DetailExcursionInfoViewModel) {
         title.text = excursion.title
         ratingImage.image = UIImage(named: ExcursionsListConstants.ExcursionCell.ratingImage)
-        ratingLabel.text = String(excursion.rating)
+        ratingLabel.text = excursion.rating
         numberOfPlacesLabel.text = excursion.numberOfPlaces
         durationLabel.text = excursion.duration
         distanceLabel.text = excursion.distance

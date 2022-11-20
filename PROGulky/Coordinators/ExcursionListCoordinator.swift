@@ -53,7 +53,7 @@ extension ExcursionListCoordinator: ExcursionsListModuleOutput {
         rootNavigationController.pushViewController(detailView, animated: true)
     }
 
-    func DetailExcursionWantsToClose() {
+    func detailExcursionModuleWantsToClose() {
         rootNavigationController.popViewController(animated: true)
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Данные в ячейки таблицы с местами
 struct PlaceViewModel {
     var sort: String
     var title: String

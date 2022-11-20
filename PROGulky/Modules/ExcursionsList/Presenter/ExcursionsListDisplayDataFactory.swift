@@ -79,7 +79,7 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
             rating: 5.0,
             description: "Приглашаем познакомиться с одной из древнейших и красивейших столиц мира. Вы оцените эклектичную архитектуру города, увидите знаменитые улицы",
             duration: 60,
-            numberOfPoints: 5,
+            numberOfPoints: 1,
             distance: 2.2,
             places: places
         )
@@ -89,7 +89,7 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
             rating: 4.96,
             description: "Приглашаем познакомиться с одной из древнейших и красивейших столиц мира. Вы оцените эклектичную архитектуру города, увидите знаменитые улицы",
             duration: 65,
-            numberOfPoints: 6,
+            numberOfPoints: 2,
             distance: 3.2,
             places: places
         )
@@ -99,7 +99,7 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
             rating: 3.33,
             description: "Приглашаем познакомиться с одной из древнейших и красивейших столиц мира. Вы оцените эклектичную архитектуру города, увидите знаменитые улицы",
             duration: 90,
-            numberOfPoints: 9,
+            numberOfPoints: 3,
             distance: 4.4,
             places: places
         )
@@ -109,7 +109,7 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
             rating: 3.7,
             description: "Приглашаем познакомиться с одной из древнейших и красивейших столиц мира. Вы оцените эклектичную архитектуру города, увидите знаменитые улицы",
             duration: 100,
-            numberOfPoints: 9,
+            numberOfPoints: 5,
             distance: 4.4,
             places: places
         )
