@@ -16,7 +16,7 @@ final class ProfileModuleBuilder {
         let interactor = ProfileInteractor()
 
         let presenter = ProfilePresenter(interactor: interactor, router: router)
-        presenter.view = viewController as? any ProfileViewInput
+        presenter.view = viewController
 
         interactor.output = presenter
         viewController.output = presenter

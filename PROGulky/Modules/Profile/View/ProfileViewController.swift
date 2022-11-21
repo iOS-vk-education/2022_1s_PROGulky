@@ -110,6 +110,11 @@ final class ProfileViewController: UIViewController {
     }
 }
 
+// MARK: ProfileViewInput
+
+extension ProfileViewController: ProfileViewInput {
+}
+
 // MARK: UITableViewDelegate, UITableViewDataSource
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {

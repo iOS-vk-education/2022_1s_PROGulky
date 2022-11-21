@@ -11,7 +11,7 @@ import UIKit
 
 protocol SectionType: CustomStringConvertible {
     var containsSwitch: Bool { get }
-    var imageBtn: UIImage { get }
+    var image: String { get }
 }
 
 // MARK: - SettingsSection
@@ -55,16 +55,16 @@ enum AccountOptions: Int, CaseIterable, SectionType {
         }
     }
 
-    var imageBtn: UIImage {
+    var image: String {
         switch self {
         case .personalDataSettings:
-            return UIImage(named: "Icon-Profile")!
+            return Images.personalDataSettingsImage
         case .achievements:
-            return UIImage(named: "Icon-Achievement")!
+            return Images.achievementsImage
         case .history:
-            return UIImage(named: "Icon-Activity")!
+            return Images.historyImage
         case .beGuide:
-            return UIImage(named: "Icon-UserBeGuide")!
+            return Images.beGuideImage
         }
     }
 }
@@ -91,14 +91,14 @@ enum OtherOptions: Int, CaseIterable, SectionType {
         }
     }
 
-    var imageBtn: UIImage {
+    var image: String {
         switch self {
         case .contactUs:
-            return UIImage(named: "Icon-Edit")!
+            return Images.contactUsImage
         case .privacyPolicy:
-            return UIImage(named: "Icon-Privacy")!
+            return Images.privacyPolicyImage
         case .signOut:
-            return UIImage(named: "Icon-Setting")!
+            return Images.signOutImage
         }
     }
 }
