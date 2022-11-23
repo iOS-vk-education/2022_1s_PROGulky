@@ -28,6 +28,8 @@ final class ProfilePresenter {
 extension ProfilePresenter: ProfileModuleInput {
 }
 
+// MARK: ProfileViewOutput
+
 extension ProfilePresenter: ProfileViewOutput {
 }
 
