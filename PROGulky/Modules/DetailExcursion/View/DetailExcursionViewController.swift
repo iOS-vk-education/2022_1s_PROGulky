@@ -148,7 +148,7 @@ extension DetailExcursionViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailExcursionConstants.TableView.DescriptionCell.reuseId) as? DescriptionCell else {
                 return UITableViewCell()
             }
-            let description = output.description // кажется что так нельзя и что это описание надо брать из вью модели
+            let description = output.description
             cell.set(description: description)
 
             return cell
@@ -173,13 +173,6 @@ extension DetailExcursionViewController: UITableViewDataSource {
         case .Places:
             return DetailExcursionConstants.TableView.PlaceCell.height
         case .Description:
-//            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailExcursionConstants.TableView.DescriptionCell.reuseId) as? DescriptionCell else {
-//                return 0.0
-//            }
-//            let description = output.detailExcursionViewModel.description
-//            cell.set(description: description)
-//
-//            return cell.height()
             return UITableView.automaticDimension
         }
     }

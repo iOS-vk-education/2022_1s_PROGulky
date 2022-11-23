@@ -13,7 +13,7 @@ final class DescriptionCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        addSubview(text)
+        contentView.addSubview(text)
 
         setupUI()
         setupConstraints()
@@ -24,15 +24,12 @@ final class DescriptionCell: UITableViewCell {
         fatalError("init(coder:) has not implemeted")
     }
 
-    func height() -> CGFloat {
-        text.frame.size.height
-    }
-
     func set(description: String) {
         text.text = description
     }
 
     private func setupUI() {
+        selectionStyle = UITableViewCell.SelectionStyle.none
         configureDecriptionText()
     }
 
@@ -46,9 +43,11 @@ final class DescriptionCell: UITableViewCell {
     }
 
     private func setDescriptionTextConstraints() {
+        let marginGuide = contentView.layoutMarginsGuide
         text.translatesAutoresizingMaskIntoConstraints = false
-        text.topAnchor.constraint(equalTo: topAnchor, constant: DetailExcursionConstants.TableView.DescriptionCell.Text.marginTop).isActive = true
-        text.leadingAnchor.constraint(equalTo: leadingAnchor, constant: DetailExcursionConstants.Screen.padding).isActive = true
-        text.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -DetailExcursionConstants.Screen.padding).isActive = true
+        text.bottomAnchor.constraint(equalTo: marginGuide.bottomAnchor).isActive = true
+        text.topAnchor.constraint(equalTo: marginGuide.topAnchor).isActive = true
+        text.leadingAnchor.constraint(equalTo: marginGuide.leadingAnchor).isActive = true
+        text.trailingAnchor.constraint(equalTo: marginGuide.trailingAnchor).isActive = true
     }
 }

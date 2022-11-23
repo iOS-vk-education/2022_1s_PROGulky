@@ -43,6 +43,7 @@ final class ExcursionCell: UITableViewCell {
     // MARK: configs styles
 
     private func setupUI() {
+        selectionStyle = UITableViewCell.SelectionStyle.none
         configureImageView()
         configureTitleLabel()
         configurRatingImage()

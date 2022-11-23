@@ -35,6 +35,7 @@ final class PlaceCell: UITableViewCell {
     // MARK: configs styles
 
     private func setupUI() {
+        selectionStyle = UITableViewCell.SelectionStyle.none
         configureSortLabel()
         configureTitleLabel()
         configureSubtitleLabel()
