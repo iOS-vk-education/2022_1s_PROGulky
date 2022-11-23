@@ -23,9 +23,9 @@ enum SettingsSection: Int, CaseIterable, CustomStringConvertible {
     var description: String {
         switch self {
         case .Account:
-            return TextConstants.titleAccount
+            return TextConstantsProfile.titleAccount
         case .Other:
-            return TextConstants.titleOthers
+            return TextConstantsProfile.titleOthers
         }
     }
 }
@@ -45,26 +45,26 @@ enum AccountOptions: Int, CaseIterable, SectionType {
     var description: String {
         switch self {
         case .personalDataSettings:
-            return TextConstants.titlePersonalData
+            return TextConstantsProfile.titlePersonalData
         case .achievements:
-            return TextConstants.titleAchievements
+            return TextConstantsProfile.titleAchievements
         case .history:
-            return TextConstants.titleHistory
+            return TextConstantsProfile.titleHistory
         case .beGuide:
-            return TextConstants.titleBeGuide
+            return TextConstantsProfile.titleBeGuide
         }
     }
 
     var image: String {
         switch self {
         case .personalDataSettings:
-            return Images.personalDataSettingsImage
+            return ImagesProfile.personalDataSettingsImage
         case .achievements:
-            return Images.achievementsImage
+            return ImagesProfile.achievementsImage
         case .history:
-            return Images.historyImage
+            return ImagesProfile.historyImage
         case .beGuide:
-            return Images.beGuideImage
+            return ImagesProfile.beGuideImage
         }
     }
 }
@@ -83,22 +83,22 @@ enum OtherOptions: Int, CaseIterable, SectionType {
     var description: String {
         switch self {
         case .contactUs:
-            return TextConstants.titleContactUs
+            return TextConstantsProfile.titleContactUs
         case .privacyPolicy:
-            return TextConstants.titlePrivacyPolicy
+            return TextConstantsProfile.titlePrivacyPolicy
         case .signOut:
-            return TextConstants.titleSignOut
+            return TextConstantsProfile.titleSignOut
         }
     }
 
     var image: String {
         switch self {
         case .contactUs:
-            return Images.contactUsImage
+            return ImagesProfile.contactUsImage
         case .privacyPolicy:
-            return Images.privacyPolicyImage
+            return ImagesProfile.privacyPolicyImage
         case .signOut:
-            return Images.signOutImage
+            return ImagesProfile.signOutImage
         }
     }
 }
