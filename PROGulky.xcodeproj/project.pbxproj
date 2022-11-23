@@ -39,6 +39,18 @@
 		4FF78E5B66DB288D78967914 /* ExcursionsListInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D28233730CF25DD0C0AD76 /* ExcursionsListInteractorIO.swift */; };
 		527308AC21EE31AD2021C736 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913E1F7ACBA08F04736A7B /* ProfilePresenter.swift */; };
 		5402F408D6CF6940CF013078 /* DetailExcursionInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C546C37FB5B431E527B15F9F /* DetailExcursionInteractorIO.swift */; };
+		543F2CA6292E722C00120116 /* DetailExcursionDisplayDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CA5292E722C00120116 /* DetailExcursionDisplayDataFactory.swift */; };
+		543F2CAB292E724C00120116 /* PlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CA8292E724C00120116 /* PlaceViewModel.swift */; };
+		543F2CAC292E724C00120116 /* DetailExcursionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CA9292E724C00120116 /* DetailExcursionViewModel.swift */; };
+		543F2CAD292E724C00120116 /* DetailExcursionInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CAA292E724C00120116 /* DetailExcursionInfoViewModel.swift */; };
+		543F2CAF292E726000120116 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CAE292E726000120116 /* Place.swift */; };
+		543F2CB1292E726D00120116 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CB0292E726D00120116 /* Int+Extensions.swift */; };
+		543F2CB3292E727B00120116 /* DetailExcursionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CB2292E727B00120116 /* DetailExcursionConstants.swift */; };
+		543F2CB7292E728B00120116 /* DescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CB5292E728B00120116 /* DescriptionCell.swift */; };
+		543F2CB8292E728B00120116 /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CB6292E728B00120116 /* PlaceCell.swift */; };
+		543F2CBD292E72CA00120116 /* DetailExcursionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CBA292E72CA00120116 /* DetailExcursionInfoView.swift */; };
+		543F2CBE292E72CA00120116 /* DetailExcursionSettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CBB292E72CA00120116 /* DetailExcursionSettingsSection.swift */; };
+		543F2CBF292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CBC292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift */; };
 		545FE1AA291DA58F00890693 /* ExcursionsListConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */; };
 		545FE1AC291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */; };
 		548ABFDA29205592001CFDA9 /* Excursion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548ABFD929205592001CFDA9 /* Excursion.swift */; };
@@ -165,6 +177,18 @@
 		50BA4A7906722E491708A6B7 /* LoginInteractor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
 		52697DF6ECE8C9DFEB65C474 /* AddExcursionBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddExcursionBuilder.swift; sourceTree = "<group>"; };
 		539079D5625F18BF3BB5D1B0 /* AddExcursionRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddExcursionRouter.swift; sourceTree = "<group>"; };
+		543F2CA5292E722C00120116 /* DetailExcursionDisplayDataFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionDisplayDataFactory.swift; sourceTree = "<group>"; };
+		543F2CA8292E724C00120116 /* PlaceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceViewModel.swift; sourceTree = "<group>"; };
+		543F2CA9292E724C00120116 /* DetailExcursionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionViewModel.swift; sourceTree = "<group>"; };
+		543F2CAA292E724C00120116 /* DetailExcursionInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionInfoViewModel.swift; sourceTree = "<group>"; };
+		543F2CAE292E726000120116 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		543F2CB0292E726D00120116 /* Int+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
+		543F2CB2292E727B00120116 /* DetailExcursionConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionConstants.swift; sourceTree = "<group>"; };
+		543F2CB5292E728B00120116 /* DescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DescriptionCell.swift; sourceTree = "<group>"; };
+		543F2CB6292E728B00120116 /* PlaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
+		543F2CBA292E72CA00120116 /* DetailExcursionInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionInfoView.swift; sourceTree = "<group>"; };
+		543F2CBB292E72CA00120116 /* DetailExcursionSettingsSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionSettingsSection.swift; sourceTree = "<group>"; };
+		543F2CBC292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionHeaderInSectionView.swift; sourceTree = "<group>"; };
 		545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsListConstants.swift; sourceTree = "<group>"; };
 		545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsListDisplayDataFactory.swift; sourceTree = "<group>"; };
 		548ABFD929205592001CFDA9 /* Excursion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Excursion.swift; sourceTree = "<group>"; };
@@ -383,7 +407,6 @@
 				5E4BC081045FC069A1B238C0 /* RegistrationInteractorIO.swift */,
 				1E9E5A511FCA6DAE0FF23BDB /* RegistrationInteractor.swift */,
 			);
-			name = Interactor;
 			path = Interactor;
 			sourceTree = "<group>";
 		};
@@ -405,7 +428,6 @@
 				FDC08348C2CF55CF4525BF64 /* Router */,
 				F214FF3BE9AB22FAAF73524D /* RegistrationBuilder.swift */,
 			);
-			name = Registration;
 			path = Registration;
 			sourceTree = "<group>";
 		};
@@ -421,6 +443,7 @@
 		3D2A1DE4717FC4996209FAD8 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				543F2CA4292E722C00120116 /* DataSource */,
 				7977E1C3C99EF3BAE96BF607 /* DetailExcursionModuleIO.swift */,
 				86EEC9736F0079DB7CE3570D /* DetailExcursionPresenter.swift */,
 			);
@@ -439,6 +462,10 @@
 		4F07ADFFAACF085EEFBC4F47 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				543F2CB9292E72CA00120116 /* Views */,
+				543F2CB4292E728B00120116 /* Cells */,
+				543F2CB2292E727B00120116 /* DetailExcursionConstants.swift */,
+				543F2CA7292E724C00120116 /* ViewModels */,
 				AEEE1A974A7B5FD3DF4894F3 /* DetailExcursionViewIO.swift */,
 				B434111035862A4121532B06 /* DetailExcursionViewController.swift */,
 			);
@@ -482,13 +509,50 @@
 				EE3FC899DCAFEB030903AD1E /* RegistrationViewIO.swift */,
 				0427CB24B963E6BE85F421AF /* RegistrationViewController.swift */,
 			);
-			name = View;
 			path = View;
+			sourceTree = "<group>";
+		};
+		543F2CA4292E722C00120116 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				543F2CA5292E722C00120116 /* DetailExcursionDisplayDataFactory.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		543F2CA7292E724C00120116 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				543F2CA8292E724C00120116 /* PlaceViewModel.swift */,
+				543F2CA9292E724C00120116 /* DetailExcursionViewModel.swift */,
+				543F2CAA292E724C00120116 /* DetailExcursionInfoViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		543F2CB4292E728B00120116 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				543F2CB5292E728B00120116 /* DescriptionCell.swift */,
+				543F2CB6292E728B00120116 /* PlaceCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		543F2CB9292E72CA00120116 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				543F2CBA292E72CA00120116 /* DetailExcursionInfoView.swift */,
+				543F2CBB292E72CA00120116 /* DetailExcursionSettingsSection.swift */,
+				543F2CBC292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		548ABFD829205578001CFDA9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				543F2CAE292E726000120116 /* Place.swift */,
 				548ABFD929205592001CFDA9 /* Excursion.swift */,
 			);
 			path = Models;
@@ -497,6 +561,7 @@
 		54C089D1291A87C2000497FE /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				543F2CB0292E726D00120116 /* Int+Extensions.swift */,
 				A553F1D129199288001E679C /* UIColorExtension.swift */,
 				54C089D2291A87FD000497FE /* UIView+Extensions.swift */,
 				54C089D4291A8AC7000497FE /* UILabel+Extensions.swift */,
@@ -525,7 +590,6 @@
 				AEDD8E8D3664F9D266D391BF /* Router */,
 				55949AAC5795E04EFB3A815D /* LoginBuilder.swift */,
 			);
-			name = Login;
 			path = Login;
 			sourceTree = "<group>";
 		};
@@ -640,7 +704,6 @@
 				D0E5CAAA344B4C1AADD9B402 /* LoginModuleIO.swift */,
 				C0C6712D10F37B6C1BD78BC9 /* LoginPresenter.swift */,
 			);
-			name = Presenter;
 			path = Presenter;
 			sourceTree = "<group>";
 		};
@@ -650,7 +713,6 @@
 				91C1B6D5C2A416E233AEC019 /* LoginViewIO.swift */,
 				734A3672FF422D603DEC09D6 /* LoginViewController.swift */,
 			);
-			name = View;
 			path = View;
 			sourceTree = "<group>";
 		};
@@ -699,7 +761,6 @@
 				7BDD4E98E76BD058E616FAAC /* RegistrationModuleIO.swift */,
 				B0C8DC0C513957612829BD5B /* RegistrationPresenter.swift */,
 			);
-			name = Presenter;
 			path = Presenter;
 			sourceTree = "<group>";
 		};
@@ -768,7 +829,6 @@
 				D17A15CB28E983856F3464CD /* LoginRouterInput.swift */,
 				DB516B71A56EEC0503A39306 /* LoginRouter.swift */,
 			);
-			name = Router;
 			path = Router;
 			sourceTree = "<group>";
 		};
@@ -868,7 +928,6 @@
 				840A9B700CA2CE0C76061571 /* LoginInteractorIO.swift */,
 				50BA4A7906722E491708A6B7 /* LoginInteractor.swift */,
 			);
-			name = Interactor;
 			path = Interactor;
 			sourceTree = "<group>";
 		};
@@ -878,7 +937,6 @@
 				7F20361B161E22678EA92C75 /* RegistrationRouterInput.swift */,
 				A30DD967BD6524D15EEC420D /* RegistrationRouter.swift */,
 			);
-			name = Router;
 			path = Router;
 			sourceTree = "<group>";
 		};
@@ -1199,11 +1257,13 @@
 			files = (
 				6675D20D29126FF20058A4B0 /* AppCoordinator.swift in Sources */,
 				A5074CCE292B6BA2005692EB /* ImageConstants.swift in Sources */,
+				543F2CB7292E728B00120116 /* DescriptionCell.swift in Sources */,
 				54C089D3291A87FD000497FE /* UIView+Extensions.swift in Sources */,
 				661A0D892902996D00312A0B /* AppDelegate.swift in Sources */,
 				CA16E5FF3470878ABCAD8F11 /* ExcursionsListViewIO.swift in Sources */,
 				A6870B67FEAA859C2BBA0908 /* ExcursionsListViewController.swift in Sources */,
 				41F7A17B895BE5DF38BCC83C /* ExcursionsListModuleIO.swift in Sources */,
+				543F2CBD292E72CA00120116 /* DetailExcursionInfoView.swift in Sources */,
 				6675D213291274240058A4B0 /* FavouriteCoordinator.swift in Sources */,
 				23D03DB6FC1C2101E327923A /* ExcursionsListPresenter.swift in Sources */,
 				4FF78E5B66DB288D78967914 /* ExcursionsListInteractorIO.swift in Sources */,
@@ -1221,6 +1281,7 @@
 				F055DE90C634E09F51679CD7 /* ProfileInteractorIO.swift in Sources */,
 				B997C151DD955FC5AFD51B77 /* ProfileInteractor.swift in Sources */,
 				91A3262CA89266F64C125380 /* ProfileRouterInput.swift in Sources */,
+				543F2CAD292E724C00120116 /* DetailExcursionInfoViewModel.swift in Sources */,
 				A553F1DA291A6F27001E679C /* TextConstants.swift in Sources */,
 				545FE1AC291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift in Sources */,
 				A6ACA2679B16F08F548F337C /* ProfileRouter.swift in Sources */,
@@ -1228,6 +1289,7 @@
 				10F870708172AC94BED055CD /* FavouritesExcursionsViewIO.swift in Sources */,
 				D881BF6CBAF8E07985F93B19 /* FavouritesExcursionsViewController.swift in Sources */,
 				6884644A93D5EB0CEBEEE732 /* FavouritesExcursionsModuleIO.swift in Sources */,
+				543F2CAB292E724C00120116 /* PlaceViewModel.swift in Sources */,
 				E9F972D6925AAE35541A6A7A /* FavouritesExcursionsPresenter.swift in Sources */,
 				54C089D5291A8AC7000497FE /* UILabel+Extensions.swift in Sources */,
 				E440B3CED1731E9DAC92FF12 /* FavouritesExcursionsInteractorIO.swift in Sources */,
@@ -1240,16 +1302,19 @@
 				F2C92852DA10723516E8E6EF /* DetailExcursionViewController.swift in Sources */,
 				3F5656DA5D90C769DFA30064 /* DetailExcursionModuleIO.swift in Sources */,
 				EA7635CC63622276E58EC987 /* DetailExcursionPresenter.swift in Sources */,
+				543F2CB3292E727B00120116 /* DetailExcursionConstants.swift in Sources */,
 				545FE1AA291DA58F00890693 /* ExcursionsListConstants.swift in Sources */,
 				5402F408D6CF6940CF013078 /* DetailExcursionInteractorIO.swift in Sources */,
 				4D431C4CFA090AAF737BFDA6 /* DetailExcursionInteractor.swift in Sources */,
 				4F067BBCAC8AC547A90F181F /* DetailExcursionRouterInput.swift in Sources */,
 				5B52A8B4700F3BF1D6EEB611 /* DetailExcursionRouter.swift in Sources */,
 				AA0CDCA2C8678A5E183D4C84 /* DetailExcursionBuilder.swift in Sources */,
+				543F2CAF292E726000120116 /* Place.swift in Sources */,
 				A553F1D8291A6968001E679C /* Colors.swift in Sources */,
 				F4A76012F97C4A709AAA3C14 /* AddExcursionViewIO.swift in Sources */,
 				0F421E73CE8F4E9691E36D01 /* AddExcursionViewController.swift in Sources */,
 				082089B7A9D25203031384D5 /* AddExcursionModuleIO.swift in Sources */,
+				543F2CA6292E722C00120116 /* DetailExcursionDisplayDataFactory.swift in Sources */,
 				A553F1D229199288001E679C /* UIColorExtension.swift in Sources */,
 				E1F490979D6E53196362D9CE /* AddExcursionPresenter.swift in Sources */,
 				B8F0BCCE71C38DB82043139E /* AddExcursionInteractorIO.swift in Sources */,
@@ -1262,6 +1327,7 @@
 				0CDD72663D40FC7741EC5506 /* AddPlaceViewIO.swift in Sources */,
 				A5D309F62928F66C005D2275 /* ProfileSettingsSection.swift in Sources */,
 				6675D20F291270570058A4B0 /* ExcursionListCoordinator.swift in Sources */,
+				543F2CBE292E72CA00120116 /* DetailExcursionSettingsSection.swift in Sources */,
 				54C089D7291ACB76000497FE /* ExcursionsFilterBarView.swift in Sources */,
 				B034A94B89A9375743C132B8 /* AddPlaceViewController.swift in Sources */,
 				61FDF8207F3152E8332214CC /* AddPlaceModuleIO.swift in Sources */,
@@ -1270,6 +1336,7 @@
 				4CC686E424266FF8BF1249B4 /* AddPlaceInteractor.swift in Sources */,
 				54A50C482917199E0042769E /* ExcursionViewModel.swift in Sources */,
 				E72261714744A55D4417AC1C /* AddPlaceRouterInput.swift in Sources */,
+				543F2CB8292E728B00120116 /* PlaceCell.swift in Sources */,
 				7662A63312813E510FDB7DE7 /* AddPlaceRouter.swift in Sources */,
 				01E841AC7DA27A19B18FA460 /* AddPlaceBuilder.swift in Sources */,
 				36C36310E3B7177102A045F2 /* DetailPlaceViewIO.swift in Sources */,
@@ -1281,9 +1348,11 @@
 				2B1C02734BC120EC3252A924 /* DetailPlaceInteractor.swift in Sources */,
 				7E3B8C8C195150120F38D847 /* DetailPlaceRouterInput.swift in Sources */,
 				25870E6F8BEFEB2F31531204 /* DetailPlaceRouter.swift in Sources */,
+				543F2CAC292E724C00120116 /* DetailExcursionViewModel.swift in Sources */,
 				80135A7F2F9E2095875F9983 /* DetailPlaceBuilder.swift in Sources */,
 				7495A9E99FA1ED80C161E765 /* LoginViewIO.swift in Sources */,
 				3227EE9BC41528DB70DAD760 /* LoginViewController.swift in Sources */,
+				543F2CBF292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift in Sources */,
 				336E4600A0A49D9C44DC5C40 /* LoginModuleIO.swift in Sources */,
 				8636B05F007AA0977913B61E /* LoginPresenter.swift in Sources */,
 				747D5FE28C269B46F47D0909 /* LoginInteractorIO.swift in Sources */,
@@ -1299,6 +1368,7 @@
 				84949E5EEA87D3C81E48166E /* RegistrationInteractor.swift in Sources */,
 				A2994B9518C4E37B13EDCADF /* RegistrationRouterInput.swift in Sources */,
 				33FE5454AE4A9E49D98BE1E0 /* RegistrationRouter.swift in Sources */,
+				543F2CB1292E726D00120116 /* Int+Extensions.swift in Sources */,
 				43E940EF32E87EED733BEB02 /* RegistrationBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

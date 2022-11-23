@@ -33,7 +33,7 @@ final class ExcursionCell: UITableViewCell {
     }
 
     func set(excursion: ExcursionViewModel) {
-        excursionImageView.image = UIImage(named: excursion.image ?? "picture")
+        excursionImageView.image = UIImage(named: excursion.image ?? "placeholderImage")
         excursionTitleLabel.text = excursion.title
         excursionRatingImage.image = UIImage(named: ExcursionsListConstants.ExcursionCell.ratingImage)
         excursionRatingLabel.text = String(excursion.rating)
@@ -43,6 +43,7 @@ final class ExcursionCell: UITableViewCell {
     // MARK: configs styles
 
     private func setupUI() {
+        selectionStyle = UITableViewCell.SelectionStyle.none
         configureImageView()
         configureTitleLabel()
         configurRatingImage()

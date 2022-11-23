@@ -84,9 +84,9 @@ final class ExcursionsListViewController: UIViewController {
 extension ExcursionsListViewController: ExcursionsListViewInput {
 }
 
-// MARK: UITableViewDelegate, UITableViewDataSource
+// MARK: UITableViewDataSource
 
-extension ExcursionsListViewController: UITableViewDelegate, UITableViewDataSource {
+extension ExcursionsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         output.itemsCount()
     }
@@ -103,5 +103,13 @@ extension ExcursionsListViewController: UITableViewDelegate, UITableViewDataSour
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         ExcursionsListConstants.ExcursionCell.height
+    }
+}
+
+// MARK: UITableViewDelegate
+
+extension ExcursionsListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        output.didSelectCell(at: indexPath)
     }
 }

@@ -5,6 +5,8 @@
 //  Created by SemyonPyatkov on 31/10/2022.
 //
 
+import Foundation
+
 // MARK: - ExcursionsListViewOutput
 
 protocol ExcursionsListViewOutput: AnyObject {
@@ -13,6 +15,8 @@ protocol ExcursionsListViewOutput: AnyObject {
     func item(for index: Int) -> ExcursionViewModel
 
     func itemsCount() -> Int
+
+    func didSelectCell(at indexPath: IndexPath)
 }
 
 // MARK: - ExcursionsListViewInput
