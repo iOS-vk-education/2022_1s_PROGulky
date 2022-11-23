@@ -18,22 +18,22 @@ enum TabBarPage: CaseIterable {
     var image: UIImage? {
         switch self {
         case .excursionList:
-            return UIImage(named: "home")
+            return UIImage(named: "Home")
         case .favourite:
-            return UIImage(named: "heart")
+            return UIImage(named: "Likes")
         case .profile:
-            return UIImage(named: "profile")
+            return UIImage(named: "Profile")
         }
     }
 
     var selectedImage: UIImage? {
         switch self {
         case .excursionList:
-            return UIImage(named: "home.fill")
+            return UIImage(named: "Home-Active")
         case .favourite:
-            return UIImage(named: "heart.fill")
+            return UIImage(named: "Likes-Active")
         case .profile:
-            return UIImage(named: "profile.fill")
+            return UIImage(named: "Profile-Active")
         }
     }
 }
