@@ -8,12 +8,12 @@
 import Foundation
 
 extension Int {
-    func places() -> String {
+    func wordEnding(for wordRoot: String) -> String {
         var placeString: String!
-        if "1".contains("\(self % 10)") { placeString = "место" }
-        if "234".contains("\(self % 10)") { placeString = "места" }
-        if "567890".contains("\(self % 10)") { placeString = "мест" }
-        if 11 ... 14 ~= self % 100 { placeString = "мест" }
+        if "1".contains("\(self % 10)") { placeString = "\(wordRoot)о" }
+        if "234".contains("\(self % 10)") { placeString = "\(wordRoot)а" }
+        if "567890".contains("\(self % 10)") { placeString = "\(wordRoot)" }
+        if 11 ... 14 ~= self % 100 { placeString = "\(wordRoot)" }
         return "\(self) " + placeString
     }
 }

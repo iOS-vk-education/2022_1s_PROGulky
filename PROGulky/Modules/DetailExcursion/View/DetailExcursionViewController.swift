@@ -23,12 +23,13 @@ final class DetailExcursionViewController: UIViewController {
 
         setupUI()
         setupConstraints()
-        setDisplayData()
+
+        output.didLoadView()
     }
 
-    private func setDisplayData() {
-        excursionImageView.image = UIImage(named: output.detailExcursionViewModel.image)
-        detailExcursionInfoView.set(excursion: output.detailExcursionInfoViewModel)
+    func configure(viewModel: DetailExcursionViewModel) {
+        excursionImageView.image = UIImage(named: viewModel.image)
+        detailExcursionInfoView.set(excursion: viewModel.infoViewModel)
     }
 
     private func setupUI() {
@@ -115,24 +116,24 @@ extension DetailExcursionViewController: UITableViewDelegate {
 extension DetailExcursionViewController: UITableViewDataSource {
     // Количество секций таблицы
     func numberOfSections(in tableView: UITableView) -> Int {
-        DetailExcursionConstants.TableView.Sections.allCases.count
+        DetailExcursionSettingsSections.allCases.count
     }
 
     // Количество ячеек в каждой секции
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let section = DetailExcursionConstants.TableView.Sections(rawValue: section) else { return 0 }
+        guard let section = DetailExcursionSettingsSections(rawValue: section) else { return 0 }
 
         switch section {
         case .Places:
             return output.placesCount
         case .Description:
-            return DetailExcursionConstants.TableView.Sections.DescriptionOptions.allCases.count
+            return DetailExcursionSettingsSections.DescriptionOptions.allCases.count
         }
     }
 
     // Ячейки в секции
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let section = DetailExcursionConstants.TableView.Sections(rawValue: indexPath.section) else { return UITableViewCell() }
+        guard let section = DetailExcursionSettingsSections(rawValue: indexPath.section) else { return UITableViewCell() }
 
         switch section {
         case .Places:
@@ -147,7 +148,7 @@ extension DetailExcursionViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailExcursionConstants.TableView.DescriptionCell.reuseId) as? DescriptionCell else {
                 return UITableViewCell()
             }
-            let description = output.detailExcursionViewModel.description
+            let description = output.description // кажется что так нельзя и что это описание надо брать из вью модели
             cell.set(description: description)
 
             return cell
@@ -156,22 +157,30 @@ extension DetailExcursionViewController: UITableViewDataSource {
 
     // Вью заголовка секций
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let text = DetailExcursionSettingsSections(rawValue: section)?.description else { return UIView() }
+
         let view = DetailExcursionHeaderInSectionView()
-        // костыль чтобы избавиться от nil (подскажи как нормально сделать)
-        view.set(headerText: DetailExcursionConstants.TableView.Sections(rawValue: section)?.description ?? "")
+        view.set(headerText: text)
+
         return view
     }
 
     // Высоты ячеек в секциях
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let section = DetailExcursionConstants.TableView.Sections(rawValue: indexPath.section) else { return 0 }
+        guard let section = DetailExcursionSettingsSections(rawValue: indexPath.section) else { return 0 }
 
         switch section {
         case .Places:
             return DetailExcursionConstants.TableView.PlaceCell.height
         case .Description:
-            // Начал решать это в DescriptionCell
-            return 200
+//            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailExcursionConstants.TableView.DescriptionCell.reuseId) as? DescriptionCell else {
+//                return 0.0
+//            }
+//            let description = output.detailExcursionViewModel.description
+//            cell.set(description: description)
+//
+//            return cell.height()
+            return UITableView.automaticDimension
         }
     }
 }

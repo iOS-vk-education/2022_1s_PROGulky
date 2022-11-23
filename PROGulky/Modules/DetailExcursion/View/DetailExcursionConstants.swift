@@ -61,7 +61,7 @@ struct DetailExcursionConstants {
             static let marginTop: CGFloat = 10
             static let marginLeft: CGFloat = 40
             static let marginRight: CGFloat = -40
-            static let width: CGFloat = 45
+            static let width: CGFloat = 49
             static let height: CGFloat = 45
             static let textColor = UIColor.gray
             static let numberOfLines = 2
@@ -81,21 +81,13 @@ struct DetailExcursionConstants {
     enum TableView {
         static let marginTop: CGFloat = 10
 
-        enum Sections: Int, CaseIterable {
-            case Places
-            case Description
-
-            var description: String {
-                switch self {
-                case .Places:
-                    return "Точки экскрусии"
-                case .Description:
-                    return "Описание"
-                }
+        enum Sections {
+            enum PlacesCells {
+                static let title = "Точки экскрусии"
             }
 
-            enum DescriptionOptions: CaseIterable {
-                case DescriptionText
+            enum DescriptionCell {
+                static let title = "Описание"
             }
         }
 

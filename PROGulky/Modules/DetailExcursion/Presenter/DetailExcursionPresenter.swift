@@ -20,6 +20,7 @@ final class DetailExcursionPresenter {
     private let router: DetailExcursionRouterInput
     private let factory = DetailExcursionDisplayDataFactory()
     private let excursion: Excursion
+    private let viewModel: DetailExcursionViewModel
 
     // MARK: - Lifecycle
 
@@ -27,6 +28,7 @@ final class DetailExcursionPresenter {
         self.interactor = interactor
         self.router = router
         self.excursion = excursion
+        viewModel = factory.setupViewModel(excursion: excursion)
     }
 }
 
@@ -36,6 +38,10 @@ extension DetailExcursionPresenter: DetailExcursionModuleInput {
 // MARK: DetailExcursionViewOutput
 
 extension DetailExcursionPresenter: DetailExcursionViewOutput {
+    func didLoadView() {
+        view.configure(viewModel: viewModel)
+    }
+
     func place(for indexPath: IndexPath) -> PlaceViewModel {
         factory.getPlaceViewModel(for: excursion.places[indexPath.row])
     }
@@ -44,12 +50,8 @@ extension DetailExcursionPresenter: DetailExcursionViewOutput {
         excursion.places.count
     }
 
-    var detailExcursionInfoViewModel: DetailExcursionInfoViewModel {
-        factory.getDetailExcursionInfoViewModel(for: excursion)
-    }
-
-    var detailExcursionViewModel: DetailExcursionViewModel {
-        factory.getDetailExcursionViewModel(for: excursion)
+    var description: String {
+        excursion.description
     }
 }
 

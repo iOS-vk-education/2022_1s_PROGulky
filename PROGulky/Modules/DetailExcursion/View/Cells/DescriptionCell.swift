@@ -24,9 +24,9 @@ final class DescriptionCell: UITableViewCell {
         fatalError("init(coder:) has not implemeted")
     }
 
-//    static func height() -> Double {
-//
-//    }
+    func height() -> CGFloat {
+        text.frame.size.height
+    }
 
     func set(description: String) {
         text.text = description
@@ -50,7 +50,5 @@ final class DescriptionCell: UITableViewCell {
         text.topAnchor.constraint(equalTo: topAnchor, constant: DetailExcursionConstants.TableView.DescriptionCell.Text.marginTop).isActive = true
         text.leadingAnchor.constraint(equalTo: leadingAnchor, constant: DetailExcursionConstants.Screen.padding).isActive = true
         text.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -DetailExcursionConstants.Screen.padding).isActive = true
-
-        let height = frame.size.height // не могу понять как прокинуть ее в static func height() (чето туплю жестко)
     }
 }
