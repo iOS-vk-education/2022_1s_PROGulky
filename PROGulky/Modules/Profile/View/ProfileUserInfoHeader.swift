@@ -12,7 +12,7 @@ final class UserInfoHeader: UIView {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.image = UIImage(named: "Avatar")
+        iv.image = UIImage(systemName: "person.crop.circle")?.withTintColor(.prog.Dynamic.lightPrimary, renderingMode: .alwaysOriginal)
 
         return iv
     }()

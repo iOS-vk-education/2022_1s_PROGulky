@@ -23,8 +23,7 @@ final class ExcursionsListViewController: UIViewController {
     }
 
     private func setupUI() {
-        view.backgroundColor = ExcursionsListConstants.Screen.backgroundColor
-
+        view.backgroundColor = .prog.Dynamic.background
         setupNavBar()
         setupFilterBar()
         setupTableView()
@@ -77,7 +76,7 @@ final class ExcursionsListViewController: UIViewController {
         excursionsTable.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         excursionsTable.topAnchor.constraint(equalTo: filterBar.bottomAnchor).isActive = true
         excursionsTable.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        excursionsTable.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        excursionsTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
 }
 

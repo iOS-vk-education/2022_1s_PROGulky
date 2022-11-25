@@ -17,6 +17,7 @@ final class DetailExcursionInfoView: UIView {
 
     private let ratingImage: UIImageView = {
         let image = UIImageView()
+        let img = DetailExcursionConstants.InfoView.Rating.Image.image
         image.image = DetailExcursionConstants.InfoView.Rating.Image.image
         return image
     }()
@@ -106,6 +107,8 @@ final class DetailExcursionInfoView: UIView {
         title.topAnchor.constraint(equalTo: topAnchor, constant: DetailExcursionConstants.InfoView.Title.marginTop).isActive = true
         title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
+
+    // TODO: - change size, не отображается картинка
 
     private func setRatingImageConstraint() {
         ratingImage.translatesAutoresizingMaskIntoConstraints = false

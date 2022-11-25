@@ -27,14 +27,12 @@ final class AppCoordinator: NSObject, CoordinatorProtocol {
     // TODO: - PROG-17 добавить динамический цвет у таббара
     func start(animated: Bool) {
         tabBarController.delegate = self
-        tabBarController.tabBar.backgroundColor = .white
+        tabBarController.tabBar.tintColor = .prog.Dynamic.text
+        tabBarController.tabBar.backgroundColor = .prog.Dynamic.background
 
         TabBarPage.allCases.forEach {
             getTabController($0)
         }
-        tabBarController.tabBarItem.title = "Хуй"
-        tabBarController.tabBarController?.title = "Хуй2"
-        tabBarController.title = "Hui3"
     }
 
     // MARK: Private

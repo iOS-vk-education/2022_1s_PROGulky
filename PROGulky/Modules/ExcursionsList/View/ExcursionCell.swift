@@ -35,8 +35,8 @@ final class ExcursionCell: UITableViewCell {
     func set(excursion: ExcursionViewModel) {
         excursionImageView.image = UIImage(named: excursion.image ?? "placeholderImage")
         excursionTitleLabel.text = excursion.title
-        // TODO: - PROG-17 change color and size
-        excursionRatingImage.image = UIImage(systemName: ExcursionsListConstants.ExcursionCell.ratingImage)?.withTintColor(.systemGray2, renderingMode: .alwaysOriginal)
+        excursionRatingImage.image = UIImage(systemName: ExcursionsListConstants.ExcursionCell.ratingImage)?
+            .withTintColor(.prog.Dynamic.shadow, renderingMode: .alwaysOriginal)
         excursionRatingLabel.text = String(excursion.rating)
         excursionParametersLabel.text = String(excursion.parameters)
     }
@@ -107,6 +107,8 @@ final class ExcursionCell: UITableViewCell {
         excursionTitleLabel.heightAnchor.constraint(equalToConstant: ExcursionsListConstants.ExcursionCell.heightTitleFrame).isActive = true
         excursionTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -ExcursionsListConstants.Screen.padding).isActive = true
     }
+
+    // TODO: - change size
 
     private func setRatingImageConstraints() {
         excursionRatingImage.translatesAutoresizingMaskIntoConstraints = false

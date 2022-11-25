@@ -11,7 +11,8 @@ final class SettingsCell: UITableViewCell {
     var sectionType: SectionType? {
         didSet {
             guard let sectionType = sectionType else { return }
-            imageView?.image = UIImage(named: sectionType.image)
+            imageView?.image = UIImage(systemName: sectionType.image)?
+                .withTintColor(.prog.Dynamic.lightPrimary, renderingMode: .alwaysOriginal)
             textLabel?.text = sectionType.description
         }
     }
