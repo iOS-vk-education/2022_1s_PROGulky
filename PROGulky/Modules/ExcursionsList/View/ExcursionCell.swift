@@ -35,7 +35,8 @@ final class ExcursionCell: UITableViewCell {
     func set(excursion: ExcursionViewModel) {
         excursionImageView.image = UIImage(named: excursion.image ?? "placeholderImage")
         excursionTitleLabel.text = excursion.title
-        excursionRatingImage.image = UIImage(named: ExcursionsListConstants.ExcursionCell.ratingImage)
+        // TODO: - PROG-17 change color and size
+        excursionRatingImage.image = UIImage(systemName: ExcursionsListConstants.ExcursionCell.ratingImage)?.withTintColor(.systemGray2, renderingMode: .alwaysOriginal)
         excursionRatingLabel.text = String(excursion.rating)
         excursionParametersLabel.text = String(excursion.parameters)
     }

@@ -32,7 +32,7 @@ final class ExcursionsListViewController: UIViewController {
 
     // Настройка нав бара
     private func setupNavBar() {
-        title = ExcursionsListConstants.ExcursionsListNavBar.title
+        navigationItem.title = ExcursionsListConstants.ExcursionsListNavBar.title
 
         let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButton))
         navigationItem.rightBarButtonItem = rightBarButtonItem

@@ -39,7 +39,8 @@ struct DetailExcursionConstants {
 
         enum Rating {
             enum Image {
-                static let image = UIImage(named: "star")
+                // TODO: PROG-17: change color and size
+                static let image = UIImage(systemName: "star.fill")
                 static let XOffset: CGFloat = -20
                 static let marginTop: CGFloat = 5
             }
