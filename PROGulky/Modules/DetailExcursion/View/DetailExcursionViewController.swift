@@ -12,12 +12,168 @@ import UIKit
 final class DetailExcursionViewController: UIViewController {
     var output: DetailExcursionViewOutput!
 
+    private var excursionImageView = UIImageView(frame: .zero)
+    private var detailExcursionInfoView = DetailExcursionInfoView(frame: .zero)
+    private var tableView = UITableView()
+
     // MARK: Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        setupUI()
+        setupConstraints()
+
+        output.didLoadView()
+    }
+
+    func configure(viewModel: DetailExcursionViewModel) {
+        excursionImageView.image = UIImage(named: viewModel.image)
+        detailExcursionInfoView.set(excursion: viewModel.infoViewModel)
+    }
+
+    private func setupUI() {
+        view.addSubviews(
+            excursionImageView,
+            detailExcursionInfoView,
+            tableView
+        )
+        view.backgroundColor = ExcursionsListConstants.Screen.backgroundColor
+
+        configureImageView()
+        configureDetailExcursionInfoView()
+        configureTableView()
+    }
+
+    private func configureImageView() {
+        excursionImageView.clipsToBounds = true
+    }
+
+    private func configureDetailExcursionInfoView() {
+        detailExcursionInfoView.backgroundColor = DetailExcursionConstants.InfoView.backgroundColor
+        detailExcursionInfoView.layer.cornerRadius = DetailExcursionConstants.InfoView.cornerRadius
+
+        // Конфигурация тени
+        detailExcursionInfoView.layer.shadowColor = DetailExcursionConstants.InfoView.shadowColor
+        detailExcursionInfoView.layer.shadowOpacity = DetailExcursionConstants.InfoView.shadowOpacity
+        detailExcursionInfoView.layer.shadowRadius = DetailExcursionConstants.InfoView.shadowRadius
+    }
+
+    private func configureTableView() {
+        setTableViewDelegate()
+
+        tableView.register(PlaceCell.self, forCellReuseIdentifier: DetailExcursionConstants.TableView.PlaceCell.reuseId)
+        tableView.register(DescriptionCell.self, forCellReuseIdentifier: DetailExcursionConstants.TableView.DescriptionCell.reuseId)
+    }
+
+    private func setTableViewDelegate() {
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+
+    private func setupConstraints() {
+        setImageConstraints()
+        setDetailExcursionInfoViewConstraints()
+        setTableViewConstraints()
+    }
+
+    private func setImageConstraints() {
+        excursionImageView.translatesAutoresizingMaskIntoConstraints = false
+        excursionImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: DetailExcursionConstants.Image.marginTop).isActive = true
+        excursionImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        excursionImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        excursionImageView.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.Image.height).isActive = true
+    }
+
+    private func setDetailExcursionInfoViewConstraints() {
+        detailExcursionInfoView.translatesAutoresizingMaskIntoConstraints = false
+        detailExcursionInfoView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        detailExcursionInfoView.topAnchor.constraint(equalTo: excursionImageView.bottomAnchor, constant: DetailExcursionConstants.InfoView.heightInImage).isActive = true
+        detailExcursionInfoView.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.InfoView.height).isActive = true
+        detailExcursionInfoView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: DetailExcursionConstants.InfoView.marginLeft).isActive = true
+        detailExcursionInfoView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: DetailExcursionConstants.InfoView.marginRight).isActive = true
+    }
+
+    private func setTableViewConstraints() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.topAnchor.constraint(equalTo: detailExcursionInfoView.bottomAnchor, constant: DetailExcursionConstants.TableView.marginTop).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
 }
 
+// MARK: DetailExcursionViewInput
+
 extension DetailExcursionViewController: DetailExcursionViewInput {
+}
+
+extension DetailExcursionViewController: UITableViewDelegate {
+}
+
+// MARK: UITableViewDataSource
+
+extension DetailExcursionViewController: UITableViewDataSource {
+    // Количество секций таблицы
+    func numberOfSections(in tableView: UITableView) -> Int {
+        DetailExcursionSettingsSections.allCases.count
+    }
+
+    // Количество ячеек в каждой секции
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let section = DetailExcursionSettingsSections(rawValue: section) else { return 0 }
+
+        switch section {
+        case .Places:
+            return output.placesCount
+        case .Description:
+            return DetailExcursionSettingsSections.DescriptionOptions.allCases.count
+        }
+    }
+
+    // Ячейки в секции
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let section = DetailExcursionSettingsSections(rawValue: indexPath.section) else { return UITableViewCell() }
+
+        switch section {
+        case .Places:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailExcursionConstants.TableView.PlaceCell.reuseId) as? PlaceCell else {
+                return UITableViewCell()
+            }
+            let place = output.place(for: indexPath)
+            cell.set(place: place)
+
+            return cell
+        case .Description:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailExcursionConstants.TableView.DescriptionCell.reuseId) as? DescriptionCell else {
+                return UITableViewCell()
+            }
+            let description = output.description
+            cell.set(description: description)
+
+            return cell
+        }
+    }
+
+    // Вью заголовка секций
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let text = DetailExcursionSettingsSections(rawValue: section)?.description else { return UIView() }
+
+        let view = DetailExcursionHeaderInSectionView()
+        view.set(headerText: text)
+
+        return view
+    }
+
+    // Высоты ячеек в секциях
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let section = DetailExcursionSettingsSections(rawValue: indexPath.section) else { return 0 }
+
+        switch section {
+        case .Places:
+            return DetailExcursionConstants.TableView.PlaceCell.height
+        case .Description:
+            return UITableView.automaticDimension
+        }
+    }
 }

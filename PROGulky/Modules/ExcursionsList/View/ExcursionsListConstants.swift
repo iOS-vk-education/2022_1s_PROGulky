@@ -49,7 +49,7 @@ struct ExcursionsListConstants {
         static let heightTitleFrame: CGFloat = 40 // Высота фрейма в котором размещен заголовок
 
         static let raitingImageIndentFromTitle: CGFloat = 5 // Отступ картинки от заголовка
-        static let ratingImage: String = "star" // Иконка рейтинга
+        static let ratingImage: String = "star.fill" // Иконка рейтинга
         static let ratingFontSize: CGFloat = 13 // Размер текста рейтинга
         static let ratingFontWeight = UIFont.Weight.medium // Толщина текста рейтинга
         static let ratingTextColor: UIColor = .gray // Цвет текста рейтинга

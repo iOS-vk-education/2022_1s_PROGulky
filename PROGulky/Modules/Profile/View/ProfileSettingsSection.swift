@@ -58,13 +58,13 @@ enum AccountOptions: Int, CaseIterable, SectionType {
     var image: String {
         switch self {
         case .personalDataSettings:
-            return ImagesProfile.personalDataSettingsImage
+            return "person"
         case .achievements:
-            return ImagesProfile.achievementsImage
+            return "character.book.closed"
         case .history:
-            return ImagesProfile.historyImage
+            return "chart.bar.doc.horizontal"
         case .beGuide:
-            return ImagesProfile.beGuideImage
+            return "person.badge.shield.checkmark"
         }
     }
 }
@@ -94,11 +94,11 @@ enum OtherOptions: Int, CaseIterable, SectionType {
     var image: String {
         switch self {
         case .contactUs:
-            return ImagesProfile.contactUsImage
+            return "square.and.pencil"
         case .privacyPolicy:
-            return ImagesProfile.privacyPolicyImage
+            return "checkmark.shield"
         case .signOut:
-            return ImagesProfile.signOutImage
+            return "multiply.circle"
         }
     }
 }

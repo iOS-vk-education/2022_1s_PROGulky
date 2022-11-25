@@ -10,12 +10,16 @@ import UIKit
 // MARK: - ExcursionsListModuleBuilder
 
 final class ExcursionsListModuleBuilder {
-    func build() -> UIViewController {
+    func build(moduleOutput: ExcursionsListModuleOutput) -> UIViewController {
         let viewController = ExcursionsListViewController()
         let router = ExcursionsListRouter()
         let interactor = ExcursionsListInteractor()
 
-        let presenter = ExcursionsListPresenter(interactor: interactor, router: router)
+        let presenter = ExcursionsListPresenter(
+            interactor: interactor,
+            router: router,
+            moduleOutput: moduleOutput
+        )
         presenter.view = viewController
 
         interactor.output = presenter
