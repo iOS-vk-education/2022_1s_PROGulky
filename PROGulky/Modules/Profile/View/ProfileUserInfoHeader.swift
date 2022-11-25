@@ -28,7 +28,7 @@ final class UserInfoHeader: UIView {
         let label = UILabel()
         label.text = TextConstants.titleUserStatus
         label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = CustomColor.greyColor
+        label.textColor = .prog.Dynamic.text
         return label
     }()
 
