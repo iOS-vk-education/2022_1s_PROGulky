@@ -18,22 +18,23 @@ enum TabBarPage: CaseIterable {
     var image: UIImage? {
         switch self {
         case .excursionList:
-            return UIImage(named: "Home")
+            return UIImage(systemName: "house")
         case .favourite:
-            return UIImage(named: "Likes")
+            return UIImage(systemName: "heart")
         case .profile:
-            return UIImage(named: "Profile")
+            return UIImage(systemName: "person")
         }
     }
 
+    // TODO: PROG-17 - добавить выделение цветом
     var selectedImage: UIImage? {
         switch self {
         case .excursionList:
-            return UIImage(named: "Home-Active")
+            return UIImage(systemName: "house")
         case .favourite:
-            return UIImage(named: "Likes-Active")
+            return UIImage(systemName: "heart")
         case .profile:
-            return UIImage(named: "Profile-Active")
+            return UIImage(systemName: "person")
         }
     }
 }
