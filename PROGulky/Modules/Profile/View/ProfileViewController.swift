@@ -46,14 +46,14 @@ final class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = CustomColor.whiteColor
+        view.backgroundColor = .prog.Dynamic.background
         configureTableView()
         configureUI()
     }
 
     private func configureUI() {
         titleLabel.text = Constants.Title.title
-        titleLabel.textColor = CustomColor.blackColor
+        titleLabel.textColor = .prog.Dynamic.text
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
@@ -95,10 +95,10 @@ final class ProfileViewController: UIViewController {
 
     private func setupTableViewHeader(section: Int) -> UIView {
         let view = UIView()
-        view.backgroundColor = CustomColor.mainGreen
+        view.backgroundColor = .prog.Dynamic.lightPrimary
         let title = UILabel()
         title.font = UIFont.systemFont(ofSize: 16)
-        title.textColor = CustomColor.blackColor
+        title.textColor = .prog.Dynamic.lightText
         title.text = SettingsSection(rawValue: section)?.description
         view.addSubview(title)
         title.snp.makeConstraints { make in
