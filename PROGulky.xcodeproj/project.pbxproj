@@ -80,6 +80,7 @@
 		6675D211291271350058A4B0 /* TabBarItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675D210291271350058A4B0 /* TabBarItemFactory.swift */; };
 		6675D213291274240058A4B0 /* FavouriteCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675D212291274240058A4B0 /* FavouriteCoordinator.swift */; };
 		6675D215291274710058A4B0 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6675D214291274700058A4B0 /* ProfileCoordinator.swift */; };
+		66A96A672930D09C007935C9 /* ProgColors+Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A96A662930D09C007935C9 /* ProgColors+Colors.swift */; };
 		6884644A93D5EB0CEBEEE732 /* FavouritesExcursionsModuleIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD46D3F79C248744CE5F2C /* FavouritesExcursionsModuleIO.swift */; };
 		73F38211B0A1DD7FE5991BF6 /* RegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C8DC0C513957612829BD5B /* RegistrationPresenter.swift */; };
 		747D5FE28C269B46F47D0909 /* LoginInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A9B700CA2CE0C76061571 /* LoginInteractorIO.swift */; };
@@ -95,9 +96,7 @@
 		91A3262CA89266F64C125380 /* ProfileRouterInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD05B85C1D60E44F3AA3D1A /* ProfileRouterInput.swift */; };
 		94D58836216B679A692591E0 /* ExcursionsListBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA925C2590C194B399F154 /* ExcursionsListBuilder.swift */; };
 		A2994B9518C4E37B13EDCADF /* RegistrationRouterInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F20361B161E22678EA92C75 /* RegistrationRouterInput.swift */; };
-		A5074CCE292B6BA2005692EB /* ImageConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5074CCD292B6BA2005692EB /* ImageConstants.swift */; };
 		A553F1D229199288001E679C /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D129199288001E679C /* UIColorExtension.swift */; };
-		A553F1D8291A6968001E679C /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D7291A6968001E679C /* Colors.swift */; };
 		A553F1DA291A6F27001E679C /* TextConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D9291A6F27001E679C /* TextConstants.swift */; };
 		A5B7537F2913FBA4001D1978 /* ProfileUserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */; };
 		A5D309F42928F403005D2275 /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */; };
@@ -223,6 +222,7 @@
 		6675D210291271350058A4B0 /* TabBarItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarItemFactory.swift; sourceTree = "<group>"; };
 		6675D212291274240058A4B0 /* FavouriteCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteCoordinator.swift; sourceTree = "<group>"; };
 		6675D214291274700058A4B0 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		66A96A662930D09C007935C9 /* ProgColors+Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProgColors+Colors.swift"; sourceTree = "<group>"; };
 		6956CF76F0FCD65BE420ABDC /* ProfileRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
 		6C070CC38B9431BEF26E6225 /* AddExcursionViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddExcursionViewController.swift; sourceTree = "<group>"; };
 		6D0A6B73EB276D5B7C47C018 /* AddPlaceBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddPlaceBuilder.swift; sourceTree = "<group>"; };
@@ -244,9 +244,7 @@
 		91C1B6D5C2A416E233AEC019 /* LoginViewIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginViewIO.swift; sourceTree = "<group>"; };
 		9E9D063F55E55F2E734E77F6 /* FavouritesExcursionsInteractorIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FavouritesExcursionsInteractorIO.swift; sourceTree = "<group>"; };
 		A30DD967BD6524D15EEC420D /* RegistrationRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegistrationRouter.swift; sourceTree = "<group>"; };
-		A5074CCD292B6BA2005692EB /* ImageConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConstants.swift; sourceTree = "<group>"; };
 		A553F1D129199288001E679C /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
-		A553F1D7291A6968001E679C /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		A553F1D9291A6F27001E679C /* TextConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextConstants.swift; sourceTree = "<group>"; };
 		A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoHeader.swift; sourceTree = "<group>"; };
 		A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
@@ -569,6 +567,7 @@
 				A553F1D129199288001E679C /* UIColorExtension.swift */,
 				54C089D2291A87FD000497FE /* UIView+Extensions.swift */,
 				54C089D4291A8AC7000497FE /* UILabel+Extensions.swift */,
+				66A96A662930D09C007935C9 /* ProgColors+Colors.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -630,7 +629,6 @@
 		661A0D872902996D00312A0B /* PROGulky */ = {
 			isa = PBXGroup;
 			children = (
-				A553F1D6291A6959001E679C /* Colors */,
 				54C089D1291A87C2000497FE /* Extensions */,
 				548ABFD829205578001CFDA9 /* Models */,
 				6675D20929126F350058A4B0 /* Coordinators */,
@@ -799,19 +797,10 @@
 			path = AddPlace;
 			sourceTree = "<group>";
 		};
-		A553F1D6291A6959001E679C /* Colors */ = {
-			isa = PBXGroup;
-			children = (
-				A553F1D7291A6968001E679C /* Colors.swift */,
-			);
-			path = Colors;
-			sourceTree = "<group>";
-		};
 		A553F1DB291A7354001E679C /* Constants */ = {
 			isa = PBXGroup;
 			children = (
 				A553F1D9291A6F27001E679C /* TextConstants.swift */,
-				A5074CCD292B6BA2005692EB /* ImageConstants.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1270,7 +1259,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6675D20D29126FF20058A4B0 /* AppCoordinator.swift in Sources */,
-				A5074CCE292B6BA2005692EB /* ImageConstants.swift in Sources */,
 				543F2CB7292E728B00120116 /* DescriptionCell.swift in Sources */,
 				54C089D3291A87FD000497FE /* UIView+Extensions.swift in Sources */,
 				661A0D892902996D00312A0B /* AppDelegate.swift in Sources */,
@@ -1319,6 +1307,7 @@
 				EA7635CC63622276E58EC987 /* DetailExcursionPresenter.swift in Sources */,
 				543F2CB3292E727B00120116 /* DetailExcursionConstants.swift in Sources */,
 				545FE1AA291DA58F00890693 /* ExcursionsListConstants.swift in Sources */,
+				66A96A672930D09C007935C9 /* ProgColors+Colors.swift in Sources */,
 				5402F408D6CF6940CF013078 /* DetailExcursionInteractorIO.swift in Sources */,
 				4D431C4CFA090AAF737BFDA6 /* DetailExcursionInteractor.swift in Sources */,
 				4F067BBCAC8AC547A90F181F /* DetailExcursionRouterInput.swift in Sources */,
@@ -1326,7 +1315,6 @@
 				AA0CDCA2C8678A5E183D4C84 /* DetailExcursionBuilder.swift in Sources */,
 				54D91DC12930C5150097AF52 /* FavouritesExcursionMessageView.swift in Sources */,
 				543F2CAF292E726000120116 /* Place.swift in Sources */,
-				A553F1D8291A6968001E679C /* Colors.swift in Sources */,
 				F4A76012F97C4A709AAA3C14 /* AddExcursionViewIO.swift in Sources */,
 				0F421E73CE8F4E9691E36D01 /* AddExcursionViewController.swift in Sources */,
 				082089B7A9D25203031384D5 /* AddExcursionModuleIO.swift in Sources */,
