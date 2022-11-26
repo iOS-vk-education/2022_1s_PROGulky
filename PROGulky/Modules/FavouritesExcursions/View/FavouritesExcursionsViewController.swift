@@ -25,7 +25,7 @@ final class FavouritesExcursionsViewController: UIViewController {
     }
 
     private func setupUI() {
-        view.backgroundColor = FavouritesExcursionsConstants.Screen.backgroundColor
+        view.backgroundColor = .prog.Dynamic.background
         setupNavBar()
         setupMessageView()
     }
