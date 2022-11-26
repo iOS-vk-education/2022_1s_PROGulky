@@ -6,17 +6,48 @@
 //
 
 import UIKit
+import SnapKit
 
 // MARK: - FavouritesExcursionsViewController
 
 final class FavouritesExcursionsViewController: UIViewController {
     var output: FavouritesExcursionsViewOutput!
 
+    private let message = FavouritesExcursionsMessageView(frame: .zero)
+
     // MARK: Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
+
+        setupUI()
+        setupConstraints()
+    }
+
+    private func setupUI() {
+        view.backgroundColor = FavouritesExcursionsConstants.Screen.backgroundColor
+        setupNavBar()
+        setupMessageView()
+    }
+
+    // Настройка нав бара
+    private func setupNavBar() {
+        navigationItem.title = FavouritesExcursionsConstants.NavBar.title
+    }
+
+    private func setupMessageView() {
+        view.addSubview(message)
+    }
+
+    private func setupConstraints() {
+        setupMessageViewConstraints()
+    }
+
+    private func setupMessageViewConstraints() {
+        message.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
     }
 }
 
