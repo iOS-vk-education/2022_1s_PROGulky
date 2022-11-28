@@ -23,9 +23,9 @@ enum SettingsSection: Int, CaseIterable, CustomStringConvertible {
     var description: String {
         switch self {
         case .Account:
-            return TextConstants.titleAccount
+            return TextConstantsProfile.titleAccount
         case .Other:
-            return TextConstants.titleOthers
+            return TextConstantsProfile.titleOthers
         }
     }
 }
@@ -45,13 +45,13 @@ enum AccountOptions: Int, CaseIterable, SectionType {
     var description: String {
         switch self {
         case .personalDataSettings:
-            return TextConstants.titlePersonalData
+            return TextConstantsProfile.titlePersonalData
         case .achievements:
-            return TextConstants.titleAchievements
+            return TextConstantsProfile.titleAchievements
         case .history:
-            return TextConstants.titleHistory
+            return TextConstantsProfile.titleHistory
         case .beGuide:
-            return TextConstants.titleBeGuide
+            return TextConstantsProfile.titleBeGuide
         }
     }
 
@@ -83,11 +83,11 @@ enum OtherOptions: Int, CaseIterable, SectionType {
     var description: String {
         switch self {
         case .contactUs:
-            return TextConstants.titleContactUs
+            return TextConstantsProfile.titleContactUs
         case .privacyPolicy:
-            return TextConstants.titlePrivacyPolicy
+            return TextConstantsProfile.titlePrivacyPolicy
         case .signOut:
-            return TextConstants.titleSignOut
+            return TextConstantsProfile.titleSignOut
         }
     }
 

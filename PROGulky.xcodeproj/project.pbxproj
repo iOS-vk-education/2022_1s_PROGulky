@@ -96,6 +96,9 @@
 		91A3262CA89266F64C125380 /* ProfileRouterInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD05B85C1D60E44F3AA3D1A /* ProfileRouterInput.swift */; };
 		94D58836216B679A692591E0 /* ExcursionsListBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCFA925C2590C194B399F154 /* ExcursionsListBuilder.swift */; };
 		A2994B9518C4E37B13EDCADF /* RegistrationRouterInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F20361B161E22678EA92C75 /* RegistrationRouterInput.swift */; };
+		A5074CE2292DC97E005692EB /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5074CE1292DC97E005692EB /* CustomTextField.swift */; };
+		A5074CE5292DC9AF005692EB /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5074CE4292DC9AF005692EB /* CustomButton.swift */; };
+		A517195D2934B7AE003454FF /* UIViewController+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A517195C2934B7AE003454FF /* UIViewController+Extentions.swift */; };
 		A553F1D229199288001E679C /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D129199288001E679C /* UIColorExtension.swift */; };
 		A553F1DA291A6F27001E679C /* TextConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D9291A6F27001E679C /* TextConstants.swift */; };
 		A5B7537F2913FBA4001D1978 /* ProfileUserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */; };
@@ -244,6 +247,9 @@
 		91C1B6D5C2A416E233AEC019 /* LoginViewIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginViewIO.swift; sourceTree = "<group>"; };
 		9E9D063F55E55F2E734E77F6 /* FavouritesExcursionsInteractorIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = FavouritesExcursionsInteractorIO.swift; sourceTree = "<group>"; };
 		A30DD967BD6524D15EEC420D /* RegistrationRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegistrationRouter.swift; sourceTree = "<group>"; };
+		A5074CE1292DC97E005692EB /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		A5074CE4292DC9AF005692EB /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		A517195C2934B7AE003454FF /* UIViewController+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extentions.swift"; sourceTree = "<group>"; };
 		A553F1D129199288001E679C /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		A553F1D9291A6F27001E679C /* TextConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextConstants.swift; sourceTree = "<group>"; };
 		A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoHeader.swift; sourceTree = "<group>"; };
@@ -568,6 +574,7 @@
 				54C089D2291A87FD000497FE /* UIView+Extensions.swift */,
 				54C089D4291A8AC7000497FE /* UILabel+Extensions.swift */,
 				66A96A662930D09C007935C9 /* ProgColors+Colors.swift */,
+				A517195C2934B7AE003454FF /* UIViewController+Extentions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -797,6 +804,15 @@
 			path = AddPlace;
 			sourceTree = "<group>";
 		};
+		A5074CE3292DC983005692EB /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				A5074CE1292DC97E005692EB /* CustomTextField.swift */,
+				A5074CE4292DC9AF005692EB /* CustomButton.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		A553F1DB291A7354001E679C /* Constants */ = {
 			isa = PBXGroup;
 			children = (
@@ -921,6 +937,7 @@
 				5521AF0EED2856EFD5BFF104 /* DetailPlace */,
 				6515A3A27098F6CBCEA39AA7 /* Login */,
 				3675A89778D92CD34F80613B /* Registration */,
+				A5074CE3292DC983005692EB /* CustomView */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1280,6 +1297,7 @@
 				0847232626A75B9FF101F402 /* ProfileViewIO.swift in Sources */,
 				147E3B43F41E35D149EB3E41 /* ProfileViewController.swift in Sources */,
 				C364355ABC98A250C6D85467 /* ProfileModuleIO.swift in Sources */,
+				A517195D2934B7AE003454FF /* UIViewController+Extentions.swift in Sources */,
 				527308AC21EE31AD2021C736 /* ProfilePresenter.swift in Sources */,
 				F055DE90C634E09F51679CD7 /* ProfileInteractorIO.swift in Sources */,
 				B997C151DD955FC5AFD51B77 /* ProfileInteractor.swift in Sources */,
@@ -1317,6 +1335,7 @@
 				543F2CAF292E726000120116 /* Place.swift in Sources */,
 				F4A76012F97C4A709AAA3C14 /* AddExcursionViewIO.swift in Sources */,
 				0F421E73CE8F4E9691E36D01 /* AddExcursionViewController.swift in Sources */,
+				A5074CE2292DC97E005692EB /* CustomTextField.swift in Sources */,
 				082089B7A9D25203031384D5 /* AddExcursionModuleIO.swift in Sources */,
 				543F2CA6292E722C00120116 /* DetailExcursionDisplayDataFactory.swift in Sources */,
 				A553F1D229199288001E679C /* UIColorExtension.swift in Sources */,
@@ -1341,6 +1360,7 @@
 				54A50C482917199E0042769E /* ExcursionViewModel.swift in Sources */,
 				E72261714744A55D4417AC1C /* AddPlaceRouterInput.swift in Sources */,
 				543F2CB8292E728B00120116 /* PlaceCell.swift in Sources */,
+				A5074CE5292DC9AF005692EB /* CustomButton.swift in Sources */,
 				7662A63312813E510FDB7DE7 /* AddPlaceRouter.swift in Sources */,
 				01E841AC7DA27A19B18FA460 /* AddPlaceBuilder.swift in Sources */,
 				36C36310E3B7177102A045F2 /* DetailPlaceViewIO.swift in Sources */,

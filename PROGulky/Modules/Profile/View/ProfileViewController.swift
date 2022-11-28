@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import MessageUI
 
 private let reuseIdentifier = "SettingsCell"
 
@@ -20,7 +21,7 @@ final class ProfileViewController: UIViewController {
 
     private enum Constants {
         enum Title {
-            static let title = TextConstants.titleProfile
+            static let title = TextConstantsProfile.titleProfile
             static let topOffset: CGFloat = 0
             static let height: CGFloat = 24
         }
@@ -162,9 +163,71 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
         switch section {
         case .Account:
-            print(AccountOptions(rawValue: indexPath.row)?.description as Any)
+            switch AccountOptions(rawValue: indexPath.row)!.rawValue {
+            case 0:
+                print(TextConstantsProfile.titlePersonalData)
+            case 1:
+                print(TextConstantsProfile.titleAchievements)
+            case 2:
+                print(TextConstantsProfile.titleHistory)
+            case 3:
+                print(TextConstantsProfile.titleBeGuide)
+            default:
+                print("no action")
+            }
         case .Other:
-            print(OtherOptions(rawValue: indexPath.row)?.description as Any)
+            switch OtherOptions(rawValue: indexPath.row)!.rawValue {
+            case 0:
+                showMailComposer()
+            case 1:
+                print(TextConstantsProfile.titlePrivacyPolicy)
+            case 2:
+                print(TextConstantsProfile.titleSignOut)
+                goToLogin()
+            default:
+                print("no action")
+            }
         }
+    }
+
+    func goToLogin() {
+        let login = LoginViewController()
+        login.modalPresentationStyle = .fullScreen
+        present(login, animated: true, completion: nil)
+    }
+
+    func showMailComposer() {
+        guard MFMailComposeViewController.canSendMail() else {
+            print("can't send")
+            return
+        }
+
+        let composer = MFMailComposeViewController()
+        composer.mailComposeDelegate = self
+        composer.setToRecipients([TextConstantsProfile.contactUsMail])
+        composer.setSubject(TextConstantsProfile.contactUsMessageTitle)
+
+        present(composer, animated: true)
+    }
+}
+
+// MARK: MFMailComposeViewControllerDelegate
+
+extension ProfileViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        switch result {
+        case .cancelled:
+            print("Cancelled")
+        case .failed:
+            print("Failed to send")
+        case .saved:
+            print("Saved")
+        case .sent:
+            print("Email Sent")
+        @unknown default:
+            break
+        }
+
+        controller.dismiss(animated: true)
     }
 }

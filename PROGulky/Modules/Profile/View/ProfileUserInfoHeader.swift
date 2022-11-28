@@ -19,14 +19,14 @@ final class UserInfoHeader: UIView {
 
     private let usernameLabel: UILabel = {
         let label = UILabel()
-        label.text = TextConstants.titleUserName
+        label.text = TextConstantsProfile.titleUserName
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
 
     private let statusLabel: UILabel = {
         let label = UILabel()
-        label.text = TextConstants.titleUserStatus
+        label.text = TextConstantsProfile.titleUserStatus
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .prog.Dynamic.text
         return label
