@@ -62,6 +62,8 @@ final class DetailExcursionViewController: UIViewController {
     private func configureTableView() {
         setTableViewDelegate()
 
+        tableView.backgroundColor = UIColor.prog.Dynamic.background
+
         tableView.register(PlaceCell.self, forCellReuseIdentifier: DetailExcursionConstants.TableView.PlaceCell.reuseId)
         tableView.register(DescriptionCell.self, forCellReuseIdentifier: DetailExcursionConstants.TableView.DescriptionCell.reuseId)
     }
