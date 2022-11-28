@@ -15,13 +15,13 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
 
     private let labelTop = UILabel()
 
-    private let nameField = CustomTextField(name: TextConstantsSignUp.titleName, image: ImagesAuth.namesImage, security: false)
+    private var nameField = CustomTextField()
 
-    private let emailField = CustomTextField(name: TextConstantsSignUp.titleEmail, image: ImagesAuth.emailImage, security: false)
-    private let passwordField = CustomTextField(name: TextConstantsSignUp.titlePassword, image: ImagesAuth.passwordImage, security: true)
-    private let passwordSecondField = CustomTextField(name: TextConstantsSignUp.titlePasswordSecond, image: ImagesAuth.passwordImage, security: true)
-    private let buttonSignUp = CustomButton(title: TextConstantsSignUp.titleSignUp, image: ImagesAuth.LoginBtnImage, color: CustomColor.mainGreen, textColor: CustomColor.whiteColor)
-    private let buttonSignIn = CustomButton(title: TextConstantsSignUp.titleSignIn, image: "", color: CustomColor.white, textColor: CustomColor.greyColor)
+    private var emailField = CustomTextField()
+    private var passwordField = CustomTextField()
+    private var passwordSecondField = CustomTextField()
+    private var buttonSignUp = CustomButton(title: TextConstantsSignUp.titleSignUp, image: nil, color: .prog.Dynamic.lightPrimary, textColor: .prog.Dynamic.lightText)
+    private let buttonSignIn = CustomButton(title: TextConstantsSignUp.titleSignIn, image: nil, color: .prog.Dynamic.background, textColor: .prog.Dynamic.text)
 
     private enum Constants {
         enum TextField {
@@ -43,11 +43,33 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = CustomColor.white
+        hideKeyboardWhenTappedAround()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+
+        view.backgroundColor = .prog.Dynamic.background
 
         labelTop.text = TextConstantsSignUp.titleTop
         labelTop.font = UIFont(name: "Arial", size: 50)
-        labelTop.textColor = CustomColor.mainGreen
+        labelTop.textColor = .prog.Dynamic.primary
+
+        guard let imagePerson = UIImage(systemName: "person") else {
+            return
+        }
+        nameField = CustomTextField(name: TextConstantsSignUp.titleName, image: imagePerson, security: false)
+        guard let imageEnvelope = UIImage(systemName: "envelope") else {
+            return
+        }
+        emailField = CustomTextField(name: TextConstantsSignUp.titleEmail, image: imageEnvelope, security: false)
+        guard let imageLock = UIImage(systemName: "lock") else {
+            return
+        }
+        passwordField = CustomTextField(name: TextConstantsSignUp.titlePassword, image: imageLock, security: true)
+        passwordSecondField = CustomTextField(name: TextConstantsSignUp.titlePasswordSecond, image: imageLock, security: true)
+        guard let imageLogin = UIImage(systemName: "chevron.forward.circle.fill") else {
+            return
+        }
+        buttonSignUp = CustomButton(title: TextConstantsSignUp.titleSignUp, image: imageLogin, color: .prog.Dynamic.lightPrimary, textColor: .prog.Dynamic.lightText)
 
         nameField.returnKeyType = .next
         emailField.returnKeyType = .next
@@ -93,14 +115,12 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc func didTapButtonSignUp() {
-        print("sign up")
         let profile = ProfileViewController()
         profile.modalPresentationStyle = .fullScreen
         present(profile, animated: true, completion: nil)
     }
 
     @objc func didTapButtonSignIn() {
-        print("sign in")
         let login = LoginViewController()
         login.modalPresentationStyle = .fullScreen
         present(login, animated: true, completion: nil)
@@ -108,6 +128,17 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
 
     @objc func didTapRestoreButton() {
         print("forget")
+    }
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+            view.frame.origin.y -= keyboardHeight
+        }
+    }
+
+    @objc func keyboardWillHide() {
+        view.frame.origin.y = 0
     }
 
     private func configureUI() {

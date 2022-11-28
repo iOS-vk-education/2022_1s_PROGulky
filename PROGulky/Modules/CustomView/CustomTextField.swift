@@ -10,9 +10,9 @@ import UIKit
 class CustomTextField: UITextField {
     private var security = Bool()
     private var name = String()
-    private var image = String()
+    private var image = UIImage()
 
-    convenience init(name: String, image: String, security: Bool) {
+    convenience init(name: String, image: UIImage, security: Bool) {
         self.init()
         self.name = name
         self.image = image
@@ -30,11 +30,11 @@ class CustomTextField: UITextField {
         isSecureTextEntry = security
         autocapitalizationType = .none
         font = UIFont.systemFont(ofSize: 14)
-        backgroundColor = CustomColor.whiteColor
+        backgroundColor = .prog.Dynamic.background
         layer.borderColor = UIColor.lightGray.cgColor
         leftView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: frame.height))
-        let imageView = UIImageView(frame: CGRect(x: 10, y: -9, width: 20, height: 20))
-        imageView.image = UIImage(named: image)
+        let imageView = UIImageView(frame: CGRect(x: 10, y: -9, width: 22, height: 20))
+        imageView.image = image.withTintColor(.prog.Dynamic.lightPrimary, renderingMode: .alwaysOriginal)
         leftView?.addSubview(imageView)
         leftViewMode = .always
     }

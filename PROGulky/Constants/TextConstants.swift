@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - TextConstantsProfile
 
-class TextConstantsProfile: NSObject {
+struct TextConstantsProfile {
     static let titleProfile = "Профиль"
     static let titleAccount = "Аккаунт"
     static let titleOthers = "Другое"
@@ -28,7 +28,7 @@ class TextConstantsProfile: NSObject {
 
 // MARK: - TextConstantsLogin
 
-class TextConstantsLogin: NSObject {
+struct TextConstantsLogin {
     static let titleProgramName = "PROгулки"
     static let titleEmail = "Email"
     static let titlePassword = "Пароль"
@@ -39,7 +39,7 @@ class TextConstantsLogin: NSObject {
 
 // MARK: - TextConstantsSignUp
 
-class TextConstantsSignUp: NSObject {
+struct TextConstantsSignUp {
     static let titleTop = "Регистрация"
     static let titleEmail = "Email"
     static let titlePassword = "Пароль"

@@ -178,9 +178,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         case .Other:
             switch OtherOptions(rawValue: indexPath.row)!.rawValue {
             case 0:
-                print(TextConstantsProfile.titleContactUs)
                 showMailComposer()
-
             case 1:
                 print(TextConstantsProfile.titlePrivacyPolicy)
             case 2:
@@ -199,7 +197,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func showMailComposer() {
-        print("mail allert")
         guard MFMailComposeViewController.canSendMail() else {
             print("can't send")
             return

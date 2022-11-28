@@ -8,12 +8,12 @@
 import UIKit
 
 class CustomButton: UIButton {
-    init(title: String, image: String, color: UIColor, textColor: UIColor) {
+    init(title: String, image: UIImage?, color: UIColor, textColor: UIColor) {
         super.init(frame: .zero)
         layer.cornerRadius = 20
         var config = UIButton.Configuration.filled()
         config.title = title
-        config.image = UIImage(named: image)
+        config.image = image
         config.imagePlacement = .leading
         config.imagePadding = 10
         config.baseBackgroundColor = color
