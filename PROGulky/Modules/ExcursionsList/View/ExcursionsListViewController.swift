@@ -13,7 +13,7 @@ final class ExcursionsListViewController: UIViewController {
     var output: ExcursionsListViewOutput!
 
     private let filterBar = ExcursionsFilterBarView(frame: .zero)
-    private var excursionsTable = UITableView(frame: .zero)
+    private var excursionsTable = UITableView(frame: .zero, style: .insetGrouped)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,6 @@ final class ExcursionsListViewController: UIViewController {
     }
 
     private func setupUI() {
-        view.backgroundColor = .prog.Dynamic.background
         setupNavBar()
         setupFilterBar()
         setupTableView()
@@ -31,7 +30,8 @@ final class ExcursionsListViewController: UIViewController {
 
     // Настройка нав бара
     private func setupNavBar() {
-        navigationItem.title = ExcursionsListConstants.ExcursionsListNavBar.title
+        navigationItem.title = ExcursionsListConstants.NavBar.title
+        navigationController?.view.backgroundColor = ExcursionsListConstants.NavBar.backgroundColor
 
         let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButton))
         navigationItem.rightBarButtonItem = rightBarButtonItem
@@ -57,6 +57,16 @@ final class ExcursionsListViewController: UIViewController {
 
     // Настройка таблицы с экскурсиями
     private func setupTableView() {
+        excursionsTable.backgroundColor = .prog.Dynamic.background
+
+        excursionsTable.layoutMargins = UIEdgeInsets(
+            top: ExcursionsListConstants.Screen.paddingTop,
+            left: ExcursionsListConstants.Screen.padding,
+            bottom: ExcursionsListConstants.Screen.paddingBottom,
+            right: ExcursionsListConstants.Screen.padding
+        )
+        excursionsTable.separatorStyle = .none
+
         view.addSubview(excursionsTable)
 
         setTableViewDelegate()

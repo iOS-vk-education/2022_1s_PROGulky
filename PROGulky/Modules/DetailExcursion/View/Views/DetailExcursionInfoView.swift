@@ -78,17 +78,20 @@ final class DetailExcursionInfoView: UIView {
             distanceLabel,
             button
         )
-
+        setupUI()
         setupConstraints()
     }
 
     func set(excursion: DetailExcursionInfoViewModel) {
         title.text = excursion.title
-        ratingImage.image = UIImage(named: ExcursionsListConstants.ExcursionCell.ratingImage)
+        ratingImage.image = DetailExcursionConstants.InfoView.Rating.Image.image
         ratingLabel.text = excursion.rating
         numberOfPlacesLabel.text = excursion.numberOfPlaces
         durationLabel.text = excursion.duration
         distanceLabel.text = excursion.distance
+    }
+
+    private func setupUI() {
     }
 
     private func setupConstraints() {
@@ -108,17 +111,18 @@ final class DetailExcursionInfoView: UIView {
         title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 
-    // TODO: - change size, не отображается картинка
-
     private func setRatingImageConstraint() {
         ratingImage.translatesAutoresizingMaskIntoConstraints = false
         ratingImage.centerXAnchor.constraint(equalTo: centerXAnchor, constant: DetailExcursionConstants.InfoView.Rating.Image.XOffset).isActive = true
         ratingImage.topAnchor.constraint(equalTo: title.bottomAnchor, constant: DetailExcursionConstants.InfoView.Rating.Image.marginTop).isActive = true
+        ratingImage.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.InfoView.Rating.Image.height).isActive = true
+        ratingImage.widthAnchor.constraint(equalTo: ratingImage.heightAnchor,
+                                           multiplier: DetailExcursionConstants.InfoView.Rating.Image.aspectRatio).isActive = true
     }
 
     private func setRatingLabelConstraint() {
         ratingLabel.translatesAutoresizingMaskIntoConstraints = false
-        ratingLabel.leadingAnchor.constraint(equalTo: ratingImage.trailingAnchor).isActive = true
+        ratingLabel.leadingAnchor.constraint(equalTo: ratingImage.trailingAnchor, constant: DetailExcursionConstants.InfoView.Rating.Label.marginLeft).isActive = true
         ratingLabel.topAnchor.constraint(equalTo: title.bottomAnchor, constant: DetailExcursionConstants.InfoView.Rating.Label.marginTop).isActive = true
     }
 

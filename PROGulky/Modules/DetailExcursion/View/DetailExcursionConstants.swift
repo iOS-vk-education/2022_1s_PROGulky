@@ -18,7 +18,7 @@ struct DetailExcursionConstants {
     }
 
     enum InfoView {
-        static let backgroundColor = UIColor.white
+        static let backgroundColor = UIColor.prog.Dynamic.lightBackground
         static let cornerRadius: CGFloat = 16
         static let height: CGFloat = 200
 
@@ -39,15 +39,17 @@ struct DetailExcursionConstants {
 
         enum Rating {
             enum Image {
-                // TODO: PROG-17: change color and size
                 static let image = UIImage(systemName: "star.fill")?
                     .withTintColor(.prog.Dynamic.shadow, renderingMode: .alwaysOriginal)
                 static let XOffset: CGFloat = -20
-                static let marginTop: CGFloat = 5
+                static let marginTop: CGFloat = 7
+                static let height: CGFloat = 20
+                static let aspectRatio: CGFloat = 1.1
             }
 
             enum Label {
                 static let marginTop: CGFloat = 7
+                static let marginLeft: CGFloat = 5
             }
         }
 
@@ -76,7 +78,7 @@ struct DetailExcursionConstants {
             static let height: CGFloat = 40
             static let cornerRadius: CGFloat = 12
             static let text = "На карте"
-            static let color = UIColor.systemGreen
+            static let color = UIColor.prog.Dynamic.primary
         }
     }
 
@@ -96,13 +98,14 @@ struct DetailExcursionConstants {
         enum HeaderInSection {
             static let marginTop: CGFloat = 20
             static let textColor = UIColor.gray
-            static let backgroundColor = UIColor.white
+            static let backgroundColor = UIColor.prog.Dynamic.background
             static let font = UIFont.systemFont(ofSize: 19, weight: UIFont.Weight.semibold)
         }
 
         enum PlaceCell {
             static let reuseId = "PlaceCell" // Идентификатор ячейки
             static let height: CGFloat = 60
+            static let backgroundColor = UIColor.prog.Dynamic.lightBackground
 
             enum Sort {
                 static let marginLeft: CGFloat = 20
@@ -127,6 +130,7 @@ struct DetailExcursionConstants {
 
         enum DescriptionCell {
             static let reuseId = "DescriptionCell" // Идентификатор ячейки
+            static let backgroundColor = UIColor.prog.Dynamic.lightBackground
 
             enum Text {
                 static let marginTop: CGFloat = 10

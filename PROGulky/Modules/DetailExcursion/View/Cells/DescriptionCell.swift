@@ -29,6 +29,7 @@ final class DescriptionCell: UITableViewCell {
     }
 
     private func setupUI() {
+        backgroundColor = DetailExcursionConstants.TableView.DescriptionCell.backgroundColor
         selectionStyle = UITableViewCell.SelectionStyle.none
         configureDecriptionText()
     }
