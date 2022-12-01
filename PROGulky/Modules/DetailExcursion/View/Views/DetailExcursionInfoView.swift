@@ -113,7 +113,7 @@ final class DetailExcursionInfoView: UIView {
 
     private func setRatingImageConstraint() {
         ratingImage.translatesAutoresizingMaskIntoConstraints = false
-        ratingImage.centerXAnchor.constraint(equalTo: centerXAnchor, constant: DetailExcursionConstants.InfoView.Rating.Image.XOffset).isActive = true
+        ratingImage.trailingAnchor.constraint(equalTo: ratingLabel.leadingAnchor, constant: DetailExcursionConstants.InfoView.Rating.Image.marginRight).isActive = true
         ratingImage.topAnchor.constraint(equalTo: title.bottomAnchor, constant: DetailExcursionConstants.InfoView.Rating.Image.marginTop).isActive = true
         ratingImage.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.InfoView.Rating.Image.height).isActive = true
         ratingImage.widthAnchor.constraint(equalTo: ratingImage.heightAnchor,
@@ -122,8 +122,8 @@ final class DetailExcursionInfoView: UIView {
 
     private func setRatingLabelConstraint() {
         ratingLabel.translatesAutoresizingMaskIntoConstraints = false
-        ratingLabel.leadingAnchor.constraint(equalTo: ratingImage.trailingAnchor, constant: DetailExcursionConstants.InfoView.Rating.Label.marginLeft).isActive = true
         ratingLabel.topAnchor.constraint(equalTo: title.bottomAnchor, constant: DetailExcursionConstants.InfoView.Rating.Label.marginTop).isActive = true
+        ratingLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
 
     private func setHorizontalLineConstraint() {

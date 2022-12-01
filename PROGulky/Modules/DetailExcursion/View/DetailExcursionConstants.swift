@@ -41,15 +41,14 @@ struct DetailExcursionConstants {
             enum Image {
                 static let image = UIImage(systemName: "star.fill")?
                     .withTintColor(.prog.Dynamic.shadow, renderingMode: .alwaysOriginal)
-                static let XOffset: CGFloat = -20
                 static let marginTop: CGFloat = 7
+                static let marginRight: CGFloat = -7
                 static let height: CGFloat = 20
                 static let aspectRatio: CGFloat = 1.1
             }
 
             enum Label {
                 static let marginTop: CGFloat = 7
-                static let marginLeft: CGFloat = 5
             }
         }
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class ExcursionCell: UITableViewCell {
     private let excursionImageView = UIImageView()
@@ -46,12 +47,22 @@ final class ExcursionCell: UITableViewCell {
     }
 
     func set(excursion: ExcursionViewModel) {
-        excursionImageView.image = UIImage(named: excursion.image ?? "placeholderImage")
+        setupImage(with: excursion.image)
+
         excursionTitleLabel.text = excursion.title
         excursionRatingImage.image = UIImage(systemName: ExcursionsListConstants.ExcursionCell.RatingImage.name)?
             .withTintColor(.prog.Dynamic.shadow, renderingMode: .alwaysOriginal)
         excursionRatingLabel.text = String(excursion.rating)
         excursionParametersLabel.text = String(excursion.parameters)
+    }
+
+    private func setupImage(with image: String?) {
+        if let image = image {
+            let imageURL = "\(ExcursionsListConstants.Api.imageURL)/\(image)"
+            excursionImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "placeholderImage"))
+        } else {
+            excursionImageView.image = UIImage(named: "placeholderImage")
+        }
     }
 
     // MARK: configs styles
@@ -74,6 +85,7 @@ final class ExcursionCell: UITableViewCell {
     private func configureImageView() {
         excursionImageView.layer.cornerRadius = ExcursionsListConstants.ExcursionCell.Image.cornerRadius
         excursionImageView.clipsToBounds = true
+        excursionImageView.contentMode = .scaleAspectFill
     }
 
     private func configureTitleLabel() {

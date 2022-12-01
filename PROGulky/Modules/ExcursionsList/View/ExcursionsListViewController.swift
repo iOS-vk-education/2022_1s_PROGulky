@@ -14,6 +14,7 @@ final class ExcursionsListViewController: UIViewController {
 
     private let filterBar = ExcursionsFilterBarView(frame: .zero)
     private var excursionsTable = UITableView(frame: .zero, style: .insetGrouped)
+    private let loader = UIActivityIndicatorView(frame: .zero)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,7 @@ final class ExcursionsListViewController: UIViewController {
         setupNavBar()
         setupFilterBar()
         setupTableView()
+        setupLoader()
     }
 
     func reload() {
@@ -92,6 +94,17 @@ final class ExcursionsListViewController: UIViewController {
         excursionsTable.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         excursionsTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
+
+    private func setupLoader() {
+        view.addSubview(loader)
+        setLoaderConstraints()
+    }
+
+    private func setLoaderConstraints() {
+        loader.translatesAutoresizingMaskIntoConstraints = false
+        loader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
 }
 
 // MARK: ExcursionsListViewInput
@@ -99,6 +112,15 @@ final class ExcursionsListViewController: UIViewController {
 extension ExcursionsListViewController: ExcursionsListViewInput {
     func reloadView() {
         reload()
+    }
+
+    func startLoader() {
+        loader.hidesWhenStopped = true
+        loader.startAnimating()
+    }
+
+    func stopLoader() {
+        loader.stopAnimating()
     }
 }
 

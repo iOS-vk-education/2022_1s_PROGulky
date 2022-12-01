@@ -23,4 +23,8 @@ protocol ExcursionsListViewOutput: AnyObject {
 
 protocol ExcursionsListViewInput: AnyObject {
     func reloadView()
+
+    func startLoader()
+
+    func stopLoader()
 }

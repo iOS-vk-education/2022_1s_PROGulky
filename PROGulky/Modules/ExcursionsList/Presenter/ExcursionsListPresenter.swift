@@ -46,6 +46,7 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
 
     func didLoadView() {
         interactor.loadExcursionsList()
+        view.startLoader() // Запуск анимации лоадера
 //      excursions = factory.setExcursionsListDisplayData()
     }
 
@@ -62,8 +63,8 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
 
 extension ExcursionsListPresenter: ExcursionsListInteractorOutput {
     func didLoadExcursionsList(excursions: Excursions) {
-        print("loaded", excursions)
         self.excursions = excursions
-        view.reloadView()
+        view.reloadView() // Перезагрузить тейбл вью
+        view.stopLoader() // Выключить анимацию лоадера
     }
 }
