@@ -28,6 +28,10 @@ final class ExcursionsListViewController: UIViewController {
         setupTableView()
     }
 
+    func reload() {
+        excursionsTable.reloadData()
+    }
+
     // Настройка нав бара
     private func setupNavBar() {
         navigationItem.title = ExcursionsListConstants.NavBar.title
@@ -90,7 +94,12 @@ final class ExcursionsListViewController: UIViewController {
     }
 }
 
+// MARK: ExcursionsListViewInput
+
 extension ExcursionsListViewController: ExcursionsListViewInput {
+    func reloadView() {
+        reload()
+    }
 }
 
 // MARK: UITableViewDataSource

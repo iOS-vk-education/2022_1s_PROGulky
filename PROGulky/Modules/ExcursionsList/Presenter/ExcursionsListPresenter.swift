@@ -45,7 +45,8 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
     }
 
     func didLoadView() {
-        excursions = factory.setExcursionsListDisplayData()
+        interactor.loadExcursionsList()
+//      excursions = factory.setExcursionsListDisplayData()
     }
 
     func item(for index: Int) -> ExcursionViewModel {
@@ -57,5 +58,12 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
     }
 }
 
+// MARK: ExcursionsListInteractorOutput
+
 extension ExcursionsListPresenter: ExcursionsListInteractorOutput {
+    func didLoadExcursionsList(excursions: Excursions) {
+        print("loaded", excursions)
+        self.excursions = excursions
+        view.reloadView()
+    }
 }
