@@ -12,6 +12,7 @@ import SnapKit
 
 final class LoginViewController: UIViewController, UITextFieldDelegate {
     var output: LoginViewOutput!
+    var appCoordinator: AppCoordinator?
 
     private let labelProgramName = UILabel()
     private var emailField = CustomTextField()
@@ -97,9 +98,42 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc func didTapButtonSignIn() {
-        let profile = ProfileViewController()
-        profile.modalPresentationStyle = .fullScreen
-        present(profile, animated: true, completion: nil)
+//        let profile = ProfileViewController()
+//        profile.modalPresentationStyle = .fullScreen
+//        present(profile, animated: true, completion: nil)
+
+        if emailField.text == "" {
+            emailField.layer.borderWidth = 1.0
+            emailField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+        } else {
+            if passwordField.text == "" {
+                passwordField.layer.borderWidth = 1.0
+                passwordField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            } else {
+                emailField.layer.borderWidth = 0
+                passwordField.layer.borderWidth = 0
+
+                print(emailField.text!)
+                print(passwordField.text!)
+
+                let login = LoginInteractor().login(email: emailField.text!, password: passwordField.text!)
+                let token: Int?
+                let refreshToken: String?
+
+                token = login?.id
+                if token == nil {
+                    print("try again")
+                    return
+                } else {
+//                    let saveAccessToken: Bool = KeychainWrapper.standard.set(token!, forKey: "userToken")
+                    print("success!")
+                    let profile = ProfileViewController()
+                    profile.modalPresentationStyle = .fullScreen
+                    present(profile, animated: true, completion: nil)
+//                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                }
+            }
+        }
     }
 
     @objc func didTapButtonSignUp() {

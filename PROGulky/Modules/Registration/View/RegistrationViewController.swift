@@ -115,15 +115,45 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc func didTapButtonSignUp() {
-        let profile = ProfileViewController()
-        profile.modalPresentationStyle = .fullScreen
-        present(profile, animated: true, completion: nil)
+        if emailField.text == "" {
+            emailField.layer.borderWidth = 1.0
+            emailField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+        } else {
+            if passwordField.text == "" {
+                passwordField.layer.borderWidth = 1.0
+                passwordField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            } else {
+                emailField.layer.borderWidth = 0
+                passwordField.layer.borderWidth = 0
+
+                print(emailField.text!)
+                print(passwordField.text!)
+
+                let registration = RegistrationInteractor().registration(email: emailField.text!, name: nameField.text!, password: passwordField.text!)
+                let token: Int?
+                let refreshToken: String?
+
+                token = registration?.id
+                if token == nil {
+                    print("try again")
+                    return
+                } else {
+//                    let saveAccessToken: Bool = KeychainWrapper.standard.set(token!, forKey: "userToken")
+                    print("success!")
+                    let profile = ProfileViewController()
+                    profile.modalPresentationStyle = .fullScreen
+                    present(profile, animated: true, completion: nil)
+//                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
+                }
+            }
+        }
     }
 
     @objc func didTapButtonSignIn() {
-        let login = LoginViewController()
-        login.modalPresentationStyle = .fullScreen
-        present(login, animated: true, completion: nil)
+        let login = LoginModuleBuilder.build(LoginModuleBuilder())
+        print("smth")
+        login().modalPresentationStyle = .fullScreen
+        present(login(), animated: true, completion: nil)
     }
 
     @objc func didTapRestoreButton() {
