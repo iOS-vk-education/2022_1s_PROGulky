@@ -12,6 +12,6 @@ import Foundation
 struct ExcursionViewModel {
     var image: String?
     var title: String
-    var rating: Double
+    var rating: String
     var parameters: String
 }

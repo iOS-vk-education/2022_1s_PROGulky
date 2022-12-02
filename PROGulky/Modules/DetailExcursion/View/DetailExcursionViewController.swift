@@ -28,8 +28,17 @@ final class DetailExcursionViewController: UIViewController {
     }
 
     func configure(viewModel: DetailExcursionViewModel) {
-        excursionImageView.image = UIImage(named: viewModel.image)
+        setupImage(with: viewModel.image)
         detailExcursionInfoView.set(excursion: viewModel.infoViewModel)
+    }
+
+    private func setupImage(with image: String?) {
+        if let image = image {
+            let imageURL = "\(ExcursionsListConstants.Api.imageURL)/\(image)"
+            excursionImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "placeholderImage"))
+        } else {
+            excursionImageView.image = UIImage(named: "placeholderImage")
+        }
     }
 
     private func setupUI() {
@@ -47,6 +56,7 @@ final class DetailExcursionViewController: UIViewController {
 
     private func configureImageView() {
         excursionImageView.clipsToBounds = true
+        excursionImageView.contentMode = .scaleAspectFill
     }
 
     private func configureDetailExcursionInfoView() {

@@ -9,13 +9,12 @@ import Foundation
 
 // MARK: - Place
 
-struct Place {
-    var sort: Int // Номер на маршруте
-    var title: String
-    var description: String
-    var image: String?
-    var address: String
-    var city: String
-    var latitude: String // Широта
-    var longitude: String // Долгота
+struct Place: Codable {
+    let sort: Int?
+    let title: String
+    let description: String
+    let image: String?
+    let address: String
+    let city: String
+    let latitude, longitude: Double
 }
