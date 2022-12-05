@@ -13,4 +13,5 @@ protocol MapDetailModuleInput: AnyObject {
 // MARK: - MapDetailModuleOutput
 
 protocol MapDetailModuleOutput: AnyObject {
+    func mapDetailModuleWantsToClose()
 }

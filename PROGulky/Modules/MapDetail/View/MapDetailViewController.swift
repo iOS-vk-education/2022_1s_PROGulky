@@ -12,14 +12,44 @@ import UIKit
 final class MapDetailViewController: UIViewController {
     var output: MapDetailViewOutput!
     var mapView: UIView!
-    var detailView: UIView!
+    var detailView = DetailExcursionInfoView(isBottomSheet: true)
 
     // MARK: Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .clear
+        view.backgroundColor = .prog.Dynamic.background
+        setupDetailView()
+        setupNavigationBar()
         output.viewDidLoad()
+    }
+
+    private func setupNavigationBar() {
+        navigationController?.tabBarController?.tabBar.isHidden = true
+        let backButtonItem = UIBarButtonItem()
+        backButtonItem.tintColor = .black
+        backButtonItem.title = nil
+        backButtonItem.style = .plain
+        backButtonItem.target = self
+        backButtonItem.action = #selector(backButtonTapped)
+        backButtonItem.image = UIImage(systemName: "chevron.left")
+        navigationItem.leftBarButtonItem = backButtonItem
+    }
+
+    private func setupDetailView() {
+        detailView.set(excursion: output.viewModel)
+        view.addSubview(detailView)
+        detailView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(200)
+        }
+    }
+
+    @objc
+    private func backButtonTapped() {
+        output.backButtonTapped()
     }
 }
 
@@ -43,19 +73,15 @@ extension MapDetailViewController: MapDetailTransitionHandlerProtocol {
     }
 
     func embedDetailModule(_ viewController: UIViewController) {
-        addChild(viewController)
-        viewController.didMove(toParent: self)
-        detailView = viewController.view
-        view.addSubview(detailView)
-        detailView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.height.equalTo(200)
-//            make.top.equalToSuperview()
-//            make.trailing.equalToSuperview()
+//        addChild(viewController)
+//        viewController.didMove(toParent: self)
+//        detailView = viewController.view
+//        view.addSubview(detailView)
+//        detailView.snp.makeConstraints { make in
+//            make.bottom.equalToSuperview()
 //            make.leading.equalToSuperview()
-//            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.top)
-        }
+//            make.trailing.equalToSuperview()
+//            make.height.equalTo(400)
+//        }
     }
 }

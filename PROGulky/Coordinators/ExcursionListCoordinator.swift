@@ -49,21 +49,25 @@ final class ExcursionListCoordinator: CoordinatorProtocol {
 extension ExcursionListCoordinator: ExcursionsListModuleOutput {
     func excursionsListModuleWantsToOpenDetailExcursion(excursion: Excursion) {
 //        let builder = DetailExcursionModuleBuilder()
-//        let detailView = builder.build(for: excursion)
+//        let detailView = builder.build(for: excursion, moduleOutput: self)
 //        rootNavigationController.pushViewController(detailView, animated: true)
 
         let builder = MapDetailModuleBuilder()
         let vc = builder.build(moduleOutput: self, excursion: excursion)
-        rootNavigationController.tabBarController?.tabBar.isHidden = true
         rootNavigationController.pushViewController(vc, animated: true)
     }
 
     func detailExcursionModuleWantsToClose() {
         rootNavigationController.popViewController(animated: true)
+        rootNavigationController.tabBarController?.tabBar.isHidden = false
     }
 }
 
 // MARK: MapDetailModuleOutput
 
 extension ExcursionListCoordinator: MapDetailModuleOutput {
+    func mapDetailModuleWantsToClose() {
+        rootNavigationController.popViewController(animated: true)
+        rootNavigationController.tabBarController?.tabBar.isHidden = false
+    }
 }

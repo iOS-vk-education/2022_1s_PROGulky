@@ -70,8 +70,8 @@ extension MapPresenter: MapViewOutput {
         var count = 0
         excursion.places.forEach { place in
             let point = YMKRequestPoint(
-                point: YMKPoint(latitude: Double(place.latitude) ?? 0,
-                                longitude: Double(place.longitude) ?? 0),
+                point: YMKPoint(latitude: place.latitude,
+                                longitude: place.longitude),
                 type: count == 0 || count == excursion.places.count - 1 ? .waypoint : .viapoint,
                 pointContext: nil
             )

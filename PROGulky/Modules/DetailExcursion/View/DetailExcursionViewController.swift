@@ -13,7 +13,7 @@ final class DetailExcursionViewController: UIViewController {
     var output: DetailExcursionViewOutput!
 
     private var excursionImageView = UIImageView(frame: .zero)
-    private var detailExcursionInfoView = DetailExcursionInfoView(frame: .zero)
+    private var detailExcursionInfoView = DetailExcursionInfoView()
     private var tableView = UITableView()
 
     // MARK: Lifecycle

@@ -79,6 +79,14 @@ struct DetailExcursionConstants {
             static let text = "На карте"
             static let color = UIColor.prog.Dynamic.primary
         }
+
+        enum Streak {
+            static let cornerRadius: CGFloat = 2
+            static let backgroundColor: UIColor = .prog.Dynamic.shadow
+            static let topOffset: CGFloat = 10
+            static let width: CGFloat = 52
+            static let height: CGFloat = 4
+        }
     }
 
     enum TableView {

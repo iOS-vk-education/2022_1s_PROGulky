@@ -45,8 +45,8 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
                 image: nil,
                 address: "Театральная площадь, 1",
                 city: "Москва",
-                latitude: "55.760221",
-                longitude: "37.618561"
+                latitude: 55.760221,
+                longitude: 37.618561
             ),
             Place(
                 sort: 2,
@@ -55,8 +55,8 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
                 image: nil,
                 address: "Москва, Ивановская площадь",
                 city: "Москва",
-                latitude: "55.755246",
-                longitude: "37.617779"
+                latitude: 55.755246,
+                longitude: 37.617779
             ),
             Place(
                 sort: 3,
@@ -65,8 +65,8 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
                 image: nil,
                 address: "Красная площадь, 7",
                 city: "Москва",
-                latitude: "55.752490",
-                longitude: "37.623205"
+                latitude: 55.752490,
+                longitude: 37.623205
             ),
             Place(
                 sort: 4,
@@ -75,8 +75,8 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
                 image: nil,
                 address: "ул. Волхонка 15",
                 city: "Москва",
-                latitude: "55.744561",
-                longitude: "37.605463"
+                latitude: 55.744561,
+                longitude: 37.605463
             )
         ]
 

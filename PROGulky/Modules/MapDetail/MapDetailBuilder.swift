@@ -15,7 +15,7 @@ final class MapDetailModuleBuilder {
         let router = MapDetailRouter(viewController, excursion: excursion)
         let interactor = MapDetailInteractor()
 
-        let presenter = MapDetailPresenter(interactor: interactor, router: router, output: moduleOutput)
+        let presenter = MapDetailPresenter(interactor: interactor, router: router, output: moduleOutput, excursion: excursion)
         presenter.view = viewController
 
         interactor.output = presenter
