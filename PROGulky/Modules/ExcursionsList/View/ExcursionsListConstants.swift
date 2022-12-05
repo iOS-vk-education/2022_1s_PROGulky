@@ -11,11 +11,14 @@ struct ExcursionsListConstants {
     // Константы для всего экрана (падинги, цвет фотна и т. д.)
     enum Screen {
         static let padding: CGFloat = 12
-        static let backgroundColor = UIColor.white
+        static let paddingTop: CGFloat = 0
+        static let paddingBottom: CGFloat = 0
+        static let backgroundColor = UIColor.prog.Dynamic.background
     }
 
-    enum ExcursionsListNavBar {
+    enum NavBar {
         static let title: String = "Экскурсии" // Название экрана
+        static let backgroundColor = UIColor.prog.Dynamic.lightBackground
     }
 
     enum ExcursionsFilterBar {
@@ -37,25 +40,54 @@ struct ExcursionsListConstants {
     enum ExcursionCell {
         static let reuseId = "ExcursionCell" // Идентификатор ячейки
 
-        static let height: CGFloat = 120 // Высота ячейки
+        static let height: CGFloat = 130 // Высота ячейки
         static let contentIndent: CGFloat = 20 // Отступ контента от картинки
+        static let cornerRadius: CGFloat = 12 // Скругление у ячейки
 
-        static let imageCornerRadius: CGFloat = 10 // Радиус скургления картинки экскурсии
-        static let imageHeight: CGFloat = 92 // Высота картинки
-        static let imageAspectRatio: CGFloat = 16 / 9 // Соотношение сторон картинки
+        enum ContentView {
+            static let marginTop: CGFloat = 5
+            static let marginBottom: CGFloat = 5
+            static let marginLeft: CGFloat = 0
+            static let marginRight: CGFloat = 0
+        }
 
-        static let titleFontSize: CGFloat = 17 // Размер заголовка
-        static let titleFontWeight = UIFont.Weight.semibold // Толщина заголовка
-        static let heightTitleFrame: CGFloat = 40 // Высота фрейма в котором размещен заголовок
+        enum Image {
+            static let cornerRadius: CGFloat = 10 // Радиус скургления картинки экскурсии
+            static let height: CGFloat = 92 // Высота картинки
+            static let aspectRatio: CGFloat = 16 / 9 // Соотношение сторон картинки
+        }
 
-        static let raitingImageIndentFromTitle: CGFloat = 5 // Отступ картинки от заголовка
-        static let ratingImage: String = "star.fill" // Иконка рейтинга
-        static let ratingFontSize: CGFloat = 13 // Размер текста рейтинга
-        static let ratingFontWeight = UIFont.Weight.medium // Толщина текста рейтинга
-        static let ratingTextColor: UIColor = .gray // Цвет текста рейтинга
+        enum Title {
+            static let fontSize: CGFloat = 17 // Размер заголовка
+            static let fontWeight = UIFont.Weight.semibold // Толщина заголовка
+            static let heightFrame: CGFloat = 40 // Высота фрейма в котором размещен заголовок
+        }
 
-        static let parametersFontSize: CGFloat = 13 // Размер текста параметров
-        static let parametersFontWeight = UIFont.Weight.medium // Толщина текста параметров
-        static let parametersTextColor: UIColor = .gray // Цвет текста параметров
+        enum RatingImage {
+            static let marginTop: CGFloat = 5 // Отступ от заголовка
+            static let name: String = "star.fill" // Иконка рейтинга
+            static let height: CGFloat = 15
+            static let aspectRatio: CGFloat = 1.1 // отношение высоты к ширине
+        }
+
+        enum RatingLabel {
+            static let marginTop: CGFloat = 5 // Отступ от заголовка
+            static let marginLeft: CGFloat = 3
+            static let fontSize: CGFloat = 13 // Размер текста рейтинга
+            static let fontWeight = UIFont.Weight.medium // Толщина текста рейтинга
+            static let textColor: UIColor = .gray // Цвет текста рейтинга
+        }
+
+        enum Parameters {
+            static let marginTop: CGFloat = 5
+            static let fontSize: CGFloat = 13 // Размер текста параметров
+            static let fontWeight = UIFont.Weight.medium // Толщина текста параметров
+            static let textColor: UIColor = .gray // Цвет текста параметров
+        }
+    }
+
+    enum Api {
+        static let baseURL: String = "http://37.140.195.167:5000"
+        static let imageURL: String = "\(baseURL)/images/excursions"
     }
 }

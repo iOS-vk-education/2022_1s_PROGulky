@@ -22,4 +22,9 @@ protocol ExcursionsListViewOutput: AnyObject {
 // MARK: - ExcursionsListViewInput
 
 protocol ExcursionsListViewInput: AnyObject {
+    func reloadView()
+
+    func startLoader()
+
+    func stopLoader()
 }

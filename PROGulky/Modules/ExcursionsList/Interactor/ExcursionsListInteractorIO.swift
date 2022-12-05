@@ -10,9 +10,11 @@ import Foundation
 // MARK: - ExcursionsListInteractorOutput
 
 protocol ExcursionsListInteractorOutput: AnyObject {
+    func didLoadExcursionsList(excursions: Excursions)
 }
 
 // MARK: - ExcursionsListInteractorInput
 
 protocol ExcursionsListInteractorInput: AnyObject {
+    func loadExcursionsList()
 }

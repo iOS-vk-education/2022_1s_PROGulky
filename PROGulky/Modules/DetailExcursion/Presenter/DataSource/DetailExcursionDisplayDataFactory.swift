@@ -19,16 +19,24 @@ protocol DetailExcursionDisplayDataFactoryProtocol {
 
 class DetailExcursionDisplayDataFactory: DetailExcursionDisplayDataFactoryProtocol {
     func getPlaceViewModel(for place: Place) -> PlaceViewModel {
-        PlaceViewModel(sort: String(place.sort), title: place.title, subtitle: place.address)
+        // TODO: с апи должен приходить sort, сейчас тут замоканная единица
+        PlaceViewModel(sort: String(1), title: place.title, subtitle: place.address)
     }
 
     func setupViewModel(excursion: Excursion) -> DetailExcursionViewModel {
-        DetailExcursionViewModel(
+        var displayRating: String
+        if let rating = excursion.rating {
+            displayRating = "\(rating)"
+        } else {
+            displayRating = "Без рейтинга"
+        }
+
+        return DetailExcursionViewModel(
             image: excursion.image ?? "placeholderImage",
             description: excursion.description,
             infoViewModel: DetailExcursionInfoViewModel(
                 title: excursion.title,
-                rating: "\(excursion.rating)",
+                rating: displayRating,
                 numberOfPlaces: excursion.numberOfPoints.wordEnding(for: "мест"),
                 duration: "\(excursion.duration) мин",
                 distance: "\(excursion.distance) км"
