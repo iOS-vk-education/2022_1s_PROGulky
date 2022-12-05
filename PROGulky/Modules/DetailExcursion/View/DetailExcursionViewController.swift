@@ -13,23 +13,17 @@ final class DetailExcursionViewController: UIViewController {
     var output: DetailExcursionViewOutput!
 
     private var excursionImageView = UIImageView(frame: .zero)
-    private var detailExcursionInfoView = DetailExcursionInfoView()
+    var detailExcursionInfoView = DetailExcursionInfoView()
     private var tableView = UITableView()
 
     // MARK: Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUI()
         setupConstraints()
 
         output.didLoadView()
-    }
-
-    func configure(viewModel: DetailExcursionViewModel) {
-        setupImage(with: viewModel.image)
-        detailExcursionInfoView.set(excursion: viewModel.infoViewModel)
     }
 
     private func setupImage(with image: String?) {
@@ -118,6 +112,10 @@ final class DetailExcursionViewController: UIViewController {
 // MARK: DetailExcursionViewInput
 
 extension DetailExcursionViewController: DetailExcursionViewInput {
+    func configure(viewModel: DetailExcursionViewModel) {
+        setupImage(with: viewModel.image)
+        detailExcursionInfoView.set(excursion: viewModel.infoViewModel)
+    }
 }
 
 extension DetailExcursionViewController: UITableViewDelegate {

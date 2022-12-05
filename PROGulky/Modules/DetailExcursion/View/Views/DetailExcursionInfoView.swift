@@ -92,8 +92,6 @@ final class DetailExcursionInfoView: UIView {
         )
         setupUI()
         setupConstraints()
-        button.isHidden = isBottomSheet
-        streakView.isHidden = !isBottomSheet
     }
 
     // MARK: Public Methods
@@ -105,6 +103,13 @@ final class DetailExcursionInfoView: UIView {
         numberOfPlacesLabel.text = excursion.numberOfPlaces
         durationLabel.text = excursion.duration
         distanceLabel.text = excursion.distance
+    }
+
+    func makeBottomSheetView(isBottomSheet: Bool) {
+        UIView.animate(withDuration: 0.170) {
+            self.button.isHidden = isBottomSheet
+            self.streakView.isHidden = !isBottomSheet
+        }
     }
 
     // MARK: Private Methods

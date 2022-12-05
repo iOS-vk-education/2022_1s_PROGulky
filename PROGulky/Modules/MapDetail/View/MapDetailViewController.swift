@@ -12,15 +12,17 @@ import UIKit
 final class MapDetailViewController: UIViewController {
     var output: MapDetailViewOutput!
     var mapView: UIView!
-    var detailView = DetailExcursionInfoView(isBottomSheet: true)
+    var detailView: UIView!
+
+    private var panGestureRecognizer: UIPanGestureRecognizer?
 
     // MARK: Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .prog.Dynamic.background
-        setupDetailView()
         setupNavigationBar()
+        setupGestureRecognizer()
         output.viewDidLoad()
     }
 
@@ -37,7 +39,7 @@ final class MapDetailViewController: UIViewController {
     }
 
     private func setupDetailView() {
-        detailView.set(excursion: output.viewModel)
+//        detailView.set(excursion: output.viewModel)
         view.addSubview(detailView)
         detailView.snp.makeConstraints { make in
             make.bottom.equalToSuperview()
@@ -45,11 +47,22 @@ final class MapDetailViewController: UIViewController {
             make.trailing.equalToSuperview()
             make.height.equalTo(200)
         }
+        detailView.isUserInteractionEnabled = true
+    }
+
+    private func setupGestureRecognizer() {
+        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
+        panGestureRecognizer?.minimumNumberOfTouches = 1
     }
 
     @objc
     private func backButtonTapped() {
         output.backButtonTapped()
+    }
+
+    @objc
+    private func handleSwipe(_ gestureRecognizer: UIPanGestureRecognizer) {        
+        output.handleSwipe()
     }
 }
 
@@ -59,6 +72,24 @@ extension MapDetailViewController: MapDetailViewInput {
 // MARK: MapDetailTransitionHandlerProtocol
 
 extension MapDetailViewController: MapDetailTransitionHandlerProtocol {
+    func embedDetailModule(_ viewController: UIViewController) {
+        addChild(viewController)
+        viewController.didMove(toParent: self)
+        guard let detailViewController = viewController as? DetailExcursionViewController else { return }
+        detailViewController.viewDidLoad()
+        detailViewController.detailExcursionInfoView.makeBottomSheetView(isBottomSheet: true)
+        detailView = detailViewController.detailExcursionInfoView
+        view.addSubview(detailView)
+        detailView.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(200)
+        }
+        detailView.isUserInteractionEnabled = true
+        detailView.addGestureRecognizer(panGestureRecognizer!)
+    }
+
     func embedMapModule(_ viewController: UIViewController) {
         addChild(viewController)
         viewController.didMove(toParent: self)
@@ -70,18 +101,5 @@ extension MapDetailViewController: MapDetailTransitionHandlerProtocol {
             make.leading.equalToSuperview()
             make.bottom.equalTo(detailView.snp.top)
         }
-    }
-
-    func embedDetailModule(_ viewController: UIViewController) {
-//        addChild(viewController)
-//        viewController.didMove(toParent: self)
-//        detailView = viewController.view
-//        view.addSubview(detailView)
-//        detailView.snp.makeConstraints { make in
-//            make.bottom.equalToSuperview()
-//            make.leading.equalToSuperview()
-//            make.trailing.equalToSuperview()
-//            make.height.equalTo(400)
-//        }
     }
 }

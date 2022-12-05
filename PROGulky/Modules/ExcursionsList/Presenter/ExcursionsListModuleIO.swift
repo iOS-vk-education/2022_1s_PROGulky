@@ -13,5 +13,5 @@ protocol ExcursionsListModuleInput: AnyObject {
 // MARK: - ExcursionsListModuleOutput
 
 protocol ExcursionsListModuleOutput: AnyObject {
-    func excursionsListModuleWantsToOpenDetailExcursion(excursion: Excursion)
+    func excursionsListModuleWantsToOpenMapDetailModule(excursion: Excursion)
 }

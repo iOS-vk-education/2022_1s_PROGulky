@@ -47,26 +47,32 @@ final class ExcursionListCoordinator: CoordinatorProtocol {
 // MARK: ExcursionsListModuleOutput
 
 extension ExcursionListCoordinator: ExcursionsListModuleOutput {
-    func excursionsListModuleWantsToOpenDetailExcursion(excursion: Excursion) {
-//        let builder = DetailExcursionModuleBuilder()
-//        let detailView = builder.build(for: excursion, moduleOutput: self)
-//        rootNavigationController.pushViewController(detailView, animated: true)
-
-        let builder = MapDetailModuleBuilder()
-        let vc = builder.build(moduleOutput: self, excursion: excursion)
-        rootNavigationController.pushViewController(vc, animated: true)
-    }
-
-    func detailExcursionModuleWantsToClose() {
-        rootNavigationController.popViewController(animated: true)
-        rootNavigationController.tabBarController?.tabBar.isHidden = false
+    func excursionsListModuleWantsToOpenMapDetailModule(excursion: Excursion) {
+        let mapDetailBuilder = MapDetailModuleBuilder()
+        let mapDetailViewController = mapDetailBuilder.build(moduleOutput: self, excursion: excursion)
+        rootNavigationController.pushViewController(mapDetailViewController, animated: true)
     }
 }
 
 // MARK: MapDetailModuleOutput
 
 extension ExcursionListCoordinator: MapDetailModuleOutput {
+    func mapDetailModuleWantsToOpenDetailModule(excursion: Excursion) {
+        let detailBuilder = DetailExcursionModuleBuilder(excursion: excursion, moduleOutput: self)
+        let detailViewController = detailBuilder.build()
+        rootNavigationController.pushViewController(detailViewController, animated: true)
+    }
+
     func mapDetailModuleWantsToClose() {
+        rootNavigationController.popViewController(animated: true)
+        rootNavigationController.tabBarController?.tabBar.isHidden = false
+    }
+}
+
+// MARK: DetailExcursionModuleOutput
+
+extension ExcursionListCoordinator: DetailExcursionModuleOutput {
+    func detailExcursionModuleWantsToClose() {
         rootNavigationController.popViewController(animated: true)
         rootNavigationController.tabBarController?.tabBar.isHidden = false
     }

@@ -53,6 +53,10 @@ extension MapDetailPresenter: MapDetailViewOutput {
     func backButtonTapped() {
         moduleOutput?.mapDetailModuleWantsToClose()
     }
+
+    func handleSwipe() {
+        moduleOutput?.mapDetailModuleWantsToOpenDetailModule(excursion: excursion)
+    }
 }
 
 extension MapDetailPresenter: MapDetailInteractorOutput {

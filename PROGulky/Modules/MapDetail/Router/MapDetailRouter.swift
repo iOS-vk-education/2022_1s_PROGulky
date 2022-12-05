@@ -21,15 +21,15 @@ final class MapDetailRouter {
 // MARK: MapDetailRouterInput
 
 extension MapDetailRouter: MapDetailRouterInput {
+    func embedDetailModule(output: DetailExcursionModuleOutput) {
+        let builder = DetailExcursionModuleBuilder(excursion: excursion, moduleOutput: output)
+        let detailViewController = builder.build()
+        mapDetailViewController?.embedDetailModule(detailViewController)
+    }
+
     func embedMapModule(output: MapModuleOutput) {
         let builder = MapModuleBuilder()
         let mapViewController = builder.build(moduleOutput: output, excursion: excursion)
         mapDetailViewController?.embedMapModule(mapViewController)
-    }
-
-    func embedDetailModule(output: DetailExcursionModuleOutput) {
-        let builder = DetailExcursionModuleBuilder()
-        let detailViewController = builder.build(for: excursion, moduleOutput: output)
-        mapDetailViewController?.embedDetailModule(detailViewController)
     }
 }
