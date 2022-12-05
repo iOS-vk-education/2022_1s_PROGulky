@@ -15,6 +15,7 @@ final class ExcursionsListViewController: UIViewController {
     private let filterBar = ExcursionsFilterBarView(frame: .zero)
     private var excursionsTable = UITableView(frame: .zero, style: .insetGrouped)
     private let loader = UIActivityIndicatorView(frame: .zero)
+    private let errorView = ErrorView(frame: .zero)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,7 @@ final class ExcursionsListViewController: UIViewController {
         setupFilterBar()
         setupTableView()
         setupLoader()
+        setupErrorView()
     }
 
     func reload() {
@@ -105,11 +107,37 @@ final class ExcursionsListViewController: UIViewController {
         loader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         loader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
+
+    private func setupErrorView() {
+        errorView.repeatRequestButton.addTarget(self, action: #selector(pressed), for: .touchUpInside)
+        view.addSubview(errorView)
+
+        errorView.isHidden = true
+        setErrorViewConstrints()
+    }
+
+    @objc func pressed() {
+        print("pressed")
+//        output.didRepeatButtonPressed()
+    }
+
+    private func setErrorViewConstrints() {
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
 }
 
 // MARK: ExcursionsListViewInput
 
 extension ExcursionsListViewController: ExcursionsListViewInput {
+    func showErrorView() {
+        DispatchQueue.main.async {
+            self.errorView.isHidden = false
+            self.loader.stopAnimating()
+        }
+    }
+
     func reloadView() {
         reload()
     }

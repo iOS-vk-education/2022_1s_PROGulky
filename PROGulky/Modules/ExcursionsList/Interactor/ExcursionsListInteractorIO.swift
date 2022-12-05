@@ -11,6 +11,8 @@ import Foundation
 
 protocol ExcursionsListInteractorOutput: AnyObject {
     func didLoadExcursionsList(excursions: Excursions)
+
+    func getNetworkError()
 }
 
 // MARK: - ExcursionsListInteractorInput

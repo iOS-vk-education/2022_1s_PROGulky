@@ -18,7 +18,7 @@ enum ApiType {
 
     var path: String {
         switch self {
-        case .getExcursions: return "/excursions"
+        case .getExcursions: return "/excursions3"
         }
     }
 

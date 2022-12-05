@@ -59,9 +59,21 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
     }
 }
 
+// MARK: ErrorViewOutput
+
+extension ExcursionsListPresenter: ErrorViewOutput {
+    func didRepeatButtonPressed() {
+        print("REPEAT")
+    }
+}
+
 // MARK: ExcursionsListInteractorOutput
 
 extension ExcursionsListPresenter: ExcursionsListInteractorOutput {
+    func getNetworkError() {
+        view.showErrorView()
+    }
+
     func didLoadExcursionsList(excursions: Excursions) {
         self.excursions = excursions
         view.reloadView() // Перезагрузить тейбл вью

@@ -20,6 +20,7 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
             case let .success(excursions):
                 self?.output?.didLoadExcursionsList(excursions: excursions)
             case let .failure(error):
+                self?.output?.getNetworkError()
                 print("error", error)
             }
         }

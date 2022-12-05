@@ -22,9 +22,17 @@ protocol ExcursionsListViewOutput: AnyObject {
 // MARK: - ExcursionsListViewInput
 
 protocol ExcursionsListViewInput: AnyObject {
-    func reloadView()
+    func reloadView() // Перезагрузка данны в таблице
 
-    func startLoader()
+    func startLoader() // Запустить крутилку с загрузкой
 
-    func stopLoader()
+    func stopLoader() // Остановить крутилку с загрузкой
+
+    func showErrorView() // Показать сообщение с ошибкой
+}
+
+// MARK: - ErrorViewOutput
+
+protocol ErrorViewOutput: AnyObject {
+    func didRepeatButtonPressed()
 }
