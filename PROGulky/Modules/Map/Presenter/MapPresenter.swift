@@ -25,13 +25,15 @@ final class MapPresenter {
     private var massTransitSession: YMKMasstransitSession?
     private var requestPoints = [YMKRequestPoint]()
     private let factory = DetailExcursionDisplayDataFactory()
+    private weak var moduleOutput: MapModuleOutput?
 
     // MARK: - Lifecycle
 
-    init(interactor: MapInteractorInput, router: MapRouterInput, excursion: Excursion) {
+    init(interactor: MapInteractorInput, router: MapRouterInput, excursion: Excursion, moduleOutput: MapModuleOutput) {
         self.interactor = interactor
         self.router = router
         self.excursion = excursion
+        self.moduleOutput = moduleOutput
     }
 
     func onRoutesReceived(_ routes: [YMKMasstransitRoute]) {
@@ -61,7 +63,7 @@ extension MapPresenter: MapModuleInput {
 
 extension MapPresenter: MapViewOutput {
     var detailExcursionInfoViewModel: DetailExcursionInfoViewModel {
-        factory.getDetailExcursionInfoViewModel(for: excursion)
+        factory.setupViewModel(excursion: excursion).infoViewModel
     }
 
     func setupRoute() {

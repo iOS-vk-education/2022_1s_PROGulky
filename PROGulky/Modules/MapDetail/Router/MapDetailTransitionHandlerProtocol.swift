@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import UIKit
+
+protocol MapDetailTransitionHandlerProtocol: AnyObject {
+    func embedMapModule(_ viewController: UIViewController)
+    func embedDetailModule(_ viewController: UIViewController)
+}

@@ -14,7 +14,7 @@ import SnapKit
 final class MapViewController: UIViewController {
     private var mapView: YMKMapView!
     var output: MapViewOutput!
-    private var infoView = DetailExcursionInfoView(frame: .zero)
+//    private var infoView = DetailExcursionInfoView(frame: .zero)
 
     private let button = UIButton()
     private let listener: CameraListener = .init()
@@ -26,15 +26,15 @@ final class MapViewController: UIViewController {
 
         setupMaps()
 
-        infoView.set(excursion: output.detailExcursionInfoViewModel)
-        view.addSubview(infoView)
-        infoView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalTo(200)
-        }
-        infoView.backgroundColor = .white
+//        infoView.set(excursion: output.detailExcursionInfoViewModel)
+//        view.addSubview(infoView)
+//        infoView.snp.makeConstraints { make in
+//            make.bottom.equalToSuperview()
+//            make.centerX.equalToSuperview()
+//            make.width.equalToSuperview()
+//            make.height.equalTo(200)
+//        }
+//        infoView.backgroundColor = .white
         setupButton()
 
         output.setupRoute()
@@ -55,7 +55,7 @@ final class MapViewController: UIViewController {
         view.bringSubviewToFront(button)
         button.setImage(UIImage(named: "compass")?.withRenderingMode(.alwaysOriginal), for: .normal)
         button.snp.makeConstraints { make in
-            make.bottom.equalTo(self.infoView.snp.top).offset(-32)
+            make.bottom.equalToSuperview().offset(-32)
             make.trailing.equalToSuperview().inset(24)
             make.height.equalTo(40)
             make.width.equalTo(40)

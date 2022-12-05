@@ -10,12 +10,15 @@ import UIKit
 // MARK: - MapModuleBuilder
 
 final class MapModuleBuilder {
-    func build(_ excursion: Excursion) -> UIViewController {
+    func build(moduleOutput: MapModuleOutput, excursion: Excursion) -> UIViewController {
         let viewController = MapViewController()
         let router = MapRouter()
         let interactor = MapInteractor()
 
-        let presenter = MapPresenter(interactor: interactor, router: router, excursion: excursion)
+        let presenter = MapPresenter(interactor: interactor,
+                                     router: router,
+                                     excursion: excursion,
+                                     moduleOutput: moduleOutput)
         presenter.view = viewController
 
         interactor.output = presenter
