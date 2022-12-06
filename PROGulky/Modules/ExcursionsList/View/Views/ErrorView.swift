@@ -7,6 +7,12 @@
 
 import UIKit
 
+// MARK: - ErrorViewDelegate
+
+protocol ErrorViewDelegate: AnyObject {
+    func didRepeatButtonTapped()
+}
+
 // MARK: - Constants
 
 private struct Constants {
@@ -54,6 +60,10 @@ final class ErrorView: UIView {
         button.configuration = configuration
         return button
     }()
+    
+    @objc func didButtonTapped() {
+        delegate?.didRepeatButtonTapped()
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -80,14 +90,4 @@ final class ErrorView: UIView {
         repeatRequestButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         repeatRequestButton.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: Constants.ErrorView.Button.marginTop).isActive = true
     }
-
-    @objc func didButtonTapped() {
-        delegate?.didRepeatButtonTapped()
-    }
-}
-
-// MARK: - ErrorViewDelegate
-
-protocol ErrorViewDelegate: AnyObject {
-    func didRepeatButtonTapped()
 }
