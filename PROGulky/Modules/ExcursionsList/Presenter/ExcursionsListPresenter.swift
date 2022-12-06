@@ -40,7 +40,7 @@ extension ExcursionsListPresenter: ExcursionsListModuleInput {
 // MARK: ExcursionsListViewOutput
 
 extension ExcursionsListPresenter: ExcursionsListViewOutput {
-    func didRepeatButtonPressed() {
+    func didRepeatButtonTapped() {
         interactor.loadExcursionsList()
     }
 

@@ -18,7 +18,7 @@ protocol ExcursionsListViewOutput: AnyObject {
 
     func didSelectCell(at indexPath: IndexPath)
 
-    func didRepeatButtonPressed()
+    func didRepeatButtonTapped()
 }
 
 // MARK: - ExcursionsListViewInput

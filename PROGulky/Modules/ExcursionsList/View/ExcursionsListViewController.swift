@@ -110,13 +110,10 @@ final class ExcursionsListViewController: UIViewController {
 
     private func setupErrorView() {
         view.addSubview(errorView)
-        errorView.repeatRequestButton.addTarget(self, action: #selector(didRepeatButtonPressed), for: .touchUpInside)
+        errorView.delegate = self
+
         errorView.isHidden = true
         setErrorViewConstrints()
-    }
-
-    @objc func didRepeatButtonPressed() {
-        output.didRepeatButtonPressed()
     }
 
     private func setErrorViewConstrints() {
@@ -179,5 +176,13 @@ extension ExcursionsListViewController: UITableViewDataSource {
 extension ExcursionsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         output.didSelectCell(at: indexPath)
+    }
+}
+
+// MARK: ErrorViewDelegate
+
+extension ExcursionsListViewController: ErrorViewDelegate {
+    func didRepeatButtonTapped() {
+        output.didRepeatButtonTapped()
     }
 }
