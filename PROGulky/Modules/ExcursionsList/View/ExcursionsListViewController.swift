@@ -109,22 +109,22 @@ final class ExcursionsListViewController: UIViewController {
     }
 
     private func setupErrorView() {
-        errorView.repeatRequestButton.addTarget(self, action: #selector(pressed), for: .touchUpInside)
         view.addSubview(errorView)
-
+        errorView.repeatRequestButton.addTarget(self, action: #selector(didRepeatButtonPressed), for: .touchUpInside)
         errorView.isHidden = true
         setErrorViewConstrints()
     }
 
-    @objc func pressed() {
-        print("pressed")
-//        output.didRepeatButtonPressed()
+    @objc func didRepeatButtonPressed() {
+        output.didRepeatButtonPressed()
     }
 
     private func setErrorViewConstrints() {
         errorView.translatesAutoresizingMaskIntoConstraints = false
         errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        errorView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        errorView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
     }
 }
 

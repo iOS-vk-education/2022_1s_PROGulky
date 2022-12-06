@@ -40,6 +40,10 @@ extension ExcursionsListPresenter: ExcursionsListModuleInput {
 // MARK: ExcursionsListViewOutput
 
 extension ExcursionsListPresenter: ExcursionsListViewOutput {
+    func didRepeatButtonPressed() {
+        interactor.loadExcursionsList()
+    }
+
     func didSelectCell(at indexPath: IndexPath) {
         moduleOutput?.excursionsListModuleWantsToOpenDetailExcursion(excursion: excursions[indexPath.row])
     }
@@ -56,14 +60,6 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
 
     func itemsCount() -> Int {
         excursions.count
-    }
-}
-
-// MARK: ErrorViewOutput
-
-extension ExcursionsListPresenter: ErrorViewOutput {
-    func didRepeatButtonPressed() {
-        print("REPEAT")
     }
 }
 

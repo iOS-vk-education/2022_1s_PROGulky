@@ -29,7 +29,6 @@ private struct Constants {
 // MARK: - ErrorView
 
 final class ErrorView: UIView {
-    var output: ErrorViewOutput!
     // Сообщение
     private let messageLabel: UILabel = {
         let label = UILabel()
@@ -40,7 +39,6 @@ final class ErrorView: UIView {
     // Кнопка повтора запроса
     var repeatRequestButton: UIButton = {
         let button = UIButton()
-        // button.addTarget(self, action: #selector(self.pressed), for: .touchUpInside)
         var configuration = UIButton.Configuration.filled()
         configuration.title = Constants.ErrorView.Button.text
         configuration.baseBackgroundColor = .prog.Dynamic.primary
@@ -78,10 +76,5 @@ final class ErrorView: UIView {
         repeatRequestButton.translatesAutoresizingMaskIntoConstraints = false
         repeatRequestButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         repeatRequestButton.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: Constants.ErrorView.Button.marginTop).isActive = true
-    }
-
-    @objc func pressed() {
-        print("pressed")
-        output.didRepeatButtonPressed()
     }
 }

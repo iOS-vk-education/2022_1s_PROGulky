@@ -21,7 +21,7 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
                 self?.output?.didLoadExcursionsList(excursions: excursions)
             case let .failure(error):
                 self?.output?.getNetworkError()
-                print("error", error)
+                print("error:", error)
             }
         }
     }
