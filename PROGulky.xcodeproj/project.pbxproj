@@ -100,11 +100,9 @@
 		A5074CE5292DC9AF005692EB /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5074CE4292DC9AF005692EB /* CustomButton.swift */; };
 		A517195D2934B7AE003454FF /* UIViewController+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A517195C2934B7AE003454FF /* UIViewController+Extentions.swift */; };
 		A52CA4502939C333008CBE64 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52CA44F2939C333008CBE64 /* User.swift */; };
-		A52CA4532939EA2B008CBE64 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52CA4522939EA2B008CBE64 /* ApiManager.swift */; };
-		A52CA455293A1DC3008CBE64 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52CA454293A1DC3008CBE64 /* Login.swift */; };
-		A52CA457293A1E9A008CBE64 /* Role.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52CA456293A1E9A008CBE64 /* Role.swift */; };
 		A553F1D229199288001E679C /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D129199288001E679C /* UIColorExtension.swift */; };
 		A553F1DA291A6F27001E679C /* TextConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D9291A6F27001E679C /* TextConstants.swift */; };
+		A55CD31B293E835A00C4F1A6 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CD31A293E835A00C4F1A6 /* UserDefaultsKeys.swift */; };
 		A5B7537F2913FBA4001D1978 /* ProfileUserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */; };
 		A5D309F42928F403005D2275 /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */; };
 		A5D309F62928F66C005D2275 /* ProfileSettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D309F52928F66C005D2275 /* ProfileSettingsSection.swift */; };
@@ -255,11 +253,9 @@
 		A5074CE4292DC9AF005692EB /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		A517195C2934B7AE003454FF /* UIViewController+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extentions.swift"; sourceTree = "<group>"; };
 		A52CA44F2939C333008CBE64 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		A52CA4522939EA2B008CBE64 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
-		A52CA454293A1DC3008CBE64 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
-		A52CA456293A1E9A008CBE64 /* Role.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Role.swift; sourceTree = "<group>"; };
 		A553F1D129199288001E679C /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		A553F1D9291A6F27001E679C /* TextConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextConstants.swift; sourceTree = "<group>"; };
+		A55CD31A293E835A00C4F1A6 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoHeader.swift; sourceTree = "<group>"; };
 		A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
 		A5D309F52928F66C005D2275 /* ProfileSettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsSection.swift; sourceTree = "<group>"; };
@@ -571,8 +567,7 @@
 				543F2CAE292E726000120116 /* Place.swift */,
 				548ABFD929205592001CFDA9 /* Excursion.swift */,
 				A52CA44F2939C333008CBE64 /* User.swift */,
-				A52CA454293A1DC3008CBE64 /* Login.swift */,
-				A52CA456293A1E9A008CBE64 /* Role.swift */,
+				A55CD31A293E835A00C4F1A6 /* UserDefaultsKeys.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -824,14 +819,6 @@
 			path = CustomView;
 			sourceTree = "<group>";
 		};
-		A52CA4512939EA18008CBE64 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				A52CA4522939EA2B008CBE64 /* ApiManager.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		A553F1DB291A7354001E679C /* Constants */ = {
 			isa = PBXGroup;
 			children = (
@@ -929,7 +916,6 @@
 		E2A5C7E3B66E94E250659396 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				A52CA4512939EA18008CBE64 /* Services */,
 				6DE36CAA8C99CE8FA62D79F5 /* ProfileInteractorIO.swift */,
 				4B16741CC48F86627C2AE6A8 /* ProfileInteractor.swift */,
 			);
@@ -1300,7 +1286,7 @@
 				54C089D3291A87FD000497FE /* UIView+Extensions.swift in Sources */,
 				661A0D892902996D00312A0B /* AppDelegate.swift in Sources */,
 				CA16E5FF3470878ABCAD8F11 /* ExcursionsListViewIO.swift in Sources */,
-				A52CA457293A1E9A008CBE64 /* Role.swift in Sources */,
+				A55CD31B293E835A00C4F1A6 /* UserDefaultsKeys.swift in Sources */,
 				A6870B67FEAA859C2BBA0908 /* ExcursionsListViewController.swift in Sources */,
 				41F7A17B895BE5DF38BCC83C /* ExcursionsListModuleIO.swift in Sources */,
 				543F2CBD292E72CA00120116 /* DetailExcursionInfoView.swift in Sources */,
@@ -1335,7 +1321,6 @@
 				E9F972D6925AAE35541A6A7A /* FavouritesExcursionsPresenter.swift in Sources */,
 				54C089D5291A8AC7000497FE /* UILabel+Extensions.swift in Sources */,
 				E440B3CED1731E9DAC92FF12 /* FavouritesExcursionsInteractorIO.swift in Sources */,
-				A52CA4532939EA2B008CBE64 /* ApiManager.swift in Sources */,
 				AC2B243C7837A2D1C337F656 /* FavouritesExcursionsInteractor.swift in Sources */,
 				DF2C602FDD54CFA3AF88934A /* FavouritesExcursionsRouterInput.swift in Sources */,
 				1CBF00DD0C0FABDE6D041683 /* FavouritesExcursionsRouter.swift in Sources */,
@@ -1407,7 +1392,6 @@
 				ECA139E7F52774DABE97C7B8 /* LoginRouterInput.swift in Sources */,
 				3181A5F8EA22ACE9625B4045 /* LoginRouter.swift in Sources */,
 				87BD1B8038052077804AF5E4 /* LoginBuilder.swift in Sources */,
-				A52CA455293A1DC3008CBE64 /* Login.swift in Sources */,
 				0A90CC96D7511319570AA6D4 /* RegistrationViewIO.swift in Sources */,
 				B892E93A9D87D984B2BFABF1 /* RegistrationViewController.swift in Sources */,
 				90AF0656123BCD7A6902944A /* RegistrationModuleIO.swift in Sources */,

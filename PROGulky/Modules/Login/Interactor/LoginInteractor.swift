@@ -18,10 +18,10 @@ final class LoginInteractor {
 // MARK: LoginInteractorInput
 
 extension LoginInteractor: LoginInteractorInput {
-    func login(email: String, password: String) -> (Login?) {
+    func login(email: String, password: String) -> (User?) {
         let semaphore = DispatchSemaphore(value: 0)
 
-        var returnData: Login?
+        var returnData: User?
         let json: [String: Any] = [
             "email": email,
             "password": password
@@ -43,7 +43,7 @@ extension LoginInteractor: LoginInteractorInput {
                 semaphore.signal()
                 return
             }
-            returnData = try? JSONDecoder().decode(Login.self, from: data)
+            returnData = try? JSONDecoder().decode(User.self, from: data)
             print("login returnData \(String(describing: returnData))")
             semaphore.signal()
         }

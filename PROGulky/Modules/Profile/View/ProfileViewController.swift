@@ -183,6 +183,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 print(TextConstantsProfile.titlePrivacyPolicy)
             case 2:
                 print(TextConstantsProfile.titleSignOut)
+                UserDefaults.standard.set(false, forKey: "isLoggedIn")
                 goToLogin()
             default:
                 print("no action")

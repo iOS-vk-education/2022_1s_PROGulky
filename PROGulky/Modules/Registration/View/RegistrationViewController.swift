@@ -138,12 +138,19 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
                     print("try again")
                     return
                 } else {
-//                    let saveAccessToken: Bool = KeychainWrapper.standard.set(token!, forKey: "userToken")
                     print("success!")
+
+                    let defaults = UserDefaults.standard
+                    defaults.setValue(token, forKey: UserKeys().token)
+                    defaults.setValue(registration?.id, forKey: UserKeys().id)
+                    defaults.setValue(registration?.email, forKey: UserKeys().email)
+                    defaults.setValue(registration?.name, forKey: UserKeys().name)
+                    defaults.set(true, forKey: "isLoggedIn")
+                    defaults.synchronize()
+
                     let profile = ProfileViewController()
                     profile.modalPresentationStyle = .fullScreen
                     present(profile, animated: true, completion: nil)
-//                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
                 }
             }
         }
@@ -151,7 +158,6 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
 
     @objc func didTapButtonSignIn() {
         let login = LoginModuleBuilder.build(LoginModuleBuilder())
-        print("smth")
         login().modalPresentationStyle = .fullScreen
         present(login(), animated: true, completion: nil)
     }

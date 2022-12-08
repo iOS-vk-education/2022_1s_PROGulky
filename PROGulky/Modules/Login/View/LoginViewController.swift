@@ -112,25 +112,27 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
             } else {
                 emailField.layer.borderWidth = 0
                 passwordField.layer.borderWidth = 0
+                let login = LoginInteractor().login(email: emailField.text ?? "", password: passwordField.text ?? "")
+                let token: String?
 
-                print(emailField.text!)
-                print(passwordField.text!)
-
-                let login = LoginInteractor().login(email: emailField.text!, password: passwordField.text!)
-                let token: Int?
-                let refreshToken: String?
-
-                token = login?.id
+                token = login?.token
                 if token == nil {
                     print("try again")
                     return
                 } else {
-//                    let saveAccessToken: Bool = KeychainWrapper.standard.set(token!, forKey: "userToken")
                     print("success!")
+
+                    let defaults = UserDefaults.standard
+                    defaults.setValue(token, forKey: UserKeys().token)
+                    defaults.setValue(login?.id, forKey: UserKeys().id)
+                    defaults.setValue(login?.email, forKey: UserKeys().email)
+                    defaults.setValue(login?.name, forKey: UserKeys().name)
+                    defaults.set(true, forKey: "isLoggedIn")
+                    defaults.synchronize()
+
                     let profile = ProfileViewController()
                     profile.modalPresentationStyle = .fullScreen
                     present(profile, animated: true, completion: nil)
-//                    UserDefaults.standard.set(true, forKey: "isLoggedIn")
                 }
             }
         }

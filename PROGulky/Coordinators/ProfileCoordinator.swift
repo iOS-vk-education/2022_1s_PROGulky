@@ -25,18 +25,37 @@ final class ProfileCoordinator: CoordinatorProtocol {
     // MARK: Public Methods
 
     func start(animated: Bool) {
-        let builder = ProfileModuleBuilder()
-        let profileViewController = builder.build()
-        rootNavigationController.setViewControllers([profileViewController], animated: false)
+//        let temp = 
+        if (UserDefaults.standard.string(forKey: "isLoggedIn") != nil) == true {
+            print("ok")
+            let builder = ProfileModuleBuilder()
+            let profileViewController = builder.build()
+            rootNavigationController.setViewControllers([profileViewController], animated: false)
 
-        rootNavigationController.tabBarItem = tabBarItemFactory.getTabBarItem(from: TabBarPage.profile)
+            rootNavigationController.tabBarItem = tabBarItemFactory.getTabBarItem(from: TabBarPage.profile)
 
-        var controllers = rootTabBarController?.viewControllers
-        if controllers == nil {
-            controllers = [rootNavigationController]
+            var controllers = rootTabBarController?.viewControllers
+            if controllers == nil {
+                controllers = [rootNavigationController]
+            } else {
+                controllers?.append(rootNavigationController)
+            }
+            rootTabBarController?.setViewControllers(controllers, animated: true)
         } else {
-            controllers?.append(rootNavigationController)
+            print("sorry")
+            let builder = LoginModuleBuilder()
+            let loginViewController = builder.build()
+            rootNavigationController.setViewControllers([loginViewController], animated: false)
+
+//            rootNavigationController.tabBarItem = tabBarItemFactory.getTabBarItem(from: TabBarPage.profile)
+
+//            var controllers = rootTabBarController?.viewControllers
+//            if controllers == nil {
+//                controllers = [rootNavigationController]
+//            } else {
+//                controllers?.append(rootNavigationController)
+//            }
+//            rootTabBarController?.setViewControllers(controllers, animated: true)
         }
-        rootTabBarController?.setViewControllers(controllers, animated: true)
     }
 }

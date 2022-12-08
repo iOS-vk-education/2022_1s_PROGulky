@@ -16,10 +16,10 @@ final class RegistrationInteractor {
 // MARK: RegistrationInteractorInput
 
 extension RegistrationInteractor: RegistrationInteractorInput {
-    func registration(email: String, name: String, password: String) -> (Login?) {
+    func registration(email: String, name: String, password: String) -> (User?) {
         let semaphore = DispatchSemaphore(value: 0)
 
-        var returnData: Login?
+        var returnData: User?
         let json: [String: Any] = [
             "email": email,
             "name": name,
@@ -42,7 +42,7 @@ extension RegistrationInteractor: RegistrationInteractorInput {
                 semaphore.signal()
                 return
             }
-            returnData = try? JSONDecoder().decode(Login.self, from: data)
+            returnData = try? JSONDecoder().decode(User.self, from: data)
             print("login returnData \(String(describing: returnData))")
             semaphore.signal()
         }
