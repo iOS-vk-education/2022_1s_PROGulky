@@ -46,8 +46,9 @@ extension MapDetailPresenter: MapDetailViewOutput {
     }
 
     func viewDidLoad() {
-        router.embedDetailModule(output: self)
         router.embedMapModule(output: self)
+        router.embedDetailModule(output: self)
+//        router.embedMapModule(output: self)
     }
 
     func backButtonTapped() {

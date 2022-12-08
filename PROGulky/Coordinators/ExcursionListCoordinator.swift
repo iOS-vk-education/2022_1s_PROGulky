@@ -48,6 +48,9 @@ final class ExcursionListCoordinator: CoordinatorProtocol {
 
 extension ExcursionListCoordinator: ExcursionsListModuleOutput {
     func excursionsListModuleWantsToOpenMapDetailModule(excursion: Excursion) {
+//        let detailBuilder = DetailExcursionModuleBuilder(excursion: excursion, moduleOutput: self)
+//        let detailViewController = detailBuilder.build()
+//        rootNavigationController.pushViewController(detailViewController, animated: true)
         let mapDetailBuilder = MapDetailModuleBuilder()
         let mapDetailViewController = mapDetailBuilder.build(moduleOutput: self, excursion: excursion)
         rootNavigationController.pushViewController(mapDetailViewController, animated: true)

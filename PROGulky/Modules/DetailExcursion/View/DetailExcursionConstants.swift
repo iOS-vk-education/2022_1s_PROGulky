@@ -20,7 +20,7 @@ struct DetailExcursionConstants {
     enum InfoView {
         static let backgroundColor = UIColor.prog.Dynamic.lightBackground
         static let cornerRadius: CGFloat = 16
-        static let height: CGFloat = 200
+        static let height: CGFloat = 140
 
         static let marginLeft: CGFloat = 20
         static let marginRight: CGFloat = -20
@@ -30,7 +30,7 @@ struct DetailExcursionConstants {
         static let shadowOpacity: Float = 0.5
         static let shadowRadius: CGFloat = 7
 
-        static let heightInImage: CGFloat = -100 // На сколько эта вью залезает на картинку
+        static let heightInImage: CGFloat = -20 // На сколько эта вью залезает на картинку
 
         enum Title {
             static let marginTop: CGFloat = 15

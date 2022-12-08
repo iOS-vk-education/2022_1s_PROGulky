@@ -76,7 +76,7 @@ final class DetailExcursionInfoView: UIView {
 
     // MARK: Lifecycle
 
-    init(isBottomSheet: Bool = false) {
+    init() {
         super.init(frame: .zero)
 
         addSubviews(
@@ -87,11 +87,12 @@ final class DetailExcursionInfoView: UIView {
             numberOfPlacesLabel,
             durationLabel,
             distanceLabel,
-            button,
-            streakView
+            button
+//            streakView
         )
         setupUI()
         setupConstraints()
+        button.isHidden = true
     }
 
     // MARK: Public Methods
@@ -107,8 +108,8 @@ final class DetailExcursionInfoView: UIView {
 
     func makeBottomSheetView(isBottomSheet: Bool) {
         UIView.animate(withDuration: 0.170) {
-            self.button.isHidden = isBottomSheet
-            self.streakView.isHidden = !isBottomSheet
+//            self.button.isHidden = isBottomSheet
+//            self.streakView.isHidden = !isBottomSheet
         }
     }
 
@@ -126,7 +127,7 @@ final class DetailExcursionInfoView: UIView {
         setDurationLabelConstraint()
         setDistanceLabelConstraint()
         setButtonConstraint()
-        setupStreakView()
+//        setupStreakView()
     }
 
     private func setTitleConstraint() {

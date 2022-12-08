@@ -11,10 +11,9 @@ import UIKit
 
 final class MapDetailViewController: UIViewController {
     var output: MapDetailViewOutput!
-    var mapView: UIView!
-    var detailView: UIView!
+    private var mapView: UIView!
 
-    private var panGestureRecognizer: UIPanGestureRecognizer?
+    private var detailViewController: DetailExcursionViewController!
 
     // MARK: Lifecycle
 
@@ -22,7 +21,6 @@ final class MapDetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .prog.Dynamic.background
         setupNavigationBar()
-        setupGestureRecognizer()
         output.viewDidLoad()
     }
 
@@ -38,31 +36,9 @@ final class MapDetailViewController: UIViewController {
         navigationItem.leftBarButtonItem = backButtonItem
     }
 
-    private func setupDetailView() {
-//        detailView.set(excursion: output.viewModel)
-        view.addSubview(detailView)
-        detailView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.height.equalTo(200)
-        }
-        detailView.isUserInteractionEnabled = true
-    }
-
-    private func setupGestureRecognizer() {
-        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
-        panGestureRecognizer?.minimumNumberOfTouches = 1
-    }
-
     @objc
     private func backButtonTapped() {
         output.backButtonTapped()
-    }
-
-    @objc
-    private func handleSwipe(_ gestureRecognizer: UIPanGestureRecognizer) {        
-        output.handleSwipe()
     }
 }
 
@@ -73,21 +49,25 @@ extension MapDetailViewController: MapDetailViewInput {
 
 extension MapDetailViewController: MapDetailTransitionHandlerProtocol {
     func embedDetailModule(_ viewController: UIViewController) {
-        addChild(viewController)
-        viewController.didMove(toParent: self)
         guard let detailViewController = viewController as? DetailExcursionViewController else { return }
         detailViewController.viewDidLoad()
-        detailViewController.detailExcursionInfoView.makeBottomSheetView(isBottomSheet: true)
-        detailView = detailViewController.detailExcursionInfoView
-        view.addSubview(detailView)
-        detailView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.height.equalTo(200)
+
+        isModalInPresentation = true
+        detailViewController.isModalInPresentation = true
+
+        if let sheet = detailViewController.sheetPresentationController {
+            let smallDetent = UISheetPresentationController.Detent.custom(identifier: .medium) { _ in
+                170
+            }
+
+            sheet.detents = [smallDetent, .large()]
+            sheet.preferredCornerRadius = 13
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.largestUndimmedDetentIdentifier = smallDetent.identifier
+            sheet.prefersGrabberVisible = true
+            sheet.delegate = self
         }
-        detailView.isUserInteractionEnabled = true
-        detailView.addGestureRecognizer(panGestureRecognizer!)
+        present(detailViewController, animated: true)
     }
 
     func embedMapModule(_ viewController: UIViewController) {
@@ -96,10 +76,38 @@ extension MapDetailViewController: MapDetailTransitionHandlerProtocol {
         mapView = viewController.view
         view.addSubview(mapView)
         mapView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.bottom.equalTo(detailView.snp.top)
+            make.edges.equalToSuperview()
+//            make.top.equalToSuperview()
+//            make.trailing.equalToSuperview()
+//            make.leading.equalToSuperview()
+//            make.bottom.equalToSuperview()
         }
+    }
+}
+
+// MARK: UISheetPresentationControllerDelegate
+
+extension MapDetailViewController: UISheetPresentationControllerDelegate {
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+        guard let detailViewController = sheetPresentationController.presentedViewController as? DetailExcursionViewController else {
+            return
+        }
+//        detailViewController.resize()
+        let size: DetailExcursionViewController.Size
+        guard let id = sheetPresentationController.selectedDetentIdentifier else { return }
+//        if sheetPresentationController.selectedDetentIdentifier == .medium {
+//
+//        }
+        switch id {
+        case .large: size = .large
+        case .medium: size = .small
+        default:
+            return
+        }
+
+        sheetPresentationController.animateChanges {
+            detailViewController.resize(size)
+        }
+        
     }
 }
