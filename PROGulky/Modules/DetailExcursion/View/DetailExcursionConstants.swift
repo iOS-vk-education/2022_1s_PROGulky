@@ -20,7 +20,7 @@ struct DetailExcursionConstants {
     enum InfoView {
         static let backgroundColor = UIColor.prog.Dynamic.lightBackground
         static let cornerRadius: CGFloat = 16
-        static let height: CGFloat = 140
+        static let height: CGFloat = 170
 
         static let marginLeft: CGFloat = 20
         static let marginRight: CGFloat = -20

@@ -60,12 +60,6 @@ extension ExcursionListCoordinator: ExcursionsListModuleOutput {
 // MARK: MapDetailModuleOutput
 
 extension ExcursionListCoordinator: MapDetailModuleOutput {
-    func mapDetailModuleWantsToOpenDetailModule(excursion: Excursion) {
-        let detailBuilder = DetailExcursionModuleBuilder(excursion: excursion, moduleOutput: self)
-        let detailViewController = detailBuilder.build()
-        rootNavigationController.pushViewController(detailViewController, animated: true)
-    }
-
     func mapDetailModuleWantsToClose() {
         rootNavigationController.popViewController(animated: true)
         rootNavigationController.tabBarController?.tabBar.isHidden = false

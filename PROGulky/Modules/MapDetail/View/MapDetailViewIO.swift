@@ -11,7 +11,6 @@ protocol MapDetailViewOutput: AnyObject {
     var viewModel: DetailExcursionInfoViewModel { get }
     func viewDidLoad()
     func backButtonTapped()
-    func handleSwipe()
 }
 
 // MARK: - MapDetailViewInput

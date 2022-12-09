@@ -48,15 +48,10 @@ extension MapDetailPresenter: MapDetailViewOutput {
     func viewDidLoad() {
         router.embedMapModule(output: self)
         router.embedDetailModule(output: self)
-//        router.embedMapModule(output: self)
     }
 
     func backButtonTapped() {
         moduleOutput?.mapDetailModuleWantsToClose()
-    }
-
-    func handleSwipe() {
-        moduleOutput?.mapDetailModuleWantsToOpenDetailModule(excursion: excursion)
     }
 }
 

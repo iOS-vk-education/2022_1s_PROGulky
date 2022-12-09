@@ -14,5 +14,4 @@ protocol MapDetailModuleInput: AnyObject {
 
 protocol MapDetailModuleOutput: AnyObject {
     func mapDetailModuleWantsToClose()
-    func mapDetailModuleWantsToOpenDetailModule(excursion: Excursion)
 }

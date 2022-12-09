@@ -18,6 +18,20 @@ final class MapViewController: UIViewController {
     private let button = UIButton()
     private let listener: CameraListener = .init()
 
+    private enum Constants {
+        enum Compass {
+            static let bottomOffset: CGFloat = -232
+            static let heightWidth: CGFloat = 40
+            static let trailingOffset: CGFloat = -24
+        }
+
+        static let animationDuration = 0.170
+
+        static let longAnimationDuration: Float = 1
+        static let zoom: Float = 17
+        static let degreesInHalfPi: Float = 180
+    }
+
     // MARK: Lifecycle
 
     override func viewDidLoad() {
@@ -42,12 +56,15 @@ final class MapViewController: UIViewController {
     private func setupButton() {
         view.addSubview(button)
         view.bringSubviewToFront(button)
-        button.setImage(UIImage(named: "compass")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.setImage(UIImage(named: "compass")?
+            .withRenderingMode(.alwaysOriginal), for: .normal)
         button.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().offset(-192)
-            make.trailing.equalToSuperview().inset(24)
-            make.height.equalTo(40)
-            make.width.equalTo(40)
+            make.bottom.equalToSuperview()
+                .offset(Constants.Compass.bottomOffset)
+            make.trailing.equalToSuperview()
+                .offset(Constants.Compass.trailingOffset)
+            make.height.equalTo(Constants.Compass.heightWidth)
+            make.width.equalTo(Constants.Compass.heightWidth)
         }
         button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
     }
@@ -70,7 +87,8 @@ final class MapViewController: UIViewController {
 
         mapView.mapWindow.map.move(
             with: cameraPosition,
-            animationType: YMKAnimation(type: YMKAnimationType.linear, duration: 0.170)
+            animationType: YMKAnimation(type: YMKAnimationType.linear,
+                                        duration: Float(Constants.animationDuration))
         )
     }
 }
@@ -94,11 +112,11 @@ extension MapViewController: MapViewInput {
 
         mapView.mapWindow.map.move(
             with: YMKCameraPosition(target: points[0],
-                                    zoom: 17,
+                                    zoom: Constants.zoom,
                                     azimuth: 0,
                                     tilt: 0),
             animationType: YMKAnimation(type: YMKAnimationType.smooth,
-                                        duration: 1)
+                                        duration: Constants.longAnimationDuration)
         )
     }
 }
@@ -107,9 +125,9 @@ extension MapViewController: MapViewInput {
 
 extension MapViewController: ListenerDelegate {
     func azimuthChanged(with cameraPosition: YMKCameraPosition) {
-        UIView.animate(withDuration: 0.170) {
+        UIView.animate(withDuration: Constants.animationDuration) {
             self.button.transform = CGAffineTransform(
-                rotationAngle: CGFloat(-cameraPosition.azimuth * .pi / 180)
+                rotationAngle: CGFloat(-cameraPosition.azimuth * .pi / Constants.degreesInHalfPi)
             )
         }
     }

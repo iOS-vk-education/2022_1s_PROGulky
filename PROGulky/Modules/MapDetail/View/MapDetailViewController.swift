@@ -13,7 +13,11 @@ final class MapDetailViewController: UIViewController {
     var output: MapDetailViewOutput!
     private var mapView: UIView!
 
-    private var detailViewController: DetailExcursionViewController!
+    private enum Constants {
+        static let backButtonImageName = "chevron.left"
+        static let smallSheetHeight: CGFloat = 190
+        static let cornerRadius: CGFloat = 13
+    }
 
     // MARK: Lifecycle
 
@@ -32,12 +36,13 @@ final class MapDetailViewController: UIViewController {
         backButtonItem.style = .plain
         backButtonItem.target = self
         backButtonItem.action = #selector(backButtonTapped)
-        backButtonItem.image = UIImage(systemName: "chevron.left")
+        backButtonItem.image = UIImage(systemName: Constants.backButtonImageName)
         navigationItem.leftBarButtonItem = backButtonItem
     }
 
     @objc
     private func backButtonTapped() {
+        dismiss(animated: false)
         output.backButtonTapped()
     }
 }
@@ -52,20 +57,17 @@ extension MapDetailViewController: MapDetailTransitionHandlerProtocol {
         guard let detailViewController = viewController as? DetailExcursionViewController else { return }
         detailViewController.viewDidLoad()
 
-        isModalInPresentation = true
         detailViewController.isModalInPresentation = true
-
         if let sheet = detailViewController.sheetPresentationController {
             let smallDetent = UISheetPresentationController.Detent.custom(identifier: .medium) { _ in
-                170
+                Constants.smallSheetHeight
             }
 
             sheet.detents = [smallDetent, .large()]
-            sheet.preferredCornerRadius = 13
+            sheet.preferredCornerRadius = Constants.cornerRadius
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.largestUndimmedDetentIdentifier = smallDetent.identifier
+            sheet.largestUndimmedDetentIdentifier = .large
             sheet.prefersGrabberVisible = true
-            sheet.delegate = self
         }
         present(detailViewController, animated: true)
     }
@@ -77,37 +79,6 @@ extension MapDetailViewController: MapDetailTransitionHandlerProtocol {
         view.addSubview(mapView)
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-//            make.top.equalToSuperview()
-//            make.trailing.equalToSuperview()
-//            make.leading.equalToSuperview()
-//            make.bottom.equalToSuperview()
         }
-    }
-}
-
-// MARK: UISheetPresentationControllerDelegate
-
-extension MapDetailViewController: UISheetPresentationControllerDelegate {
-    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
-        guard let detailViewController = sheetPresentationController.presentedViewController as? DetailExcursionViewController else {
-            return
-        }
-//        detailViewController.resize()
-        let size: DetailExcursionViewController.Size
-        guard let id = sheetPresentationController.selectedDetentIdentifier else { return }
-//        if sheetPresentationController.selectedDetentIdentifier == .medium {
-//
-//        }
-        switch id {
-        case .large: size = .large
-        case .medium: size = .small
-        default:
-            return
-        }
-
-        sheetPresentationController.animateChanges {
-            detailViewController.resize(size)
-        }
-        
     }
 }
