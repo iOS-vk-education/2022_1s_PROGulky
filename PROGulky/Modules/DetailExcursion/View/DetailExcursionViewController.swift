@@ -60,11 +60,6 @@ final class DetailExcursionViewController: UIViewController {
         detailExcursionInfoView.layer.cornerRadius = DetailExcursionConstants.InfoView.cornerRadius
         detailExcursionInfoView.clipsToBounds = true
         detailExcursionInfoView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-
-        // Конфигурация тени
-//        detailExcursionInfoView.layer.shadowColor = DetailExcursionConstants.InfoView.shadowColor
-//        detailExcursionInfoView.layer.shadowOpacity = DetailExcursionConstants.InfoView.shadowOpacity
-//        detailExcursionInfoView.layer.shadowRadius = DetailExcursionConstants.InfoView.shadowRadius
     }
 
     private func configureTableView() {
