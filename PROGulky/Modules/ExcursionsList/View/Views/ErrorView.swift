@@ -60,8 +60,8 @@ final class ErrorView: UIView {
         button.configuration = configuration
         return button
     }()
-    
-    @objc func didButtonTapped() {
+
+    @objc private func didButtonTapped() {
         delegate?.didRepeatButtonTapped()
     }
 

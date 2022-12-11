@@ -14,4 +14,6 @@ protocol ExcursionsListModuleInput: AnyObject {
 
 protocol ExcursionsListModuleOutput: AnyObject {
     func excursionsListModuleWantsToOpenDetailExcursion(excursion: Excursion)
+
+    func excursionsListModuleWantsToOpenAddExcursion()
 }

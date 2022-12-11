@@ -8,6 +8,7 @@
 // MARK: - AddExcursionViewOutput
 
 protocol AddExcursionViewOutput: AnyObject {
+    func selectedPlacesCount() -> Int
 }
 
 // MARK: - AddExcursionViewInput

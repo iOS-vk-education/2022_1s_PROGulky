@@ -17,6 +17,8 @@ final class AddExcursionPresenter {
     private let interactor: AddExcursionInteractorInput
     private let router: AddExcursionRouterInput
 
+    private let selectedPlaces: [Place] = []
+
     // MARK: - Lifecycle
 
     init(interactor: AddExcursionInteractorInput, router: AddExcursionRouterInput) {
@@ -28,7 +30,12 @@ final class AddExcursionPresenter {
 extension AddExcursionPresenter: AddExcursionModuleInput {
 }
 
+// MARK: AddExcursionViewOutput
+
 extension AddExcursionPresenter: AddExcursionViewOutput {
+    func selectedPlacesCount() -> Int {
+        selectedPlaces.count
+    }
 }
 
 extension AddExcursionPresenter: AddExcursionInteractorOutput {

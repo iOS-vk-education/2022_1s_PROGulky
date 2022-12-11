@@ -46,7 +46,9 @@ final class ExcursionsListViewController: UIViewController {
     }
 
     @objc
-    private func didTapAddButton() {}
+    private func didTapAddButton() {
+        output.didAddExcursionButtonTapped()
+    }
 
     // Настройка топ бара
     private func setupFilterBar() {

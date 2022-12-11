@@ -56,4 +56,14 @@ extension ExcursionListCoordinator: ExcursionsListModuleOutput {
     func detailExcursionModuleWantsToClose() {
         rootNavigationController.popViewController(animated: true)
     }
+
+    func excursionsListModuleWantsToOpenAddExcursion() {
+        let builder = AddExcursionModuleBuilder()
+        let addView = builder.build()
+        rootNavigationController.pushViewController(addView, animated: true)
+    }
+
+    func addExcursionModuleWantsToClose() {
+        rootNavigationController.popViewController(animated: true)
+    }
 }

@@ -55,6 +55,10 @@
 		543F2CBF292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CBC292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift */; };
 		545FE1AA291DA58F00890693 /* ExcursionsListConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */; };
 		545FE1AC291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */; };
+		5478D21C2943986F00A3C23D /* SelectedPlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5478D21B2943986F00A3C23D /* SelectedPlaceCell.swift */; };
+		5478D21E2943987F00A3C23D /* AddPlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5478D21D2943987F00A3C23D /* AddPlaceCell.swift */; };
+		5478D22129439BA100A3C23D /* CreateExcursionSettingsSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5478D22029439BA100A3C23D /* CreateExcursionSettingsSections.swift */; };
+		5478D22329439C0D00A3C23D /* CreateExcursionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5478D22229439C0D00A3C23D /* CreateExcursionConstants.swift */; };
 		548ABFDA29205592001CFDA9 /* Excursion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548ABFD929205592001CFDA9 /* Excursion.swift */; };
 		54A50C46291714E10042769E /* ExcursionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A50C45291714E10042769E /* ExcursionCell.swift */; };
 		54A50C482917199E0042769E /* ExcursionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A50C472917199E0042769E /* ExcursionViewModel.swift */; };
@@ -201,6 +205,10 @@
 		543F2CBC292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionHeaderInSectionView.swift; sourceTree = "<group>"; };
 		545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsListConstants.swift; sourceTree = "<group>"; };
 		545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsListDisplayDataFactory.swift; sourceTree = "<group>"; };
+		5478D21B2943986F00A3C23D /* SelectedPlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedPlaceCell.swift; sourceTree = "<group>"; };
+		5478D21D2943987F00A3C23D /* AddPlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceCell.swift; sourceTree = "<group>"; };
+		5478D22029439BA100A3C23D /* CreateExcursionSettingsSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExcursionSettingsSections.swift; sourceTree = "<group>"; };
+		5478D22229439C0D00A3C23D /* CreateExcursionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExcursionConstants.swift; sourceTree = "<group>"; };
 		548ABFD929205592001CFDA9 /* Excursion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Excursion.swift; sourceTree = "<group>"; };
 		54A50C45291714E10042769E /* ExcursionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionCell.swift; sourceTree = "<group>"; };
 		54A50C472917199E0042769E /* ExcursionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionViewModel.swift; sourceTree = "<group>"; };
@@ -332,6 +340,9 @@
 		0393E4E7915E722FC0FC3CD3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5478D22229439C0D00A3C23D /* CreateExcursionConstants.swift */,
+				5478D21F29439B8200A3C23D /* Views */,
+				544F4D7D2943966100E2B0E9 /* Cells */,
 				565F7487028E8AB78853ADEE /* AddExcursionViewIO.swift */,
 				6C070CC38B9431BEF26E6225 /* AddExcursionViewController.swift */,
 			);
@@ -570,6 +581,23 @@
 				543F2CBA292E72CA00120116 /* DetailExcursionInfoView.swift */,
 				543F2CBB292E72CA00120116 /* DetailExcursionSettingsSection.swift */,
 				543F2CBC292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		544F4D7D2943966100E2B0E9 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5478D21B2943986F00A3C23D /* SelectedPlaceCell.swift */,
+				5478D21D2943987F00A3C23D /* AddPlaceCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		5478D21F29439B8200A3C23D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5478D22029439BA100A3C23D /* CreateExcursionSettingsSections.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1324,11 +1352,13 @@
 				6675D20B29126FD80058A4B0 /* CoordinatorProtocol.swift in Sources */,
 				F83E1A9F4C1F8D6516201126 /* ExcursionsListRouterInput.swift in Sources */,
 				1D19F4AB810FE4440C1F30EF /* ExcursionsListRouter.swift in Sources */,
+				5478D22329439C0D00A3C23D /* CreateExcursionConstants.swift in Sources */,
 				94D58836216B679A692591E0 /* ExcursionsListBuilder.swift in Sources */,
 				54D91DBE2930C1ED0097AF52 /* FavouritesExcursionsConstants.swift in Sources */,
 				A5D309F42928F403005D2275 /* ProfileSettingsCell.swift in Sources */,
 				0847232626A75B9FF101F402 /* ProfileViewIO.swift in Sources */,
 				147E3B43F41E35D149EB3E41 /* ProfileViewController.swift in Sources */,
+				5478D21E2943987F00A3C23D /* AddPlaceCell.swift in Sources */,
 				C364355ABC98A250C6D85467 /* ProfileModuleIO.swift in Sources */,
 				A517195D2934B7AE003454FF /* UIViewController+Extentions.swift in Sources */,
 				527308AC21EE31AD2021C736 /* ProfilePresenter.swift in Sources */,
@@ -1349,6 +1379,7 @@
 				E9F972D6925AAE35541A6A7A /* FavouritesExcursionsPresenter.swift in Sources */,
 				54C089D5291A8AC7000497FE /* UILabel+Extensions.swift in Sources */,
 				E440B3CED1731E9DAC92FF12 /* FavouritesExcursionsInteractorIO.swift in Sources */,
+				5478D21C2943986F00A3C23D /* SelectedPlaceCell.swift in Sources */,
 				AC2B243C7837A2D1C337F656 /* FavouritesExcursionsInteractor.swift in Sources */,
 				DF2C602FDD54CFA3AF88934A /* FavouritesExcursionsRouterInput.swift in Sources */,
 				1CBF00DD0C0FABDE6D041683 /* FavouritesExcursionsRouter.swift in Sources */,
@@ -1405,6 +1436,7 @@
 				655B60CD5F361A727A7F17AE /* DetailPlacePresenter.swift in Sources */,
 				58650139389367223C2EFB8B /* DetailPlaceInteractorIO.swift in Sources */,
 				2B1C02734BC120EC3252A924 /* DetailPlaceInteractor.swift in Sources */,
+				5478D22129439BA100A3C23D /* CreateExcursionSettingsSections.swift in Sources */,
 				7E3B8C8C195150120F38D847 /* DetailPlaceRouterInput.swift in Sources */,
 				25870E6F8BEFEB2F31531204 /* DetailPlaceRouter.swift in Sources */,
 				543F2CAC292E724C00120116 /* DetailExcursionViewModel.swift in Sources */,
