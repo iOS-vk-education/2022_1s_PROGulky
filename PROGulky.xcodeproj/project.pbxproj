@@ -62,7 +62,6 @@
 		54C089D3291A87FD000497FE /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C089D2291A87FD000497FE /* UIView+Extensions.swift */; };
 		54C089D5291A8AC7000497FE /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C089D4291A8AC7000497FE /* UILabel+Extensions.swift */; };
 		54C089D7291ACB76000497FE /* ExcursionsFilterBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C089D6291ACB76000497FE /* ExcursionsFilterBarView.swift */; };
-		54C460EB29392D7300A1A1D6 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 54C460EA29392D7300A1A1D6 /* SDWebImage */; };
 		54D91DBE2930C1ED0097AF52 /* FavouritesExcursionsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D91DBD2930C1ED0097AF52 /* FavouritesExcursionsConstants.swift */; };
 		54D91DC12930C5150097AF52 /* FavouritesExcursionMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D91DC02930C5150097AF52 /* FavouritesExcursionMessageView.swift */; };
 		58650139389367223C2EFB8B /* DetailPlaceInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9D40BD2E032FE9D70ED86A /* DetailPlaceInteractorIO.swift */; };
@@ -305,7 +304,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54C460EB29392D7300A1A1D6 /* SDWebImage in Frameworks */,
 				B5B117DD037D05E1D6A06F0A /* Pods_PROGulky.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1001,16 +999,13 @@
 				5A0E4B6449C266E74CD9A10C /* [CP] Embed Pods Frameworks */,
 				661A0DB82902A63800312A0B /* SwiftLint */,
 				661A0DBA2902A66700312A0B /* SwiftFormat */,
-				ABBE6D6A311B130C66CED0C7 /* [CP] Copy Pods Resources */,
+				F7E8988AB96CF1A2827074CB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = PROGulky;
-			packageProductDependencies = (
-				54C460EA29392D7300A1A1D6 /* SDWebImage */,
-			);
 			productName = PROGulky;
 			productReference = 661A0D852902996D00312A0B /* PROGulky.app */;
 			productType = "com.apple.product-type.application";
@@ -1043,7 +1038,7 @@
 				661A0DA22902996F00312A0B /* Frameworks */,
 				661A0DA32902996F00312A0B /* Resources */,
 				14C01A78E1CEB040BFC42529 /* [CP] Embed Pods Frameworks */,
-				640EB9C849C270A07B9496EC /* [CP] Copy Pods Resources */,
+				310C020658B301CC77EF0EDD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1087,9 +1082,6 @@
 				Base,
 			);
 			mainGroup = 661A0D7C2902996D00312A0B;
-			packageReferences = (
-				54C460E929392D7300A1A1D6 /* XCRemoteSwiftPackageReference "SDWebImage" */,
-			);
 			productRefGroup = 661A0D862902996D00312A0B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1145,6 +1137,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PROGulky-PROGulkyUITests/Pods-PROGulky-PROGulkyUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		310C020658B301CC77EF0EDD /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PROGulky-PROGulkyUITests/Pods-PROGulky-PROGulkyUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PROGulky-PROGulkyUITests/Pods-PROGulky-PROGulkyUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PROGulky-PROGulkyUITests/Pods-PROGulky-PROGulkyUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4AAD977D8E016F284374F5D1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1182,23 +1191,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PROGulky/Pods-PROGulky-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		640EB9C849C270A07B9496EC /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PROGulky-PROGulkyUITests/Pods-PROGulky-PROGulkyUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PROGulky-PROGulkyUITests/Pods-PROGulky-PROGulkyUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PROGulky-PROGulkyUITests/Pods-PROGulky-PROGulkyUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		661A0DB82902A63800312A0B /* SwiftLint */ = {
@@ -1284,7 +1276,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ABBE6D6A311B130C66CED0C7 /* [CP] Copy Pods Resources */ = {
+		F7E8988AB96CF1A2827074CB /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1759,25 +1751,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		54C460E929392D7300A1A1D6 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		54C460EA29392D7300A1A1D6 /* SDWebImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 54C460E929392D7300A1A1D6 /* XCRemoteSwiftPackageReference "SDWebImage" */;
-			productName = SDWebImage;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 661A0D7D2902996D00312A0B /* Project object */;
 }
