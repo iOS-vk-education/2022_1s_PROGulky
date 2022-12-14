@@ -99,6 +99,7 @@ final class DetailExcursionViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.top.lessThanOrEqualTo(self.excursionImageView.snp.bottom)
                 .offset(DetailExcursionConstants.InfoView.heightInImage)
+            make.bottom.greaterThanOrEqualTo(self.excursionImageView.snp.bottom)
             make.height.greaterThanOrEqualTo(DetailExcursionConstants.InfoView.height)
             make.trailing.equalToSuperview()
             make.leading.equalToSuperview()
