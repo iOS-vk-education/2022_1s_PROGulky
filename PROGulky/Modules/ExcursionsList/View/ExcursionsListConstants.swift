@@ -85,4 +85,9 @@ struct ExcursionsListConstants {
             static let textColor: UIColor = .gray // Цвет текста параметров
         }
     }
+
+    enum Api {
+        static let baseURL: String = "http://37.140.195.167:5000"
+        static let imageURL: String = "\(baseURL)/images/excursions"
+    }
 }

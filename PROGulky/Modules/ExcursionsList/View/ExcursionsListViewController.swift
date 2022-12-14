@@ -14,6 +14,8 @@ final class ExcursionsListViewController: UIViewController {
 
     private let filterBar = ExcursionsFilterBarView(frame: .zero)
     private var excursionsTable = UITableView(frame: .zero, style: .insetGrouped)
+    private let loader = UIActivityIndicatorView(frame: .zero)
+    private let errorView = ErrorView(frame: .zero)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +28,12 @@ final class ExcursionsListViewController: UIViewController {
         setupNavBar()
         setupFilterBar()
         setupTableView()
+        setupLoader()
+        setupErrorView()
+    }
+
+    func reload() {
+        excursionsTable.reloadData()
     }
 
     // Настройка нав бара
@@ -88,9 +96,57 @@ final class ExcursionsListViewController: UIViewController {
         excursionsTable.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         excursionsTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
+
+    private func setupLoader() {
+        view.addSubview(loader)
+        setLoaderConstraints()
+    }
+
+    private func setLoaderConstraints() {
+        loader.translatesAutoresizingMaskIntoConstraints = false
+        loader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        loader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    }
+
+    private func setupErrorView() {
+        view.addSubview(errorView)
+        errorView.delegate = self
+
+        errorView.isHidden = true
+        setErrorViewConstrints()
+    }
+
+    private func setErrorViewConstrints() {
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        errorView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        errorView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+    }
 }
 
+// MARK: ExcursionsListViewInput
+
 extension ExcursionsListViewController: ExcursionsListViewInput {
+    func showErrorView() {
+        DispatchQueue.main.async {
+            self.errorView.isHidden = false
+            self.loader.stopAnimating()
+        }
+    }
+
+    func reloadView() {
+        reload()
+    }
+
+    func startLoader() {
+        loader.hidesWhenStopped = true
+        loader.startAnimating()
+    }
+
+    func stopLoader() {
+        loader.stopAnimating()
+    }
 }
 
 // MARK: UITableViewDataSource
@@ -120,5 +176,13 @@ extension ExcursionsListViewController: UITableViewDataSource {
 extension ExcursionsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         output.didSelectCell(at: indexPath)
+    }
+}
+
+// MARK: ErrorViewDelegate
+
+extension ExcursionsListViewController: ErrorViewDelegate {
+    func didRepeatButtonTapped() {
+        output.didRepeatButtonTapped()
     }
 }

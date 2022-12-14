@@ -17,9 +17,18 @@ protocol ExcursionsListViewOutput: AnyObject {
     func itemsCount() -> Int
 
     func didSelectCell(at indexPath: IndexPath)
+
+    func didRepeatButtonTapped()
 }
 
 // MARK: - ExcursionsListViewInput
 
 protocol ExcursionsListViewInput: AnyObject {
+    func reloadView() // Перезагрузка данны в таблице
+
+    func startLoader() // Запустить крутилку с загрузкой
+
+    func stopLoader() // Остановить крутилку с загрузкой
+
+    func showErrorView() // Показать сообщение с ошибкой
 }

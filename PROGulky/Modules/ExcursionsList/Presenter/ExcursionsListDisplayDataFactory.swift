@@ -20,10 +20,17 @@ protocol ExcursionsListDisplayDataFactoryProtocol {
 
 final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryProtocol {
     func getExcursionViewModel(for excursion: Excursion) -> ExcursionViewModel {
-        ExcursionViewModel(
+        var displayRating: String
+        if let rating = excursion.rating {
+            displayRating = "\(rating)"
+        } else {
+            displayRating = "Без рейтинга"
+        }
+
+        return ExcursionViewModel(
             image: excursion.image,
             title: excursion.title,
-            rating: excursion.rating,
+            rating: displayRating,
             parameters: "\(excursion.numberOfPoints) точек | \(excursion.distance) км | \(excursion.duration) мин"
         )
     }
@@ -38,8 +45,8 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
                 image: nil,
                 address: "Театральная площадь, 1",
                 city: "Москва",
-                latitude: "55.760452",
-                longitude: "37.618373"
+                latitude: 55.760452,
+                longitude: 37.618373
             ),
             Place(
                 sort: 2,
@@ -48,8 +55,8 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
                 image: nil,
                 address: "Москва, Ивановская площадь",
                 city: "Москва",
-                latitude: "55.760452",
-                longitude: "37.618373"
+                latitude: 55.760452,
+                longitude: 37.618373
             ),
             Place(
                 sort: 3,
@@ -58,8 +65,8 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
                 image: nil,
                 address: "Красная площадь, 7",
                 city: "Москва",
-                latitude: "55.760452",
-                longitude: "37.618373"
+                latitude: 55.760452,
+                longitude: 37.618373
             ),
             Place(
                 sort: 4,
@@ -68,59 +75,74 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
                 image: nil,
                 address: "ул. Волхонка 15",
                 city: "Москва",
-                latitude: "55.760452",
-                longitude: "37.618373"
+                latitude: 55.760452,
+                longitude: 37.618373
             )
         ]
 
         let e1 = Excursion(
-            image: nil,
             title: "Интересная Москва",
-            rating: 5.0,
             description: "Приглашаем познакомиться с одной из древнейших и красивейших столиц мира. Вы оцените эклектичную архитектуру города, увидите знаменитые улицы",
+            ownerId: 1,
+            image: nil,
+            rating: nil,
             duration: 60,
-            numberOfPoints: 1,
             distance: 2.2,
+            numberOfPoints: 1,
+            ownerRoleValue: "user",
+            owner: Owner(id: 1, name: "Имя", email: "email"),
             places: places
         )
         let e2 = Excursion(
-            image: nil,
             title: "Театры Москвы",
-            rating: 4.96,
             description: "Приглашаем познакомиться с одной из древнейших и красивейших столиц мира. Вы оцените эклектичную архитектуру города, увидите знаменитые улицы",
+            ownerId: 1,
+            image: nil,
+            rating: 4.96,
             duration: 65,
-            numberOfPoints: 2,
             distance: 3.2,
+            numberOfPoints: 2,
+            ownerRoleValue: "user",
+            owner: Owner(id: 1, name: "Имя", email: "email"),
             places: places
         )
         let e3 = Excursion(
-            image: nil,
             title: "Парки",
-            rating: 3.33,
             description: "Приглашаем познакомиться с одной из древнейших и красивейших столиц мира. Вы оцените эклектичную архитектуру города, увидите знаменитые улицы",
+            ownerId: 1,
+            image: nil,
+            rating: 3.33,
             duration: 90,
-            numberOfPoints: 3,
             distance: 4.4,
+            numberOfPoints: 3,
+            ownerRoleValue: "user",
+            owner: Owner(id: 1, name: "Имя", email: "email"),
             places: places
         )
         let e4 = Excursion(
-            image: nil,
             title: "Пешеходная тропа",
-            rating: 3.7,
             description: "Приглашаем познакомиться с одной из древнейших и красивейших столиц мира. Вы оцените эклектичную архитектуру города, увидите знаменитые улицы",
+            ownerId: 1,
+            image: nil,
+            rating: 3.7,
             duration: 100,
-            numberOfPoints: 5,
             distance: 4.4,
+            numberOfPoints: 5,
+            ownerRoleValue: "user",
+            owner: Owner(id: 1, name: "Имя", email: "email"),
             places: places
         )
         let e5 = Excursion(
-            image: nil,
             title: "Обзорная",
-            rating: 4.5,
             description: "Приглашаем познакомиться с одной из древнейших и красивейших столиц мира. Вы оцените эклектичную архитектуру города, увидите знаменитые улицы",
+            ownerId: 1,
+            image: nil,
+            rating: 4.5,
             duration: 50,
-            numberOfPoints: 6,
             distance: 1.9,
+            numberOfPoints: 6,
+            ownerRoleValue: "user",
+            owner: Owner(id: 1, name: "Имя", email: "email"),
             places: places
         )
 

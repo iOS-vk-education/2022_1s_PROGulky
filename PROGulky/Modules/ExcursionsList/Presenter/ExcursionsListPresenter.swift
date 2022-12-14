@@ -40,12 +40,18 @@ extension ExcursionsListPresenter: ExcursionsListModuleInput {
 // MARK: ExcursionsListViewOutput
 
 extension ExcursionsListPresenter: ExcursionsListViewOutput {
+    func didRepeatButtonTapped() {
+        interactor.loadExcursionsList()
+    }
+
     func didSelectCell(at indexPath: IndexPath) {
         moduleOutput?.excursionsListModuleWantsToOpenDetailExcursion(excursion: excursions[indexPath.row])
     }
 
     func didLoadView() {
-        excursions = factory.setExcursionsListDisplayData()
+        interactor.loadExcursionsList()
+        view.startLoader() // Запуск анимации лоадера
+//      excursions = factory.setExcursionsListDisplayData()
     }
 
     func item(for index: Int) -> ExcursionViewModel {
@@ -57,5 +63,16 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
     }
 }
 
+// MARK: ExcursionsListInteractorOutput
+
 extension ExcursionsListPresenter: ExcursionsListInteractorOutput {
+    func getNetworkError() {
+        view.showErrorView()
+    }
+
+    func didLoadExcursionsList(excursions: Excursions) {
+        self.excursions = excursions
+        view.reloadView() // Перезагрузить тейбл вью
+        view.stopLoader() // Выключить анимацию лоадера
+    }
 }
