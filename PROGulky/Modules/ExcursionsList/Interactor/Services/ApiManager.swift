@@ -41,12 +41,11 @@ final class ApiManager {
 
     func getExcursions(completion: @escaping (Result<Excursions, Error>) -> Void) {
         let request = ApiType.getExcursions.request
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
                 completion(.failure(error))
             }
             guard let data = data else { return }
-
             do {
                 let excursions = try JSONDecoder().decode(Excursions.self, from: data)
                 // completion(.success(excursions))

@@ -2,13 +2,13 @@ PODS:
   - SnapKit (5.6.0)
   - SwiftFormat/CLI (0.49.9)
   - SwiftLint (0.47.1)
-  - YandexMapsMobile (4.2.1-lite)
+  - YandexMapsMobile (4.2.2-full)
 
 DEPENDENCIES:
   - SnapKit (~> 5.6.0)
   - SwiftFormat/CLI (~> 0.49)
   - SwiftLint (~> 0.47.1)
-  - YandexMapsMobile (~> 4.2.1-lite)
+  - YandexMapsMobile (~> 4.2.2-full)
 
 SPEC REPOS:
   trunk:
@@ -21,8 +21,8 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftFormat: 016c15401d06959ef9f81d7956462e91f55b8ac5
   SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
-  YandexMapsMobile: 4c635511108c2db35bfa7d4e855f5bc45ea5175f
+  YandexMapsMobile: 1fd5f86bc368ad6ba528b199f9477e4a26796567
 
-PODFILE CHECKSUM: 093d7b9e95b533d693ceddfc26a766f22b5dd7d4
+PODFILE CHECKSUM: 810cf4b319b0f14c2530a6b22d48ee729b8d7b34
 
 COCOAPODS: 1.11.3

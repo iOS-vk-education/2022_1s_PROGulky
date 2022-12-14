@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.appCoordinator = appCoordinator
         appCoordinator.start(animated: false)
 
+        let mapsConfigurator: MapsConfiguratorServiceProtocol = MapsConfiguratorService()
+        mapsConfigurator.activateMaps()
+
         return true
     }
 }
