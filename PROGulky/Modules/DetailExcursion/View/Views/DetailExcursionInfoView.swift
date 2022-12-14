@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import SnapKit
 
 final class DetailExcursionInfoView: UIView {
-    // Заголовок
+    // MARK: Private Properties
+
     private let title: UILabel = {
         let label = UILabel()
         label.font = DetailExcursionConstants.InfoView.Title.font
@@ -65,8 +67,10 @@ final class DetailExcursionInfoView: UIView {
         return button
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    // MARK: Lifecycle
+
+    init() {
+        super.init(frame: .zero)
 
         addSubviews(
             title,
@@ -80,7 +84,10 @@ final class DetailExcursionInfoView: UIView {
         )
         setupUI()
         setupConstraints()
+        button.isHidden = true
     }
+
+    // MARK: Public Methods
 
     func set(excursion: DetailExcursionInfoViewModel) {
         title.text = excursion.title
@@ -90,6 +97,8 @@ final class DetailExcursionInfoView: UIView {
         durationLabel.text = excursion.duration
         distanceLabel.text = excursion.distance
     }
+
+    // MARK: Private Methods
 
     private func setupUI() {
     }
@@ -106,65 +115,87 @@ final class DetailExcursionInfoView: UIView {
     }
 
     private func setTitleConstraint() {
-        title.translatesAutoresizingMaskIntoConstraints = false
-        title.topAnchor.constraint(equalTo: topAnchor, constant: DetailExcursionConstants.InfoView.Title.marginTop).isActive = true
-        title.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        title.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+                .offset(DetailExcursionConstants.InfoView.Title.marginTop)
+            make.centerX.equalToSuperview()
+        }
     }
 
     private func setRatingImageConstraint() {
-        ratingImage.translatesAutoresizingMaskIntoConstraints = false
-        ratingImage.trailingAnchor.constraint(equalTo: ratingLabel.leadingAnchor, constant: DetailExcursionConstants.InfoView.Rating.Image.marginRight).isActive = true
-        ratingImage.topAnchor.constraint(equalTo: title.bottomAnchor, constant: DetailExcursionConstants.InfoView.Rating.Image.marginTop).isActive = true
-        ratingImage.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.InfoView.Rating.Image.height).isActive = true
-        ratingImage.widthAnchor.constraint(equalTo: ratingImage.heightAnchor,
-                                           multiplier: DetailExcursionConstants.InfoView.Rating.Image.aspectRatio).isActive = true
+        ratingImage.snp.makeConstraints { make in
+            make.trailing.equalTo(ratingLabel.snp.leading)
+                .offset(DetailExcursionConstants.InfoView.Rating.Image.marginRight)
+            make.top.equalTo(title.snp.bottom)
+                .offset(DetailExcursionConstants.InfoView.Rating.Image.marginTop)
+            make.height.equalTo(DetailExcursionConstants.InfoView.Rating.Image.height)
+            make.width.equalTo(ratingImage.snp.height)
+                .multipliedBy(DetailExcursionConstants.InfoView.Rating.Image.aspectRatio)
+        }
     }
 
     private func setRatingLabelConstraint() {
-        ratingLabel.translatesAutoresizingMaskIntoConstraints = false
-        ratingLabel.topAnchor.constraint(equalTo: title.bottomAnchor, constant: DetailExcursionConstants.InfoView.Rating.Label.marginTop).isActive = true
-        ratingLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        ratingLabel.snp.makeConstraints { make in
+            make.top.equalTo(title.snp.bottom)
+                .offset(DetailExcursionConstants.InfoView.Rating.Label.marginTop)
+            make.centerX.equalToSuperview()
+        }
     }
 
     private func setHorizontalLineConstraint() {
-        horizontalLine.translatesAutoresizingMaskIntoConstraints = false
-        horizontalLine.leadingAnchor.constraint(equalTo: leadingAnchor, constant: DetailExcursionConstants.InfoView.HorizontalLine.marginLeft).isActive = true
-        horizontalLine.trailingAnchor.constraint(equalTo: trailingAnchor, constant: DetailExcursionConstants.InfoView.HorizontalLine.marginRight).isActive = true
-        horizontalLine.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.InfoView.HorizontalLine.height).isActive = true
-        horizontalLine.topAnchor.constraint(equalTo: ratingImage.bottomAnchor, constant: DetailExcursionConstants.InfoView.HorizontalLine.marginTop).isActive = true
+        horizontalLine.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+                .offset(DetailExcursionConstants.InfoView.HorizontalLine.marginLeft)
+            make.trailing.equalToSuperview()
+                .offset(DetailExcursionConstants.InfoView.HorizontalLine.marginRight)
+            make.height.equalTo(DetailExcursionConstants.InfoView.HorizontalLine.height)
+            make.top.equalTo(ratingImage.snp.bottom)
+                .offset(DetailExcursionConstants.InfoView.HorizontalLine.marginTop)
+        }
     }
 
     private func setNumberOfPlacesLabelConstraint() {
-        numberOfPlacesLabel.translatesAutoresizingMaskIntoConstraints = false
-        numberOfPlacesLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: DetailExcursionConstants.InfoView.ParameterItem.marginLeft).isActive = true
-        numberOfPlacesLabel.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor,
-                                                 constant: DetailExcursionConstants.InfoView.ParameterItem.marginTop).isActive = true
-        numberOfPlacesLabel.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.InfoView.ParameterItem.height).isActive = true
-        numberOfPlacesLabel.widthAnchor.constraint(equalToConstant: DetailExcursionConstants.InfoView.ParameterItem.width).isActive = true
+        numberOfPlacesLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+                .offset(DetailExcursionConstants.InfoView.ParameterItem.marginLeft)
+            make.top.equalTo(horizontalLine.snp.bottom)
+                .offset(DetailExcursionConstants.InfoView.ParameterItem.marginTop)
+            make.height.equalTo(DetailExcursionConstants.InfoView.ParameterItem.height)
+            make.width.equalTo(DetailExcursionConstants.InfoView.ParameterItem.width)
+        }
     }
 
     private func setDurationLabelConstraint() {
-        durationLabel.translatesAutoresizingMaskIntoConstraints = false
-        durationLabel.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor, constant: DetailExcursionConstants.InfoView.ParameterItem.marginTop).isActive = true
-        durationLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        durationLabel.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.InfoView.ParameterItem.height).isActive = true
-        durationLabel.widthAnchor.constraint(equalToConstant: DetailExcursionConstants.InfoView.ParameterItem.width).isActive = true
+        durationLabel.snp.makeConstraints { make in
+            make.top.equalTo(horizontalLine.snp.bottom)
+                .offset(DetailExcursionConstants.InfoView.ParameterItem.marginTop)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(DetailExcursionConstants.InfoView.ParameterItem.height)
+            make.width.equalTo(DetailExcursionConstants.InfoView.ParameterItem.width)
+        }
     }
 
     private func setDistanceLabelConstraint() {
-        distanceLabel.translatesAutoresizingMaskIntoConstraints = false
-        distanceLabel.topAnchor.constraint(equalTo: horizontalLine.bottomAnchor, constant: DetailExcursionConstants.InfoView.ParameterItem.marginTop).isActive = true
-        distanceLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: DetailExcursionConstants.InfoView.ParameterItem.marginRight).isActive = true
-        distanceLabel.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.InfoView.ParameterItem.height).isActive = true
-        distanceLabel.widthAnchor.constraint(equalToConstant: DetailExcursionConstants.InfoView.ParameterItem.width).isActive = true
+        distanceLabel.snp.makeConstraints { make in
+            make.top.equalTo(horizontalLine.snp.bottom)
+                .offset(DetailExcursionConstants.InfoView.ParameterItem.marginTop)
+            make.trailing.equalToSuperview()
+                .offset(DetailExcursionConstants.InfoView.ParameterItem.marginRight)
+            make.height.equalTo(DetailExcursionConstants.InfoView.ParameterItem.height)
+            make.width.equalTo(DetailExcursionConstants.InfoView.ParameterItem.width)
+        }
     }
 
     private func setButtonConstraint() {
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.topAnchor.constraint(equalTo: durationLabel.bottomAnchor, constant: DetailExcursionConstants.InfoView.Button.marginTop).isActive = true
-        button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: DetailExcursionConstants.InfoView.Button.marginLeft).isActive = true
-        button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: DetailExcursionConstants.InfoView.Button.marginRight).isActive = true
-        button.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.InfoView.Button.height).isActive = true
+        button.snp.makeConstraints { make in
+            make.top.equalTo(durationLabel.snp.bottom)
+                .offset(DetailExcursionConstants.InfoView.Button.marginTop)
+            make.leading.equalToSuperview()
+                .offset(DetailExcursionConstants.InfoView.Button.marginLeft)
+            make.trailing.equalToSuperview()
+                .offset(DetailExcursionConstants.InfoView.Button.marginRight)
+            make.height.equalTo(DetailExcursionConstants.InfoView.Button.height)
+        }
     }
 
     @available(*, unavailable)

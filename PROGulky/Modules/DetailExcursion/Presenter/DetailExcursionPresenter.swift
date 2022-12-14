@@ -21,13 +21,18 @@ final class DetailExcursionPresenter {
     private let factory = DetailExcursionDisplayDataFactory()
     private let excursion: Excursion
     private let viewModel: DetailExcursionViewModel
+    private weak var moduleOutput: DetailExcursionModuleOutput?
 
     // MARK: - Lifecycle
 
-    init(interactor: DetailExcursionInteractorInput, router: DetailExcursionRouterInput, excursion: Excursion) {
+    init(interactor: DetailExcursionInteractorInput,
+         router: DetailExcursionRouterInput,
+         excursion: Excursion,
+         moduleOutput: DetailExcursionModuleOutput) {
         self.interactor = interactor
         self.router = router
         self.excursion = excursion
+        self.moduleOutput = moduleOutput
         viewModel = factory.setupViewModel(excursion: excursion)
     }
 }
