@@ -10,8 +10,7 @@ import YandexMapsMobile
 // MARK: - MapViewOutput
 
 protocol MapViewOutput: AnyObject {
-    var detailExcursionInfoViewModel: DetailExcursionInfoViewModel { get }
-    func setupRoute()
+    func didLoadView()
 }
 
 // MARK: - MapViewInput

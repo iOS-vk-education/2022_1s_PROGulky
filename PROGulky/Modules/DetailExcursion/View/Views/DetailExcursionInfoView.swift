@@ -67,13 +67,6 @@ final class DetailExcursionInfoView: UIView {
         return button
     }()
 
-    private let streakView: UIView = {
-        let view = UIView()
-        view.backgroundColor = DetailExcursionConstants.InfoView.Streak.backgroundColor
-        view.layer.cornerRadius = DetailExcursionConstants.InfoView.Streak.cornerRadius
-        return view
-    }()
-
     // MARK: Lifecycle
 
     init() {
@@ -88,7 +81,6 @@ final class DetailExcursionInfoView: UIView {
             durationLabel,
             distanceLabel,
             button
-//            streakView
         )
         setupUI()
         setupConstraints()
@@ -106,13 +98,6 @@ final class DetailExcursionInfoView: UIView {
         distanceLabel.text = excursion.distance
     }
 
-    func makeBottomSheetView(isBottomSheet: Bool) {
-        UIView.animate(withDuration: 0.170) {
-//            self.button.isHidden = isBottomSheet
-//            self.streakView.isHidden = !isBottomSheet
-        }
-    }
-
     // MARK: Private Methods
 
     private func setupUI() {
@@ -127,7 +112,6 @@ final class DetailExcursionInfoView: UIView {
         setDurationLabelConstraint()
         setDistanceLabelConstraint()
         setButtonConstraint()
-//        setupStreakView()
     }
 
     private func setTitleConstraint() {
@@ -211,16 +195,6 @@ final class DetailExcursionInfoView: UIView {
             make.trailing.equalToSuperview()
                 .offset(DetailExcursionConstants.InfoView.Button.marginRight)
             make.height.equalTo(DetailExcursionConstants.InfoView.Button.height)
-        }
-    }
-
-    private func setupStreakView() {
-        streakView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-                .offset(DetailExcursionConstants.InfoView.Streak.topOffset)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(DetailExcursionConstants.InfoView.Streak.width)
-            make.height.equalTo(DetailExcursionConstants.InfoView.Streak.height)
         }
     }
 

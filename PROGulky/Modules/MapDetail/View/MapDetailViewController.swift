@@ -25,7 +25,7 @@ final class MapDetailViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .prog.Dynamic.background
         setupNavigationBar()
-        output.viewDidLoad()
+        output.didLoadView()
     }
 
     private func setupNavigationBar() {
@@ -35,15 +35,15 @@ final class MapDetailViewController: UIViewController {
         backButtonItem.title = nil
         backButtonItem.style = .plain
         backButtonItem.target = self
-        backButtonItem.action = #selector(backButtonTapped)
+        backButtonItem.action = #selector(didTapBackButton)
         backButtonItem.image = UIImage(systemName: Constants.backButtonImageName)
         navigationItem.leftBarButtonItem = backButtonItem
     }
 
     @objc
-    private func backButtonTapped() {
+    private func didTapBackButton() {
         dismiss(animated: false)
-        output.backButtonTapped()
+        output.didTapBackButton()
     }
 }
 

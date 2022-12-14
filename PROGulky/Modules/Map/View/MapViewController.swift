@@ -40,7 +40,7 @@ final class MapViewController: UIViewController {
         setupMaps()
         setupButton()
 
-        output.setupRoute()
+        output.didLoadView()
     }
 
     private func setupMaps() {

@@ -8,9 +8,8 @@
 // MARK: - MapDetailViewOutput
 
 protocol MapDetailViewOutput: AnyObject {
-    var viewModel: DetailExcursionInfoViewModel { get }
-    func viewDidLoad()
-    func backButtonTapped()
+    func didLoadView()
+    func didTapBackButton()
 }
 
 // MARK: - MapDetailViewInput

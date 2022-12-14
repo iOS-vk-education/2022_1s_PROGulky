@@ -17,7 +17,6 @@ final class MapDetailPresenter {
     private let interactor: MapDetailInteractorInput
     private let router: MapDetailRouterInput
     private weak var moduleOutput: MapDetailModuleOutput?
-    private let detailExcursionDisplayDataFactory = DetailExcursionDisplayDataFactory()
     private let excursion: Excursion
 
     // MARK: - Lifecycle
@@ -39,18 +38,12 @@ extension MapDetailPresenter: MapDetailModuleInput {
 // MARK: MapDetailViewOutput
 
 extension MapDetailPresenter: MapDetailViewOutput {
-    var viewModel: DetailExcursionInfoViewModel {
-        detailExcursionDisplayDataFactory
-            .setupViewModel(excursion: excursion)
-            .infoViewModel
-    }
-
-    func viewDidLoad() {
+    func didLoadView() {
         router.embedMapModule(output: self)
         router.embedDetailModule(output: self)
     }
 
-    func backButtonTapped() {
+    func didTapBackButton() {
         moduleOutput?.mapDetailModuleWantsToClose()
     }
 }

@@ -24,7 +24,6 @@ final class MapPresenter {
     private let excursion: Excursion
     private var massTransitSession: YMKMasstransitSession?
     private var requestPoints = [YMKRequestPoint]()
-    private let factory = DetailExcursionDisplayDataFactory()
     private weak var moduleOutput: MapModuleOutput?
 
     // MARK: - Lifecycle
@@ -36,13 +35,13 @@ final class MapPresenter {
         self.moduleOutput = moduleOutput
     }
 
-    func onRoutesReceived(_ routes: [YMKMasstransitRoute]) {
+    private func onRoutesReceived(_ routes: [YMKMasstransitRoute]) {
         guard let route = routes.first else { return }
         let points = requestPoints.map(\.point)
         view.routeRecieved(route: route, points: points)
     }
 
-    func onRoutesError(_ error: Error) {
+    private func onRoutesError(_ error: Error) {
         guard let routingError = (error as NSError).userInfo[YRTUnderlyingErrorKey]
             as? YRTError else { return }
         var errorMessage = "Unknown error"
@@ -62,21 +61,19 @@ extension MapPresenter: MapModuleInput {
 // MARK: MapViewOutput
 
 extension MapPresenter: MapViewOutput {
-    var detailExcursionInfoViewModel: DetailExcursionInfoViewModel {
-        factory.setupViewModel(excursion: excursion).infoViewModel
-    }
-
-    func setupRoute() {
-        var count = 0
-        excursion.places.forEach { place in
+    func didLoadView() {
+        let lastWayPointNumber = excursion.places.count - 1
+        
+        requestPoints = excursion.places.enumerated().map { element in
+            let place = element.element
+            let count = element.offset
             let point = YMKRequestPoint(
                 point: YMKPoint(latitude: place.latitude,
                                 longitude: place.longitude),
-                type: count == 0 || count == excursion.places.count - 1 ? .waypoint : .viapoint,
+                type: count == 0 || count == lastWayPointNumber ? .waypoint : .viapoint,
                 pointContext: nil
             )
-            requestPoints.append(point)
-            count += 1
+            return point
         }
 
         let responseHandler = { (routesResponse: [YMKMasstransitRoute]?, error: Error?) in
