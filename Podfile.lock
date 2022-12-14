@@ -12,7 +12,7 @@ DEPENDENCIES:
   - SnapKit (~> 5.6.0)
   - SwiftFormat/CLI (~> 0.49)
   - SwiftLint (~> 0.47.1)
-  - YandexMapsMobile (= 4.2.2-full)
+  - YandexMapsMobile (~> 4.2.2-full)
 
 SPEC REPOS:
   trunk:
@@ -29,6 +29,6 @@ SPEC CHECKSUMS:
   SwiftLint: f80f1be7fa96d30e0aa68e58d45d4ea1ccaac519
   YandexMapsMobile: 1fd5f86bc368ad6ba528b199f9477e4a26796567
 
-PODFILE CHECKSUM: 01c0e59af7af4e8efc0f43ca6a289ca22c46a4f3
+PODFILE CHECKSUM: 3e12a9993a6070a94a6095c753e8e913e7ab0b55
 
 COCOAPODS: 1.11.3
