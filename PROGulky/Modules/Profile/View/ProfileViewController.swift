@@ -200,10 +200,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
     func goToLogin() {
         output.logoutButtonTapped()
-//        let builder = LoginModuleBuilder()
-//        let loginView = builder.build(moduleOutput: self)
-//        loginView.modalPresentationStyle = .fullScreen
-//        present(loginView, animated: true, completion: nil)
     }
 
     func showMailComposer() {
