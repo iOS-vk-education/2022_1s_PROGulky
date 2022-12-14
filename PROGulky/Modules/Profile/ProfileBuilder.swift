@@ -10,12 +10,12 @@ import UIKit
 // MARK: - ProfileModuleBuilder
 
 final class ProfileModuleBuilder {
-    func build() -> UIViewController {
+    func build(_ moduleOutput: ProfileModuleOutput) -> UIViewController {
         let viewController = ProfileViewController()
         let router = ProfileRouter()
         let interactor = ProfileInteractor()
 
-        let presenter = ProfilePresenter(interactor: interactor, router: router)
+        let presenter = ProfilePresenter(interactor: interactor, router: router, moduleOutput: moduleOutput)
         presenter.view = viewController
 
         interactor.output = presenter

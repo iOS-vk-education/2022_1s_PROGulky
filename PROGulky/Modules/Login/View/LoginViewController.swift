@@ -12,8 +12,6 @@ import SnapKit
 
 final class LoginViewController: UIViewController, UITextFieldDelegate {
     var output: LoginViewOutput!
-    var appCoordinator: AppCoordinator?
-
     private let labelProgramName = UILabel()
     private var emailField = CustomTextField()
     private var passwordField = CustomTextField()
@@ -73,9 +71,12 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         buttonSignUp.addTarget(self, action: #selector(didTapButtonSignUp), for: .touchUpInside)
         buttonRestore.addTarget(self, action: #selector(didTapRestoreButton), for: .touchUpInside)
 
-        [labelProgramName, emailField, passwordField, buttonSignIn, buttonRestore, buttonSignUp].forEach {
-            view.addSubview($0)
-        }
+        view.addSubviews(labelProgramName,
+                         emailField,
+                         passwordField,
+                         buttonSignIn,
+                         buttonRestore,
+                         buttonSignUp)
     }
 
     override func viewDidLayoutSubviews() {
@@ -98,10 +99,6 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc func didTapButtonSignIn() {
-//        let profile = ProfileViewController()
-//        profile.modalPresentationStyle = .fullScreen
-//        present(profile, animated: true, completion: nil)
-
         if emailField.text == "" {
             emailField.layer.borderWidth = 1.0
             emailField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
@@ -120,28 +117,18 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
                     print("try again")
                     return
                 } else {
-                    print("success!")
-
-                    let defaults = UserDefaults.standard
-                    defaults.setValue(token, forKey: UserKeys().token)
-                    defaults.setValue(login?.id, forKey: UserKeys().id)
-                    defaults.setValue(login?.email, forKey: UserKeys().email)
-                    defaults.setValue(login?.name, forKey: UserKeys().name)
-                    defaults.set(true, forKey: "isLoggedIn")
-                    defaults.synchronize()
-
-                    let profile = ProfileViewController()
-                    profile.modalPresentationStyle = .fullScreen
-                    present(profile, animated: true, completion: nil)
+                    output?.didSelectSignInBtn(token: token ?? "",
+                                               id: login?.id ?? 0,
+                                               email: login?.email ?? "",
+                                               name: login?.name ?? "",
+                                               role: login?.role.description ?? "")
                 }
             }
         }
     }
 
     @objc func didTapButtonSignUp() {
-        let signUp = RegistrationViewController()
-        signUp.modalPresentationStyle = .fullScreen
-        present(signUp, animated: true, completion: nil)
+        output?.didSelectSignUpBtn()
     }
 
     @objc func didTapRestoreButton() {

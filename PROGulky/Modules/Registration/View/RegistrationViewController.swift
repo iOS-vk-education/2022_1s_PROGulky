@@ -16,12 +16,10 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
     private let labelTop = UILabel()
 
     private var nameField = CustomTextField()
-
     private var emailField = CustomTextField()
     private var passwordField = CustomTextField()
     private var passwordSecondField = CustomTextField()
     private var buttonSignUp = CustomButton(title: TextConstantsSignUp.titleSignUp, image: nil, color: .prog.Dynamic.lightPrimary, textColor: .prog.Dynamic.lightText)
-    private let buttonSignIn = CustomButton(title: TextConstantsSignUp.titleSignIn, image: nil, color: .prog.Dynamic.background, textColor: .prog.Dynamic.text)
 
     private enum Constants {
         enum TextField {
@@ -35,7 +33,7 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
         enum Button {
             static let offset: CGFloat = 20
             static let height: CGFloat = 60
-            static let bottomOffset: CGFloat = -60
+            static var bottomOffset: CGFloat = -60
             static let topOffset: CGFloat = 10
         }
     }
@@ -81,12 +79,14 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
         passwordField.delegate = self
         passwordSecondField.delegate = self
 
-        buttonSignIn.addTarget(self, action: #selector(didTapButtonSignIn), for: .touchUpInside)
         buttonSignUp.addTarget(self, action: #selector(didTapButtonSignUp), for: .touchUpInside)
 
-        [labelTop, nameField, emailField, passwordField, passwordSecondField, buttonSignIn, buttonSignUp].forEach {
-            view.addSubview($0)
-        }
+        view.addSubviews(labelTop,
+                         nameField,
+                         emailField,
+                         passwordField,
+                         passwordSecondField,
+                         buttonSignUp)
     }
 
     override func viewDidLayoutSubviews() {
@@ -95,22 +95,21 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == nameField {
+        switch textField {
+        case nameField:
             emailField.becomeFirstResponder()
-        }
 
-        if textField == emailField {
+        case emailField:
             passwordField.becomeFirstResponder()
-        }
 
-        if textField == passwordField {
+        case passwordField:
             passwordSecondField.becomeFirstResponder()
-        }
 
-        if textField == passwordSecondField {
+        case passwordSecondField:
             didTapButtonSignUp()
+        default:
+            print("error")
         }
-
         return true
     }
 
@@ -123,53 +122,45 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
                 passwordField.layer.borderWidth = 1.0
                 passwordField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
             } else {
-                emailField.layer.borderWidth = 0
-                passwordField.layer.borderWidth = 0
-
-                print(emailField.text!)
-                print(passwordField.text!)
-
-                let registration = RegistrationInteractor().registration(email: emailField.text!, name: nameField.text!, password: passwordField.text!)
-                let token: Int?
-                let refreshToken: String?
-
-                token = registration?.id
-                if token == nil {
-                    print("try again")
-                    return
+                if passwordSecondField.text == "" || passwordField.text != passwordSecondField.text {
+                    passwordSecondField.layer.borderWidth = 1.0
+                    passwordSecondField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
                 } else {
-                    print("success!")
+                    emailField.layer.borderWidth = 0
+                    passwordField.layer.borderWidth = 0
 
-                    let defaults = UserDefaults.standard
-                    defaults.setValue(token, forKey: UserKeys().token)
-                    defaults.setValue(registration?.id, forKey: UserKeys().id)
-                    defaults.setValue(registration?.email, forKey: UserKeys().email)
-                    defaults.setValue(registration?.name, forKey: UserKeys().name)
-                    defaults.set(true, forKey: "isLoggedIn")
-                    defaults.synchronize()
+                    print(emailField.text!)
+                    print(passwordField.text!)
 
-                    let profile = ProfileViewController()
-                    profile.modalPresentationStyle = .fullScreen
-                    present(profile, animated: true, completion: nil)
+                    let registration = RegistrationInteractor().registration(email: emailField.text!, name: nameField.text!, password: passwordField.text!)
+                    let token: String?
+                    token = registration?.token
+                    if token == nil {
+                        print("try again")
+                        return
+                    } else {
+                        output.didSelectSignUpBtn(token: token ?? "",
+                                                  id: registration?.id ?? 0,
+                                                  email: registration?.email ?? "",
+                                                  name: registration?.name ?? "",
+                                                  role: registration?.role.description ?? "")
+                    }
                 }
             }
         }
     }
 
-    @objc func didTapButtonSignIn() {
-        let login = LoginModuleBuilder.build(LoginModuleBuilder())
-        login().modalPresentationStyle = .fullScreen
-        present(login(), animated: true, completion: nil)
-    }
-
     @objc func didTapRestoreButton() {
-        print("forget")
+        print("forget \n No func yet")
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let keyboardHeight = keyboardSize.height
-            view.frame.origin.y -= keyboardHeight
+            if view.frame.origin.y == 0 {
+                view.frame.origin.y -= keyboardHeight // 2
+            }
+//            view.frame.origin.y -= keyboardHeight
         }
     }
 
@@ -227,13 +218,6 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
             make.trailing.equalToSuperview()
                 .inset(Constants.Button.offset)
             make.height.equalTo(Constants.Button.height)
-        }
-
-        buttonSignIn.snp.makeConstraints { make in
-            make.top.equalTo(self.buttonSignUp.snp.bottom)
-                .offset(Constants.Button.topOffset)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(Constants.TextField.height)
         }
     }
 }

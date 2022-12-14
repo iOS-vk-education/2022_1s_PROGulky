@@ -14,12 +14,14 @@ final class AppCoordinator: NSObject, CoordinatorProtocol {
     // MARK: Public Properties
 
     var childCoordinators = [CoordinatorProtocol]()
+    var rootNavigationController: UINavigationController
     let tabBarController: UITabBarController
 
     // MARK: Lifecycle
 
     init(tabBarController: UITabBarController) {
         self.tabBarController = tabBarController
+        rootNavigationController = UINavigationController()
     }
 
     // MARK: Public

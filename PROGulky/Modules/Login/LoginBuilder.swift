@@ -10,12 +10,12 @@ import UIKit
 // MARK: - LoginModuleBuilder
 
 final class LoginModuleBuilder {
-    func build() -> UIViewController {
+    func build(moduleOutput: LoginModuleOutput) -> UIViewController {
         let viewController = LoginViewController()
         let router = LoginRouter()
         let interactor = LoginInteractor()
 
-        let presenter = LoginPresenter(interactor: interactor, router: router)
+        let presenter = LoginPresenter(interactor: interactor, router: router, moduleOutput: moduleOutput)
         presenter.view = viewController
 
         interactor.output = presenter

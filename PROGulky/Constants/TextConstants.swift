@@ -21,7 +21,7 @@ struct TextConstantsProfile {
     static let titlePrivacyPolicy = "Политика конфиденциальности"
     static let titleSignOut = "Выйти из аккаунта"
     static let titleUserName = "Имя пользователя"
-    static let titleUserStatus = "статус пользователя"
+    static let titleUserStatus = "статус"
     static let contactUsMessageTitle = "PROгулки отзыв"
     static let contactUsMail = "serge2000k@gmail.com"
 }

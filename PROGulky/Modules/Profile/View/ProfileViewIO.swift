@@ -8,6 +8,7 @@
 // MARK: - ProfileViewOutput
 
 protocol ProfileViewOutput: AnyObject {
+    func logoutButtonTapped()
 }
 
 // MARK: - ProfileViewInput

@@ -13,4 +13,6 @@ protocol LoginModuleInput: AnyObject {
 // MARK: - LoginModuleOutput
 
 protocol LoginModuleOutput: AnyObject {
+    func loginModuleWantsToOpenProfile()
+    func loginModuleWantsToOpenSingUp()
 }

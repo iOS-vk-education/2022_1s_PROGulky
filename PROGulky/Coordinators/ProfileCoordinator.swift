@@ -7,6 +7,9 @@
 
 import Foundation
 import UIKit
+
+// MARK: - ProfileCoordinator
+
 final class ProfileCoordinator: CoordinatorProtocol {
     // MARK: Private Properties
 
@@ -25,37 +28,64 @@ final class ProfileCoordinator: CoordinatorProtocol {
     // MARK: Public Methods
 
     func start(animated: Bool) {
-//        let temp = 
-        if (UserDefaults.standard.string(forKey: "isLoggedIn") != nil) == true {
-            print("ok")
-            let builder = ProfileModuleBuilder()
-            let profileViewController = builder.build()
-            rootNavigationController.setViewControllers([profileViewController], animated: false)
+        let builder = ProfileModuleBuilder()
+        let profileViewController = builder.build(self)
+//        rootNavigationController.setViewControllers([profileViewController], animated: false)
 
-            rootNavigationController.tabBarItem = tabBarItemFactory.getTabBarItem(from: TabBarPage.profile)
+        rootNavigationController.tabBarItem = tabBarItemFactory.getTabBarItem(from: TabBarPage.profile)
 
-            var controllers = rootTabBarController?.viewControllers
-            if controllers == nil {
-                controllers = [rootNavigationController]
-            } else {
-                controllers?.append(rootNavigationController)
-            }
-            rootTabBarController?.setViewControllers(controllers, animated: true)
+        var controllers = rootTabBarController?.viewControllers
+        if controllers == nil {
+            controllers = [rootNavigationController]
         } else {
-            print("sorry")
-            let builder = LoginModuleBuilder()
-            let loginViewController = builder.build()
-            rootNavigationController.setViewControllers([loginViewController], animated: false)
-
-//            rootNavigationController.tabBarItem = tabBarItemFactory.getTabBarItem(from: TabBarPage.profile)
-
-//            var controllers = rootTabBarController?.viewControllers
-//            if controllers == nil {
-//                controllers = [rootNavigationController]
-//            } else {
-//                controllers?.append(rootNavigationController)
-//            }
-//            rootTabBarController?.setViewControllers(controllers, animated: true)
+            controllers?.append(rootNavigationController)
         }
+
+        var viewControllers = [profileViewController]
+        let isLoggedOut = UserDefaults.standard.bool(forKey: "isLoggedOut")
+        if isLoggedOut {
+            let builder = LoginModuleBuilder()
+            let loginViewController = builder.build(moduleOutput: self)
+            viewControllers = [loginViewController]
+        }
+        rootNavigationController.setViewControllers(viewControllers, animated: false)
+        rootTabBarController?.setViewControllers(controllers, animated: true)
+    }
+}
+
+// MARK: ProfileModuleOutput
+
+extension ProfileCoordinator: ProfileModuleOutput {
+    func profileModuleWantsToOpenLoginModule() {
+        let builder = LoginModuleBuilder()
+        let loginViewController = builder.build(moduleOutput: self)
+        rootNavigationController.setViewControllers([loginViewController], animated: true)
+    }
+}
+
+// MARK: RegistrationModuleOutput
+
+extension ProfileCoordinator: RegistrationModuleOutput {
+    func registrationModuleWantsToOpenProfile() {
+        let builder = ProfileModuleBuilder()
+        let profileView = builder.build(self)
+        rootNavigationController.dismiss(animated: false)
+        rootNavigationController.setViewControllers([profileView], animated: true)
+    }
+}
+
+// MARK: LoginModuleOutput
+
+extension ProfileCoordinator: LoginModuleOutput {
+    func loginModuleWantsToOpenSingUp() {
+        let builder = RegistrationModuleBuilder()
+        let regView = builder.build(moduleOutput: self)
+        rootNavigationController.present(regView, animated: true)
+    }
+
+    func loginModuleWantsToOpenProfile() {
+        let builder = ProfileModuleBuilder()
+        let profileView = builder.build(self)
+        rootNavigationController.setViewControllers([profileView], animated: true)
     }
 }
