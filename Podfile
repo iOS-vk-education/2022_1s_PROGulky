@@ -8,6 +8,8 @@ target 'PROGulky' do
   pod 'SnapKit', '~> 5.6.0'
   pod 'SwiftFormat/CLI', '~> 0.49'
   pod 'YandexMapsMobile', '~> 4.2.2-full'
+  pod 'SDWebImage', '~> 5.14'
+
 
   target 'PROGulkyTests' do
     inherit! :search_paths
