@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct CreateExcursionConstants {
+struct AddExcursionConstants {
     enum Screen {
         static let padding: CGFloat = 12
     }
@@ -35,7 +35,7 @@ struct CreateExcursionConstants {
         static let marginTop: CGFloat = 10
         static let textColor: UIColor = .gray
         static let cornerRadius: Double = 12.0
-        static let height: CGFloat = 150
+        static let minHeight: CGFloat = 60
     }
 
     enum TableView {

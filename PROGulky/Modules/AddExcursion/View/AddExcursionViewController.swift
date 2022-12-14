@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 // MARK: - AddExcursionViewController
 
@@ -16,6 +17,7 @@ final class AddExcursionViewController: UIViewController {
     private let titleField = UITextField(frame: .zero)
     private let descriptionField = UITextView(frame: .zero)
     private var tableView = UITableView(frame: .zero, style: .insetGrouped)
+    private var amountOfLinesToBeShown: CGFloat = 6
 
     // MARK: Lifecycle
 
@@ -44,14 +46,14 @@ final class AddExcursionViewController: UIViewController {
     }
 
     private func configureNavBar() {
-        navigationItem.title = CreateExcursionConstants.NavBar.title
-        navigationController?.view.backgroundColor = CreateExcursionConstants.NavBar.backgroundColor
+        navigationItem.title = AddExcursionConstants.NavBar.title
+        navigationController?.view.backgroundColor = AddExcursionConstants.NavBar.backgroundColor
 
         let rightBarButtonItem = UIBarButtonItem(
-            title: CreateExcursionConstants.NavBar.rightBarButtonItemText,
+            title: AddExcursionConstants.NavBar.rightBarButtonItemText,
             style: UIBarButtonItem.Style.plain,
             target: self,
-            action: ""
+            action: nil
         )
         navigationItem.rightBarButtonItem = rightBarButtonItem
     }
@@ -69,14 +71,22 @@ final class AddExcursionViewController: UIViewController {
     private func configureTitleTextField() {
         titleField.layer.masksToBounds = true // Убирает дефолтную рамку
         titleField.borderStyle = UITextField.BorderStyle.roundedRect
-        titleField.placeholder = CreateExcursionConstants.TitleField.placeholder
-        titleField.layer.cornerRadius = CreateExcursionConstants.TitleField.cornerRadius
+        titleField.placeholder = AddExcursionConstants.TitleField.placeholder
+        titleField.layer.cornerRadius = AddExcursionConstants.TitleField.cornerRadius
+        titleField.returnKeyType = .next
+        titleField.delegate = self
+        titleField.addDoneButtonOnKeyboard()
     }
 
     private func configureDescriptionField() {
         descriptionField.layer.masksToBounds = true
-        descriptionField.textColor = CreateExcursionConstants.DescriptionField.textColor
-        descriptionField.layer.cornerRadius = CreateExcursionConstants.DescriptionField.cornerRadius
+        descriptionField.textColor = AddExcursionConstants.DescriptionField.textColor
+        descriptionField.layer.cornerRadius = AddExcursionConstants.DescriptionField.cornerRadius
+        descriptionField.font = UIFont.systemFont(ofSize: 15)
+        descriptionField.delegate = self
+        descriptionField.text = "Placeholder"
+        descriptionField.textColor = UIColor.lightGray
+        descriptionField.addDoneButtonOnKeyboard()
     }
 
     private func configureTableView() {
@@ -84,8 +94,8 @@ final class AddExcursionViewController: UIViewController {
 
         tableView.backgroundColor = UIColor.prog.Dynamic.background
 
-        tableView.register(SelectedPlaceCell.self, forCellReuseIdentifier: CreateExcursionConstants.TableView.SelectedPlaceCell.reuseId)
-        tableView.register(AddPlaceCell.self, forCellReuseIdentifier: CreateExcursionConstants.TableView.AddPlaceButtonCell.reuseId)
+        tableView.register(SelectedPlaceCell.self, forCellReuseIdentifier: AddExcursionConstants.TableView.SelectedPlaceCell.reuseId)
+        tableView.register(AddPlaceCell.self, forCellReuseIdentifier: AddExcursionConstants.TableView.AddPlaceButtonCell.reuseId)
     }
 
     private func setTableViewDelegate() {
@@ -101,35 +111,48 @@ final class AddExcursionViewController: UIViewController {
     }
 
     private func setAddImageViewConstraints() {
-        addImageView.translatesAutoresizingMaskIntoConstraints = false
-        addImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: CreateExcursionConstants.Image.marginTop).isActive = true
-        addImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        addImageView.widthAnchor.constraint(equalToConstant: CreateExcursionConstants.Image.width).isActive = true
-        addImageView.heightAnchor.constraint(equalToConstant: CreateExcursionConstants.Image.height).isActive = true
+        addImageView.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+                .offset(AddExcursionConstants.Image.marginTop)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(AddExcursionConstants.Image.width)
+            make.height.equalTo(AddExcursionConstants.Image.height)
+        }
     }
 
     private func setTitleFieldConstraints() {
-        titleField.translatesAutoresizingMaskIntoConstraints = false
-        titleField.topAnchor.constraint(equalTo: addImageView.bottomAnchor, constant: CreateExcursionConstants.TitleField.marginTop).isActive = true
-        titleField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateExcursionConstants.Screen.padding).isActive = true
-        titleField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateExcursionConstants.Screen.padding).isActive = true
-        titleField.heightAnchor.constraint(equalToConstant: CreateExcursionConstants.TitleField.height).isActive = true
+        titleField.snp.makeConstraints { make in
+            make.top.equalTo(self.addImageView.snp.bottom)
+                .offset(AddExcursionConstants.TitleField.marginTop)
+            make.leading.equalToSuperview()
+                .offset(AddExcursionConstants.Screen.padding)
+            make.trailing.equalToSuperview()
+                .offset(-AddExcursionConstants.Screen.padding)
+            make.height.equalTo(AddExcursionConstants.TitleField.height)
+        }
     }
 
     private func setDescriptionFieldConstraints() {
-        descriptionField.translatesAutoresizingMaskIntoConstraints = false
-        descriptionField.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: CreateExcursionConstants.DescriptionField.marginTop).isActive = true
-        descriptionField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateExcursionConstants.Screen.padding).isActive = true
-        descriptionField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateExcursionConstants.Screen.padding).isActive = true
-        descriptionField.heightAnchor.constraint(equalToConstant: CreateExcursionConstants.DescriptionField.height).isActive = true
+        descriptionField.snp.makeConstraints { make in
+            make.top.equalTo(self.titleField.snp.bottom)
+                .offset(AddExcursionConstants.DescriptionField.marginTop)
+            make.leading.equalToSuperview()
+                .offset(AddExcursionConstants.Screen.padding)
+            make.trailing.equalToSuperview()
+                .offset(-AddExcursionConstants.Screen.padding)
+            make.height.equalTo(
+                AddExcursionConstants.DescriptionField.minHeight)
+        }
     }
 
     private func setTableViewConstraints() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: descriptionField.bottomAnchor, constant: CreateExcursionConstants.TableView.marginTop).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(self.descriptionField.snp.bottom)
+                .offset(AddExcursionConstants.TableView.marginTop)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+        }
     }
 }
 
@@ -165,7 +188,7 @@ extension AddExcursionViewController: UITableViewDataSource {
 
         switch section {
         case .SelectedPlaces:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CreateExcursionConstants.TableView.SelectedPlaceCell.reuseId) as? SelectedPlaceCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AddExcursionConstants.TableView.SelectedPlaceCell.reuseId) as? SelectedPlaceCell else {
                 return UITableViewCell()
             }
 //            let place = output.place(for: indexPath)
@@ -173,7 +196,7 @@ extension AddExcursionViewController: UITableViewDataSource {
 
             return cell
         case .AddButton:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: CreateExcursionConstants.TableView.AddPlaceButtonCell.reuseId) as? AddPlaceCell else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AddExcursionConstants.TableView.AddPlaceButtonCell.reuseId) as? AddPlaceCell else {
                 return UITableViewCell()
             }
 //            let description = output.description
@@ -194,4 +217,31 @@ extension AddExcursionViewController: UITableViewDataSource {
 //            return UITableView.automaticDimension
 //        }
 //    }
+}
+
+// MARK: UITextViewDelegate
+
+extension AddExcursionViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Placeholder"
+            textView.textColor = UIColor.lightGray
+        }
+    }
+}
+
+// MARK: UITextFieldDelegate
+
+extension AddExcursionViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        descriptionField.becomeFirstResponder()
+        return true
+    }
 }

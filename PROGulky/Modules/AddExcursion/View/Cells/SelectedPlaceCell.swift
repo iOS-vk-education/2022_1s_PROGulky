@@ -35,7 +35,7 @@ final class SelectedPlaceCell: UITableViewCell {
     // MARK: configs styles
 
     private func setupUI() {
-        backgroundColor = CreateExcursionConstants.TableView.SelectedPlaceCell.backgroundColor
+        backgroundColor = AddExcursionConstants.TableView.SelectedPlaceCell.backgroundColor
         selectionStyle = UITableViewCell.SelectionStyle.none
         configureSortLabel()
         configureTitleLabel()
@@ -46,14 +46,14 @@ final class SelectedPlaceCell: UITableViewCell {
     }
 
     private func configureTitleLabel() {
-        title.numberOfLines = CreateExcursionConstants.TableView.SelectedPlaceCell.Title.numberOfLines
-        title.font = CreateExcursionConstants.TableView.SelectedPlaceCell.Title.font
+        title.numberOfLines = AddExcursionConstants.TableView.SelectedPlaceCell.Title.numberOfLines
+        title.font = AddExcursionConstants.TableView.SelectedPlaceCell.Title.font
     }
 
     private func configureSubtitleLabel() {
-        subtitle.numberOfLines = CreateExcursionConstants.TableView.SelectedPlaceCell.Subtitle.numberOfLines
-        subtitle.font = CreateExcursionConstants.TableView.SelectedPlaceCell.Subtitle.font
-        subtitle.textColor = CreateExcursionConstants.TableView.SelectedPlaceCell.Subtitle.textColor
+        subtitle.numberOfLines = AddExcursionConstants.TableView.SelectedPlaceCell.Subtitle.numberOfLines
+        subtitle.font = AddExcursionConstants.TableView.SelectedPlaceCell.Subtitle.font
+        subtitle.textColor = AddExcursionConstants.TableView.SelectedPlaceCell.Subtitle.textColor
     }
 
     // MARK: constraints
@@ -66,22 +66,22 @@ final class SelectedPlaceCell: UITableViewCell {
 
     private func setSortLabelConstraint() {
         sort.translatesAutoresizingMaskIntoConstraints = false
-        sort.widthAnchor.constraint(equalToConstant: CreateExcursionConstants.TableView.SelectedPlaceCell.Sort.width).isActive = true
+        sort.widthAnchor.constraint(equalToConstant: AddExcursionConstants.TableView.SelectedPlaceCell.Sort.width).isActive = true
         sort.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        sort.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CreateExcursionConstants.TableView.SelectedPlaceCell.Sort.marginLeft).isActive = true
+        sort.leadingAnchor.constraint(equalTo: leadingAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Sort.marginLeft).isActive = true
     }
 
     private func setTitleLabelConstraints() {
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.centerYAnchor.constraint(equalTo: centerYAnchor, constant: CreateExcursionConstants.TableView.SelectedPlaceCell.Title.YOffset).isActive = true
-        title.leadingAnchor.constraint(equalTo: sort.trailingAnchor, constant: CreateExcursionConstants.TableView.SelectedPlaceCell.Title.marginLeft).isActive = true
-        title.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CreateExcursionConstants.Screen.padding).isActive = true
+        title.centerYAnchor.constraint(equalTo: centerYAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Title.YOffset).isActive = true
+        title.leadingAnchor.constraint(equalTo: sort.trailingAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Title.marginLeft).isActive = true
+        title.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AddExcursionConstants.Screen.padding).isActive = true
     }
 
     private func setSubtitleLabelConstraint() {
         subtitle.translatesAutoresizingMaskIntoConstraints = false
-        subtitle.leadingAnchor.constraint(equalTo: sort.trailingAnchor, constant: CreateExcursionConstants.TableView.SelectedPlaceCell.Subtitle.marginLeft).isActive = true
-        subtitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CreateExcursionConstants.Screen.padding).isActive = true
-        subtitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: CreateExcursionConstants.TableView.SelectedPlaceCell.Subtitle.marginTop).isActive = true
+        subtitle.leadingAnchor.constraint(equalTo: sort.trailingAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Subtitle.marginLeft).isActive = true
+        subtitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AddExcursionConstants.Screen.padding).isActive = true
+        subtitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Subtitle.marginTop).isActive = true
     }
 }
