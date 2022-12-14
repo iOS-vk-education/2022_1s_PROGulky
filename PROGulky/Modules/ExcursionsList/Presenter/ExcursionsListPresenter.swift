@@ -49,7 +49,7 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
     }
 
     func didSelectCell(at indexPath: IndexPath) {
-        moduleOutput?.excursionsListModuleWantsToOpenDetailExcursion(excursion: excursions[indexPath.row])
+        moduleOutput?.excursionsListModuleWantsToOpenMapDetailModule(excursion: excursions[indexPath.row])
     }
 
     func didLoadView() {
