@@ -161,9 +161,8 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let keyboardHeight = keyboardSize.height
             if view.frame.origin.y == 0 {
-                view.frame.origin.y -= keyboardHeight // 2
+                view.frame.origin.y -= keyboardHeight
             }
-//            view.frame.origin.y -= keyboardHeight
         }
     }
 
