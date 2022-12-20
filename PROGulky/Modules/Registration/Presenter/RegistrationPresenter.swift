@@ -36,13 +36,13 @@ extension RegistrationPresenter: RegistrationModuleInput {
 // MARK: RegistrationViewOutput
 
 extension RegistrationPresenter: RegistrationViewOutput {
-    func didSelectSignUpBtn(token: String, id: Int, email: String, name: String, role: String) {
+    func didSelectSignUpBtn(user: User) {
         let defaults = UserDefaults.standard
-        defaults.setValue(token, forKey: UserKeys().token)
-        defaults.set(id, forKey: UserKeys().id)
-        defaults.set(email, forKey: UserKeys().email)
-        defaults.set(name, forKey: UserKeys().name)
-        defaults.set(role, forKey: UserKeys().role)
+        defaults.setValue(user.token, forKey: UserKeys.token)
+        defaults.set(user.id, forKey: UserKeys.id)
+        defaults.set(user.email, forKey: UserKeys.email)
+        defaults.set(user.name, forKey: UserKeys.name)
+        defaults.set(user.role.description, forKey: UserKeys.role)
         defaults.set(false, forKey: "isLoggedOut")
         defaults.synchronize()
         moduleOutput?.registrationModuleWantsToOpenProfile()

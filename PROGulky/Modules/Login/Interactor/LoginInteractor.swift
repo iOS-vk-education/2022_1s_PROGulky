@@ -11,8 +11,6 @@ import Foundation
 
 final class LoginInteractor {
     weak var output: LoginInteractorOutput?
-
-    let urlAdress = "http://37.140.195.167:5000"
 }
 
 // MARK: LoginInteractorInput
@@ -30,7 +28,7 @@ extension LoginInteractor: LoginInteractorInput {
 
         print(json)
 
-        var request = URLRequest(url: URL(string: urlAdress + "/auth/login/")!, timeoutInterval: Double.infinity)
+        var request = URLRequest(url: URL(string: baseURL + "/auth/login/")!, timeoutInterval: Double.infinity)
         print("request \(request)")
         request.httpMethod = "POST"
         request.httpBody = jsonData

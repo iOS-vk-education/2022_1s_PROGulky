@@ -98,43 +98,41 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
 
-    @objc func didTapButtonSignIn() {
-        if emailField.text == "" {
+    @objc private func didTapButtonSignIn() {
+        guard emailField.text != "" else {
             emailField.layer.borderWidth = 1.0
             emailField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            return
+        }
+        guard passwordField.text != "" else {
+            passwordField.layer.borderWidth = 1.0
+            passwordField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            return
+        }
+        emailField.layer.borderWidth = 0.5
+        emailField.layer.borderColor = UIColor.lightGray.cgColor
+        passwordField.layer.borderWidth = 0.5
+        passwordField.layer.borderColor = UIColor.lightGray.cgColor
+        let login = LoginInteractor().login(email: emailField.text ?? "", password: passwordField.text ?? "")
+        let token: String?
+        token = login?.token
+        if token == nil {
+            print("try again")
+            return
         } else {
-            if passwordField.text == "" {
-                passwordField.layer.borderWidth = 1.0
-                passwordField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
-            } else {
-                emailField.layer.borderWidth = 0
-                passwordField.layer.borderWidth = 0
-                let login = LoginInteractor().login(email: emailField.text ?? "", password: passwordField.text ?? "")
-                let token: String?
-
-                token = login?.token
-                if token == nil {
-                    print("try again")
-                    return
-                } else {
-                    output?.didSelectSignInBtn(token: token ?? "",
-                                               id: login?.id ?? 0,
-                                               email: login?.email ?? "",
-                                               name: login?.name ?? "",
-                                               role: login?.role.description ?? "")
-                }
-            }
+            let user = User(token: token ?? "", id: login?.id ?? 0, name: login?.name ?? "", email: login?.email ?? "", role: login!.role)
+            output?.didSelectSignInBtn(user: user)
         }
     }
 
-    @objc func didTapButtonSignUp() {
+    @objc private func didTapButtonSignUp() {
         output?.didSelectSignUpBtn()
     }
 
-    @objc func didTapRestoreButton() {
+    @objc private func didTapRestoreButton() {
     }
 
-    @objc func keyboardWillShow(notification: NSNotification) {
+    @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let keyboardHeight = keyboardSize.height
             if view.frame.origin.y == 0 {
@@ -143,7 +141,7 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
-    @objc func keyboardWillHide() {
+    @objc private func keyboardWillHide() {
         view.frame.origin.y = 0
     }
 

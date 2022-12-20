@@ -113,48 +113,51 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
         return true
     }
 
-    @objc func didTapButtonSignUp() {
-        if emailField.text == "" {
+    @objc private func didTapButtonSignUp() {
+        guard emailField.text != "" else {
             emailField.layer.borderWidth = 1.0
             emailField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            return
+        }
+        guard passwordField.text != "" else {
+            passwordField.layer.borderWidth = 1.0
+            passwordField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            return
+        }
+        guard passwordSecondField.text != "" else {
+            passwordSecondField.layer.borderWidth = 1.0
+            passwordSecondField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            return
+        }
+
+        guard passwordField.text == passwordSecondField.text else {
+            passwordSecondField.layer.borderWidth = 1.0
+            passwordSecondField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            return
+        }
+        emailField.layer.borderWidth = 0.5
+        emailField.layer.borderColor = UIColor.lightGray.cgColor
+        passwordField.layer.borderWidth = 0.5
+        passwordField.layer.borderColor = UIColor.lightGray.cgColor
+        passwordSecondField.layer.borderWidth = 0.5
+        passwordSecondField.layer.borderColor = UIColor.lightGray.cgColor
+        let registration = RegistrationInteractor().registration(email: emailField.text!, name: nameField.text!, password: passwordField.text!)
+        let token: String?
+        token = registration?.token
+        if token == nil {
+            print("try again")
+            return
         } else {
-            if passwordField.text == "" {
-                passwordField.layer.borderWidth = 1.0
-                passwordField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
-            } else {
-                if passwordSecondField.text == "" || passwordField.text != passwordSecondField.text {
-                    passwordSecondField.layer.borderWidth = 1.0
-                    passwordSecondField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
-                } else {
-                    emailField.layer.borderWidth = 0
-                    passwordField.layer.borderWidth = 0
-
-                    print(emailField.text!)
-                    print(passwordField.text!)
-
-                    let registration = RegistrationInteractor().registration(email: emailField.text!, name: nameField.text!, password: passwordField.text!)
-                    let token: String?
-                    token = registration?.token
-                    if token == nil {
-                        print("try again")
-                        return
-                    } else {
-                        output.didSelectSignUpBtn(token: token ?? "",
-                                                  id: registration?.id ?? 0,
-                                                  email: registration?.email ?? "",
-                                                  name: registration?.name ?? "",
-                                                  role: registration?.role.description ?? "")
-                    }
-                }
-            }
+            let user = User(token: token ?? "", id: registration?.id ?? 0, name: registration?.name ?? "", email: registration?.email ?? "", role: registration!.role)
+            output.didSelectSignUpBtn(user: user)
         }
     }
 
-    @objc func didTapRestoreButton() {
+    @objc private func didTapRestoreButton() {
         print("forget \n No func yet")
     }
 
-    @objc func keyboardWillShow(notification: NSNotification) {
+    @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let keyboardHeight = keyboardSize.height
             if view.frame.origin.y == 0 {
@@ -164,7 +167,7 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
-    @objc func keyboardWillHide() {
+    @objc private func keyboardWillHide() {
         view.frame.origin.y = 0
     }
 

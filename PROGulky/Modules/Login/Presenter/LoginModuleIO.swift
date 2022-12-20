@@ -14,5 +14,5 @@ protocol LoginModuleInput: AnyObject {
 
 protocol LoginModuleOutput: AnyObject {
     func loginModuleWantsToOpenProfile()
-    func loginModuleWantsToOpenSingUp()
+    func loginModuleWantsToOpenRegistrationModule()
 }

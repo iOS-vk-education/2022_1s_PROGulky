@@ -28,25 +28,23 @@ final class ProfileCoordinator: CoordinatorProtocol {
     // MARK: Public Methods
 
     func start(animated: Bool) {
-        let builder = ProfileModuleBuilder()
-        let profileViewController = builder.build(self)
-//        rootNavigationController.setViewControllers([profileViewController], animated: false)
-
-        rootNavigationController.tabBarItem = tabBarItemFactory.getTabBarItem(from: TabBarPage.profile)
-
         var controllers = rootTabBarController?.viewControllers
         if controllers == nil {
             controllers = [rootNavigationController]
         } else {
             controllers?.append(rootNavigationController)
         }
-
-        var viewControllers = [profileViewController]
+        var viewControllers = [UIViewController]()
+        rootNavigationController.tabBarItem = tabBarItemFactory.getTabBarItem(from: TabBarPage.profile)
         let isLoggedOut = UserDefaults.standard.bool(forKey: "isLoggedOut")
         if isLoggedOut {
             let builder = LoginModuleBuilder()
             let loginViewController = builder.build(moduleOutput: self)
             viewControllers = [loginViewController]
+        } else {
+            let builder = ProfileModuleBuilder()
+            let profileViewController = builder.build(self)
+            viewControllers = [profileViewController]
         }
         rootNavigationController.setViewControllers(viewControllers, animated: false)
         rootTabBarController?.setViewControllers(controllers, animated: true)
@@ -77,7 +75,7 @@ extension ProfileCoordinator: RegistrationModuleOutput {
 // MARK: LoginModuleOutput
 
 extension ProfileCoordinator: LoginModuleOutput {
-    func loginModuleWantsToOpenSingUp() {
+    func loginModuleWantsToOpenRegistrationModule() {
         let builder = RegistrationModuleBuilder()
         let regView = builder.build(moduleOutput: self)
         rootNavigationController.present(regView, animated: true)

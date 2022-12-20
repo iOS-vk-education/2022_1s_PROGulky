@@ -8,7 +8,7 @@
 // MARK: - RegistrationViewOutput
 
 protocol RegistrationViewOutput: AnyObject {
-    func didSelectSignUpBtn(token: String, id: Int, email: String, name: String, role: String)
+    func didSelectSignUpBtn(user: User)
 }
 
 // MARK: - RegistrationViewInput

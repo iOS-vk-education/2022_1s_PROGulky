@@ -8,7 +8,7 @@
 // MARK: - LoginViewOutput
 
 protocol LoginViewOutput: AnyObject {
-    func didSelectSignInBtn(token: String, id: Int, email: String, name: String, role: String)
+    func didSelectSignInBtn(user: User)
     func didSelectSignUpBtn()
 }
 

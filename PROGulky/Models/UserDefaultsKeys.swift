@@ -6,9 +6,9 @@
 //
 
 struct UserKeys {
-    let token = "token"
-    let id = "id"
-    let name = "name"
-    let email = "email"
-    let role = "role"
+    static let token = "token"
+    static let id = "id"
+    static let name = "name"
+    static let email = "email"
+    static let role = "role"
 }

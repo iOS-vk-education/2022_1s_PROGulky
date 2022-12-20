@@ -57,7 +57,6 @@ final class ApiManagerLogin {
 
             do {
                 let user = try JSONDecoder().decode(User.self, from: data)
-                // completion(.success(excursions))
                 DispatchQueue.main.async {
                     completion(.success(user))
                 }

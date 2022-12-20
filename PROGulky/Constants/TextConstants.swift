@@ -7,6 +7,8 @@
 
 import Foundation
 
+let baseURL = "http://37.140.195.167:5000"
+
 // MARK: - TextConstantsProfile
 
 struct TextConstantsProfile {

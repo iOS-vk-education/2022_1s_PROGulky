@@ -6,7 +6,6 @@
 //
 
 import Foundation
-@objc protocol CoordinatorProtocol: AnyObject {
+protocol CoordinatorProtocol: AnyObject {
     func start(animated: Bool)
-    @objc optional func finish()
 }

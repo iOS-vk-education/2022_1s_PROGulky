@@ -10,7 +10,6 @@ import Foundation
 
 final class RegistrationInteractor {
     weak var output: RegistrationInteractorOutput?
-    let urlAdress = "http://37.140.195.167:5000"
 }
 
 // MARK: RegistrationInteractorInput
@@ -29,7 +28,7 @@ extension RegistrationInteractor: RegistrationInteractorInput {
 
         print(json)
 
-        var request = URLRequest(url: URL(string: urlAdress + "/auth/registration")!, timeoutInterval: Double.infinity)
+        var request = URLRequest(url: URL(string: baseURL + "/auth/registration")!, timeoutInterval: Double.infinity)
         print("request \(request)")
         request.httpMethod = "POST"
         request.httpBody = jsonData
