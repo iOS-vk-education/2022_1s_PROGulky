@@ -8,7 +8,9 @@
 import Foundation
 
 struct DetailExcursionViewModel {
+    var id: Int
     var image: String
     var description: String
     var infoViewModel: DetailExcursionInfoViewModel
+    var isLiked: Bool
 }

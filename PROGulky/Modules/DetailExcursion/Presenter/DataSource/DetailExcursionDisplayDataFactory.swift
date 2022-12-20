@@ -19,8 +19,7 @@ protocol DetailExcursionDisplayDataFactoryProtocol {
 
 class DetailExcursionDisplayDataFactory: DetailExcursionDisplayDataFactoryProtocol {
     func getPlaceViewModel(for place: Place) -> PlaceViewModel {
-        // TODO: с апи должен приходить sort, сейчас тут замоканная единица
-        PlaceViewModel(sort: String(1), title: place.title, subtitle: place.address)
+        PlaceViewModel(sort: "\(place.sort)", title: place.title, subtitle: place.address)
     }
 
     func setupViewModel(excursion: Excursion) -> DetailExcursionViewModel {
@@ -32,6 +31,7 @@ class DetailExcursionDisplayDataFactory: DetailExcursionDisplayDataFactoryProtoc
         }
 
         return DetailExcursionViewModel(
+            id: excursion.id,
             image: excursion.image ?? "placeholderImage",
             description: excursion.description,
             infoViewModel: DetailExcursionInfoViewModel(
@@ -40,7 +40,8 @@ class DetailExcursionDisplayDataFactory: DetailExcursionDisplayDataFactoryProtoc
                 numberOfPlaces: excursion.numberOfPoints.wordEnding(for: "мест"),
                 duration: "\(excursion.duration) мин",
                 distance: "\(excursion.distance) км"
-            )
+            ),
+            isLiked: excursion.isFavorite
         )
     }
 }

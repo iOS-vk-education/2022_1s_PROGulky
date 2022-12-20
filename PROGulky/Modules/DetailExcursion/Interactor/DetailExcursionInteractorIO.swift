@@ -10,9 +10,15 @@ import Foundation
 // MARK: - DetailExcursionInteractorOutput
 
 protocol DetailExcursionInteractorOutput: AnyObject {
+    func userIsNotAuth()
+
+    func userAddToFavoritesExcursions(for id: Int)
+
+    func userRemoveFromFavoritesExcursions(for id: Int)
 }
 
 // MARK: - DetailExcursionInteractorInput
 
 protocol DetailExcursionInteractorInput: AnyObject {
+    func didLikeButtonTapped(with excursionId: Int, isLiked: Bool)
 }

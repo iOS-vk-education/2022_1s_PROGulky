@@ -51,15 +51,27 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
     func didLoadView() {
         interactor.loadExcursionsList()
         view.startLoader() // Запуск анимации лоадера
-//      excursions = factory.setExcursionsListDisplayData()
     }
 
     func item(for index: Int) -> ExcursionViewModel {
-        factory.getExcursionViewModel(for: excursions[index])
+        NotificationCenter.default.addObserver(self, selector: #selector(setLikeStatus), name: Notification.Name(NotificationsConstants.Excursions.name), object: nil)
+        return factory.getExcursionViewModel(for: excursions[index])
     }
 
     func itemsCount() -> Int {
         excursions.count
+    }
+
+    @objc func setLikeStatus(_ notification: Notification) {
+        guard let id = notification.userInfo?[NotificationsConstants.Excursions.UserInfoKeys.id] as? Int else {
+            return
+        }
+        guard let isLiked = notification.userInfo?[NotificationsConstants.Excursions.UserInfoKeys.isLiked] as? Bool else {
+            return
+        }
+        if let row = excursions.firstIndex(where: { $0.id == id }) {
+            excursions[row].isFavorite = isLiked
+        }
     }
 }
 
