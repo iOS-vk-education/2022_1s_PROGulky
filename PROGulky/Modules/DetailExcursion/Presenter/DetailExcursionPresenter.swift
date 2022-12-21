@@ -43,13 +43,13 @@ extension DetailExcursionPresenter: DetailExcursionModuleInput {
 // MARK: DetailExcursionViewOutput
 
 extension DetailExcursionPresenter: DetailExcursionViewOutput {
-    func didLikeButtonTapped() {
-        interactor.didLikeButtonTapped(with: viewModel.id, isLiked: viewModel.isLiked)
-    }
-
     func didLoadView() {
         view.configure(viewModel: viewModel)
         view.configureLikeButton(isLiked: viewModel.isLiked)
+    }
+
+    func didLikeButtonTapped() {
+        interactor.didLikeButtonTapped(with: viewModel.id, isLiked: viewModel.isLiked)
     }
 
     func place(for indexPath: IndexPath) -> PlaceViewModel {
@@ -68,41 +68,37 @@ extension DetailExcursionPresenter: DetailExcursionViewOutput {
 // MARK: DetailExcursionInteractorOutput
 
 extension DetailExcursionPresenter: DetailExcursionInteractorOutput {
+    func userChangeStatusLikeView(on status: Bool) {
+        view.configureLikeButton(isLiked: status)
+        viewModel.isLiked = status
+    }
+
     func userRemoveFromFavoritesExcursions(for id: Int) {
-        view.configureLikeButton(isLiked: false)
-        viewModel.isLiked = false
-        postNotificationForRemoveLike(for: id)
+        postNotificationLikeStatus(with: false, for: id)
     }
 
     func userAddToFavoritesExcursions(for id: Int) {
-        view.configureLikeButton(isLiked: true)
-        postNotificationForSetLike(for: id)
-        viewModel.isLiked = true
+        postNotificationLikeStatus(with: true, for: id)
     }
 
-    func userIsNotAuth() {
+    // Ошибка авторизации
+    func gotAuthError() {
         view.showAuthView()
     }
 
-    private func postNotificationForRemoveLike(for id: Int) {
+    // Ошибка сервера
+    func gotAnotherError() {
+        view.showErrorView()
+    }
+
+    private func postNotificationLikeStatus(with isLiked: Bool, for id: Int) {
         NotificationCenter.default.post(
             name: NSNotification.Name(
                 rawValue: NotificationsConstants.Excursions.name),
             object: nil,
             userInfo: [
                 NotificationsConstants.Excursions.UserInfoKeys.id: id,
-                NotificationsConstants.Excursions.UserInfoKeys.isLiked: false
-            ]
-        )
-    }
-
-    private func postNotificationForSetLike(for id: Int) {
-        NotificationCenter.default.post(
-            name: NSNotification.Name(rawValue: NotificationsConstants.Excursions.name),
-            object: nil,
-            userInfo: [
-                NotificationsConstants.Excursions.UserInfoKeys.id: id,
-                NotificationsConstants.Excursions.UserInfoKeys.isLiked: true
+                NotificationsConstants.Excursions.UserInfoKeys.isLiked: isLiked
             ]
         )
     }

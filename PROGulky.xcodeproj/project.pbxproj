@@ -634,6 +634,7 @@
 			isa = PBXGroup;
 			children = (
 				545A208E29511E2D0085E4AF /* NotAuthView.swift */,
+				54B1A402293DC91F00A232B9 /* ErrorView.swift */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -652,7 +653,6 @@
 			isa = PBXGroup;
 			children = (
 				54C089D6291ACB76000497FE /* ExcursionsFilterBarView.swift */,
-				54B1A402293DC91F00A232B9 /* ErrorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

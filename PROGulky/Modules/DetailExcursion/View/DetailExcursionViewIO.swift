@@ -29,4 +29,6 @@ protocol DetailExcursionViewInput: AnyObject {
     func configureLikeButton(isLiked: Bool)
 
     func showAuthView()
+
+    func showErrorView()
 }

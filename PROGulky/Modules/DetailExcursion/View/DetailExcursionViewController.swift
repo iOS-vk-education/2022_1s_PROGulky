@@ -16,8 +16,9 @@ final class DetailExcursionViewController: UIViewController {
     private var excursionImageView = UIImageView(frame: .zero)
     private var detailExcursionInfoView = DetailExcursionInfoView()
     private var tableView = UITableView()
-    private let likeImageView = UIImageView(frame: .zero)
+    private let likeButton = UIButton(frame: .zero)
     private let notAuthView = NotAuthView(frame: .zero)
+    private let errorView = ErrorView(frame: .zero) // TODO: пока не используется
 
     // MARK: Lifecycle
 
@@ -39,7 +40,7 @@ final class DetailExcursionViewController: UIViewController {
     }
 
     @objc
-    private func didLikeImageTapped() {
+    private func didLikeButtonTapped() {
         output.didLikeButtonTapped()
     }
 
@@ -48,7 +49,7 @@ final class DetailExcursionViewController: UIViewController {
             excursionImageView,
             detailExcursionInfoView,
             tableView,
-            likeImageView,
+            likeButton,
             notAuthView
         )
         view.backgroundColor = ExcursionsListConstants.Screen.backgroundColor
@@ -56,12 +57,8 @@ final class DetailExcursionViewController: UIViewController {
         configureImageView()
         configureDetailExcursionInfoView()
         configureTableView()
-        configureLikeImageView()
+        configureLikeButton()
         configureNotAuthView()
-
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(didLikeImageTapped))
-        likeImageView.isUserInteractionEnabled = true
-        likeImageView.addGestureRecognizer(tapRecognizer)
     }
 
     private func configureImageView() {
@@ -86,11 +83,9 @@ final class DetailExcursionViewController: UIViewController {
         tableView.register(DescriptionCell.self, forCellReuseIdentifier: DetailExcursionConstants.TableView.DescriptionCell.reuseId)
     }
 
-    private func configureLikeImageView() {
-        likeImageView.clipsToBounds = true
-        likeImageView.layer.masksToBounds = true
-        likeImageView.contentMode = .scaleAspectFill
-        likeImageView.tintColor = .white
+    private func configureLikeButton() {
+        likeButton.addTarget(self, action: #selector(didLikeButtonTapped), for: .touchUpInside)
+        likeButton.tintColor = .white
     }
 
     private func configureNotAuthView() {
@@ -108,7 +103,7 @@ final class DetailExcursionViewController: UIViewController {
         setImageConstraints()
         setDetailExcursionInfoViewConstraints()
         setTableViewConstraints()
-        setLikeImageViewConstraints()
+        setLikeButtonConstraints()
         setNotAuthViewConstraints()
 
         view.bringSubviewToFront(detailExcursionInfoView)
@@ -146,12 +141,12 @@ final class DetailExcursionViewController: UIViewController {
         }
     }
 
-    private func setLikeImageViewConstraints() {
-        likeImageView.translatesAutoresizingMaskIntoConstraints = false
-        likeImageView.topAnchor.constraint(equalTo: excursionImageView.topAnchor, constant: DetailExcursionConstants.LikeButton.marginTop).isActive = true
-        likeImageView.trailingAnchor.constraint(equalTo: excursionImageView.trailingAnchor, constant: DetailExcursionConstants.LikeButton.marginRight).isActive = true
-        likeImageView.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.LikeButton.height).isActive = true
-        likeImageView.widthAnchor.constraint(equalToConstant: DetailExcursionConstants.LikeButton.width).isActive = true
+    private func setLikeButtonConstraints() {
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        likeButton.topAnchor.constraint(equalTo: excursionImageView.topAnchor, constant: DetailExcursionConstants.LikeButton.marginTop).isActive = true
+        likeButton.trailingAnchor.constraint(equalTo: excursionImageView.trailingAnchor, constant: DetailExcursionConstants.LikeButton.marginRight).isActive = true
+        likeButton.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.LikeButton.height).isActive = true
+        likeButton.widthAnchor.constraint(equalToConstant: DetailExcursionConstants.LikeButton.width).isActive = true
     }
 
     private func setNotAuthViewConstraints() {
@@ -167,11 +162,15 @@ final class DetailExcursionViewController: UIViewController {
 
 extension DetailExcursionViewController: DetailExcursionViewInput {
     func configureLikeButton(isLiked: Bool) {
-        likeImageView.image = isLiked ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart")
+        likeButton.setBackgroundImage(isLiked ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart"), for: .normal)
     }
 
     func showAuthView() {
         notAuthView.isHidden = false
+    }
+
+    func showErrorView() {
+        errorView.isHidden = false
     }
 
     func configure(viewModel: DetailExcursionViewModel) {

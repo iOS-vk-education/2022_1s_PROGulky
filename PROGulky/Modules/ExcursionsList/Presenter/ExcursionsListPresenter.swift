@@ -31,6 +31,8 @@ final class ExcursionsListPresenter {
         self.interactor = interactor
         self.router = router
         self.moduleOutput = moduleOutput
+
+        NotificationCenter.default.addObserver(self, selector: #selector(setLikeStatus), name: Notification.Name(NotificationsConstants.Excursions.name), object: nil)
     }
 }
 
@@ -54,8 +56,7 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
     }
 
     func item(for index: Int) -> ExcursionViewModel {
-        NotificationCenter.default.addObserver(self, selector: #selector(setLikeStatus), name: Notification.Name(NotificationsConstants.Excursions.name), object: nil)
-        return factory.getExcursionViewModel(for: excursions[index])
+        factory.getExcursionViewModel(for: excursions[index])
     }
 
     func itemsCount() -> Int {

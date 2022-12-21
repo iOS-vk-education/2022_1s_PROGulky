@@ -8,7 +8,7 @@
 import Foundation
 
 final class ExcursionsRepository {
-    static let repository = ExcursionsRepository()
+    static let shared = ExcursionsRepository()
 
     func getExcursionsList(completion: @escaping (Result<Excursions, Error>) -> Void) {
         var token: String?

@@ -15,7 +15,7 @@ final class ExcursionsListInteractor {
 
 extension ExcursionsListInteractor: ExcursionsListInteractorInput {
     func loadExcursionsList() {
-        ExcursionsRepository.repository.getExcursionsList { [weak self] excursions in
+        ExcursionsRepository.shared.getExcursionsList { [weak self] excursions in
             switch excursions {
             case let .success(excursions):
                 self?.output?.didLoadExcursionsList(excursions: excursions)

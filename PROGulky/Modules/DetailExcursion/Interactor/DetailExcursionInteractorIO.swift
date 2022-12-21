@@ -10,11 +10,15 @@ import Foundation
 // MARK: - DetailExcursionInteractorOutput
 
 protocol DetailExcursionInteractorOutput: AnyObject {
-    func userIsNotAuth()
+    func gotAuthError()
+
+    func gotAnotherError()
 
     func userAddToFavoritesExcursions(for id: Int)
 
     func userRemoveFromFavoritesExcursions(for id: Int)
+
+    func userChangeStatusLikeView(on status: Bool)
 }
 
 // MARK: - DetailExcursionInteractorInput
