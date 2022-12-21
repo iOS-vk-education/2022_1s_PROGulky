@@ -27,7 +27,7 @@ extension DetailExcursionInteractor: DetailExcursionInteractorInput {
         }
 
         if isLiked {
-            output?.userChangeStatusLikeView(on: false) // Сначала меняем вьюху
+            output?.userChangeStatusLikeButton(on: false) // Сначала меняем вьюху
             // Удалить из избранного
             ApiManager.shared.removeFavorites(
                 completion: { result in
@@ -42,7 +42,7 @@ extension DetailExcursionInteractor: DetailExcursionInteractorInput {
                 id: excursionId
             )
         } else {
-            output?.userChangeStatusLikeView(on: true) // Сначала меняем вьюху
+            output?.userChangeStatusLikeButton(on: true) // Сначала меняем вьюху
             // Добавить в избранное
             ApiManager.shared.addFavorites(
                 completion: { result in

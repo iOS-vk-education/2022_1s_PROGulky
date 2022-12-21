@@ -18,7 +18,7 @@ protocol DetailExcursionInteractorOutput: AnyObject {
 
     func userRemoveFromFavoritesExcursions(for id: Int)
 
-    func userChangeStatusLikeView(on status: Bool)
+    func userChangeStatusLikeButton(on status: Bool)
 }
 
 // MARK: - DetailExcursionInteractorInput

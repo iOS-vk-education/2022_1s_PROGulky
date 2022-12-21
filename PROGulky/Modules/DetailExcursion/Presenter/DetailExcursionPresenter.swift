@@ -68,7 +68,7 @@ extension DetailExcursionPresenter: DetailExcursionViewOutput {
 // MARK: DetailExcursionInteractorOutput
 
 extension DetailExcursionPresenter: DetailExcursionInteractorOutput {
-    func userChangeStatusLikeView(on status: Bool) {
+    func userChangeStatusLikeButton(on status: Bool) {
         view.configureLikeButton(isLiked: status)
         viewModel.isLiked = status
     }
