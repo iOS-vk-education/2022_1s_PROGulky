@@ -13,7 +13,8 @@ final class LoginModuleBuilder {
     func build(moduleOutput: LoginModuleOutput) -> UIViewController {
         let viewController = LoginViewController()
         let router = LoginRouter()
-        let interactor = LoginInteractor()
+        let service = UserDefaultsLoginService.shared
+        let interactor = LoginInteractor(userDefaultsLoginService: service)
 
         let presenter = LoginPresenter(interactor: interactor, router: router, moduleOutput: moduleOutput)
         presenter.view = viewController

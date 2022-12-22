@@ -114,7 +114,8 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc private func didTapButtonSignUp() {
-        guard emailField.text != "" else {
+        guard let email = emailField.text,
+              email != "" else {
             emailField.layer.borderWidth = 1.0
             emailField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
             return
@@ -135,22 +136,18 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
             passwordSecondField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
             return
         }
+
+        guard let password = passwordField.text else { return }
+
         emailField.layer.borderWidth = 0.5
         emailField.layer.borderColor = UIColor.lightGray.cgColor
         passwordField.layer.borderWidth = 0.5
         passwordField.layer.borderColor = UIColor.lightGray.cgColor
         passwordSecondField.layer.borderWidth = 0.5
         passwordSecondField.layer.borderColor = UIColor.lightGray.cgColor
-        let registration = RegistrationInteractor().registration(email: emailField.text!, name: nameField.text!, password: passwordField.text!)
-        let token: String?
-        token = registration?.token
-        if token == nil {
-            print("try again")
-            return
-        } else {
-            let user = User(token: token ?? "", id: registration?.id ?? 0, name: registration?.name ?? "", email: registration?.email ?? "", role: registration!.role)
-            output.didSelectSignUpBtn(user: user)
-        }
+
+        let registrationDTO = RegistrationDTO(email: email, password: password, nickname: nameField.text ?? "")
+        output?.didTapSignUpButton(registrationDTO: registrationDTO)
     }
 
     @objc private func didTapRestoreButton() {
@@ -224,5 +221,14 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
+// MARK: RegistrationViewInput
+
 extension RegistrationViewController: RegistrationViewInput {
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: message, message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { action in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
+    }
 }

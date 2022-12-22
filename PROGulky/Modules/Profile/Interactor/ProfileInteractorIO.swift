@@ -15,4 +15,5 @@ protocol ProfileInteractorOutput: AnyObject {
 // MARK: - ProfileInteractorInput
 
 protocol ProfileInteractorInput: AnyObject {
+    func logout()
 }

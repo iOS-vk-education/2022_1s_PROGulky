@@ -19,13 +19,15 @@ final class ProfilePresenter {
     private let interactor: ProfileInteractorInput
     private let router: ProfileRouterInput
     private weak var moduleOutput: ProfileModuleOutput?
+    private let headerFactory: UserInfoHeaderDisplayDataFactoryProtocol
 
     // MARK: - Lifecycle
 
-    init(interactor: ProfileInteractorInput, router: ProfileRouterInput, moduleOutput: ProfileModuleOutput) {
+    init(interactor: ProfileInteractorInput, router: ProfileRouterInput, moduleOutput: ProfileModuleOutput, headerFactory: UserInfoHeaderDisplayDataFactoryProtocol) {
         self.interactor = interactor
         self.router = router
         self.moduleOutput = moduleOutput
+        self.headerFactory = headerFactory
     }
 }
 
@@ -35,8 +37,12 @@ extension ProfilePresenter: ProfileModuleInput {
 // MARK: ProfileViewOutput
 
 extension ProfilePresenter: ProfileViewOutput {
+    var headerDisplayData: UserInfoHeader.DisplayData {
+        headerFactory.getDisplayData()
+    }
+
     func logoutButtonTapped() {
-        UserDefaults.standard.set(true, forKey: "isLoggedOut")
+        interactor.logout()
         moduleOutput?.profileModuleWantsToOpenLoginModule()
     }
 }

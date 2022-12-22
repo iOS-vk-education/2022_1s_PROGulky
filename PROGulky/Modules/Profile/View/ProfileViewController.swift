@@ -50,6 +50,7 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = .prog.Dynamic.background
         configureTableView()
         configureUI()
+        userInfoHeader.configure(output.headerDisplayData)
     }
 
     private func configureUI() {

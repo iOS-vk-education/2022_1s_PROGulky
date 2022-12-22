@@ -10,45 +10,21 @@ import Foundation
 
 final class RegistrationInteractor {
     weak var output: RegistrationInteractorOutput?
+    private let service = UserDefaultsLoginService.shared
 }
 
 // MARK: RegistrationInteractorInput
 
 extension RegistrationInteractor: RegistrationInteractorInput {
-    func registration(email: String, name: String, password: String) -> (User?) {
-        let semaphore = DispatchSemaphore(value: 0)
-
-        var returnData: User?
-        let json: [String: Any] = [
-            "email": email,
-            "name": name,
-            "password": password
-        ]
-        let jsonData = try? JSONSerialization.data(withJSONObject: json)
-
-        print(json)
-
-        var request = URLRequest(url: URL(string: baseURL + "/auth/registration")!, timeoutInterval: Double.infinity)
-        print("request \(request)")
-        request.httpMethod = "POST"
-        request.httpBody = jsonData
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-
-            guard let data = data else {
-                print(String(describing: error))
-                semaphore.signal()
-                return
+    func registration(_ registrationDTO: RegistrationDTO) {
+        ApiManagerLogin.shared.registration(registrationDTO) { [weak self] result in
+            switch result {
+            case let .success(user):
+                self?.service.setUserAuthData(user: user)
+                self?.output?.successRegistration(user: user)
+            case let .failure(failure):
+                self?.output?.handleError(error: failure)
             }
-            returnData = try? JSONDecoder().decode(User.self, from: data)
-            print("login returnData \(String(describing: returnData))")
-            semaphore.signal()
         }
-
-        task.resume()
-        semaphore.wait()
-
-        return returnData
     }
 }

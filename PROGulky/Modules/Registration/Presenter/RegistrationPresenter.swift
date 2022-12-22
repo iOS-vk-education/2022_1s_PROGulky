@@ -36,18 +36,20 @@ extension RegistrationPresenter: RegistrationModuleInput {
 // MARK: RegistrationViewOutput
 
 extension RegistrationPresenter: RegistrationViewOutput {
-    func didSelectSignUpBtn(user: User) {
-        let defaults = UserDefaults.standard
-        defaults.setValue(user.token, forKey: UserKeys.token)
-        defaults.set(user.id, forKey: UserKeys.id)
-        defaults.set(user.email, forKey: UserKeys.email)
-        defaults.set(user.name, forKey: UserKeys.name)
-        defaults.set(user.role.description, forKey: UserKeys.role)
-        defaults.set(false, forKey: "isLoggedOut")
-        defaults.synchronize()
-        moduleOutput?.registrationModuleWantsToOpenProfile()
+    func didTapSignUpButton(registrationDTO: RegistrationDTO) {
+        interactor.registration(registrationDTO)
     }
 }
 
+// MARK: RegistrationInteractorOutput
+
 extension RegistrationPresenter: RegistrationInteractorOutput {
+    func successRegistration(user: User) {
+        moduleOutput?.registrationModuleWantsToOpenProfile()
+    }
+
+    func handleError(error: Error) {
+        let text = error.localizedDescription
+        view.showAlert(message: text)
+    }
 }

@@ -99,12 +99,14 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc private func didTapButtonSignIn() {
-        guard emailField.text != "" else {
+        guard let email = emailField.text,
+              email != "" else {
             emailField.layer.borderWidth = 1.0
             emailField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
             return
         }
-        guard passwordField.text != "" else {
+        guard let password = passwordField.text,
+              password != "" else {
             passwordField.layer.borderWidth = 1.0
             passwordField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
             return
@@ -113,16 +115,9 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         emailField.layer.borderColor = UIColor.lightGray.cgColor
         passwordField.layer.borderWidth = 0.5
         passwordField.layer.borderColor = UIColor.lightGray.cgColor
-        let login = LoginInteractor().login(email: emailField.text ?? "", password: passwordField.text ?? "")
-        let token: String?
-        token = login?.token
-        if token == nil {
-            print("try again")
-            return
-        } else {
-            let user = User(token: token ?? "", id: login?.id ?? 0, name: login?.name ?? "", email: login?.email ?? "", role: login!.role)
-            output?.didSelectSignInBtn(user: user)
-        }
+
+        let login = LoginDTO(email: email, password: password)
+        output?.didTapSignInButton(loginDTO: login)
     }
 
     @objc private func didTapButtonSignUp() {
@@ -136,7 +131,6 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let keyboardHeight = keyboardSize.height
             if view.frame.origin.y == 0 {
-                view.frame.origin.y -= keyboardHeight
             }
         }
     }
@@ -171,7 +165,7 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         }
 
         buttonSignIn.snp.makeConstraints { make in
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(Constants.Button.bottomOffset)
+            make.bottom.lessThanOrEqualTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(Constants.Button.bottomOffset)
             make.leading.equalToSuperview()
                 .offset(Constants.Button.offset)
             make.trailing.equalToSuperview()
@@ -187,7 +181,7 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         }
 
         buttonSignUp.snp.makeConstraints { make in
-            make.top.equalTo(self.buttonSignIn.snp.bottom)
+            make.top.lessThanOrEqualTo(self.buttonSignIn.snp.bottom)
                 .offset(Constants.Button.topOffset)
             make.centerX.equalToSuperview()
             make.height.equalTo(Constants.TextField.height)
@@ -195,5 +189,14 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 }
 
+// MARK: LoginViewInput
+
 extension LoginViewController: LoginViewInput {
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: message, message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { action in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
+    }
 }

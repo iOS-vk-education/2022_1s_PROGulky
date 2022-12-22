@@ -5,10 +5,11 @@
 //  Created by Сергей Киселев on 05.12.2022.
 //
 
-struct UserKeys {
-    static let token = "token"
-    static let id = "id"
-    static let name = "name"
-    static let email = "email"
-    static let role = "role"
+enum UserKeys: String, CaseIterable {
+    case token
+    case id
+    case name
+    case email
+    case role
+    case isLogin
 }

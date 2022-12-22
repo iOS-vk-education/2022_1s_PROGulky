@@ -36,15 +36,15 @@ final class ProfileCoordinator: CoordinatorProtocol {
         }
         var viewControllers = [UIViewController]()
         rootNavigationController.tabBarItem = tabBarItemFactory.getTabBarItem(from: TabBarPage.profile)
-        let isLoggedOut = UserDefaults.standard.bool(forKey: "isLoggedOut")
-        if isLoggedOut {
-            let builder = LoginModuleBuilder()
-            let loginViewController = builder.build(moduleOutput: self)
-            viewControllers = [loginViewController]
-        } else {
+        let isLoggedIn = UserDefaults.standard.bool(forKey: UserKeys.isLogin.rawValue)
+        if isLoggedIn {
             let builder = ProfileModuleBuilder()
             let profileViewController = builder.build(self)
             viewControllers = [profileViewController]
+        } else {
+            let builder = LoginModuleBuilder()
+            let loginViewController = builder.build(moduleOutput: self)
+            viewControllers = [loginViewController]
         }
         rootNavigationController.setViewControllers(viewControllers, animated: false)
         rootTabBarController?.setViewControllers(controllers, animated: true)

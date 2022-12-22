@@ -22,3 +22,18 @@ struct Role: Codable {
     let value: String
     let description: String
 }
+
+// MARK: - LoginDTO
+
+struct LoginDTO {
+    let email: String
+    let password: String
+}
+
+// MARK: - RegistrationDTO
+
+struct RegistrationDTO {
+    let email: String
+    let password: String
+    let nickname: String
+}
