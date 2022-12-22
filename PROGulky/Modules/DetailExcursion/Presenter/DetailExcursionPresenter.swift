@@ -20,14 +20,19 @@ final class DetailExcursionPresenter {
     private let router: DetailExcursionRouterInput
     private let factory = DetailExcursionDisplayDataFactory()
     private let excursion: Excursion
-    private let viewModel: DetailExcursionViewModel
+    private var viewModel: DetailExcursionViewModel
+    private weak var moduleOutput: DetailExcursionModuleOutput?
 
     // MARK: - Lifecycle
 
-    init(interactor: DetailExcursionInteractorInput, router: DetailExcursionRouterInput, excursion: Excursion) {
+    init(interactor: DetailExcursionInteractorInput,
+         router: DetailExcursionRouterInput,
+         excursion: Excursion,
+         moduleOutput: DetailExcursionModuleOutput) {
         self.interactor = interactor
         self.router = router
         self.excursion = excursion
+        self.moduleOutput = moduleOutput
         viewModel = factory.setupViewModel(excursion: excursion)
     }
 }
@@ -40,6 +45,11 @@ extension DetailExcursionPresenter: DetailExcursionModuleInput {
 extension DetailExcursionPresenter: DetailExcursionViewOutput {
     func didLoadView() {
         view.configure(viewModel: viewModel)
+        view.configureLikeButton(isLiked: viewModel.isLiked)
+    }
+
+    func didLikeButtonTapped() {
+        interactor.didLikeButtonTapped(with: viewModel.id, isLiked: viewModel.isLiked)
     }
 
     func place(for indexPath: IndexPath) -> PlaceViewModel {
@@ -55,5 +65,41 @@ extension DetailExcursionPresenter: DetailExcursionViewOutput {
     }
 }
 
+// MARK: DetailExcursionInteractorOutput
+
 extension DetailExcursionPresenter: DetailExcursionInteractorOutput {
+    func userChangeStatusLikeButton(on status: Bool) {
+        view.configureLikeButton(isLiked: status)
+        viewModel.isLiked = status
+    }
+
+    func userRemoveFromFavoritesExcursions(for id: Int) {
+        postNotificationLikeStatus(with: false, for: id)
+    }
+
+    func userAddToFavoritesExcursions(for id: Int) {
+        postNotificationLikeStatus(with: true, for: id)
+    }
+
+    // Ошибка авторизации
+    func gotAuthError() {
+        view.showAuthView()
+    }
+
+    // Ошибка сервера
+    func gotAnotherError() {
+        view.showErrorView()
+    }
+
+    private func postNotificationLikeStatus(with isLiked: Bool, for id: Int) {
+        NotificationCenter.default.post(
+            name: NSNotification.Name(
+                rawValue: NotificationsConstants.Excursions.name),
+            object: nil,
+            userInfo: [
+                NotificationsConstants.Excursions.UserInfoKeys.id: id,
+                NotificationsConstants.Excursions.UserInfoKeys.isLiked: isLiked
+            ]
+        )
+    }
 }

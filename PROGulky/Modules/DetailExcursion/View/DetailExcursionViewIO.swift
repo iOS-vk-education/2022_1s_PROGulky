@@ -14,6 +14,8 @@ protocol DetailExcursionViewOutput: AnyObject {
 
     func place(for indexPath: IndexPath) -> PlaceViewModel
 
+    func didLikeButtonTapped()
+
     var placesCount: Int { get }
 
     var description: String { get }
@@ -23,4 +25,10 @@ protocol DetailExcursionViewOutput: AnyObject {
 
 protocol DetailExcursionViewInput: AnyObject {
     func configure(viewModel: DetailExcursionViewModel)
+
+    func configureLikeButton(isLiked: Bool)
+
+    func showAuthView()
+
+    func showErrorView()
 }

@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Place
 
 struct Place: Codable {
-    let sort: Int?
+    let sort: Int
     let title: String
     let description: String
     let image: String?

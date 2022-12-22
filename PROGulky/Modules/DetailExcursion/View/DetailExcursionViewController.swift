@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 // MARK: - DetailExcursionViewController
 
@@ -13,23 +14,20 @@ final class DetailExcursionViewController: UIViewController {
     var output: DetailExcursionViewOutput!
 
     private var excursionImageView = UIImageView(frame: .zero)
-    private var detailExcursionInfoView = DetailExcursionInfoView(frame: .zero)
+    private var detailExcursionInfoView = DetailExcursionInfoView()
     private var tableView = UITableView()
+    private let likeButton = UIButton(frame: .zero)
+    private let notAuthView = NotAuthView(frame: .zero)
+    private let errorView = ErrorView(frame: .zero) // TODO: пока не используется
 
     // MARK: Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUI()
         setupConstraints()
 
         output.didLoadView()
-    }
-
-    func configure(viewModel: DetailExcursionViewModel) {
-        setupImage(with: viewModel.image)
-        detailExcursionInfoView.set(excursion: viewModel.infoViewModel)
     }
 
     private func setupImage(with image: String?) {
@@ -41,32 +39,39 @@ final class DetailExcursionViewController: UIViewController {
         }
     }
 
+    @objc
+    private func didLikeButtonTapped() {
+        output.didLikeButtonTapped()
+    }
+
     private func setupUI() {
         view.addSubviews(
             excursionImageView,
             detailExcursionInfoView,
-            tableView
+            tableView,
+            likeButton,
+            notAuthView
         )
         view.backgroundColor = ExcursionsListConstants.Screen.backgroundColor
 
         configureImageView()
         configureDetailExcursionInfoView()
         configureTableView()
+        configureLikeButton()
+        configureNotAuthView()
     }
 
     private func configureImageView() {
         excursionImageView.clipsToBounds = true
+        excursionImageView.layer.masksToBounds = true
         excursionImageView.contentMode = .scaleAspectFill
     }
 
     private func configureDetailExcursionInfoView() {
         detailExcursionInfoView.backgroundColor = DetailExcursionConstants.InfoView.backgroundColor
         detailExcursionInfoView.layer.cornerRadius = DetailExcursionConstants.InfoView.cornerRadius
-
-        // Конфигурация тени
-        detailExcursionInfoView.layer.shadowColor = DetailExcursionConstants.InfoView.shadowColor
-        detailExcursionInfoView.layer.shadowOpacity = DetailExcursionConstants.InfoView.shadowOpacity
-        detailExcursionInfoView.layer.shadowRadius = DetailExcursionConstants.InfoView.shadowRadius
+        detailExcursionInfoView.clipsToBounds = true
+        detailExcursionInfoView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
 
     private func configureTableView() {
@@ -78,6 +83,17 @@ final class DetailExcursionViewController: UIViewController {
         tableView.register(DescriptionCell.self, forCellReuseIdentifier: DetailExcursionConstants.TableView.DescriptionCell.reuseId)
     }
 
+    private func configureLikeButton() {
+        likeButton.addTarget(self, action: #selector(didLikeButtonTapped), for: .touchUpInside)
+        likeButton.tintColor = .white
+    }
+
+    private func configureNotAuthView() {
+        notAuthView.delegate = self
+        notAuthView.isHidden = true
+        notAuthView.backgroundColor = .white
+    }
+
     private func setTableViewDelegate() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -87,37 +103,80 @@ final class DetailExcursionViewController: UIViewController {
         setImageConstraints()
         setDetailExcursionInfoViewConstraints()
         setTableViewConstraints()
+        setLikeButtonConstraints()
+        setNotAuthViewConstraints()
+
+        view.bringSubviewToFront(detailExcursionInfoView)
     }
 
     private func setImageConstraints() {
-        excursionImageView.translatesAutoresizingMaskIntoConstraints = false
-        excursionImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: DetailExcursionConstants.Image.marginTop).isActive = true
-        excursionImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        excursionImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        excursionImageView.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.Image.height).isActive = true
+        excursionImageView.snp.remakeConstraints { make in
+            make.top.equalToSuperview()
+                .offset(DetailExcursionConstants.Image.marginTop)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.lessThanOrEqualTo(DetailExcursionConstants.Image.height)
+        }
     }
 
     private func setDetailExcursionInfoViewConstraints() {
-        detailExcursionInfoView.translatesAutoresizingMaskIntoConstraints = false
-        detailExcursionInfoView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        detailExcursionInfoView.topAnchor.constraint(equalTo: excursionImageView.bottomAnchor, constant: DetailExcursionConstants.InfoView.heightInImage).isActive = true
-        detailExcursionInfoView.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.InfoView.height).isActive = true
-        detailExcursionInfoView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: DetailExcursionConstants.InfoView.marginLeft).isActive = true
-        detailExcursionInfoView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: DetailExcursionConstants.InfoView.marginRight).isActive = true
+        detailExcursionInfoView.snp.remakeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.lessThanOrEqualTo(self.excursionImageView.snp.bottom)
+                .offset(DetailExcursionConstants.InfoView.heightInImage)
+            make.bottom.greaterThanOrEqualTo(self.excursionImageView.snp.bottom)
+            make.height.greaterThanOrEqualTo(DetailExcursionConstants.InfoView.height)
+            make.trailing.equalToSuperview()
+            make.leading.equalToSuperview()
+        }
     }
 
     private func setTableViewConstraints() {
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: detailExcursionInfoView.bottomAnchor, constant: DetailExcursionConstants.TableView.marginTop).isActive = true
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableView.snp.remakeConstraints { make in
+            make.top.equalTo(self.detailExcursionInfoView.snp.bottom)
+                .offset(DetailExcursionConstants.TableView.marginTop)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+    }
+
+    private func setLikeButtonConstraints() {
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        likeButton.topAnchor.constraint(equalTo: excursionImageView.topAnchor, constant: DetailExcursionConstants.LikeButton.marginTop).isActive = true
+        likeButton.trailingAnchor.constraint(equalTo: excursionImageView.trailingAnchor, constant: DetailExcursionConstants.LikeButton.marginRight).isActive = true
+        likeButton.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.LikeButton.height).isActive = true
+        likeButton.widthAnchor.constraint(equalToConstant: DetailExcursionConstants.LikeButton.width).isActive = true
+    }
+
+    private func setNotAuthViewConstraints() {
+        notAuthView.translatesAutoresizingMaskIntoConstraints = false
+        notAuthView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        notAuthView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        notAuthView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        notAuthView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
     }
 }
 
 // MARK: DetailExcursionViewInput
 
 extension DetailExcursionViewController: DetailExcursionViewInput {
+    func configureLikeButton(isLiked: Bool) {
+        likeButton.setBackgroundImage(isLiked ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart"), for: .normal)
+    }
+
+    func showAuthView() {
+        notAuthView.isHidden = false
+    }
+
+    func showErrorView() {
+        errorView.isHidden = false
+    }
+
+    func configure(viewModel: DetailExcursionViewModel) {
+        setupImage(with: viewModel.image)
+        detailExcursionInfoView.set(excursion: viewModel.infoViewModel)
+    }
 }
 
 extension DetailExcursionViewController: UITableViewDelegate {
@@ -187,5 +246,13 @@ extension DetailExcursionViewController: UITableViewDataSource {
         case .Description:
             return UITableView.automaticDimension
         }
+    }
+}
+
+// MARK: NotAuthViewDelegate
+
+extension DetailExcursionViewController: NotAuthViewDelegate {
+    func didCloseButtonTapped() {
+        notAuthView.isHidden = true
     }
 }
