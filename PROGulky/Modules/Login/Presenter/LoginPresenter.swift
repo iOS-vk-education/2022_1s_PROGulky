@@ -5,6 +5,8 @@
 //  Created by Ivan Tazenkov on 22/11/2022.
 //
 
+import Foundation
+
 // MARK: - LoginPresenter
 
 final class LoginPresenter {
@@ -16,20 +18,43 @@ final class LoginPresenter {
 
     private let interactor: LoginInteractorInput
     private let router: LoginRouterInput
+    private weak var moduleOutput: LoginModuleOutput?
 
     // MARK: - Lifecycle
 
-    init(interactor: LoginInteractorInput, router: LoginRouterInput) {
+    init(interactor: LoginInteractorInput,
+         router: LoginRouterInput,
+         moduleOutput: LoginModuleOutput) {
         self.interactor = interactor
         self.router = router
+        self.moduleOutput = moduleOutput
     }
 }
 
 extension LoginPresenter: LoginModuleInput {
 }
 
+// MARK: LoginViewOutput
+
 extension LoginPresenter: LoginViewOutput {
+    func didTapSignInButton(loginDTO: LoginDTO) {
+        interactor.login(loginDTO)
+    }
+
+    func didSelectSignUpBtn() {
+        moduleOutput?.loginModuleWantsToOpenRegistrationModule()
+    }
 }
 
+// MARK: LoginInteractorOutput
+
 extension LoginPresenter: LoginInteractorOutput {
+    func successLogin(user: User) {
+        moduleOutput?.loginModuleWantsToOpenProfile()
+    }
+
+    func handleError(error: Error) {
+        let text = error.localizedDescription
+        view.showAlert(message: text)
+    }
 }

@@ -13,4 +13,5 @@ protocol ProfileModuleInput: AnyObject {
 // MARK: - ProfileModuleOutput
 
 protocol ProfileModuleOutput: AnyObject {
+    func profileModuleWantsToOpenLoginModule()
 }

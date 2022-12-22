@@ -16,12 +16,10 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
     private let labelTop = UILabel()
 
     private var nameField = CustomTextField()
-
     private var emailField = CustomTextField()
     private var passwordField = CustomTextField()
     private var passwordSecondField = CustomTextField()
     private var buttonSignUp = CustomButton(title: TextConstantsSignUp.titleSignUp, image: nil, color: .prog.Dynamic.lightPrimary, textColor: .prog.Dynamic.lightText)
-    private let buttonSignIn = CustomButton(title: TextConstantsSignUp.titleSignIn, image: nil, color: .prog.Dynamic.background, textColor: .prog.Dynamic.text)
 
     private enum Constants {
         enum TextField {
@@ -35,7 +33,7 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
         enum Button {
             static let offset: CGFloat = 20
             static let height: CGFloat = 60
-            static let bottomOffset: CGFloat = -60
+            static var bottomOffset: CGFloat = -60
             static let topOffset: CGFloat = 10
         }
     }
@@ -81,12 +79,14 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
         passwordField.delegate = self
         passwordSecondField.delegate = self
 
-        buttonSignIn.addTarget(self, action: #selector(didTapButtonSignIn), for: .touchUpInside)
         buttonSignUp.addTarget(self, action: #selector(didTapButtonSignUp), for: .touchUpInside)
 
-        [labelTop, nameField, emailField, passwordField, passwordSecondField, buttonSignIn, buttonSignUp].forEach {
-            view.addSubview($0)
-        }
+        view.addSubviews(labelTop,
+                         nameField,
+                         emailField,
+                         passwordField,
+                         passwordSecondField,
+                         buttonSignUp)
     }
 
     override func viewDidLayoutSubviews() {
@@ -95,49 +95,75 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == nameField {
+        switch textField {
+        case nameField:
             emailField.becomeFirstResponder()
-        }
 
-        if textField == emailField {
+        case emailField:
             passwordField.becomeFirstResponder()
-        }
 
-        if textField == passwordField {
+        case passwordField:
             passwordSecondField.becomeFirstResponder()
-        }
 
-        if textField == passwordSecondField {
+        case passwordSecondField:
             didTapButtonSignUp()
+        default:
+            print("error")
         }
-
         return true
     }
 
-    @objc func didTapButtonSignUp() {
-        let profile = ProfileViewController()
-        profile.modalPresentationStyle = .fullScreen
-        present(profile, animated: true, completion: nil)
+    @objc private func didTapButtonSignUp() {
+        guard let email = emailField.text,
+              email != "" else {
+            emailField.layer.borderWidth = 1.0
+            emailField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            return
+        }
+        guard passwordField.text != "" else {
+            passwordField.layer.borderWidth = 1.0
+            passwordField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            return
+        }
+        guard passwordSecondField.text != "" else {
+            passwordSecondField.layer.borderWidth = 1.0
+            passwordSecondField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            return
+        }
+
+        guard passwordField.text == passwordSecondField.text else {
+            passwordSecondField.layer.borderWidth = 1.0
+            passwordSecondField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            return
+        }
+
+        guard let password = passwordField.text else { return }
+
+        emailField.layer.borderWidth = 0.5
+        emailField.layer.borderColor = UIColor.lightGray.cgColor
+        passwordField.layer.borderWidth = 0.5
+        passwordField.layer.borderColor = UIColor.lightGray.cgColor
+        passwordSecondField.layer.borderWidth = 0.5
+        passwordSecondField.layer.borderColor = UIColor.lightGray.cgColor
+
+        let registrationDTO = RegistrationDTO(email: email, password: password, nickname: nameField.text ?? "")
+        output?.didTapSignUpButton(registrationDTO: registrationDTO)
     }
 
-    @objc func didTapButtonSignIn() {
-        let login = LoginViewController()
-        login.modalPresentationStyle = .fullScreen
-        present(login, animated: true, completion: nil)
+    @objc private func didTapRestoreButton() {
+        print("forget \n No func yet")
     }
 
-    @objc func didTapRestoreButton() {
-        print("forget")
-    }
-
-    @objc func keyboardWillShow(notification: NSNotification) {
+    @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let keyboardHeight = keyboardSize.height
-            view.frame.origin.y -= keyboardHeight
+            if view.frame.origin.y == 0 {
+                view.frame.origin.y -= keyboardHeight
+            }
         }
     }
 
-    @objc func keyboardWillHide() {
+    @objc private func keyboardWillHide() {
         view.frame.origin.y = 0
     }
 
@@ -192,15 +218,17 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
                 .inset(Constants.Button.offset)
             make.height.equalTo(Constants.Button.height)
         }
-
-        buttonSignIn.snp.makeConstraints { make in
-            make.top.equalTo(self.buttonSignUp.snp.bottom)
-                .offset(Constants.Button.topOffset)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(Constants.TextField.height)
-        }
     }
 }
 
+// MARK: RegistrationViewInput
+
 extension RegistrationViewController: RegistrationViewInput {
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: message, message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { action in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
+    }
 }

@@ -8,6 +8,11 @@
 import UIKit
 
 final class UserInfoHeader: UIView {
+    struct DisplayData {
+        let username: String
+        let status: String
+    }
+
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -19,14 +24,14 @@ final class UserInfoHeader: UIView {
 
     private let usernameLabel: UILabel = {
         let label = UILabel()
-        label.text = TextConstantsProfile.titleUserName
+        label.text = UserDefaults.standard.string(forKey: UserKeys.name.rawValue)
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
 
     private let statusLabel: UILabel = {
         let label = UILabel()
-        label.text = TextConstantsProfile.titleUserStatus
+        label.text = TextConstantsProfile.titleUserStatus + " - " + (UserDefaults.standard.string(forKey: UserKeys.role.rawValue) ?? "")
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .prog.Dynamic.text
         return label
@@ -65,5 +70,10 @@ final class UserInfoHeader: UIView {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(_ displayData: DisplayData) {
+        usernameLabel.text = displayData.username
+        statusLabel.text = displayData.status
     }
 }

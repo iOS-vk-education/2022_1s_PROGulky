@@ -8,9 +8,12 @@
 // MARK: - LoginViewOutput
 
 protocol LoginViewOutput: AnyObject {
+    func didTapSignInButton(loginDTO: LoginDTO)
+    func didSelectSignUpBtn()
 }
 
 // MARK: - LoginViewInput
 
 protocol LoginViewInput: AnyObject {
+    func showAlert(message: String)
 }

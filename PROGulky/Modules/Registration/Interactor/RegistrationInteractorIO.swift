@@ -10,9 +10,12 @@ import Foundation
 // MARK: - RegistrationInteractorOutput
 
 protocol RegistrationInteractorOutput: AnyObject {
+    func successRegistration(user: User)
+    func handleError(error: Error)
 }
 
 // MARK: - RegistrationInteractorInput
 
 protocol RegistrationInteractorInput: AnyObject {
+    func registration(_ registrationDTO: RegistrationDTO)
 }

@@ -7,6 +7,8 @@
 
 import Foundation
 
+let baseURL = "http://37.140.195.167:5000"
+
 // MARK: - TextConstantsProfile
 
 struct TextConstantsProfile {
@@ -21,7 +23,7 @@ struct TextConstantsProfile {
     static let titlePrivacyPolicy = "Политика конфиденциальности"
     static let titleSignOut = "Выйти из аккаунта"
     static let titleUserName = "Имя пользователя"
-    static let titleUserStatus = "статус пользователя"
+    static let titleUserStatus = "статус"
     static let contactUsMessageTitle = "PROгулки отзыв"
     static let contactUsMail = "serge2000k@gmail.com"
 }

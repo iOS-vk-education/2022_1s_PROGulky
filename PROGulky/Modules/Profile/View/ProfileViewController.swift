@@ -50,6 +50,7 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = .prog.Dynamic.background
         configureTableView()
         configureUI()
+        userInfoHeader.configure(output.headerDisplayData)
     }
 
     private func configureUI() {
@@ -182,8 +183,16 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             case 1:
                 print(TextConstantsProfile.titlePrivacyPolicy)
             case 2:
-                print(TextConstantsProfile.titleSignOut)
-                goToLogin()
+
+                let alert = UIAlertController(title: "Вы уверены, что хотите выйти?", message: "", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Продолжить", style: .default, handler: { action in
+                    self.goToLogin()
+                }))
+                alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { action in
+                    alert.dismiss(animated: true, completion: nil)
+                }))
+                present(alert, animated: true, completion: nil)
+
             default:
                 print("no action")
             }
@@ -191,9 +200,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func goToLogin() {
-        let login = LoginViewController()
-        login.modalPresentationStyle = .fullScreen
-        present(login, animated: true, completion: nil)
+        output.logoutButtonTapped()
     }
 
     func showMailComposer() {

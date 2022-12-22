@@ -21,6 +21,8 @@ extension DetailExcursionInteractor: DetailExcursionInteractorInput {
             return
         }
 
+        print(UserDefaultsLoginService.shared.isLogin)
+
         guard UserProvider.provider.userIsAuth() else {
             output?.gotAuthError() // Пользователь не авторизован. Показать ошибку
             return

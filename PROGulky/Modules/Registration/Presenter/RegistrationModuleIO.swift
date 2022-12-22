@@ -13,4 +13,5 @@ protocol RegistrationModuleInput: AnyObject {
 // MARK: - RegistrationModuleOutput
 
 protocol RegistrationModuleOutput: AnyObject {
+    func registrationModuleWantsToOpenProfile()
 }

@@ -8,6 +8,8 @@
 // MARK: - ProfileViewOutput
 
 protocol ProfileViewOutput: AnyObject {
+    var headerDisplayData: UserInfoHeader.DisplayData { get }
+    func logoutButtonTapped()
 }
 
 // MARK: - ProfileViewInput

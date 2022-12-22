@@ -10,12 +10,12 @@ import UIKit
 // MARK: - RegistrationModuleBuilder
 
 final class RegistrationModuleBuilder {
-    func build() -> UIViewController {
+    func build(moduleOutput: RegistrationModuleOutput) -> UIViewController {
         let viewController = RegistrationViewController()
         let router = RegistrationRouter()
         let interactor = RegistrationInteractor()
 
-        let presenter = RegistrationPresenter(interactor: interactor, router: router)
+        let presenter = RegistrationPresenter(interactor: interactor, router: router, moduleOutput: moduleOutput)
         presenter.view = viewController
 
         interactor.output = presenter
