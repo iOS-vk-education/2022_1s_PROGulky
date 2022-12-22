@@ -17,6 +17,13 @@ struct DetailExcursionConstants {
         static let height: CGFloat = 200
     }
 
+    enum LikeButton {
+        static let marginTop: CGFloat = 30
+        static let marginRight: CGFloat = -20
+        static let height: CGFloat = 30
+        static let width: CGFloat = 30
+    }
+
     enum InfoView {
         static let backgroundColor = UIColor.prog.Dynamic.lightBackground
         static let cornerRadius: CGFloat = 16

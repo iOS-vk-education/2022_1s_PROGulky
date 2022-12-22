@@ -16,6 +16,9 @@ final class DetailExcursionViewController: UIViewController {
     private var excursionImageView = UIImageView(frame: .zero)
     private var detailExcursionInfoView = DetailExcursionInfoView()
     private var tableView = UITableView()
+    private let likeButton = UIButton(frame: .zero)
+    private let notAuthView = NotAuthView(frame: .zero)
+    private let errorView = ErrorView(frame: .zero) // TODO: пока не используется
 
     // MARK: Lifecycle
 
@@ -36,17 +39,26 @@ final class DetailExcursionViewController: UIViewController {
         }
     }
 
+    @objc
+    private func didLikeButtonTapped() {
+        output.didLikeButtonTapped()
+    }
+
     private func setupUI() {
         view.addSubviews(
             excursionImageView,
             detailExcursionInfoView,
-            tableView
+            tableView,
+            likeButton,
+            notAuthView
         )
         view.backgroundColor = ExcursionsListConstants.Screen.backgroundColor
 
         configureImageView()
         configureDetailExcursionInfoView()
         configureTableView()
+        configureLikeButton()
+        configureNotAuthView()
     }
 
     private func configureImageView() {
@@ -71,6 +83,17 @@ final class DetailExcursionViewController: UIViewController {
         tableView.register(DescriptionCell.self, forCellReuseIdentifier: DetailExcursionConstants.TableView.DescriptionCell.reuseId)
     }
 
+    private func configureLikeButton() {
+        likeButton.addTarget(self, action: #selector(didLikeButtonTapped), for: .touchUpInside)
+        likeButton.tintColor = .white
+    }
+
+    private func configureNotAuthView() {
+        notAuthView.delegate = self
+        notAuthView.isHidden = true
+        notAuthView.backgroundColor = .white
+    }
+
     private func setTableViewDelegate() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -80,6 +103,8 @@ final class DetailExcursionViewController: UIViewController {
         setImageConstraints()
         setDetailExcursionInfoViewConstraints()
         setTableViewConstraints()
+        setLikeButtonConstraints()
+        setNotAuthViewConstraints()
 
         view.bringSubviewToFront(detailExcursionInfoView)
     }
@@ -115,11 +140,39 @@ final class DetailExcursionViewController: UIViewController {
             make.bottom.equalToSuperview()
         }
     }
+
+    private func setLikeButtonConstraints() {
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        likeButton.topAnchor.constraint(equalTo: excursionImageView.topAnchor, constant: DetailExcursionConstants.LikeButton.marginTop).isActive = true
+        likeButton.trailingAnchor.constraint(equalTo: excursionImageView.trailingAnchor, constant: DetailExcursionConstants.LikeButton.marginRight).isActive = true
+        likeButton.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.LikeButton.height).isActive = true
+        likeButton.widthAnchor.constraint(equalToConstant: DetailExcursionConstants.LikeButton.width).isActive = true
+    }
+
+    private func setNotAuthViewConstraints() {
+        notAuthView.translatesAutoresizingMaskIntoConstraints = false
+        notAuthView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        notAuthView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        notAuthView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        notAuthView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+    }
 }
 
 // MARK: DetailExcursionViewInput
 
 extension DetailExcursionViewController: DetailExcursionViewInput {
+    func configureLikeButton(isLiked: Bool) {
+        likeButton.setBackgroundImage(isLiked ? UIImage(systemName: "heart.fill") : UIImage(systemName: "heart"), for: .normal)
+    }
+
+    func showAuthView() {
+        notAuthView.isHidden = false
+    }
+
+    func showErrorView() {
+        errorView.isHidden = false
+    }
+
     func configure(viewModel: DetailExcursionViewModel) {
         setupImage(with: viewModel.image)
         detailExcursionInfoView.set(excursion: viewModel.infoViewModel)
@@ -193,5 +246,13 @@ extension DetailExcursionViewController: UITableViewDataSource {
         case .Description:
             return UITableView.automaticDimension
         }
+    }
+}
+
+// MARK: NotAuthViewDelegate
+
+extension DetailExcursionViewController: NotAuthViewDelegate {
+    func didCloseButtonTapped() {
+        notAuthView.isHidden = true
     }
 }

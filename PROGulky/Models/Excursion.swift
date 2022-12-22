@@ -10,6 +10,7 @@ import Foundation
 // MARK: - Excursion
 
 struct Excursion: Codable {
+    let id: Int
     let title, description: String
     let ownerId: Int
     var image: String?
@@ -20,6 +21,7 @@ struct Excursion: Codable {
     let ownerRoleValue: String
     let owner: Owner
     var places: [Place]
+    var isFavorite: Bool
 }
 
 typealias Excursions = [Excursion]

@@ -70,7 +70,8 @@ final class MapViewController: UIViewController {
     }
 
     private func isM1Simulator() -> Bool {
-        (TARGET_IPHONE_SIMULATOR & TARGET_CPU_ARM64) != 0
+        false
+//        (TARGET_IPHONE_SIMULATOR & TARGET_CPU_ARM64) != 0
     }
 
     @objc

@@ -63,7 +63,7 @@ extension MapPresenter: MapModuleInput {
 extension MapPresenter: MapViewOutput {
     func didLoadView() {
         let lastWayPointNumber = excursion.places.count - 1
-        
+
         requestPoints = excursion.places.enumerated().map { element in
             let place = element.element
             let count = element.offset
