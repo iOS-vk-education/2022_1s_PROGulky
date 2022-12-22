@@ -22,7 +22,7 @@ final class LoginInteractor {
 
 extension LoginInteractor: LoginInteractorInput {
     func login(_ loginDTO: LoginDTO) {
-        ApiManagerLogin.shared.login(loginDTO) { [weak self] result in
+        ApiManager.shared.login(loginDTO) { [weak self] result in
             switch result {
             case let .success(user):
                 self?.userDefaultsLoginService.setUserAuthData(user: user)

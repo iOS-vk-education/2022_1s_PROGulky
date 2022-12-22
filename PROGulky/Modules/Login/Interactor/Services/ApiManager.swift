@@ -37,10 +37,10 @@ enum ApiTypeLogin {
     }
 }
 
-// MARK: - ApiManagerLogin
+// MARK: - ApiManager
 
-final class ApiManagerLogin {
-    static let shared = ApiManagerLogin()
+final class ApiManager {
+    static let shared = ApiManager()
 
     func login(_ loginDTO: LoginDTO, completion: @escaping (Result<User, Error>) -> Void) {
         let json: [String: Any] = [

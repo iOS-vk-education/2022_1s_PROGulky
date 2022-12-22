@@ -10,6 +10,7 @@ import Foundation
 // Класс замокан. В этом классе должна быть реализована работа с профилем
 final class UserProvider {
     static let provider = UserProvider()
+    let defaults = UserDefaultsLoginService()
 
     static let a = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
     static let b = ".eyJpZCI6MSwibmFtZSI6ItCh0LXQvNC10L0iLCJlbWFpbCI6InNlbXlvbkBlbWFpbC5ydSIsInJvbGVzIjp7ImlkIjoyLCJ2YWx1ZSI6InVzZXIiLCJkZXNjcmlwdGlvbiI6ItCf"
@@ -19,10 +20,10 @@ final class UserProvider {
     let mockToken = "\(a)\(b)\(b0)\(b1)\(c)"
 
     func userIsAuth() -> Bool {
-        true
+        defaults.isAuth()
     }
 
     func userToken() -> String? {
-        mockToken
+        defaults.userToken()
     }
 }

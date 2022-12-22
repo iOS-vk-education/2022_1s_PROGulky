@@ -46,6 +46,24 @@ final class UserDefaultsLoginService: UserDefaultsLoginServiceProtocol {
         defaults.synchronize()
         isLogin = false // подумать как по другому
     }
+
+    // TODO: эти два метода - БЫДЛОТА ИХ НАДО ПЕРПИСАТЬ.
+
+    func isAuth() -> Bool {
+        guard defaults.string(forKey: UserKeys.isLogin.rawValue) != nil else {
+            return false
+        }
+        if let isAuth = defaults.string(forKey: UserKeys.isLogin.rawValue) {
+            if isAuth == "1" {
+                return true
+            }
+        }
+        return false
+    }
+
+    func userToken() -> String {
+        defaults.string(forKey: UserKeys.token.rawValue) ?? ""
+    }
 }
 
 // MARK: UserDefaultsUserInfoProtocol

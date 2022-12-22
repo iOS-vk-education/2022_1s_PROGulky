@@ -17,7 +17,7 @@ final class RegistrationInteractor {
 
 extension RegistrationInteractor: RegistrationInteractorInput {
     func registration(_ registrationDTO: RegistrationDTO) {
-        ApiManagerLogin.shared.registration(registrationDTO) { [weak self] result in
+        ApiManager.shared.registration(registrationDTO) { [weak self] result in
             switch result {
             case let .success(user):
                 self?.service.setUserAuthData(user: user)
