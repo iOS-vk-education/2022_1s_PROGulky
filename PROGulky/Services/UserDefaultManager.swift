@@ -12,20 +12,14 @@ import Foundation
 protocol UserDefaultsLoginServiceProtocol {
     func setUserAuthData(user: User)
     func removeUserAuthData()
+    func getUserData() -> UserData
 }
 
-// MARK: - UserDefaultsUserInfoProtocol
+// MARK: - UserDefaultsManager
 
-protocol UserDefaultsUserInfoProtocol {
-    func getUserInfo() -> UserInfoHeader.DisplayData?
-}
-
-// MARK: - UserDefaultsLoginService
-
-final class UserDefaultsLoginService: UserDefaultsLoginServiceProtocol {
-    static let shared = UserDefaultsLoginService()
+final class UserDefaultsManager: UserDefaultsLoginServiceProtocol {
+    static let shared = UserDefaultsManager()
     private let defaults = UserDefaults.standard
-    var isLogin = false
 
     func setUserAuthData(user: User) {
         defaults.set(user.token, forKey: UserKeys.token.rawValue)
@@ -35,7 +29,6 @@ final class UserDefaultsLoginService: UserDefaultsLoginServiceProtocol {
         defaults.set(user.role.description, forKey: UserKeys.role.rawValue)
         defaults.set(true, forKey: UserKeys.isLogin.rawValue)
         defaults.synchronize()
-        isLogin = true // подумать как по другому
     }
 
     func removeUserAuthData() {
@@ -44,35 +37,33 @@ final class UserDefaultsLoginService: UserDefaultsLoginServiceProtocol {
         }
         defaults.set(false, forKey: UserKeys.isLogin.rawValue)
         defaults.synchronize()
-        isLogin = false // подумать как по другому
     }
 
-    // TODO: эти два метода - БЫДЛОТА ИХ НАДО ПЕРПИСАТЬ.
-
-    func isAuth() -> Bool {
+    // метод мне не нравится
+    func isLogged() -> Bool {
         guard defaults.string(forKey: UserKeys.isLogin.rawValue) != nil else {
             return false
         }
         if let isAuth = defaults.string(forKey: UserKeys.isLogin.rawValue) {
-            if isAuth == "1" {
+            if isAuth == "1" { // не знаю как избавиться от этого сравнения строк.
                 return true
             }
         }
         return false
     }
 
-    func userToken() -> String {
-        defaults.string(forKey: UserKeys.token.rawValue) ?? ""
-    }
-}
+    func getUserData() -> UserData {
+        let token = defaults.string(forKey: UserKeys.token.rawValue)
+        let email = defaults.string(forKey: UserKeys.email.rawValue)
+        let name = defaults.string(forKey: UserKeys.name.rawValue)
+        let displayRole = defaults.string(forKey: UserKeys.role.rawValue)
 
-// MARK: UserDefaultsUserInfoProtocol
-
-extension UserDefaultsLoginService: UserDefaultsUserInfoProtocol {
-    func getUserInfo() -> UserInfoHeader.DisplayData? {
-        guard let status = defaults.string(forKey: UserKeys.role.rawValue),
-              let username = defaults.string(forKey: UserKeys.name.rawValue) else { return nil }
-
-        return UserInfoHeader.DisplayData(username: username, status: status)
+        let userData = UserData(
+            name: name ?? "",
+            email: email ?? "",
+            token: token ?? "",
+            role: displayRole ?? ""
+        )
+        return userData
     }
 }

@@ -17,12 +17,9 @@ protocol UserInfoHeaderDisplayDataFactoryProtocol {
 
 final class UserInfoHeaderDisplayDataFactory: UserInfoHeaderDisplayDataFactoryProtocol {
     func getDisplayData() -> UserInfoHeader.DisplayData {
-        let service: UserDefaultsUserInfoProtocol = UserDefaultsLoginService()
-        guard let data = service.getUserInfo() else {
-            return UserInfoHeader.DisplayData(username: "", status: "")
-        }
+        let data = UserService.shared.getUserData()
 
-        let displayData = UserInfoHeader.DisplayData(username: data.username, status: "статус - " + data.status)
+        let displayData = UserInfoHeader.DisplayData(username: data.name, status: "статус - " + data.role)
         return displayData
     }
 }

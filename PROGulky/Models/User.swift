@@ -37,3 +37,12 @@ struct RegistrationDTO {
     let password: String
     let nickname: String
 }
+
+// MARK: - UserData
+
+struct UserData {
+    let name: String
+    let email: String
+    let token: String
+    let role: String
+}

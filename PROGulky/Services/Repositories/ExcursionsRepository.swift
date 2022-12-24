@@ -13,8 +13,8 @@ final class ExcursionsRepository {
     func getExcursionsList(completion: @escaping (Result<Excursions, Error>) -> Void) {
         var token: String?
 
-        if UserProvider.provider.userIsAuth() {
-            token = UserProvider.provider.userToken()
+        if UserAuthService.shared.isLogged() {
+            token = UserService.shared.getUserToken()
         }
 
         ApiManager.shared.getExcursions(
