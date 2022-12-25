@@ -63,7 +63,7 @@ final class AddExcursionViewController: UIViewController {
     }
 
     private func configureImageView() {
-        addImageView.image = UIImage(systemName: "square.and.pencil")
+        addImageView.image = UIImage(systemName: AddExcursionConstants.Image.placeholderName)
         addImageView.clipsToBounds = true
         addImageView.contentMode = .scaleAspectFill
     }
@@ -84,7 +84,7 @@ final class AddExcursionViewController: UIViewController {
         descriptionField.layer.cornerRadius = AddExcursionConstants.DescriptionField.cornerRadius
         descriptionField.font = UIFont.systemFont(ofSize: 15)
         descriptionField.delegate = self
-        descriptionField.text = "Placeholder"
+        descriptionField.text = AddExcursionConstants.DescriptionField.placeholder
         descriptionField.textColor = UIColor.lightGray
         descriptionField.addDoneButtonOnKeyboard()
     }
@@ -231,7 +231,7 @@ extension AddExcursionViewController: UITextViewDelegate {
 
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            textView.text = "Placeholder"
+            textView.text = AddExcursionConstants.DescriptionField.placeholder
             textView.textColor = UIColor.lightGray
         }
     }

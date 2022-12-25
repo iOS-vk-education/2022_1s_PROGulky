@@ -22,6 +22,7 @@ struct AddExcursionConstants {
         static let marginTop: CGFloat = 10
         static let height: CGFloat = 100
         static let width: CGFloat = 100
+        static let placeholderName = "square.and.pencil"
     }
 
     enum TitleField {
@@ -36,6 +37,7 @@ struct AddExcursionConstants {
         static let textColor: UIColor = .gray
         static let cornerRadius: Double = 12.0
         static let minHeight: CGFloat = 60
+        static let placeholder = "Описание"
     }
 
     enum TableView {
