@@ -388,8 +388,8 @@
 		0393E4E7915E722FC0FC3CD3 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				565F7487028E8AB78853ADEE /* AddExcursionViewIO.swift */,
 				6C070CC38B9431BEF26E6225 /* AddExcursionViewController.swift */,
+				565F7487028E8AB78853ADEE /* AddExcursionViewIO.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -397,8 +397,8 @@
 		05212DEA1A29CCC61CA412F0 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				A61307FC1E7EC9C93B0BD5AF /* AddPlaceRouterInput.swift */,
 				1D000185DA434BD3A05A46D4 /* AddPlaceRouter.swift */,
+				A61307FC1E7EC9C93B0BD5AF /* AddPlaceRouterInput.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -406,9 +406,9 @@
 		065DCE724DF806C9890BDC60 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */,
 				EBB06260EF44A16D361201C7 /* ExcursionsListModuleIO.swift */,
 				35E4CDB118F933820C3DD4A3 /* ExcursionsListPresenter.swift */,
-				545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -416,8 +416,8 @@
 		10DC71070E806EDCFF043EF7 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				7D723D312BEA6B503F839536 /* MapDetailInteractorIO.swift */,
 				7FA531D5B3741522C9B7B6B5 /* MapDetailInteractor.swift */,
+				7D723D312BEA6B503F839536 /* MapDetailInteractorIO.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -425,10 +425,10 @@
 		125D8E9A681E354B8140F71E /* AddExcursion */ = {
 			isa = PBXGroup;
 			children = (
-				0393E4E7915E722FC0FC3CD3 /* View */,
-				1FE6588D2DFA4EBD91E46A8A /* Presenter */,
 				99752DD1A717565D178854CB /* Interactor */,
+				1FE6588D2DFA4EBD91E46A8A /* Presenter */,
 				848E4F856B1E3180F7AB36FA /* Router */,
+				0393E4E7915E722FC0FC3CD3 /* View */,
 				52697DF6ECE8C9DFEB65C474 /* AddExcursionBuilder.swift */,
 			);
 			path = AddExcursion;
@@ -437,8 +437,8 @@
 		1F1A8C9B67CDC62B99A04A24 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				86D28233730CF25DD0C0AD76 /* ExcursionsListInteractorIO.swift */,
 				5B18CF0E8F6610EA949BC890 /* ExcursionsListInteractor.swift */,
+				86D28233730CF25DD0C0AD76 /* ExcursionsListInteractorIO.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -455,10 +455,10 @@
 		24759421C5671EEE5633FDF8 /* ExcursionsList */ = {
 			isa = PBXGroup;
 			children = (
-				502A06642192EE2D13A1E47C /* View */,
-				065DCE724DF806C9890BDC60 /* Presenter */,
 				1F1A8C9B67CDC62B99A04A24 /* Interactor */,
+				065DCE724DF806C9890BDC60 /* Presenter */,
 				87969EF077779258DC77DF51 /* Router */,
+				502A06642192EE2D13A1E47C /* View */,
 				FCFA925C2590C194B399F154 /* ExcursionsListBuilder.swift */,
 			);
 			path = ExcursionsList;
@@ -467,8 +467,8 @@
 		2602C03966A7230841F4BA9A /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				0AB897EAECCE498337BC4ECB /* DetailExcursionRouterInput.swift */,
 				F361316D32874105B04CF296 /* DetailExcursionRouter.swift */,
+				0AB897EAECCE498337BC4ECB /* DetailExcursionRouterInput.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -476,8 +476,8 @@
 		2F57D335C1A78CDAD5C3E04A /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				C546C37FB5B431E527B15F9F /* DetailExcursionInteractorIO.swift */,
 				DC3316B51118FB579813E7D6 /* DetailExcursionInteractor.swift */,
+				C546C37FB5B431E527B15F9F /* DetailExcursionInteractorIO.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -485,8 +485,8 @@
 		316E568C85141B3D38375D59 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				5E4BC081045FC069A1B238C0 /* RegistrationInteractorIO.swift */,
 				1E9E5A511FCA6DAE0FF23BDB /* RegistrationInteractor.swift */,
+				5E4BC081045FC069A1B238C0 /* RegistrationInteractorIO.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -504,10 +504,10 @@
 		3675A89778D92CD34F80613B /* Registration */ = {
 			isa = PBXGroup;
 			children = (
-				5419566111C6EDD122E88D45 /* View */,
-				93BBF822C427CCD19209F944 /* Presenter */,
 				316E568C85141B3D38375D59 /* Interactor */,
+				93BBF822C427CCD19209F944 /* Presenter */,
 				FDC08348C2CF55CF4525BF64 /* Router */,
+				5419566111C6EDD122E88D45 /* View */,
 				F214FF3BE9AB22FAAF73524D /* RegistrationBuilder.swift */,
 			);
 			path = Registration;
@@ -516,8 +516,8 @@
 		37AAEDC0C39529175ADF1997 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				6F9D40BD2E032FE9D70ED86A /* DetailPlaceInteractorIO.swift */,
 				EE2EA98119440C4C56329D11 /* DetailPlaceInteractor.swift */,
+				6F9D40BD2E032FE9D70ED86A /* DetailPlaceInteractorIO.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -535,8 +535,8 @@
 		4B53F239D37836506D31D45F /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				BD6EEFD6015CEFE88D932BA2 /* FavouritesExcursionsRouterInput.swift */,
 				4B8EB9872675216E283DA2C9 /* FavouritesExcursionsRouter.swift */,
+				BD6EEFD6015CEFE88D932BA2 /* FavouritesExcursionsRouterInput.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -544,12 +544,12 @@
 		4F07ADFFAACF085EEFBC4F47 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				543F2CB9292E72CA00120116 /* Views */,
 				543F2CB4292E728B00120116 /* Cells */,
-				543F2CB2292E727B00120116 /* DetailExcursionConstants.swift */,
 				543F2CA7292E724C00120116 /* ViewModels */,
-				AEEE1A974A7B5FD3DF4894F3 /* DetailExcursionViewIO.swift */,
+				543F2CB9292E72CA00120116 /* Views */,
+				543F2CB2292E727B00120116 /* DetailExcursionConstants.swift */,
 				B434111035862A4121532B06 /* DetailExcursionViewController.swift */,
+				AEEE1A974A7B5FD3DF4894F3 /* DetailExcursionViewIO.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -566,8 +566,8 @@
 		5000E24F453BFF891EE388C8 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				1AD05B85C1D60E44F3AA3D1A /* ProfileRouterInput.swift */,
 				6956CF76F0FCD65BE420ABDC /* ProfileRouter.swift */,
+				1AD05B85C1D60E44F3AA3D1A /* ProfileRouterInput.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -576,11 +576,11 @@
 			isa = PBXGroup;
 			children = (
 				54B1A401293DC7D700A232B9 /* Views */,
-				8B40B87087FB4903DCB6BD7C /* ExcursionsListViewIO.swift */,
-				D678140C434AD6CB7AD2B0DA /* ExcursionsListViewController.swift */,
 				54A50C45291714E10042769E /* ExcursionCell.swift */,
 				54A50C472917199E0042769E /* ExcursionViewModel.swift */,
 				545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */,
+				D678140C434AD6CB7AD2B0DA /* ExcursionsListViewController.swift */,
+				8B40B87087FB4903DCB6BD7C /* ExcursionsListViewIO.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -588,8 +588,8 @@
 		5419566111C6EDD122E88D45 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				EE3FC899DCAFEB030903AD1E /* RegistrationViewIO.swift */,
 				0427CB24B963E6BE85F421AF /* RegistrationViewController.swift */,
+				EE3FC899DCAFEB030903AD1E /* RegistrationViewIO.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -605,9 +605,9 @@
 		543F2CA7292E724C00120116 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				543F2CA8292E724C00120116 /* PlaceViewModel.swift */,
-				543F2CA9292E724C00120116 /* DetailExcursionViewModel.swift */,
 				543F2CAA292E724C00120116 /* DetailExcursionInfoViewModel.swift */,
+				543F2CA9292E724C00120116 /* DetailExcursionViewModel.swift */,
+				543F2CA8292E724C00120116 /* PlaceViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -624,9 +624,9 @@
 		543F2CB9292E72CA00120116 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				543F2CBC292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift */,
 				543F2CBA292E72CA00120116 /* DetailExcursionInfoView.swift */,
 				543F2CBB292E72CA00120116 /* DetailExcursionSettingsSection.swift */,
-				543F2CBC292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -642,8 +642,8 @@
 		545A208D29511DC50085E4AF /* SharedViews */ = {
 			isa = PBXGroup;
 			children = (
-				545A208E29511E2D0085E4AF /* NotAuthView.swift */,
 				54B1A402293DC91F00A232B9 /* ErrorView.swift */,
+				545A208E29511E2D0085E4AF /* NotAuthView.swift */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -672,10 +672,10 @@
 			isa = PBXGroup;
 			children = (
 				543F2CB0292E726D00120116 /* Int+Extensions.swift */,
-				A553F1D129199288001E679C /* UIColorExtension.swift */,
-				54C089D2291A87FD000497FE /* UIView+Extensions.swift */,
-				54C089D4291A8AC7000497FE /* UILabel+Extensions.swift */,
 				66A96A662930D09C007935C9 /* ProgColors+Colors.swift */,
+				A553F1D129199288001E679C /* UIColorExtension.swift */,
+				54C089D4291A8AC7000497FE /* UILabel+Extensions.swift */,
+				54C089D2291A87FD000497FE /* UIView+Extensions.swift */,
 				A517195C2934B7AE003454FF /* UIViewController+Extentions.swift */,
 			);
 			path = Extensions;
@@ -692,10 +692,10 @@
 		5521AF0EED2856EFD5BFF104 /* DetailPlace */ = {
 			isa = PBXGroup;
 			children = (
-				BC81FDC7ADFEB13E7D1898AD /* View */,
-				6C50AB1C20C32052CF57C719 /* Presenter */,
 				37AAEDC0C39529175ADF1997 /* Interactor */,
+				6C50AB1C20C32052CF57C719 /* Presenter */,
 				68B2E3821D235DCCC2420D29 /* Router */,
+				BC81FDC7ADFEB13E7D1898AD /* View */,
 				2AB2410381154D2E7418FEAD /* DetailPlaceBuilder.swift */,
 			);
 			path = DetailPlace;
@@ -704,10 +704,10 @@
 		6515A3A27098F6CBCEA39AA7 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				749A697F9D630E3C1BFB188A /* View */,
-				6E994CCF10EB1051339558BD /* Presenter */,
 				F9C7892AD0C063F8A5A02989 /* Interactor */,
+				6E994CCF10EB1051339558BD /* Presenter */,
 				AEDD8E8D3664F9D266D391BF /* Router */,
+				749A697F9D630E3C1BFB188A /* View */,
 				55949AAC5795E04EFB3A815D /* LoginBuilder.swift */,
 			);
 			path = Login;
@@ -716,12 +716,12 @@
 		661A0D7C2902996D00312A0B = {
 			isa = PBXGroup;
 			children = (
+				D610EE7BF1BAD6B086797364 /* Frameworks */,
 				661A0D872902996D00312A0B /* PROGulky */,
 				661A0D9E2902996F00312A0B /* PROGulkyTests */,
 				661A0DA82902996F00312A0B /* PROGulkyUITests */,
-				661A0D862902996D00312A0B /* Products */,
 				C2E46A047DA2A681AE087D57 /* Pods */,
-				D610EE7BF1BAD6B086797364 /* Frameworks */,
+				661A0D862902996D00312A0B /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -738,17 +738,17 @@
 		661A0D872902996D00312A0B /* PROGulky */ = {
 			isa = PBXGroup;
 			children = (
-				545A208D29511DC50085E4AF /* SharedViews */,
-				666A03702935DE5B006E3A98 /* Services */,
+				A553F1DB291A7354001E679C /* Constants */,
+				6675D20929126F350058A4B0 /* Coordinators */,
 				54C089D1291A87C2000497FE /* Extensions */,
 				548ABFD829205578001CFDA9 /* Models */,
-				6675D20929126F350058A4B0 /* Coordinators */,
 				E77DD55B27C3A4DB3B1007BB /* Modules */,
+				666A03702935DE5B006E3A98 /* Services */,
+				545A208D29511DC50085E4AF /* SharedViews */,
 				661A0D882902996D00312A0B /* AppDelegate.swift */,
 				661A0D912902996E00312A0B /* Assets.xcassets */,
-				661A0D932902996E00312A0B /* LaunchScreen.storyboard */,
 				661A0D962902996E00312A0B /* Info.plist */,
-				A553F1DB291A7354001E679C /* Constants */,
+				661A0D932902996E00312A0B /* LaunchScreen.storyboard */,
 			);
 			path = PROGulky;
 			sourceTree = "<group>";
@@ -773,12 +773,12 @@
 		666A03562935DE0F006E3A98 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				666A03572935DE0F006E3A98 /* Presenter */,
-				666A035A2935DE0F006E3A98 /* MapBuilder.swift */,
-				666A035B2935DE0F006E3A98 /* View */,
 				666A035E2935DE0F006E3A98 /* Interactor */,
-				666A03612935DE0F006E3A98 /* Services */,
+				666A03572935DE0F006E3A98 /* Presenter */,
 				666A03632935DE0F006E3A98 /* Router */,
+				666A03612935DE0F006E3A98 /* Services */,
+				666A035B2935DE0F006E3A98 /* View */,
+				666A035A2935DE0F006E3A98 /* MapBuilder.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -795,8 +795,8 @@
 		666A035B2935DE0F006E3A98 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				666A035C2935DE0F006E3A98 /* MapViewIO.swift */,
 				666A035D2935DE0F006E3A98 /* MapViewController.swift */,
+				666A035C2935DE0F006E3A98 /* MapViewIO.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -834,8 +834,8 @@
 				542594E82936AA8600FD9747 /* ApiManager.swift */,
 				666A03712935DE5B006E3A98 /* MapsConfiguratorService.swift */,
 				543F73D229527901006D7C64 /* ServicesConstants.swift */,
-				545A208A29510BBB0085E4AF /* UserProvider.swift */,
 				A57A639A2954B15100D0F4A7 /* UserDefaultsLoginService.swift */,
+				545A208A29510BBB0085E4AF /* UserProvider.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -843,12 +843,12 @@
 		6675D20929126F350058A4B0 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				6675D20A29126FD80058A4B0 /* CoordinatorProtocol.swift */,
 				6675D20C29126FF20058A4B0 /* AppCoordinator.swift */,
+				6675D20A29126FD80058A4B0 /* CoordinatorProtocol.swift */,
 				6675D20E291270570058A4B0 /* ExcursionListCoordinator.swift */,
-				6675D210291271350058A4B0 /* TabBarItemFactory.swift */,
 				6675D212291274240058A4B0 /* FavouriteCoordinator.swift */,
 				6675D214291274700058A4B0 /* ProfileCoordinator.swift */,
+				6675D210291271350058A4B0 /* TabBarItemFactory.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -866,9 +866,9 @@
 			isa = PBXGroup;
 			children = (
 				54D91DBF2930C4A30097AF52 /* Views */,
-				85C82DD792DA4E1DFF0CE66A /* FavouritesExcursionsViewIO.swift */,
-				DFAB83507AFACBB84D4D24D3 /* FavouritesExcursionsViewController.swift */,
 				54D91DBD2930C1ED0097AF52 /* FavouritesExcursionsConstants.swift */,
+				DFAB83507AFACBB84D4D24D3 /* FavouritesExcursionsViewController.swift */,
+				85C82DD792DA4E1DFF0CE66A /* FavouritesExcursionsViewIO.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -876,8 +876,8 @@
 		68B2E3821D235DCCC2420D29 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				82F91F0024FE1C6485A2EDED /* DetailPlaceRouterInput.swift */,
 				E94396705F19CF16A69DE045 /* DetailPlaceRouter.swift */,
+				82F91F0024FE1C6485A2EDED /* DetailPlaceRouterInput.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -894,8 +894,8 @@
 		6CC51BD4253A235FA6F457F3 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				D3FD0DF5CE632E35200086CC /* AddPlaceInteractorIO.swift */,
 				D44CE83535DB6291F0A61EB0 /* AddPlaceInteractor.swift */,
+				D3FD0DF5CE632E35200086CC /* AddPlaceInteractorIO.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -912,8 +912,8 @@
 		749A697F9D630E3C1BFB188A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				91C1B6D5C2A416E233AEC019 /* LoginViewIO.swift */,
 				734A3672FF422D603DEC09D6 /* LoginViewController.swift */,
+				91C1B6D5C2A416E233AEC019 /* LoginViewIO.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -921,10 +921,10 @@
 		7619C8553D3E83ADC89455CE /* DetailExcursion */ = {
 			isa = PBXGroup;
 			children = (
-				4F07ADFFAACF085EEFBC4F47 /* View */,
-				3D2A1DE4717FC4996209FAD8 /* Presenter */,
 				2F57D335C1A78CDAD5C3E04A /* Interactor */,
+				3D2A1DE4717FC4996209FAD8 /* Presenter */,
 				2602C03966A7230841F4BA9A /* Router */,
+				4F07ADFFAACF085EEFBC4F47 /* View */,
 				766C351BE508C8E642036FAA /* DetailExcursionBuilder.swift */,
 			);
 			path = DetailExcursion;
@@ -942,8 +942,8 @@
 		848E4F856B1E3180F7AB36FA /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				1F5B31AA545F1940B51F9CFF /* AddExcursionRouterInput.swift */,
 				539079D5625F18BF3BB5D1B0 /* AddExcursionRouter.swift */,
+				1F5B31AA545F1940B51F9CFF /* AddExcursionRouterInput.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -951,8 +951,8 @@
 		87969EF077779258DC77DF51 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				D666F683D015D0A8AFCCC5FA /* ExcursionsListRouterInput.swift */,
 				DBDDCCBBEC388912A426587C /* ExcursionsListRouter.swift */,
+				D666F683D015D0A8AFCCC5FA /* ExcursionsListRouterInput.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -960,10 +960,10 @@
 		8FF6B35097121DC741DBBF96 /* MapDetail */ = {
 			isa = PBXGroup;
 			children = (
-				977BD27DC69AABE90403546E /* View */,
-				67243B579306B1D25A480D60 /* Presenter */,
 				10DC71070E806EDCFF043EF7 /* Interactor */,
+				67243B579306B1D25A480D60 /* Presenter */,
 				902347FC5D3EF3361F014E52 /* Router */,
+				977BD27DC69AABE90403546E /* View */,
 				548D4153B0E81CB47D3509CC /* MapDetailBuilder.swift */,
 			);
 			path = MapDetail;
@@ -972,8 +972,8 @@
 		902347FC5D3EF3361F014E52 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				0ACA19FFC53011514EF0BA28 /* MapDetailRouterInput.swift */,
 				3A78820CCAF371C15CFCB7EC /* MapDetailRouter.swift */,
+				0ACA19FFC53011514EF0BA28 /* MapDetailRouterInput.swift */,
 				666A03732935E23B006E3A98 /* MapDetailTransitionHandlerProtocol.swift */,
 			);
 			path = Router;
@@ -991,8 +991,8 @@
 		977BD27DC69AABE90403546E /* View */ = {
 			isa = PBXGroup;
 			children = (
-				59CE7D7D65C0D8AEDB41A11D /* MapDetailViewIO.swift */,
 				2D40AEDF8EBF445BE57347C5 /* MapDetailViewController.swift */,
+				59CE7D7D65C0D8AEDB41A11D /* MapDetailViewIO.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1000,8 +1000,8 @@
 		99752DD1A717565D178854CB /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				37C5C1009F2BD7EC16167DB8 /* AddExcursionInteractorIO.swift */,
 				3D1BBC38CBF391A504391E46 /* AddExcursionInteractor.swift */,
+				37C5C1009F2BD7EC16167DB8 /* AddExcursionInteractorIO.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -1009,10 +1009,10 @@
 		9FE1DB18F9620455F84DDD0E /* AddPlace */ = {
 			isa = PBXGroup;
 			children = (
-				E49DC7FC06911393FBC24C28 /* View */,
-				4F86ADA67FA97F78AED87EB3 /* Presenter */,
 				6CC51BD4253A235FA6F457F3 /* Interactor */,
+				4F86ADA67FA97F78AED87EB3 /* Presenter */,
 				05212DEA1A29CCC61CA412F0 /* Router */,
+				E49DC7FC06911393FBC24C28 /* View */,
 				6D0A6B73EB276D5B7C47C018 /* AddPlaceBuilder.swift */,
 			);
 			path = AddPlace;
@@ -1021,8 +1021,8 @@
 		A5074CE3292DC983005692EB /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
-				A5074CE1292DC97E005692EB /* CustomTextField.swift */,
 				A5074CE4292DC9AF005692EB /* CustomButton.swift */,
+				A5074CE1292DC97E005692EB /* CustomTextField.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -1038,8 +1038,8 @@
 		A74733E3B9C6F39422CC8E7B /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				9E9D063F55E55F2E734E77F6 /* FavouritesExcursionsInteractorIO.swift */,
 				D54451D4939712CF5EA697B2 /* FavouritesExcursionsInteractor.swift */,
+				9E9D063F55E55F2E734E77F6 /* FavouritesExcursionsInteractorIO.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -1047,10 +1047,10 @@
 		AEDD74D256D8C8E79622EDB0 /* FavouritesExcursions */ = {
 			isa = PBXGroup;
 			children = (
-				684997C51FBAD148127DBF17 /* View */,
-				83A93496B03F9BCCD1CF96DE /* Presenter */,
 				A74733E3B9C6F39422CC8E7B /* Interactor */,
+				83A93496B03F9BCCD1CF96DE /* Presenter */,
 				4B53F239D37836506D31D45F /* Router */,
+				684997C51FBAD148127DBF17 /* View */,
 				1EA660BDBC0D3D1F77E748F5 /* FavouritesExcursionsBuilder.swift */,
 			);
 			path = FavouritesExcursions;
@@ -1059,8 +1059,8 @@
 		AEDD8E8D3664F9D266D391BF /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				D17A15CB28E983856F3464CD /* LoginRouterInput.swift */,
 				DB516B71A56EEC0503A39306 /* LoginRouter.swift */,
+				D17A15CB28E983856F3464CD /* LoginRouterInput.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -1068,11 +1068,11 @@
 		AF45B98F976FA4A53DAD4EEF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1025773E08D8C66DE4E8F7C0 /* ProfileViewIO.swift */,
-				A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */,
-				17FE2736BBBE69AB8C7C2BB5 /* ProfileViewController.swift */,
 				A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */,
 				A5D309F52928F66C005D2275 /* ProfileSettingsSection.swift */,
+				A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */,
+				17FE2736BBBE69AB8C7C2BB5 /* ProfileViewController.swift */,
+				1025773E08D8C66DE4E8F7C0 /* ProfileViewIO.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1080,8 +1080,8 @@
 		BC81FDC7ADFEB13E7D1898AD /* View */ = {
 			isa = PBXGroup;
 			children = (
-				EC533E1C6329DC4D34A545D4 /* DetailPlaceViewIO.swift */,
 				30133C3588D7FEC2858EFA2E /* DetailPlaceViewController.swift */,
+				EC533E1C6329DC4D34A545D4 /* DetailPlaceViewIO.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1102,10 +1102,10 @@
 		CF24E157551930C5E39C189F /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				AF45B98F976FA4A53DAD4EEF /* View */,
-				34BBB1E5F70D9CF8EDF68B78 /* Presenter */,
 				E2A5C7E3B66E94E250659396 /* Interactor */,
+				34BBB1E5F70D9CF8EDF68B78 /* Presenter */,
 				5000E24F453BFF891EE388C8 /* Router */,
+				AF45B98F976FA4A53DAD4EEF /* View */,
 				DF1023A1984E3AD4841DB0C5 /* ProfileBuilder.swift */,
 			);
 			path = Profile;
@@ -1124,8 +1124,8 @@
 		E2A5C7E3B66E94E250659396 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				6DE36CAA8C99CE8FA62D79F5 /* ProfileInteractorIO.swift */,
 				4B16741CC48F86627C2AE6A8 /* ProfileInteractor.swift */,
+				6DE36CAA8C99CE8FA62D79F5 /* ProfileInteractorIO.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -1133,8 +1133,8 @@
 		E49DC7FC06911393FBC24C28 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4EC67223F3D7D3CF1456365D /* AddPlaceViewIO.swift */,
 				C02B6B548904BF9243B745D8 /* AddPlaceViewController.swift */,
+				4EC67223F3D7D3CF1456365D /* AddPlaceViewIO.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1142,18 +1142,18 @@
 		E77DD55B27C3A4DB3B1007BB /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				666A03562935DE0F006E3A98 /* Map */,
-				24759421C5671EEE5633FDF8 /* ExcursionsList */,
-				CF24E157551930C5E39C189F /* Profile */,
-				AEDD74D256D8C8E79622EDB0 /* FavouritesExcursions */,
-				7619C8553D3E83ADC89455CE /* DetailExcursion */,
 				125D8E9A681E354B8140F71E /* AddExcursion */,
 				9FE1DB18F9620455F84DDD0E /* AddPlace */,
-				5521AF0EED2856EFD5BFF104 /* DetailPlace */,
-				6515A3A27098F6CBCEA39AA7 /* Login */,
-				3675A89778D92CD34F80613B /* Registration */,
 				A5074CE3292DC983005692EB /* CustomView */,
+				7619C8553D3E83ADC89455CE /* DetailExcursion */,
+				5521AF0EED2856EFD5BFF104 /* DetailPlace */,
+				24759421C5671EEE5633FDF8 /* ExcursionsList */,
+				AEDD74D256D8C8E79622EDB0 /* FavouritesExcursions */,
+				6515A3A27098F6CBCEA39AA7 /* Login */,
+				666A03562935DE0F006E3A98 /* Map */,
 				8FF6B35097121DC741DBBF96 /* MapDetail */,
+				CF24E157551930C5E39C189F /* Profile */,
+				3675A89778D92CD34F80613B /* Registration */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1161,8 +1161,8 @@
 		F9C7892AD0C063F8A5A02989 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				840A9B700CA2CE0C76061571 /* LoginInteractorIO.swift */,
 				50BA4A7906722E491708A6B7 /* LoginInteractor.swift */,
+				840A9B700CA2CE0C76061571 /* LoginInteractorIO.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -1170,8 +1170,8 @@
 		FDC08348C2CF55CF4525BF64 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				7F20361B161E22678EA92C75 /* RegistrationRouterInput.swift */,
 				A30DD967BD6524D15EEC420D /* RegistrationRouter.swift */,
+				7F20361B161E22678EA92C75 /* RegistrationRouterInput.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -1684,6 +1684,7 @@
 				661A0D942902996E00312A0B /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
