@@ -70,4 +70,14 @@ extension ExcursionListCoordinator: DetailExcursionModuleOutput {
         rootNavigationController.popViewController(animated: true)
         rootNavigationController.tabBarController?.tabBar.isHidden = false
     }
+
+    func excursionsListModuleWantsToOpenAddExcursion() {
+        let builder = AddExcursionModuleBuilder()
+        let addView = builder.build()
+        rootNavigationController.pushViewController(addView, animated: true)
+    }
+
+    func addExcursionModuleWantsToClose() {
+        rootNavigationController.popViewController(animated: true)
+    }
 }

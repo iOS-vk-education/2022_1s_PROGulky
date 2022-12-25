@@ -61,7 +61,7 @@ final class ErrorView: UIView {
         return button
     }()
 
-    @objc func didButtonTapped() {
+    @objc private func didButtonTapped() {
         delegate?.didRepeatButtonTapped()
     }
 
