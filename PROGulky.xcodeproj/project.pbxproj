@@ -47,6 +47,7 @@
 		542594EB2936AF9F00FD9747 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542594EA2936AF9F00FD9747 /* Owner.swift */; };
 		5438B65329573A97007F2127 /* UserAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438B65229573A97007F2127 /* UserAuthService.swift */; };
 		5438B65529575AAC007F2127 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438B65429575AAC007F2127 /* UserService.swift */; };
+		5438B65729578EB2007F2127 /* NotLoginMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438B65629578EB2007F2127 /* NotLoginMessageView.swift */; };
 		543F2CA6292E722C00120116 /* DetailExcursionDisplayDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CA5292E722C00120116 /* DetailExcursionDisplayDataFactory.swift */; };
 		543F2CAB292E724C00120116 /* PlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CA8292E724C00120116 /* PlaceViewModel.swift */; };
 		543F2CAC292E724C00120116 /* DetailExcursionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CA9292E724C00120116 /* DetailExcursionViewModel.swift */; };
@@ -221,6 +222,7 @@
 		542594EA2936AF9F00FD9747 /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		5438B65229573A97007F2127 /* UserAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthService.swift; sourceTree = "<group>"; };
 		5438B65429575AAC007F2127 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		5438B65629578EB2007F2127 /* NotLoginMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotLoginMessageView.swift; sourceTree = "<group>"; };
 		543F2CA5292E722C00120116 /* DetailExcursionDisplayDataFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionDisplayDataFactory.swift; sourceTree = "<group>"; };
 		543F2CA8292E724C00120116 /* PlaceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceViewModel.swift; sourceTree = "<group>"; };
 		543F2CA9292E724C00120116 /* DetailExcursionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionViewModel.swift; sourceTree = "<group>"; };
@@ -684,6 +686,7 @@
 			isa = PBXGroup;
 			children = (
 				54D91DC02930C5150097AF52 /* FavouritesExcursionMessageView.swift */,
+				5438B65629578EB2007F2127 /* NotLoginMessageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1633,6 +1636,7 @@
 				543F2CB1292E726D00120116 /* Int+Extensions.swift in Sources */,
 				43E940EF32E87EED733BEB02 /* RegistrationBuilder.swift in Sources */,
 				19211BC64ECA200A2201879D /* MapDetailViewIO.swift in Sources */,
+				5438B65729578EB2007F2127 /* NotLoginMessageView.swift in Sources */,
 				666A03742935E23B006E3A98 /* MapDetailTransitionHandlerProtocol.swift in Sources */,
 				996A47A6E7C6F3FCF7C5A233 /* MapDetailViewController.swift in Sources */,
 				273CFD8679A297F27A0DDF36 /* MapDetailModuleIO.swift in Sources */,

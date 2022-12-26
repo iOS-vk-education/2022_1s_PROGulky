@@ -24,7 +24,7 @@ protocol ExcursionsListViewOutput: AnyObject {
 // MARK: - ExcursionsListViewInput
 
 protocol ExcursionsListViewInput: AnyObject {
-    func reloadView() // Перезагрузка данны в таблице
+    func reloadView() // Перезагрузка данныx в таблице
 
     func startLoader() // Запустить крутилку с загрузкой
 
