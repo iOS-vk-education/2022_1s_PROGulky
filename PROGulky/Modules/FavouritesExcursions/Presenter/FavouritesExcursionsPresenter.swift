@@ -75,12 +75,14 @@ extension FavouritesExcursionsPresenter: FavouritesExcursionsInteractorOutput {
         view.stopLoader()
         view.reloadView()
         view.showEmptyListView()
+        view.hideNotLoginMessageView()
     }
 
     func didLoadFavoritesExcursionsList(favoritesExcursions: Excursions) {
         self.favoritesExcursions = favoritesExcursions
         view.stopLoader()
         view.reloadView()
+        view.hideNotLoginMessageView()
         view.hideEmptyListView()
     }
 

@@ -14,7 +14,7 @@ final class ExcursionsRepository {
         var token: String?
 
         if UserAuthService.shared.isLogged {
-            token = UserService.shared.getUserToken()
+            token = UserService.shared.userToken
         }
 
         ApiManager.shared.getExcursions(

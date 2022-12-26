@@ -153,6 +153,10 @@ final class FavouritesExcursionsViewController: UIViewController {
 // MARK: FavouritesExcursionsViewInput
 
 extension FavouritesExcursionsViewController: FavouritesExcursionsViewInput {
+    func hideNotLoginMessageView() {
+        notLoginMessage.isHidden = true
+    }
+
     func showErrorView() {
         DispatchQueue.main.async {
             self.errorView.isHidden = false

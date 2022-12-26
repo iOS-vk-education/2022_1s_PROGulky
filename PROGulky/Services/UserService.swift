@@ -7,23 +7,17 @@
 
 import Foundation
 
-// MARK: - UserServiceProtocol
-
-protocol UserServiceProtocol {
-    func getUserData() -> UserData
-}
-
 // MARK: - UserService
 
 // Сервис, который может получать данные о пользователе
-final class UserService: UserServiceProtocol {
+final class UserService {
     static let shared = UserService()
 
-    func getUserData() -> UserData {
+    var userData: UserData {
         UserDefaultsManager.shared.getUserData()
     }
 
-    func getUserToken() -> String {
+    var userToken: String {
         UserDefaultsManager.shared.getUserData().token
     }
 }

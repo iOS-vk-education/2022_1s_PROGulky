@@ -40,6 +40,7 @@ struct RegistrationDTO {
 
 // MARK: - UserData
 
+// TODO: замечание Олега (роль мог бы еще отдельно прописать enum-ом с типом стринг. было бы красивое)
 struct UserData {
     let name: String
     let email: String

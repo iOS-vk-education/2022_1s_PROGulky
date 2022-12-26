@@ -15,7 +15,7 @@ final class FavouritesExcursionsInteractor {
 
 extension FavouritesExcursionsInteractor: FavouritesExcursionsInteractorInput {
     func loadFavoritesExcursionsList() {
-        let token = UserService.shared.getUserToken()
+        let token = UserService.shared.userToken
 
         guard UserAuthService.shared.isLogged else {
             output?.gotAuthError() // Пользователь не авторизован. Показать сообщение об этом

@@ -39,4 +39,6 @@ protocol FavouritesExcursionsViewInput: AnyObject {
     func reloadView() // Перезагрузить таблицу
 
     func hideEmptyListView() // Спрятать надпись о пустом избранном
+
+    func hideNotLoginMessageView()
 }
