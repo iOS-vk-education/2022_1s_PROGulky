@@ -17,7 +17,7 @@ extension DetailExcursionInteractor: DetailExcursionInteractorInput {
     func didLikeButtonTapped(with excursionId: Int, isLiked: Bool) {
         let token = UserService.shared.getUserToken()
 
-        guard UserAuthService.shared.isLogged() else {
+        guard UserAuthService.shared.isLogged else {
             output?.gotAuthError() // Пользователь не авторизован. Показать ошибку
             return
         }

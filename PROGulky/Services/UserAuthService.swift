@@ -7,15 +7,6 @@
 
 import Foundation
 
-// MARK: - UserAuthServiceProtocol
-
-protocol UserAuthServiceProtocol {
-    func isLogged() -> Bool
-    func registration(dto: RegistrationDTO, completion: @escaping (Result<User, Error>) -> Void)
-    func login(dto: LoginDTO, completion: @escaping (Result<User, Error>) -> Void)
-    func logout()
-}
-
 // MARK: - UserAuthService
 
 // Сервис, который может
@@ -23,11 +14,11 @@ protocol UserAuthServiceProtocol {
 // 2. логинить
 // 3. регистрировать
 // 4. выходить из аккаунта
-final class UserAuthService: UserAuthServiceProtocol {
+final class UserAuthService {
     static let shared = UserAuthService()
 
-    func isLogged() -> Bool {
-        UserDefaultsManager.shared.isLogged()
+    var isLogged: Bool {
+        UserDefaultsManager.shared.isLogged
     }
 
     func registration(dto: RegistrationDTO, completion: @escaping (Result<User, Error>) -> Void) {

@@ -39,18 +39,28 @@ final class UserDefaultsManager: UserDefaultsLoginServiceProtocol {
         defaults.synchronize()
     }
 
-    // метод мне не нравится
-    func isLogged() -> Bool {
-        guard defaults.string(forKey: UserKeys.isLogin.rawValue) != nil else {
+    var isLogged: Bool {
+        guard
+            defaults.string(forKey: UserKeys.isLogin.rawValue) != nil,
+            let isAuth = defaults.string(forKey: UserKeys.isLogin.rawValue)
+        else {
             return false
         }
-        if let isAuth = defaults.string(forKey: UserKeys.isLogin.rawValue) {
-            if isAuth == "1" { // не знаю как избавиться от этого сравнения строк.
-                return true
-            }
-        }
-        return false
+        return isAuth == "1"
     }
+
+//    // метод мне не нравится
+//    func isLogged() -> Bool {
+//        guard defaults.string(forKey: UserKeys.isLogin.rawValue) != nil else {
+//            return false
+//        }
+//        if let isAuth = defaults.string(forKey: UserKeys.isLogin.rawValue) {
+//            if isAuth == "1" { // не знаю как избавиться от этого сравнения строк.
+//                return true
+//            }
+//        }
+//        return false
+//    }
 
     func getUserData() -> UserData {
         let token = defaults.string(forKey: UserKeys.token.rawValue)

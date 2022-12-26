@@ -17,7 +17,7 @@ extension FavouritesExcursionsInteractor: FavouritesExcursionsInteractorInput {
     func loadFavoritesExcursionsList() {
         let token = UserService.shared.getUserToken()
 
-        guard UserAuthService.shared.isLogged() else {
+        guard UserAuthService.shared.isLogged else {
             output?.gotAuthError() // Пользователь не авторизован. Показать сообщение об этом
             return
         }

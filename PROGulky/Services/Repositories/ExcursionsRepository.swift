@@ -13,7 +13,7 @@ final class ExcursionsRepository {
     func getExcursionsList(completion: @escaping (Result<Excursions, Error>) -> Void) {
         var token: String?
 
-        if UserAuthService.shared.isLogged() {
+        if UserAuthService.shared.isLogged {
             token = UserService.shared.getUserToken()
         }
 
