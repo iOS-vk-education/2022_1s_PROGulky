@@ -15,30 +15,23 @@ private let reuseIdentifier = "SettingsCell"
 
 final class ProfileViewController: UIViewController {
     var output: ProfileViewOutput!
-    private let titleLabel = UILabel()
     private let userInfoHeader = UserInfoHeader(frame: .zero)
     private var tableView = UITableView()
 
     private enum Constants {
-        enum Title {
-            static let title = TextConstantsProfile.titleProfile
-            static let topOffset: CGFloat = 0
-            static let height: CGFloat = 24
-        }
-
         enum Header {
             static let topOffset: CGFloat = 20
-            static let height: CGFloat = 70
+            static let height: CGFloat = 100
         }
 
         enum TableView {
             static let topOffset: CGFloat = 32
             static let rowHeight: CGFloat = 40
-            static let offset: CGFloat = 20
+            static let offset: CGFloat = 0
             static let cornerRadius: CGFloat = 16
             static let heightForHeader: CGFloat = 40
-            static let height: CGFloat = 390
-            static let contentInsetTop: CGFloat = -21
+            static let height: CGFloat = 420
+            static let contentInsetTop: CGFloat = 0
             static let leftAnchor: CGFloat = 16
         }
     }
@@ -54,17 +47,10 @@ final class ProfileViewController: UIViewController {
     }
 
     private func configureUI() {
-        titleLabel.text = Constants.Title.title
-        titleLabel.textColor = .prog.Dynamic.text
-        view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(Constants.Title.height)
-        }
+        navigationItem.title = TextConstantsProfile.titleProfile
         view.addSubview(userInfoHeader)
         userInfoHeader.snp.makeConstraints { make in
-            make.top.equalTo(self.titleLabel.snp.bottom)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
                 .offset(Constants.Header.topOffset)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
@@ -84,12 +70,12 @@ final class ProfileViewController: UIViewController {
     }
 
     private func configureTableView() {
-        tableView = UITableView()
+        tableView = UITableView(frame: tableView.frame, style: .insetGrouped)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = Constants.TableView.rowHeight
         tableView.register(SettingsCell.self, forCellReuseIdentifier: reuseIdentifier)
-        tableView.layer.cornerRadius = Constants.TableView.cornerRadius
+        tableView.backgroundColor = .prog.Dynamic.background
         tableView.separatorStyle = .none
         tableView.contentInset.top = Constants.TableView.contentInsetTop
         tableView.alwaysBounceVertical = false
@@ -97,10 +83,9 @@ final class ProfileViewController: UIViewController {
 
     private func setupTableViewHeader(section: Int) -> UIView {
         let view = UIView()
-        view.backgroundColor = .prog.Dynamic.lightPrimary
         let title = UILabel()
         title.font = UIFont.systemFont(ofSize: 16)
-        title.textColor = .prog.Dynamic.lightText
+        title.textColor = .prog.Dynamic.textGray
         title.text = SettingsSection(rawValue: section)?.description
         view.addSubview(title)
         title.snp.makeConstraints { make in
@@ -172,14 +157,14 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             case 2:
                 print(TextConstantsProfile.titleHistory)
             case 3:
-                print(TextConstantsProfile.titleBeGuide)
+                showMailComposer(message: TextConstantsProfile.beGuideMessage)
             default:
                 print("no action")
             }
         case .Other:
             switch OtherOptions(rawValue: indexPath.row)!.rawValue {
             case 0:
-                showMailComposer()
+                showMailComposer(message: TextConstantsProfile.contactUsMessageTitle)
             case 1:
                 print(TextConstantsProfile.titlePrivacyPolicy)
             case 2:
@@ -203,7 +188,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         output.logoutButtonTapped()
     }
 
-    func showMailComposer() {
+    func showMailComposer(message: String) {
         guard MFMailComposeViewController.canSendMail() else {
             print("can't send")
             return
@@ -212,7 +197,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         let composer = MFMailComposeViewController()
         composer.mailComposeDelegate = self
         composer.setToRecipients([TextConstantsProfile.contactUsMail])
-        composer.setSubject(TextConstantsProfile.contactUsMessageTitle)
+        composer.setSubject(message)
 
         present(composer, animated: true)
     }

@@ -21,7 +21,7 @@ class CustomTextField: UITextField {
     }
 
     private func entryField() {
-        textColor = .black
+        textColor = .prog.Dynamic.text
         placeholder = name
         layer.cornerRadius = 14
         layer.borderWidth = 0.5

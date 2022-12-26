@@ -18,7 +18,7 @@ class CustomButton: UIButton {
         config.imagePadding = 10
         config.baseBackgroundColor = color
         config.baseForegroundColor = textColor
-        config.background.cornerRadius = 99
+        config.background.cornerRadius = 16
         config.cornerStyle = .fixed
 
         configuration = config
