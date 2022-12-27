@@ -19,7 +19,11 @@ protocol DetailExcursionDisplayDataFactoryProtocol {
 
 class DetailExcursionDisplayDataFactory: DetailExcursionDisplayDataFactoryProtocol {
     func getPlaceViewModel(for place: Place) -> PlaceViewModel {
-        PlaceViewModel(sort: "\(place.sort)", title: place.title, subtitle: place.address)
+        var sort = ""
+        if let s = place.sort {
+            sort = "\(s)"
+        }
+        return PlaceViewModel(sort: sort, title: place.title, subtitle: place.address)
     }
 
     func setupViewModel(excursion: Excursion) -> DetailExcursionViewModel {
