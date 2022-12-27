@@ -18,8 +18,8 @@ struct DetailExcursionConstants {
     }
 
     enum LikeButton {
-        static let marginTop: CGFloat = 30
         static let marginRight: CGFloat = -20
+        static let marginBottom: CGFloat = -40
         static let height: CGFloat = 30
         static let width: CGFloat = 30
     }

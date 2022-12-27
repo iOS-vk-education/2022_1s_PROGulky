@@ -31,4 +31,6 @@ protocol ExcursionsListViewInput: AnyObject {
     func stopLoader() // Остановить крутилку с загрузкой
 
     func showErrorView() // Показать сообщение с ошибкой
+
+    func hideErrorView()
 }

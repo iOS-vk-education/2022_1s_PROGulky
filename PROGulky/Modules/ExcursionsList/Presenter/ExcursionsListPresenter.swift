@@ -80,11 +80,14 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
 
 extension ExcursionsListPresenter: ExcursionsListInteractorOutput {
     func getNetworkError() {
+        excursions = []
         view.showErrorView()
+        view.reloadView() // Перезагрузить тейбл вью
     }
 
     func didLoadExcursionsList(excursions: Excursions) {
         self.excursions = excursions
+        view.hideErrorView() // Скрыть сообщение об ошибках
         view.reloadView() // Перезагрузить тейбл вью
         view.stopLoader() // Выключить анимацию лоадера
     }
