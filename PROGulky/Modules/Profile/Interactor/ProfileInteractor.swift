@@ -11,17 +11,12 @@ import Foundation
 
 final class ProfileInteractor {
     weak var output: ProfileInteractorOutput?
-    private let userDefaultsLoginService: UserDefaultsLoginServiceProtocol
-
-    init(userDefaultsLoginService: UserDefaultsLoginServiceProtocol) {
-        self.userDefaultsLoginService = userDefaultsLoginService
-    }
 }
 
 // MARK: ProfileInteractorInput
 
 extension ProfileInteractor: ProfileInteractorInput {
     func logout() {
-        userDefaultsLoginService.removeUserAuthData()
+        UserAuthService.shared.logout()
     }
 }

@@ -10,9 +10,17 @@ import Foundation
 // MARK: - FavouritesExcursionsInteractorOutput
 
 protocol FavouritesExcursionsInteractorOutput: AnyObject {
+    func gotAuthError()
+
+    func gotEmptyFavoritesList()
+
+    func didLoadFavoritesExcursionsList(favoritesExcursions: Excursions)
+
+    func gotNetworkError()
 }
 
 // MARK: - FavouritesExcursionsInteractorInput
 
 protocol FavouritesExcursionsInteractorInput: AnyObject {
+    func loadFavoritesExcursionsList()
 }

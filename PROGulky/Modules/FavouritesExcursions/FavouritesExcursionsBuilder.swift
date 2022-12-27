@@ -10,12 +10,16 @@ import UIKit
 // MARK: - FavouritesExcursionsModuleBuilder
 
 final class FavouritesExcursionsModuleBuilder {
-    func build() -> UIViewController {
+    func build(moduleOutput: FavouritesExcursionsModuleOutput) -> UIViewController {
         let viewController = FavouritesExcursionsViewController()
         let router = FavouritesExcursionsRouter()
         let interactor = FavouritesExcursionsInteractor()
 
-        let presenter = FavouritesExcursionsPresenter(interactor: interactor, router: router)
+        let presenter = FavouritesExcursionsPresenter(
+            interactor: interactor,
+            router: router,
+            moduleOutput: moduleOutput
+        )
         presenter.view = viewController
 
         interactor.output = presenter

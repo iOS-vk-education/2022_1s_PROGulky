@@ -17,8 +17,6 @@ final class DetailExcursionViewController: UIViewController {
     private var detailExcursionInfoView = DetailExcursionInfoView()
     private var tableView = UITableView()
     private let likeButton = UIButton(frame: .zero)
-    private let notAuthView = NotAuthView(frame: .zero)
-    private let errorView = ErrorView(frame: .zero) // TODO: пока не используется
 
     // MARK: Lifecycle
 
@@ -49,8 +47,7 @@ final class DetailExcursionViewController: UIViewController {
             excursionImageView,
             detailExcursionInfoView,
             tableView,
-            likeButton,
-            notAuthView
+            likeButton
         )
         view.backgroundColor = ExcursionsListConstants.Screen.backgroundColor
 
@@ -58,7 +55,6 @@ final class DetailExcursionViewController: UIViewController {
         configureDetailExcursionInfoView()
         configureTableView()
         configureLikeButton()
-        configureNotAuthView()
     }
 
     private func configureImageView() {
@@ -88,12 +84,6 @@ final class DetailExcursionViewController: UIViewController {
         likeButton.tintColor = .white
     }
 
-    private func configureNotAuthView() {
-        notAuthView.delegate = self
-        notAuthView.isHidden = true
-        notAuthView.backgroundColor = .white
-    }
-
     private func setTableViewDelegate() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -104,7 +94,6 @@ final class DetailExcursionViewController: UIViewController {
         setDetailExcursionInfoViewConstraints()
         setTableViewConstraints()
         setLikeButtonConstraints()
-        setNotAuthViewConstraints()
 
         view.bringSubviewToFront(detailExcursionInfoView)
     }
@@ -148,14 +137,6 @@ final class DetailExcursionViewController: UIViewController {
         likeButton.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.LikeButton.height).isActive = true
         likeButton.widthAnchor.constraint(equalToConstant: DetailExcursionConstants.LikeButton.width).isActive = true
     }
-
-    private func setNotAuthViewConstraints() {
-        notAuthView.translatesAutoresizingMaskIntoConstraints = false
-        notAuthView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        notAuthView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        notAuthView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        notAuthView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
-    }
 }
 
 // MARK: DetailExcursionViewInput
@@ -166,11 +147,19 @@ extension DetailExcursionViewController: DetailExcursionViewInput {
     }
 
     func showAuthView() {
-        notAuthView.isHidden = false
+        let notLoginAlert = UIAlertController(title: "Вы не авторизованы! Необходимо войти в Ваш аккаунт", message: "", preferredStyle: .alert)
+        notLoginAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
+            notLoginAlert.dismiss(animated: true, completion: nil)
+        }))
+        present(notLoginAlert, animated: true, completion: nil)
     }
 
     func showErrorView() {
-        errorView.isHidden = false
+        let errorAlert = UIAlertController(title: "Произошла ошибка. Повторите позже", message: "", preferredStyle: .alert)
+        errorAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
+            errorAlert.dismiss(animated: true, completion: nil)
+        }))
+        present(errorAlert, animated: true, completion: nil)
     }
 
     func configure(viewModel: DetailExcursionViewModel) {
@@ -246,13 +235,5 @@ extension DetailExcursionViewController: UITableViewDataSource {
         case .Description:
             return UITableView.automaticDimension
         }
-    }
-}
-
-// MARK: NotAuthViewDelegate
-
-extension DetailExcursionViewController: NotAuthViewDelegate {
-    func didCloseButtonTapped() {
-        notAuthView.isHidden = true
     }
 }

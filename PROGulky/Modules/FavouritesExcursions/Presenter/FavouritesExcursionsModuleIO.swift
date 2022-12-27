@@ -13,4 +13,5 @@ protocol FavouritesExcursionsModuleInput: AnyObject {
 // MARK: - FavouritesExcursionsModuleOutput
 
 protocol FavouritesExcursionsModuleOutput: AnyObject {
+    func favoritesExcursionsListModuleWantsToOpenMapDetailModule(excursion: Excursion)
 }
