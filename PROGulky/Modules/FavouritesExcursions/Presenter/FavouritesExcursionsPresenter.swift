@@ -95,6 +95,7 @@ extension FavouritesExcursionsPresenter: FavouritesExcursionsInteractorOutput {
         favoritesExcursions = []
         view.stopLoader()
         view.reloadView()
+        view.hideEmptyListView()
         view.showNotAuthView()
     }
 }
