@@ -15,6 +15,7 @@ enum ApiType {
     case removeFavorites(token: String, excursionId: String) // Удалить экскурсию из избранного
     case login // Логин
     case registration // Регистрация
+    case getFavoritesExcursions(token: String) // Избранные по токену для пользователя
     case getPlaces
 
     var baseURL: String {
@@ -32,6 +33,8 @@ enum ApiType {
             return ["Authorization": "Bearer \(token)"]
         case let .removeFavorites(token, _):
             return ["Authorization": "Bearer \(token)"]
+        case let .getFavoritesExcursions(token):
+            return ["Authorization": "Bearer \(token)"]
         default:
             return [:]
         }
@@ -44,6 +47,7 @@ enum ApiType {
         case .removeFavorites: return "/excursions/delete_favorite"
         case .login: return "/auth/login"
         case .registration: return "/auth/registration"
+        case .getFavoritesExcursions: return "/excursions/favorites_excursions"
         case .getPlaces: return "/places"
         }
     }
@@ -68,6 +72,9 @@ enum ApiType {
         case .login, .registration:
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            return request
+        case .getFavoritesExcursions:
+            request.httpMethod = "GET"
             return request
         }
     }
@@ -145,6 +152,26 @@ final class ApiManager {
                 }
             } catch let jsonError {
                 print("Failed decode error:", jsonError)
+                completion(.failure(jsonError))
+            }
+        }
+        task.resume()
+    }
+
+    func getFavoritesExcursions(completion: @escaping (Result<Excursions, Error>) -> Void, token: String) {
+        let request = ApiType.getFavoritesExcursions(token: token).request
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            guard let data = data else { return }
+            do {
+                let excursions = try JSONDecoder().decode(Excursions.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(excursions))
+                }
+            } catch let jsonError {
                 completion(.failure(jsonError))
             }
         }

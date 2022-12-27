@@ -37,6 +37,10 @@ struct ExcursionsListConstants {
         static let padding: CGFloat = 6
     }
 
+    enum FavoritesExcursionsCell {
+        static let reuseId = "FavoritesExcursionCell"
+    }
+
     enum ExcursionCell {
         static let reuseId = "ExcursionCell" // Идентификатор ячейки
 

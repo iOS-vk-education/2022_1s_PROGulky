@@ -37,3 +37,13 @@ struct RegistrationDTO {
     let password: String
     let nickname: String
 }
+
+// MARK: - UserData
+
+// TODO: замечание Олега (роль мог бы еще отдельно прописать enum-ом с типом стринг. было бы красивое)
+struct UserData {
+    let name: String
+    let email: String
+    let token: String
+    let role: String
+}

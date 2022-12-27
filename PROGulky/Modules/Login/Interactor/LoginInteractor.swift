@@ -11,24 +11,18 @@ import Foundation
 
 final class LoginInteractor {
     weak var output: LoginInteractorOutput?
-    private let userDefaultsLoginService: UserDefaultsLoginServiceProtocol
-
-    init(userDefaultsLoginService: UserDefaultsLoginServiceProtocol) {
-        self.userDefaultsLoginService = userDefaultsLoginService
-    }
 }
 
 // MARK: LoginInteractorInput
 
 extension LoginInteractor: LoginInteractorInput {
     func login(_ loginDTO: LoginDTO) {
-        ApiManager.shared.login(loginDTO) { [weak self] result in
+        UserAuthService.shared.login(dto: loginDTO) { [weak self] result in
             switch result {
             case let .success(user):
-                self?.userDefaultsLoginService.setUserAuthData(user: user)
                 self?.output?.successLogin(user: user)
-            case let .failure(failure):
-                self?.output?.handleError(error: failure)
+            case let .failure(error):
+                self?.output?.handleError(error: error)
             }
         }
     }

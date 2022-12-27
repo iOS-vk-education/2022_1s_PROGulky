@@ -13,8 +13,8 @@ final class ExcursionsRepository {
     func getExcursionsList(completion: @escaping (Result<Excursions, Error>) -> Void) {
         var token: String?
 
-        if UserProvider.provider.userIsAuth() {
-            token = UserProvider.provider.userToken()
+        if UserAuthService.shared.isLogged {
+            token = UserService.shared.userToken
         }
 
         ApiManager.shared.getExcursions(
@@ -25,8 +25,27 @@ final class ExcursionsRepository {
                         completion(.success(excursions))
                     }
                 case let .failure(error):
-                    completion(.failure(error))
-                    print("error:", error)
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
+                }
+            },
+            token: token
+        )
+    }
+
+    func getFavoritesExcursionsList(completion: @escaping (Result<Excursions, Error>) -> Void, token: String) {
+        ApiManager.shared.getFavoritesExcursions(
+            completion: { excursions in
+                switch excursions {
+                case let .success(excursions):
+                    DispatchQueue.main.async {
+                        completion(.success(excursions))
+                    }
+                case let .failure(error):
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
             },
             token: token
