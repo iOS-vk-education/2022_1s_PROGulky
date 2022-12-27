@@ -24,6 +24,11 @@ final class ExcursionsListViewController: UIViewController {
         output.didLoadView()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        output.didLoadView()
+    }
+
     private func setupUI() {
         setupNavBar()
         setupFilterBar()
@@ -130,6 +135,11 @@ final class ExcursionsListViewController: UIViewController {
 // MARK: ExcursionsListViewInput
 
 extension ExcursionsListViewController: ExcursionsListViewInput {
+    func hideErrorView() {
+        errorView.isHidden = true
+        loader.stopAnimating()
+    }
+
     func showErrorView() {
         DispatchQueue.main.async {
             self.errorView.isHidden = false

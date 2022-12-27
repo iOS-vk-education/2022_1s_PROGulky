@@ -131,7 +131,7 @@ final class DetailExcursionViewController: UIViewController {
 
     private func setLikeButtonConstraints() {
         likeButton.translatesAutoresizingMaskIntoConstraints = false
-        likeButton.topAnchor.constraint(equalTo: excursionImageView.topAnchor, constant: DetailExcursionConstants.LikeButton.marginTop).isActive = true
+        likeButton.bottomAnchor.constraint(equalTo: excursionImageView.bottomAnchor, constant: DetailExcursionConstants.LikeButton.marginBottom).isActive = true
         likeButton.trailingAnchor.constraint(equalTo: excursionImageView.trailingAnchor, constant: DetailExcursionConstants.LikeButton.marginRight).isActive = true
         likeButton.heightAnchor.constraint(equalToConstant: DetailExcursionConstants.LikeButton.height).isActive = true
         likeButton.widthAnchor.constraint(equalToConstant: DetailExcursionConstants.LikeButton.width).isActive = true

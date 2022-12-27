@@ -33,6 +33,11 @@ final class FavouritesExcursionsViewController: UIViewController {
         output.didLoadView()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        output.didLoadView()
+    }
+
     @objc
     private func refresh() {
         output.didPullResfresh()

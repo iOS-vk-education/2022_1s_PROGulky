@@ -19,7 +19,7 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
             switch excursions {
             case let .success(excursions):
                 self?.output?.didLoadExcursionsList(excursions: excursions)
-            case let .failure:
+            case .failure:
                 self?.output?.getNetworkError()
             }
         }
