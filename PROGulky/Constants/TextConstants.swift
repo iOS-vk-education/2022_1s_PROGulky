@@ -25,6 +25,7 @@ struct TextConstantsProfile {
     static let titleUserName = "Имя пользователя"
     static let titleUserStatus = "статус"
     static let contactUsMessageTitle = "PROгулки отзыв"
+    static let beGuideMessage = "Запрос: изменение статуса на гида"
     static let contactUsMail = "serge2000k@gmail.com"
 }
 
@@ -37,6 +38,7 @@ struct TextConstantsLogin {
     static let titleSignIn = "Войти"
     static let titleSignUp = "Зарегистрироваться"
     static let titleRestore = "Забыли пароль?"
+    static let titleNavBar = "Вход"
 }
 
 // MARK: - TextConstantsSignUp

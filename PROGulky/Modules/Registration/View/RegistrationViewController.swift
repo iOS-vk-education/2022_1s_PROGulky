@@ -14,12 +14,12 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
     var output: RegistrationViewOutput!
 
     private let labelTop = UILabel()
-
+    private let imageProgramLogo = UIImageView()
     private var nameField = CustomTextField()
     private var emailField = CustomTextField()
     private var passwordField = CustomTextField()
     private var passwordSecondField = CustomTextField()
-    private var buttonSignUp = CustomButton(title: TextConstantsSignUp.titleSignUp, image: nil, color: .prog.Dynamic.lightPrimary, textColor: .prog.Dynamic.lightText)
+    private var buttonSignUp = CustomButton(title: TextConstantsSignUp.titleSignUp, image: nil, color: .prog.Dynamic.primary, textColor: .prog.Dynamic.lightText)
 
     private enum Constants {
         enum TextField {
@@ -27,7 +27,9 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
             static let height: CGFloat = 48
             static let firstCenterOffset: CGFloat = -200
             static let topOffset: CGFloat = 15
-            static let topLabelHeight: CGFloat = 100
+            static let topLabelHeight: CGFloat = 20
+            static let imageLogoSize: CGFloat = 100
+            static let bottomOffset: CGFloat = -20
         }
 
         enum Button {
@@ -42,14 +44,12 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         hideKeyboardWhenTappedAround()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         view.backgroundColor = .prog.Dynamic.background
-
+        imageProgramLogo.image = UIImage(named: "progulkiLabel")
         labelTop.text = TextConstantsSignUp.titleTop
-        labelTop.font = UIFont(name: "Arial", size: 50)
-        labelTop.textColor = .prog.Dynamic.primary
+        labelTop.font = UIFont.boldSystemFont(ofSize: 20.0)
+        labelTop.textColor = .prog.Dynamic.text
 
         guard let imagePerson = UIImage(systemName: "person") else {
             return
@@ -64,10 +64,7 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
         }
         passwordField = CustomTextField(name: TextConstantsSignUp.titlePassword, image: imageLock, security: true)
         passwordSecondField = CustomTextField(name: TextConstantsSignUp.titlePasswordSecond, image: imageLock, security: true)
-        guard let imageLogin = UIImage(systemName: "chevron.forward.circle.fill") else {
-            return
-        }
-        buttonSignUp = CustomButton(title: TextConstantsSignUp.titleSignUp, image: imageLogin, color: .prog.Dynamic.lightPrimary, textColor: .prog.Dynamic.lightText)
+        buttonSignUp = CustomButton(title: TextConstantsSignUp.titleSignUp, image: nil, color: .prog.Dynamic.primary, textColor: .prog.Dynamic.lightText)
 
         nameField.returnKeyType = .next
         emailField.returnKeyType = .next
@@ -86,7 +83,8 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
                          emailField,
                          passwordField,
                          passwordSecondField,
-                         buttonSignUp)
+                         buttonSignUp,
+                         imageProgramLogo)
     }
 
     override func viewDidLayoutSubviews() {
@@ -150,32 +148,20 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
         output?.didTapSignUpButton(registrationDTO: registrationDTO)
     }
 
-    @objc private func didTapRestoreButton() {
-        print("forget \n No func yet")
-    }
-
-    @objc private func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let keyboardHeight = keyboardSize.height
-            if view.frame.origin.y == 0 {
-                view.frame.origin.y -= keyboardHeight
-            }
-        }
-    }
-
-    @objc private func keyboardWillHide() {
-        view.frame.origin.y = 0
-    }
-
     private func configureUI() {
         labelTop.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(Constants.TextField.offset)
             make.centerX.equalToSuperview()
-            make.height.equalTo(Constants.TextField.topLabelHeight)
         }
 
+        imageProgramLogo.snp.makeConstraints { make in
+            make.top.equalTo(self.labelTop.snp.bottom).offset(Constants.TextField.offset)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(Constants.TextField.imageLogoSize)
+            make.height.equalTo(Constants.TextField.imageLogoSize)
+        }
         nameField.snp.makeConstraints { make in
-            make.centerY.equalToSuperview().offset(Constants.TextField.firstCenterOffset)
+            make.top.equalTo(self.imageProgramLogo.snp.bottom).offset(Constants.TextField.offset)
             make.leading.equalToSuperview()
                 .offset(Constants.TextField.offset)
             make.trailing.equalToSuperview()
@@ -211,7 +197,7 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
         }
 
         buttonSignUp.snp.makeConstraints { make in
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(Constants.Button.bottomOffset)
+            make.top.equalTo(self.passwordSecondField.snp.bottom).offset(Constants.TextField.offset)
             make.leading.equalToSuperview()
                 .offset(Constants.Button.offset)
             make.trailing.equalToSuperview()

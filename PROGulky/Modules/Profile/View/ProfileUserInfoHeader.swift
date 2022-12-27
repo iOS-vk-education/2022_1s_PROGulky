@@ -17,7 +17,7 @@ final class UserInfoHeader: UIView {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.image = UIImage(systemName: "person.crop.circle")?.withTintColor(.prog.Dynamic.lightPrimary, renderingMode: .alwaysOriginal)
+        iv.image = UIImage(systemName: "person.crop.circle")?.withTintColor(.prog.Dynamic.primary, renderingMode: .alwaysOriginal)
 
         return iv
     }()
@@ -25,7 +25,7 @@ final class UserInfoHeader: UIView {
     private let usernameLabel: UILabel = {
         let label = UILabel()
         label.text = UserDefaults.standard.string(forKey: UserKeys.name.rawValue)
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 24)
         return label
     }()
 
@@ -33,37 +33,35 @@ final class UserInfoHeader: UIView {
         let label = UILabel()
         label.text = TextConstantsProfile.titleUserStatus + " - " + (UserDefaults.standard.string(forKey: UserKeys.role.rawValue) ?? "")
         label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .prog.Dynamic.text
+        label.textColor = .prog.Dynamic.textGray
         return label
     }()
 
     private enum Constants {
-        static let offset: CGFloat = 20
+        static let offset: CGFloat = 10
         static let imagesSize: CGFloat = 60
-        static let offsetUName: CGFloat = -10
-        static let offsetAnchorUName: CGFloat = 20
-        static let offsetUStatus: CGFloat = 10
     }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        addSubview(profileImageView)
+        addSubviews(profileImageView,
+                    usernameLabel,
+                    statusLabel)
         profileImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(Constants.offset)
+            make.top.equalToSuperview()
+            make.centerX.equalToSuperview()
             make.width.equalTo(Constants.imagesSize)
             make.height.equalTo(Constants.imagesSize + 4)
         }
-        addSubview(usernameLabel)
+
         usernameLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(profileImageView).offset(Constants.offsetUName)
-            make.leading.equalTo(profileImageView.snp.trailing).offset(Constants.offsetAnchorUName)
+            make.top.equalTo(self.profileImageView.snp.bottom).offset(Constants.offset)
+            make.centerX.equalToSuperview()
         }
-        addSubview(statusLabel)
+
         statusLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(profileImageView).offset(Constants.offsetUStatus)
-            make.leading.equalTo(profileImageView.snp.trailing).offset(Constants.offsetAnchorUName)
+            make.top.equalTo(self.usernameLabel.snp.bottom).offset(Constants.offset)
+            make.centerX.equalToSuperview()
         }
     }
 

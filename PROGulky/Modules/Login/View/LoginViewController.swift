@@ -12,19 +12,18 @@ import SnapKit
 
 final class LoginViewController: UIViewController, UITextFieldDelegate {
     var output: LoginViewOutput!
-    private let labelProgramName = UILabel()
+    private let imageProgramLogo = UIImageView()
     private var emailField = CustomTextField()
     private var passwordField = CustomTextField()
-    private var buttonSignIn = CustomButton(title: TextConstantsLogin.titleSignIn, image: nil, color: .prog.Dynamic.lightPrimary, textColor: .prog.Dynamic.lightText)
+    private var buttonSignIn = CustomButton(title: TextConstantsLogin.titleSignIn, image: nil, color: .prog.Dynamic.primary, textColor: .prog.Dynamic.lightText)
     private let buttonSignUp = CustomButton(title: TextConstantsLogin.titleSignUp, image: nil, color: .prog.Dynamic.background, textColor: .prog.Dynamic.text)
-    private let buttonRestore = CustomButton(title: TextConstantsLogin.titleRestore, image: nil, color: .prog.Dynamic.background, textColor: .prog.Dynamic.text)
     private enum Constants {
         enum TextField {
             static let offset: CGFloat = 20
             static let height: CGFloat = 48
             static let EmailCenterOffset: CGFloat = -120
             static let topOffset: CGFloat = 15
-            static let topLabelHeight: CGFloat = 100
+            static let imageLogoSize: CGFloat = 100
         }
 
         enum Button {
@@ -39,8 +38,6 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
 
         hideKeyboardWhenTappedAround()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
 
         view.backgroundColor = .prog.Dynamic.background
 
@@ -52,15 +49,11 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         passwordField = CustomTextField(name: TextConstantsLogin.titlePassword, image: imageLock, security: true)
-        guard let imageLogin = UIImage(systemName: "chevron.forward.circle.fill") else {
-            return
-        }
-        buttonSignIn = CustomButton(title: TextConstantsLogin.titleSignIn, image: imageLogin, color: .prog.Dynamic.lightPrimary, textColor: .prog.Dynamic.lightText)
+        buttonSignIn = CustomButton(title: TextConstantsLogin.titleSignIn, image: nil, color: .prog.Dynamic.primary, textColor: .prog.Dynamic.lightText)
 
-        labelProgramName.text = TextConstantsLogin.titleProgramName
-        labelProgramName.font = UIFont(name: "Arial", size: 50)
-        labelProgramName.textColor = .prog.Dynamic.primary
+        navigationItem.title = TextConstantsLogin.titleNavBar
 
+        imageProgramLogo.image = UIImage(named: "progulkiLabel")
         emailField.returnKeyType = .next
         passwordField.returnKeyType = .done
 
@@ -69,13 +62,11 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
 
         buttonSignIn.addTarget(self, action: #selector(didTapButtonSignIn), for: .touchUpInside)
         buttonSignUp.addTarget(self, action: #selector(didTapButtonSignUp), for: .touchUpInside)
-        buttonRestore.addTarget(self, action: #selector(didTapRestoreButton), for: .touchUpInside)
 
-        view.addSubviews(labelProgramName,
+        view.addSubviews(imageProgramLogo,
                          emailField,
                          passwordField,
                          buttonSignIn,
-                         buttonRestore,
                          buttonSignUp)
     }
 
@@ -124,30 +115,16 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         output?.didSelectSignUpBtn()
     }
 
-    @objc private func didTapRestoreButton() {
-    }
-
-    @objc private func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let keyboardHeight = keyboardSize.height
-            if view.frame.origin.y == 0 {
-            }
-        }
-    }
-
-    @objc private func keyboardWillHide() {
-        view.frame.origin.y = 0
-    }
-
     private func configureUI() {
-        labelProgramName.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+        imageProgramLogo.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(Constants.TextField.topOffset)
             make.centerX.equalToSuperview()
-            make.height.equalTo(Constants.TextField.topLabelHeight)
+            make.width.equalTo(Constants.TextField.imageLogoSize)
+            make.height.equalTo(Constants.TextField.imageLogoSize)
         }
 
         emailField.snp.makeConstraints { make in
-            make.centerY.equalToSuperview().offset(Constants.TextField.EmailCenterOffset)
+            make.top.equalTo(self.imageProgramLogo.snp.bottom).offset(Constants.TextField.offset)
             make.leading.equalToSuperview()
                 .offset(Constants.TextField.offset)
             make.trailing.equalToSuperview()
@@ -165,7 +142,7 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         }
 
         buttonSignIn.snp.makeConstraints { make in
-            make.bottom.lessThanOrEqualTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(Constants.Button.bottomOffset)
+            make.top.equalTo(self.passwordField.snp.bottom).offset(Constants.Button.offset)
             make.leading.equalToSuperview()
                 .offset(Constants.Button.offset)
             make.trailing.equalToSuperview()
@@ -173,16 +150,9 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
             make.height.equalTo(Constants.Button.height)
         }
 
-        buttonRestore.snp.makeConstraints { make in
-            make.top.equalTo(self.passwordField.snp.bottom)
-                .offset(Constants.Button.topOffset)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(Constants.TextField.height)
-        }
-
         buttonSignUp.snp.makeConstraints { make in
-            make.top.lessThanOrEqualTo(self.buttonSignIn.snp.bottom)
-                .offset(Constants.Button.topOffset)
+            make.top.equalTo(self.buttonSignIn.snp.bottom)
+                .offset(Constants.Button.offset)
             make.centerX.equalToSuperview()
             make.height.equalTo(Constants.TextField.height)
         }
