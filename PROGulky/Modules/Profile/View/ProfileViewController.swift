@@ -151,10 +151,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         case .Account:
             switch AccountOptions(rawValue: indexPath.row)!.rawValue {
             case 0:
+                present(PlugViewController(), animated: true) // Заглушка
                 print(TextConstantsProfile.titlePersonalData)
             case 1:
+                present(PlugViewController(), animated: true) // Заглушка
                 print(TextConstantsProfile.titleAchievements)
             case 2:
+                present(PlugViewController(), animated: true) // Заглушка
                 print(TextConstantsProfile.titleHistory)
             case 3:
                 showMailComposer(message: TextConstantsProfile.beGuideMessage)
@@ -170,7 +173,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     UIApplication.shared.open(url)
                 }
             case 2:
-
                 let alert = UIAlertController(title: "Вы уверены, что хотите выйти?", message: "", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Продолжить", style: .default, handler: { action in
                     self.goToLogin()
