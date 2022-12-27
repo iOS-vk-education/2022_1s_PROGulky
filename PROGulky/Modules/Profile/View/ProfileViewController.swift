@@ -166,7 +166,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             case 0:
                 showMailComposer(message: TextConstantsProfile.contactUsMessageTitle)
             case 1:
-                print(TextConstantsProfile.titlePrivacyPolicy)
+                if let url = URL(string: "https://pages.flycricket.io/progulki/privacy.html") {
+                    UIApplication.shared.open(url)
+                }
             case 2:
 
                 let alert = UIAlertController(title: "Вы уверены, что хотите выйти?", message: "", preferredStyle: .alert)
