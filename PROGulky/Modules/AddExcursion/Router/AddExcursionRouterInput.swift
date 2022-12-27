@@ -7,5 +7,13 @@
 
 import Foundation
 
+// MARK: - AddExcursionRouterInput
+
 protocol AddExcursionRouterInput: AnyObject {
+    func openAddPlaceView()
+}
+
+// MARK: - AddExcursionRouterOutput
+
+protocol AddExcursionRouterOutput: AnyObject {
 }

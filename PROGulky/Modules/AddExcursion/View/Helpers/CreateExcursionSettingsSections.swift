@@ -8,15 +8,24 @@
 import Foundation
 
 enum CreateExcursionSettingsSections: Int, CaseIterable {
-    case SelectedPlaces
-    case AddButton
+    case image
+    case titleSection
+    case descriptionSection
+    case selectedPlaces
+    case addButton
 
     var description: String {
         switch self {
-        case .SelectedPlaces:
+        case .selectedPlaces:
             return DetailExcursionConstants.TableView.Sections.PlacesCells.title
-        case .AddButton:
+        case .addButton:
             return DetailExcursionConstants.TableView.Sections.DescriptionCell.title
+        case .image:
+            return "image"
+        case .titleSection:
+            return "title"
+        case .descriptionSection:
+            return "desc"
         }
     }
 }

@@ -21,8 +21,8 @@ struct AddExcursionConstants {
     enum Image {
         static let marginTop: CGFloat = 10
         static let height: CGFloat = 100
-        static let width: CGFloat = 100
-        static let placeholderName = "square.and.pencil"
+        static let width: CGFloat = 120
+        static let placeholderName = "photo"
     }
 
     enum TitleField {
@@ -78,7 +78,7 @@ struct AddExcursionConstants {
             }
 
             enum Title {
-                static let text: String = "Добавить место"
+                static let text: String = "Выбрать места"
                 static let font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
             }
         }
