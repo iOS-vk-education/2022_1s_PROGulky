@@ -92,7 +92,9 @@ extension FavouritesExcursionsPresenter: FavouritesExcursionsInteractorOutput {
     }
 
     func gotAuthError() {
+        favoritesExcursions = []
         view.stopLoader()
+        view.reloadView()
         view.showNotAuthView()
     }
 }
