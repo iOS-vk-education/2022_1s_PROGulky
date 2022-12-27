@@ -91,16 +91,15 @@ extension AddExcursionPresenter: AddExcursionViewOutput {
     }
 
     func didTapSaveButton(name: String, description: String, image: UIImage) {
-        var places = selectedPlaces.map { "\($0.id ?? 0)" }
+        let places = selectedPlaces.map { "\($0.id ?? 0)" }
         let placeIds = places.joined(separator: ",")
         let excursion = ExcursionForPost(title: name,
                                          description: description,
-                                         image: image.jpegData(compressionQuality: 1) ?? Data(),
+                                         image: image,
                                          duration: duration,
                                          distance: distance,
-                                         placeIds: placeIds)
-
-        
+                                         placesIds: placeIds)
+        interactor.sendExcursion(excursion: excursion)
     }
 
     var selectedPlacesCount: Int {
@@ -129,5 +128,21 @@ extension AddExcursionPresenter: AddExcursionViewOutput {
     }
 }
 
+// MARK: AddExcursionInteractorOutput
+
 extension AddExcursionPresenter: AddExcursionInteractorOutput {
+    func successeded() {
+        selectedPlacesManager.removeAll()
+        moduleOutput?.addExcursionModuleWantsToClose()
+    }
+
+    // Ошибка авторизации
+    func gotAuthError() {
+        view.showAuthView()
+    }
+
+    // Ошибка сервера
+    func gotAnotherError() {
+        view.showErrorView()
+    }
 }

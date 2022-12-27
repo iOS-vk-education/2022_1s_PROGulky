@@ -9,12 +9,27 @@
 
 final class AddExcursionInteractor {
     weak var output: AddExcursionInteractorOutput?
-    private let 
 }
+
+// MARK: AddExcursionInteractorInput
 
 extension AddExcursionInteractor: AddExcursionInteractorInput {
     func sendExcursion(excursion: ExcursionForPost) {
-        <#code#>
-    }
+        guard UserAuthService.shared.isLogged else {
+            output?.gotAuthError() // Пользователь не авторизован. Показать ошибку
+            return
+        }
 
+        let token = UserService.shared.userToken
+
+        ApiManager.shared.sendExcursion(excursion: excursion, token: token) { result in
+            switch result {
+            case let .success(success):
+                print(success.title, success.id)
+                self.output?.successeded()
+            case let .failure(failure):
+                self.output?.gotAnotherError()
+            }
+        }
+    }
 }

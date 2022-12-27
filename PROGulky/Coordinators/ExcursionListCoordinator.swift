@@ -77,15 +77,15 @@ extension ExcursionListCoordinator: DetailExcursionModuleOutput {
         let addView = builder.build(moduleOutput: self)
         rootNavigationController.pushViewController(addView, animated: true)
     }
-
-    func addExcursionModuleWantsToClose() {
-        rootNavigationController.popViewController(animated: true)
-    }
 }
 
 // MARK: AddExcursionModuleOutput
 
 extension ExcursionListCoordinator: AddExcursionModuleOutput {
+    func addExcursionModuleWantsToClose() {
+        rootNavigationController.popViewController(animated: true)
+    }
+
     func addExcursionModuleWantsToOpenAddPlaceModule() {
         let addPlaceViewModel = AddPlaceViewModel(moduleOutput: self)
         let addPlaceView = AddPlaceView(viewModel: addPlaceViewModel)

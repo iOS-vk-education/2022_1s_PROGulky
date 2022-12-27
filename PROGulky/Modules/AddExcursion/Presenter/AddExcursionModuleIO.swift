@@ -14,4 +14,5 @@ protocol AddExcursionModuleInput: AnyObject {
 
 protocol AddExcursionModuleOutput: AnyObject {
     func addExcursionModuleWantsToOpenAddPlaceModule()
+    func addExcursionModuleWantsToClose()
 }

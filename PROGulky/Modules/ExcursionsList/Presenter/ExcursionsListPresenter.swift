@@ -43,6 +43,10 @@ extension ExcursionsListPresenter: ExcursionsListModuleInput {
 
 extension ExcursionsListPresenter: ExcursionsListViewOutput {
     func didAddExcursionButtonTapped() {
+        guard UserAuthService.shared.isLogged else {
+            view.showAuthView()
+            return
+        }
         moduleOutput?.excursionsListModuleWantsToOpenAddExcursion()
     }
 

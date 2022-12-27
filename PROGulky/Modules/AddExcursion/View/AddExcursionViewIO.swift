@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // MARK: - AddExcursionViewOutput
 
@@ -27,4 +28,6 @@ protocol AddExcursionViewOutput: AnyObject {
 protocol AddExcursionViewInput: AnyObject {
     func reload()
     func reloadTable()
+    func showAuthView()
+    func showErrorView()
 }

@@ -61,8 +61,8 @@ final class AddExcursionViewController: UIViewController {
             !name.isEmpty,
             let description = excursionDescription,
             !description.isEmpty,
-            output.selectedPlacesCount != 0 else,
-            let image {
+            output.selectedPlacesCount != 0,
+            let image else {
             return
         }
         output.didTapSaveButton(name: name, description: description, image: image)
@@ -132,6 +132,22 @@ extension AddExcursionViewController: AddExcursionViewInput {
 
     func reload() {
         output.reloadData()
+    }
+
+    func showAuthView() {
+        let notLoginAlert = UIAlertController(title: "Вы не авторизованы! Необходимо войти в Ваш аккаунт", message: "", preferredStyle: .alert)
+        notLoginAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
+            notLoginAlert.dismiss(animated: true, completion: nil)
+        }))
+        present(notLoginAlert, animated: true, completion: nil)
+    }
+
+    func showErrorView() {
+        let errorAlert = UIAlertController(title: "Произошла ошибка. Повторите позже", message: "", preferredStyle: .alert)
+        errorAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
+            errorAlert.dismiss(animated: true, completion: nil)
+        }))
+        present(errorAlert, animated: true, completion: nil)
     }
 }
 
