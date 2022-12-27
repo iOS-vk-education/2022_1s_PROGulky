@@ -51,7 +51,9 @@ final class ExcursionsListViewController: UIViewController {
     }
 
     @objc
-    private func didTapAddButton() {}
+    private func didTapAddButton() {
+        output.didAddExcursionButtonTapped()
+    }
 
     // Настройка топ бара
     private func setupFilterBar() {
@@ -156,6 +158,14 @@ extension ExcursionsListViewController: ExcursionsListViewInput {
 
     func stopLoader() {
         loader.stopAnimating()
+    }
+
+    func showAuthView() {
+        let notLoginAlert = UIAlertController(title: "Вы не авторизованы! Необходимо войти в Ваш аккаунт", message: "", preferredStyle: .alert)
+        notLoginAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
+            notLoginAlert.dismiss(animated: true, completion: nil)
+        }))
+        present(notLoginAlert, animated: true, completion: nil)
     }
 }
 

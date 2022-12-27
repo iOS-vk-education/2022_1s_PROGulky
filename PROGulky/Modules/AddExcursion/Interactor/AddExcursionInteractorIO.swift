@@ -10,9 +10,13 @@ import Foundation
 // MARK: - AddExcursionInteractorOutput
 
 protocol AddExcursionInteractorOutput: AnyObject {
+    func gotAuthError()
+    func gotAnotherError()
+    func successeded()
 }
 
 // MARK: - AddExcursionInteractorInput
 
 protocol AddExcursionInteractorInput: AnyObject {
+    func sendExcursion(excursion: ExcursionForPost)
 }

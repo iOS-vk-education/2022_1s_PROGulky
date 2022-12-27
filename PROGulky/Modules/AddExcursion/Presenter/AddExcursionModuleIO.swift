@@ -13,4 +13,6 @@ protocol AddExcursionModuleInput: AnyObject {
 // MARK: - AddExcursionModuleOutput
 
 protocol AddExcursionModuleOutput: AnyObject {
+    func addExcursionModuleWantsToOpenAddPlaceModule()
+    func addExcursionModuleWantsToClose()
 }

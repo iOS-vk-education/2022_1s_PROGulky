@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 // MARK: - ExcursionListCoordinator
 
@@ -69,5 +70,36 @@ extension ExcursionListCoordinator: DetailExcursionModuleOutput {
     func detailExcursionModuleWantsToClose() {
         rootNavigationController.popViewController(animated: true)
         rootNavigationController.tabBarController?.tabBar.isHidden = false
+    }
+
+    func excursionsListModuleWantsToOpenAddExcursion() {
+        let builder = AddExcursionModuleBuilder()
+        let addView = builder.build(moduleOutput: self)
+        rootNavigationController.pushViewController(addView, animated: true)
+    }
+}
+
+// MARK: AddExcursionModuleOutput
+
+extension ExcursionListCoordinator: AddExcursionModuleOutput {
+    func addExcursionModuleWantsToClose() {
+        rootNavigationController.popViewController(animated: true)
+    }
+
+    func addExcursionModuleWantsToOpenAddPlaceModule() {
+        let addPlaceViewModel = AddPlaceViewModel(moduleOutput: self)
+        let addPlaceView = AddPlaceView(viewModel: addPlaceViewModel)
+        let hosting = UIHostingController(rootView: addPlaceView)
+        rootNavigationController.present(hosting, animated: true)
+    }
+}
+
+// MARK: AppPlaceViewModuleOutput
+
+extension ExcursionListCoordinator: AppPlaceViewModuleOutput {
+    func addPlaceViewModuleWantsToClose() {
+        guard let addExcursionViewController: AddExcursionViewInput = rootNavigationController.topViewController
+            as? AddExcursionViewController else { return }
+        addExcursionViewController.reload()
     }
 }

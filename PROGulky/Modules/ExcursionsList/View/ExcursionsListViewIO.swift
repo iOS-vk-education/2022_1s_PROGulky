@@ -19,6 +19,8 @@ protocol ExcursionsListViewOutput: AnyObject {
     func didSelectCell(at indexPath: IndexPath)
 
     func didRepeatButtonTapped()
+
+    func didAddExcursionButtonTapped()
 }
 
 // MARK: - ExcursionsListViewInput
@@ -32,5 +34,6 @@ protocol ExcursionsListViewInput: AnyObject {
 
     func showErrorView() // Показать сообщение с ошибкой
 
+    func showAuthView()
     func hideErrorView()
 }

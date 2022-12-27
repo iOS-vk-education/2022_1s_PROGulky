@@ -94,7 +94,6 @@ final class DetailExcursionViewController: UIViewController {
         setDetailExcursionInfoViewConstraints()
         setTableViewConstraints()
         setLikeButtonConstraints()
-
         view.bringSubviewToFront(detailExcursionInfoView)
     }
 

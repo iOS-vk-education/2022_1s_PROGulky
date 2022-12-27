@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // MARK: - Excursion
 
@@ -25,3 +26,21 @@ struct Excursion: Codable {
 }
 
 typealias Excursions = [Excursion]
+
+// MARK: - ExcursionForPost
+
+struct ExcursionForPost {
+    let title: String
+    let description: String
+    let image: UIImage
+    let duration: Int
+    let distance: Double
+    let placesIds: String
+}
+
+// MARK: - ExcursionAfterPost
+
+struct ExcursionAfterPost: Codable {
+    let id: Int?
+    let title: String?
+}

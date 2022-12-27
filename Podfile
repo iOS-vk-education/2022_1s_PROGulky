@@ -9,7 +9,7 @@ target 'PROGulky' do
   pod 'SwiftFormat/CLI', '~> 0.49'
   pod 'YandexMapsMobile', '~> 4.2.2-full'
   pod 'SDWebImage', '~> 5.14'
-
+  pod 'SDWebImageSwiftUI', '~> 2.2.1'
 
   target 'PROGulkyTests' do
     inherit! :search_paths
