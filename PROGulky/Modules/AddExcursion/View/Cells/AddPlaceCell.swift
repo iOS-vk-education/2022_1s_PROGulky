@@ -9,13 +9,10 @@ import UIKit
 
 final class AddPlaceCell: UITableViewCell {
     private let title = UILabel()
-    private let image = UIImageView(frame: .zero)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        addSubviews(title, image)
-
+        addSubviews(title)
         setupUI()
         setupConstraints()
     }
@@ -31,36 +28,25 @@ final class AddPlaceCell: UITableViewCell {
         backgroundColor = AddExcursionConstants.TableView.AddPlaceButtonCell.backgroundColor
         selectionStyle = UITableViewCell.SelectionStyle.none
         configureTitleLabel()
-        configureImage()
     }
 
     private func configureTitleLabel() {
         title.font = AddExcursionConstants.TableView.AddPlaceButtonCell.Title.font
         title.text = AddExcursionConstants.TableView.AddPlaceButtonCell.Title.text
-    }
-
-    private func configureImage() {
-        image.image = UIImage(systemName: "plus")
+        backgroundColor = .prog.Dynamic.primary
+        title.textColor = .prog.Dynamic.lightText
     }
 
     // MARK: constraints
 
     private func setupConstraints() {
-        setImageConstraints()
         setTitleLabelConstraints()
     }
 
-    private func setImageConstraints() {
-        image.translatesAutoresizingMaskIntoConstraints = false
-//        image.widthAnchor.constraint(equalToConstant: AddExcursionConstants.TableView.AddPlaceButtonCell.Image.width).isActive = true
-        image.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        image.leadingAnchor.constraint(equalTo: leadingAnchor, constant: AddExcursionConstants.TableView.AddPlaceButtonCell.Image.marginLeft).isActive = true
-    }
-
     private func setTitleLabelConstraints() {
-        title.translatesAutoresizingMaskIntoConstraints = false
-        title.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        title.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: AddExcursionConstants.TableView.AddPlaceButtonCell.Image.marginLeft).isActive = true
-        title.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AddExcursionConstants.Screen.padding).isActive = true
+        title.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.height.equalTo(44)
+        }
     }
 }

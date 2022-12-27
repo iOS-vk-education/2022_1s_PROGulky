@@ -15,6 +15,7 @@ enum ApiType {
     case removeFavorites(token: String, excursionId: String) // Удалить экскурсию из избранного
     case login // Логин
     case registration // Регистрация
+    case getPlaces
 
     var baseURL: String {
         "http://37.140.195.167:5000"
@@ -43,6 +44,7 @@ enum ApiType {
         case .removeFavorites: return "/excursions/delete_favorite"
         case .login: return "/auth/login"
         case .registration: return "/auth/registration"
+        case .getPlaces: return "/places"
         }
     }
 
@@ -52,7 +54,7 @@ enum ApiType {
         request.allHTTPHeaderFields = headers
 
         switch self {
-        case .getExcursions:
+        case .getExcursions, .getPlaces:
             request.httpMethod = "GET"
             return request
         case .addFavorites:
@@ -203,6 +205,31 @@ final class ApiManager {
                 let user = try JSONDecoder().decode(User.self, from: data)
                 DispatchQueue.main.async {
                     completion(.success(user))
+                }
+            } catch let jsonError {
+                print("Failed decode error:", jsonError)
+                DispatchQueue.main.async {
+                    completion(.failure(jsonError))
+                }
+            }
+        }
+        task.resume()
+    }
+
+    func getPlaces(completion: @escaping (Result<[Place], Error>) -> Void) {
+        let request = ApiType.getPlaces.request
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+            guard let data = data else { return }
+            do {
+                let places = try JSONDecoder().decode([Place].self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(places))
                 }
             } catch let jsonError {
                 print("Failed decode error:", jsonError)

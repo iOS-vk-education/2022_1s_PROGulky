@@ -105,8 +105,6 @@ final class DetailExcursionViewController: UIViewController {
         setTableViewConstraints()
         setLikeButtonConstraints()
         setNotAuthViewConstraints()
-
-        view.bringSubviewToFront(detailExcursionInfoView)
     }
 
     private func setImageConstraints() {

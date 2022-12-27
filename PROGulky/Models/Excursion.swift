@@ -25,3 +25,14 @@ struct Excursion: Codable {
 }
 
 typealias Excursions = [Excursion]
+
+// MARK: - ExcursionForPost
+
+struct ExcursionForPost: Codable {
+    let title: String
+    let description: String
+    let image: Data
+    let duration: Int
+    let distance: Double
+    let placeIds: String
+}

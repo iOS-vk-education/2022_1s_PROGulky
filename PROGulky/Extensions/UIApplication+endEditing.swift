@@ -1,12 +1,12 @@
 //
-//  View+ResignKeyboard.swift
+//  UIApplication+endEditing.swift
 //  PROGulky
 //
 //  Created by Иван Тазенков on 26.12.2022.
 //
 
 import Foundation
-import SwiftUI
+import UIKit
 
 extension UIApplication {
     func endEditing(_ force: Bool) {
@@ -16,22 +16,3 @@ extension UIApplication {
         window?.endEditing(force)
     }
 }
-
-//
-//// MARK: - ResignKeyboardOnDragGesture
-//
-// struct ResignKeyboardOnDragGesture: ViewModifier {
-//    var gesture = DragGesture().onChanged { _ in
-//        UIApplication.shared.endEditing(true)
-//    }
-//
-//    func body(content: Content) -> some View {
-//        content.gesture(gesture)
-//    }
-// }
-//
-// extension View {
-//    func resignKeyboardOnDragGesture() -> some View {
-//        modifier(ResignKeyboardOnDragGesture())
-//    }
-// }

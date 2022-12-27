@@ -10,12 +10,12 @@ import UIKit
 // MARK: - AddExcursionModuleBuilder
 
 final class AddExcursionModuleBuilder {
-    func build() -> UIViewController {
+    func build(moduleOutput: AddExcursionModuleOutput) -> UIViewController {
         let viewController = AddExcursionViewController()
         let router = AddExcursionRouter()
         let interactor = AddExcursionInteractor()
 
-        let presenter = AddExcursionPresenter(interactor: interactor, router: router)
+        let presenter = AddExcursionPresenter(interactor: interactor, router: router, moduleOutput: moduleOutput)
         presenter.view = viewController
 
         interactor.output = presenter

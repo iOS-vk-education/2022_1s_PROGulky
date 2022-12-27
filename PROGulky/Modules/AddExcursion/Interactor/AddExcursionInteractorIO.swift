@@ -15,4 +15,5 @@ protocol AddExcursionInteractorOutput: AnyObject {
 // MARK: - AddExcursionInteractorInput
 
 protocol AddExcursionInteractorInput: AnyObject {
+    func sendExcursion(excursion: ExcursionForPost)
 }

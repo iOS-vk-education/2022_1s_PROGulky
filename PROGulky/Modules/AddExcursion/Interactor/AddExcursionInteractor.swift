@@ -9,7 +9,12 @@
 
 final class AddExcursionInteractor {
     weak var output: AddExcursionInteractorOutput?
+    private let 
 }
 
 extension AddExcursionInteractor: AddExcursionInteractorInput {
+    func sendExcursion(excursion: ExcursionForPost) {
+        <#code#>
+    }
+
 }

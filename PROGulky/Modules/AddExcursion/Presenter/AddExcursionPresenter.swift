@@ -5,6 +5,9 @@
 //  Created by SemyonPyatkov on 31/10/2022.
 //
 
+import Foundation
+import YandexMapsMobile
+
 // MARK: - AddExcursionPresenter
 
 final class AddExcursionPresenter {
@@ -16,14 +19,60 @@ final class AddExcursionPresenter {
 
     private let interactor: AddExcursionInteractorInput
     private let router: AddExcursionRouterInput
-
-    private let selectedPlaces: [Place] = []
+    private weak var moduleOutput: AddExcursionModuleOutput?
+    private let selectedPlacesManager = SelectedPlacesManager.sharedInstance
+    private var selectedPlaces: [Place] { selectedPlacesManager.selectedPlaces }
+    private var distance: Double = 0
+    private var duration = 0
+    private var massTransitSession: YMKMasstransitSession?
 
     // MARK: - Lifecycle
 
-    init(interactor: AddExcursionInteractorInput, router: AddExcursionRouterInput) {
+    init(interactor: AddExcursionInteractorInput, router: AddExcursionRouterInput, moduleOutput: AddExcursionModuleOutput) {
         self.interactor = interactor
         self.router = router
+        self.moduleOutput = moduleOutput
+    }
+
+    private func calculateDistanceAndDuration() {
+        let lastWayPointNumber = selectedPlaces.count - 1
+
+        let requestPoints = selectedPlaces.enumerated().map { element in
+            let place = element.element
+            let count = element.offset
+            let point = YMKRequestPoint(
+                point: YMKPoint(latitude: place.latitude,
+                                longitude: place.longitude),
+                type: count == 0 || count == lastWayPointNumber ? .waypoint : .viapoint,
+                pointContext: nil
+            )
+            return point
+        }
+
+        let pedestrianRouter = YMKTransport.sharedInstance().createPedestrianRouter()
+        massTransitSession = pedestrianRouter.requestRoutes(
+            with: requestPoints,
+            timeOptions: YMKTimeOptions(departureTime: Date(), arrivalTime: nil),
+            routeHandler: { [weak self] (routeResponse: [YMKMasstransitRoute]?, error: Error?) in
+                if let error = error {
+                    self?.duration = 0
+                    self?.distance = 0
+                    self?.reloadHeaderView()
+                    return
+                }
+                guard let route = routeResponse?.first else {
+                    return
+                }
+
+                self?.distance = route.metadata.weight.walkingDistance.value / 1000
+                self?.duration = Int(route.metadata.weight.time.value / 60)
+                self?.reloadHeaderView()
+            }
+        )
+    }
+
+    private func reloadHeaderView() {
+        view.reloadTable()
     }
 }
 
@@ -33,8 +82,50 @@ extension AddExcursionPresenter: AddExcursionModuleInput {
 // MARK: AddExcursionViewOutput
 
 extension AddExcursionPresenter: AddExcursionViewOutput {
-    func selectedPlacesCount() -> Int {
-        selectedPlaces.count
+    var routeDistance: Double {
+        distance
+    }
+
+    var routeDuration: Int {
+        duration
+    }
+
+    func didTapSaveButton(name: String, description: String, image: UIImage) {
+        var places = selectedPlaces.map { "\($0.id ?? 0)" }
+        let placeIds = places.joined(separator: ",")
+        let excursion = ExcursionForPost(title: name,
+                                         description: description,
+                                         image: image.jpegData(compressionQuality: 1) ?? Data(),
+                                         duration: duration,
+                                         distance: distance,
+                                         placeIds: placeIds)
+
+        
+    }
+
+    var selectedPlacesCount: Int {
+        selectedPlacesManager.selectedPlaces.count
+    }
+
+    func didTapAddPlaceButton() {
+        moduleOutput?.addExcursionModuleWantsToOpenAddPlaceModule()
+    }
+
+    func place(for indexPath: IndexPath) -> Place {
+        selectedPlacesManager.selectedPlaces[indexPath.row]
+    }
+
+    func removePlace(at indexPath: IndexPath) {
+        selectedPlacesManager.remove(at: indexPath.row)
+    }
+
+    func swapPlaces(from sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        selectedPlacesManager.swap(from: sourceIndexPath.row,
+                                   to: destinationIndexPath.row)
+    }
+
+    func reloadData() {
+        calculateDistanceAndDuration()
     }
 }
 

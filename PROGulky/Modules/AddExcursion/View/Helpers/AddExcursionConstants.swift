@@ -49,14 +49,17 @@ struct AddExcursionConstants {
 
             enum Sort {
                 static let marginLeft: CGFloat = 20
+                static let shiftOffset: CGFloat = 32
                 static let width: CGFloat = 20
             }
 
             enum Title {
                 static let marginLeft: CGFloat = 10
+                static let width: CGFloat = 200
                 static let font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
                 static let YOffset: CGFloat = -10
                 static let numberOfLines = 1
+                static let trailing: CGFloat = 40
             }
 
             enum Subtitle {
@@ -82,5 +85,10 @@ struct AddExcursionConstants {
                 static let font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
             }
         }
+    }
+
+    enum Api {
+        static let baseURL: String = "http://37.140.195.167:5000"
+        static let imageURL: String = "\(baseURL)/images/places"
     }
 }

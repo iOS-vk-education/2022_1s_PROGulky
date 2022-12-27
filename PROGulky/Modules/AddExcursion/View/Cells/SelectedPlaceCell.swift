@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class SelectedPlaceCell: UITableViewCell {
     private let sort = UILabel()
@@ -26,13 +27,28 @@ final class SelectedPlaceCell: UITableViewCell {
         fatalError("init(coder:) has not implemeted")
     }
 
-    func set(place: PlaceViewModel) {
-        sort.text = place.sort
+    func set(place: Place) {
+        sort.text = "\(place.sort ?? 0)"
         title.text = place.title
-        subtitle.text = place.subtitle
+        subtitle.text = place.address
     }
 
     // MARK: configs styles
+
+    func updateSortConstraint(isEditing: Bool) {
+        sort.snp.updateConstraints { make in
+            if isEditing {
+                make.leading.equalToSuperview()
+                    .offset(AddExcursionConstants.TableView.SelectedPlaceCell.Sort.shiftOffset)
+            } else {
+                make.leading.equalToSuperview()
+                    .offset(AddExcursionConstants.TableView.SelectedPlaceCell.Sort.marginLeft)
+            }
+        }
+        layoutIfNeeded()
+        layoutSubviews()
+        updateConstraints()
+    }
 
     private func setupUI() {
         backgroundColor = AddExcursionConstants.TableView.SelectedPlaceCell.backgroundColor
@@ -65,23 +81,47 @@ final class SelectedPlaceCell: UITableViewCell {
     }
 
     private func setSortLabelConstraint() {
-        sort.translatesAutoresizingMaskIntoConstraints = false
-        sort.widthAnchor.constraint(equalToConstant: AddExcursionConstants.TableView.SelectedPlaceCell.Sort.width).isActive = true
-        sort.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        sort.leadingAnchor.constraint(equalTo: leadingAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Sort.marginLeft).isActive = true
+        sort.snp.makeConstraints { make in
+            make.width.equalTo(AddExcursionConstants.TableView.SelectedPlaceCell.Sort.width)
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview()
+                .offset(AddExcursionConstants.TableView.SelectedPlaceCell.Sort.marginLeft)
+        }
+//        sort.translatesAutoresizingMaskIntoConstraints = false
+//        sort.widthAnchor.constraint(equalToConstant: AddExcursionConstants.TableView.SelectedPlaceCell.Sort.width).isActive = true
+//        sort.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+//        sort.leadingAnchor.constraint(equalTo: leadingAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Sort.marginLeft).isActive = true
     }
 
     private func setTitleLabelConstraints() {
-        title.translatesAutoresizingMaskIntoConstraints = false
-        title.centerYAnchor.constraint(equalTo: centerYAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Title.YOffset).isActive = true
-        title.leadingAnchor.constraint(equalTo: sort.trailingAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Title.marginLeft).isActive = true
-        title.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AddExcursionConstants.Screen.padding).isActive = true
+        title.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+                .offset(AddExcursionConstants.TableView.SelectedPlaceCell.Title.YOffset)
+            make.leading.equalTo(self.sort.snp.trailing)
+                .offset(AddExcursionConstants.TableView.SelectedPlaceCell.Title.marginLeft)
+            make.trailing.equalToSuperview()
+                .offset(-AddExcursionConstants.TableView.SelectedPlaceCell.Title.trailing)
+        }
+
+//        title.translatesAutoresizingMaskIntoConstraints = false
+//        title.centerYAnchor.constraint(equalTo: centerYAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Title.YOffset).isActive = true
+//        title.leadingAnchor.constraint(equalTo: sort.trailingAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Title.marginLeft).isActive = true
+//        title.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AddExcursionConstants.Screen.padding).isActive = true
     }
 
     private func setSubtitleLabelConstraint() {
-        subtitle.translatesAutoresizingMaskIntoConstraints = false
-        subtitle.leadingAnchor.constraint(equalTo: sort.trailingAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Subtitle.marginLeft).isActive = true
-        subtitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AddExcursionConstants.Screen.padding).isActive = true
-        subtitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Subtitle.marginTop).isActive = true
+        subtitle.snp.makeConstraints { make in
+            make.leading.equalTo(self.sort.snp.trailing)
+                .offset(AddExcursionConstants.TableView.SelectedPlaceCell.Title.marginLeft)
+            make.trailing.equalToSuperview()
+                .offset(-AddExcursionConstants.TableView.SelectedPlaceCell.Title.trailing)
+            make.top.equalTo(self.title.snp.bottom)
+                .offset(AddExcursionConstants.TableView.SelectedPlaceCell.Subtitle.marginTop)
+        }
+
+//        subtitle.translatesAutoresizingMaskIntoConstraints = false
+//        subtitle.leadingAnchor.constraint(equalTo: sort.trailingAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Subtitle.marginLeft).isActive = true
+//        subtitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AddExcursionConstants.Screen.padding).isActive = true
+//        subtitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: AddExcursionConstants.TableView.SelectedPlaceCell.Subtitle.marginTop).isActive = true
     }
 }
