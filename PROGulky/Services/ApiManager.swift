@@ -45,13 +45,13 @@ enum ApiType {
 
     var path: String {
         switch self {
-        case .getExcursions, .postExcursion: return "/excursions"
-        case .addFavorites: return "/excursions/add_favorite"
-        case .removeFavorites: return "/excursions/delete_favorite"
-        case .login: return "/auth/login"
-        case .registration: return "/auth/registration"
-        case .getFavoritesExcursions: return "/excursions/favorites_excursions"
-        case .getPlaces: return "/places"
+        case .getExcursions, .postExcursion: return "api/v1/excursions"
+        case .addFavorites: return "api/v1/excursions/add_favorite"
+        case .removeFavorites: return "api/v1/excursions/delete_favorite"
+        case .login: return "api/v1/auth/login"
+        case .registration: return "api/v1/auth/registration"
+        case .getFavoritesExcursions: return "api/v1/excursions/favorites_excursions"
+        case .getPlaces: return "api/v1/places"
         }
     }
 
