@@ -502,9 +502,9 @@
 		34BBB1E5F70D9CF8EDF68B78 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				667C6D8F29AF83C200352A21 /* Factories */,
 				175C664D284B70C6674471E7 /* ProfileModuleIO.swift */,
 				D3913E1F7ACBA08F04736A7B /* ProfilePresenter.swift */,
-				A5462DCE2954C9B2009DD1ED /* UserInfoHeaderDisplayDataFactory.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -642,7 +642,6 @@
 			isa = PBXGroup;
 			children = (
 				54B1A402293DC91F00A232B9 /* ErrorView.swift */,
-				545A208E29511E2D0085E4AF /* NotAuthView.swift */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -879,6 +878,30 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
+		667C6D8D29AF836F00352A21 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		667C6D8E29AF839100352A21 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		667C6D8F29AF83C200352A21 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				A5462DCE2954C9B2009DD1ED /* UserInfoHeaderDisplayDataFactory.swift */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
 		67243B579306B1D25A480D60 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
@@ -1082,11 +1105,11 @@
 		AF45B98F976FA4A53DAD4EEF /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1025773E08D8C66DE4E8F7C0 /* ProfileViewIO.swift */,
-				A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */,
-				17FE2736BBBE69AB8C7C2BB5 /* ProfileViewController.swift */,
-				A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */,
 				A5D309F52928F66C005D2275 /* ProfileSettingsSection.swift */,
+				667C6D8E29AF839100352A21 /* Cells */,
+				667C6D8D29AF836F00352A21 /* Views */,
+				1025773E08D8C66DE4E8F7C0 /* ProfileViewIO.swift */,
+				17FE2736BBBE69AB8C7C2BB5 /* ProfileViewController.swift */,
 				A5462DD0295AE567009DD1ED /* PlugViewController.swift */,
 			);
 			path = View;

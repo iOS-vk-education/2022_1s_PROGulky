@@ -10,7 +10,7 @@ import SnapKit
 
 // MARK: - RegistrationViewController
 
-final class RegistrationViewController: UIViewController, UITextFieldDelegate {
+final class RegistrationViewController: UIViewController {
     var output: RegistrationViewOutput!
 
     private let labelTop = UILabel()
@@ -38,28 +38,55 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
             static var bottomOffset: CGFloat = -60
             static let topOffset: CGFloat = 10
         }
+
+        enum Image {
+            static let logo = "progulkiLabel"
+            static let name = "person"
+            static let email = "envelope"
+            static let password = "lock"
+        }
     }
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
+    }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        configureUI()
+    }
+
+    // MARK: - Private Methods
+
+    private func setupViews() {
         hideKeyboardWhenTappedAround()
 
         view.backgroundColor = .prog.Dynamic.background
-        imageProgramLogo.image = UIImage(named: "progulkiLabel")
+        imageProgramLogo.image = UIImage(named: Constants.Image.logo)
         labelTop.text = TextConstantsSignUp.titleTop
         labelTop.font = UIFont.boldSystemFont(ofSize: 20.0)
         labelTop.textColor = .prog.Dynamic.text
+        setupTextFields()
+        buttonSignUp.addTarget(self, action: #selector(didTapButtonSignUp), for: .touchUpInside)
 
-        guard let imagePerson = UIImage(systemName: "person") else {
+        view.addSubviews(labelTop,
+                         buttonSignUp,
+                         imageProgramLogo)
+    }
+
+    private func setupTextFields() {
+        guard let imagePerson = UIImage(systemName: Constants.Image.name) else {
             return
         }
         nameField = CustomTextField(name: TextConstantsSignUp.titleName, image: imagePerson, security: false)
-        guard let imageEnvelope = UIImage(systemName: "envelope") else {
+        guard let imageEnvelope = UIImage(systemName: Constants.Image.email) else {
             return
         }
         emailField = CustomTextField(name: TextConstantsSignUp.titleEmail, image: imageEnvelope, security: false)
-        guard let imageLock = UIImage(systemName: "lock") else {
+        guard let imageLock = UIImage(systemName: Constants.Image.password) else {
             return
         }
         passwordField = CustomTextField(name: TextConstantsSignUp.titlePassword, image: imageLock, security: true)
@@ -76,58 +103,15 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
         passwordField.delegate = self
         passwordSecondField.delegate = self
 
-        buttonSignUp.addTarget(self, action: #selector(didTapButtonSignUp), for: .touchUpInside)
-
-        view.addSubviews(labelTop,
-                         nameField,
+        view.addSubviews(nameField,
                          emailField,
                          passwordField,
-                         passwordSecondField,
-                         buttonSignUp,
-                         imageProgramLogo)
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        configureUI()
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        switch textField {
-        case nameField:
-            emailField.becomeFirstResponder()
-
-        case emailField:
-            passwordField.becomeFirstResponder()
-
-        case passwordField:
-            passwordSecondField.becomeFirstResponder()
-
-        case passwordSecondField:
-            didTapButtonSignUp()
-        default:
-            print("error")
-        }
-        return true
+                         passwordSecondField)
     }
 
     @objc private func didTapButtonSignUp() {
-        guard let email = emailField.text,
-              email != "" else {
-            emailField.layer.borderWidth = 1.0
-            emailField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
-            return
-        }
-        guard passwordField.text != "" else {
-            passwordField.layer.borderWidth = 1.0
-            passwordField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
-            return
-        }
-        guard passwordSecondField.text != "" else {
-            passwordSecondField.layer.borderWidth = 1.0
-            passwordSecondField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
-            return
-        }
+        guard validateTextFields(textFields: emailField, passwordField, passwordSecondField)
+        else { return }
 
         guard passwordField.text == passwordSecondField.text else {
             passwordSecondField.layer.borderWidth = 1.0
@@ -135,7 +119,9 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
             return
         }
 
-        guard let password = passwordField.text else { return }
+        guard let password = passwordField.text,
+              let email = emailField.text
+        else { return }
 
         emailField.layer.borderWidth = 0.5
         emailField.layer.borderColor = UIColor.lightGray.cgColor
@@ -146,6 +132,22 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
 
         let registrationDTO = RegistrationDTO(email: email, password: password, nickname: nameField.text ?? "")
         output?.didTapSignUpButton(registrationDTO: registrationDTO)
+    }
+
+    private func validateTextFields(textFields: UITextField...) -> Bool {
+        var flag = true
+        for field in textFields {
+            if let text = field.text,
+               text.isEmpty {
+                flag = false
+                field.layer.borderWidth = 1.0
+                field.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            } else {
+                field.layer.borderWidth = 0.5
+                field.layer.borderColor = UIColor.lightGray.cgColor
+            }
+        }
+        return flag
     }
 
     private func configureUI() {
@@ -212,9 +214,32 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
 extension RegistrationViewController: RegistrationViewInput {
     func showAlert(message: String) {
         let alert = UIAlertController(title: message, message: "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { action in
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
             alert.dismiss(animated: true, completion: nil)
         }))
         present(alert, animated: true, completion: nil)
+    }
+}
+
+// MARK: UITextFieldDelegate
+
+extension RegistrationViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case nameField:
+            emailField.becomeFirstResponder()
+
+        case emailField:
+            passwordField.becomeFirstResponder()
+
+        case passwordField:
+            passwordSecondField.becomeFirstResponder()
+
+        case passwordSecondField:
+            didTapButtonSignUp()
+        default:
+            print("error")
+        }
+        return true
     }
 }

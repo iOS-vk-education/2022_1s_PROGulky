@@ -10,13 +10,20 @@ import SnapKit
 
 // MARK: - LoginViewController
 
-final class LoginViewController: UIViewController, UITextFieldDelegate {
+final class LoginViewController: UIViewController {
     var output: LoginViewOutput!
     private let imageProgramLogo = UIImageView()
     private var emailField = CustomTextField()
     private var passwordField = CustomTextField()
-    private var buttonSignIn = CustomButton(title: TextConstantsLogin.titleSignIn, image: nil, color: .prog.Dynamic.primary, textColor: .prog.Dynamic.lightText)
-    private let buttonSignUp = CustomButton(title: TextConstantsLogin.titleSignUp, image: nil, color: .prog.Dynamic.background, textColor: .prog.Dynamic.text)
+    private var buttonSignIn = CustomButton(title: TextConstantsLogin.titleSignIn,
+                                            image: nil,
+                                            color: .prog.Dynamic.primary,
+                                            textColor: .prog.Dynamic.lightText)
+
+    private let buttonSignUp = CustomButton(title: TextConstantsLogin.titleSignUp,
+                                            image: nil,
+                                            color: .prog.Dynamic.background,
+                                            textColor: .prog.Dynamic.text)
     private enum Constants {
         enum TextField {
             static let offset: CGFloat = 20
@@ -32,42 +39,19 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
             static let bottomOffset: CGFloat = -60
             static let topOffset: CGFloat = 10
         }
+
+        enum Image {
+            static let email = "envelope"
+            static let password = "lock"
+            static let logo = "progulkiLabel"
+        }
     }
+
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        hideKeyboardWhenTappedAround()
-
-        view.backgroundColor = .prog.Dynamic.background
-
-        guard let imageEnvelope = UIImage(systemName: "envelope") else {
-            return
-        }
-        emailField = CustomTextField(name: TextConstantsLogin.titleEmail, image: imageEnvelope, security: false)
-        guard let imageLock = UIImage(systemName: "lock") else {
-            return
-        }
-        passwordField = CustomTextField(name: TextConstantsLogin.titlePassword, image: imageLock, security: true)
-        buttonSignIn = CustomButton(title: TextConstantsLogin.titleSignIn, image: nil, color: .prog.Dynamic.primary, textColor: .prog.Dynamic.lightText)
-
-        navigationItem.title = TextConstantsLogin.titleNavBar
-
-        imageProgramLogo.image = UIImage(named: "progulkiLabel")
-        emailField.returnKeyType = .next
-        passwordField.returnKeyType = .done
-
-        emailField.delegate = self
-        passwordField.delegate = self
-
-        buttonSignIn.addTarget(self, action: #selector(didTapButtonSignIn), for: .touchUpInside)
-        buttonSignUp.addTarget(self, action: #selector(didTapButtonSignUp), for: .touchUpInside)
-
-        view.addSubviews(imageProgramLogo,
-                         emailField,
-                         passwordField,
-                         buttonSignIn,
-                         buttonSignUp)
+        setupViews()
     }
 
     override func viewDidLayoutSubviews() {
@@ -75,33 +59,51 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         configureUI()
     }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == emailField {
-            passwordField.becomeFirstResponder()
-        }
+    // MARK: - Private Methods
 
-        if buttonSignIn.isUserInteractionEnabled {
-            if textField == passwordField {
-                didTapButtonSignIn()
-            }
-        }
+    private func setupViews() {
+        hideKeyboardWhenTappedAround()
 
-        return true
+        view.backgroundColor = .prog.Dynamic.background
+
+        buttonSignIn = CustomButton(title: TextConstantsLogin.titleSignIn, image: nil, color: .prog.Dynamic.primary, textColor: .prog.Dynamic.lightText)
+
+        navigationItem.title = TextConstantsLogin.titleNavBar
+
+        imageProgramLogo.image = UIImage(named: Constants.Image.logo)
+
+        buttonSignIn.addTarget(self, action: #selector(didTapButtonSignIn), for: .touchUpInside)
+        buttonSignUp.addTarget(self, action: #selector(didTapButtonSignUp), for: .touchUpInside)
+        setupTextFields()
+        view.addSubviews(imageProgramLogo,
+                         buttonSignIn,
+                         buttonSignUp)
+    }
+
+    private func setupTextFields() {
+        guard let imageEnvelope = UIImage(systemName: Constants.Image.email) else {
+            return
+        }
+        emailField = CustomTextField(name: TextConstantsLogin.titleEmail, image: imageEnvelope, security: false)
+        guard let imageLock = UIImage(systemName: Constants.Image.password) else {
+            return
+        }
+        passwordField = CustomTextField(name: TextConstantsLogin.titlePassword, image: imageLock, security: true)
+        emailField.returnKeyType = .next
+        passwordField.returnKeyType = .done
+
+        emailField.delegate = self
+        passwordField.delegate = self
+        view.addSubviews(emailField,
+                         passwordField)
     }
 
     @objc private func didTapButtonSignIn() {
-        guard let email = emailField.text,
-              email != "" else {
-            emailField.layer.borderWidth = 1.0
-            emailField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
-            return
-        }
-        guard let password = passwordField.text,
-              password != "" else {
-            passwordField.layer.borderWidth = 1.0
-            passwordField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
-            return
-        }
+        guard validateTextFields(textFields: emailField, passwordField),
+              let email = emailField.text,
+              let password = passwordField.text
+        else { return }
+
         emailField.layer.borderWidth = 0.5
         emailField.layer.borderColor = UIColor.lightGray.cgColor
         passwordField.layer.borderWidth = 0.5
@@ -109,6 +111,22 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
 
         let login = LoginDTO(email: email, password: password)
         output?.didTapSignInButton(loginDTO: login)
+    }
+
+    private func validateTextFields(textFields: UITextField...) -> Bool {
+        var flag = true
+        for field in textFields {
+            if let text = field.text,
+               text.isEmpty {
+                flag = false
+                field.layer.borderWidth = 1.0
+                field.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+            } else {
+                field.layer.borderWidth = 0.5
+                field.layer.borderColor = UIColor.lightGray.cgColor
+            }
+        }
+        return flag
     }
 
     @objc private func didTapButtonSignUp() {
@@ -164,9 +182,26 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
 extension LoginViewController: LoginViewInput {
     func showAlert(message: String) {
         let alert = UIAlertController(title: message, message: "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { action in
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
             alert.dismiss(animated: true, completion: nil)
         }))
         present(alert, animated: true, completion: nil)
+    }
+}
+
+// MARK: UITextFieldDelegate
+
+extension LoginViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailField {
+            passwordField.becomeFirstResponder()
+        }
+
+        if buttonSignIn.isUserInteractionEnabled {
+            if textField == passwordField {
+                didTapButtonSignIn()
+            }
+        }
+        return true
     }
 }
