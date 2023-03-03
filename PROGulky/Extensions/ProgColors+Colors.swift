@@ -36,26 +36,29 @@ extension ProgColors {
         static let base: UIColor = dynamicColor(light: baseL, dark: baseD)
         static let shadow: UIColor = dynamicColor(light: shadowL, dark: shadowD)
         static let textGray: UIColor = dynamicColor(light: textGrayL, dark: textGrayD)
+        static let rating: UIColor = dynamicColor(light: ratingL, dark: ratingD)
+
+        static let greetingText: UIColor = dynamicColor(light: primaryL, dark: textD) // Цвет приветственного слова "Привет"
     }
 }
 
 // MARK: - Вообще все цвета
 
 private extension ProgColors {
-    static var lightTextL: UIColor { UIColor(red: 1, green: 1, blue: 1, alpha: 1) }
-    static var lightTextD: UIColor { UIColor(red: 1, green: 1, blue: 1, alpha: 1) }
+    static var lightTextL: UIColor { UIColor(red: 0.678, green: 0.670, blue: 0.698, alpha: 1) }
+    static var lightTextD: UIColor { UIColor(red: 0.341, green: 0.337, blue: 0.356, alpha: 1) }
 
     static var textL: UIColor { UIColor(red: 0, green: 0, blue: 0, alpha: 1) }
     static var textD: UIColor { UIColor(red: 1, green: 1, blue: 1, alpha: 1) }
 
-    static var backgroundL: UIColor { UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1) }
-    static var backgroundD: UIColor { UIColor(red: 0.039, green: 0.039, blue: 0.039, alpha: 1) }
+    static var backgroundL: UIColor { UIColor(red: 1, green: 1, blue: 1, alpha: 1) }
+    static var backgroundD: UIColor { UIColor(red: 0.137, green: 0.113, blue: 0.149, alpha: 1) }
 
     static var lightBackgroundL: UIColor { UIColor(red: 1, green: 1, blue: 1, alpha: 1) }
-    static var lightBackgroundD: UIColor { UIColor(red: 0.098, green: 0.098, blue: 0.098, alpha: 1) }
+    static var lightBackgroundD: UIColor { UIColor(red: 0.227, green: 0.196, blue: 0.243, alpha: 1) }
 
-    static var primaryL: UIColor { UIColor(red: 0.212, green: 0.286, blue: 0.208, alpha: 1) }
-    static var primaryD: UIColor { UIColor(red: 0.246, green: 0.363, blue: 0.24, alpha: 1) }
+    static var primaryL: UIColor { UIColor(red: 0.29, green: 0.403, blue: 1, alpha: 1) }
+    static var primaryD: UIColor { UIColor(red: 0.29, green: 0.403, blue: 1, alpha: 1) }
 
     static var lightPrimaryL: UIColor { UIColor(red: 0.44, green: 0.583, blue: 0.433, alpha: 1) }
     static var lightPrimaryD: UIColor { UIColor(red: 0.543, green: 0.688, blue: 0.536, alpha: 1) }
@@ -72,9 +75,12 @@ private extension ProgColors {
     static var baseL: UIColor { UIColor(red: 0, green: 0.478, blue: 1, alpha: 1) }
     static var baseD: UIColor { UIColor(red: 0.188, green: 0.576, blue: 1, alpha: 1) }
 
-    static var shadowL: UIColor { UIColor(red: 0.775, green: 0.775, blue: 0.775, alpha: 1) }
-    static var shadowD: UIColor { UIColor(red: 0.875, green: 0.868, blue: 0.868, alpha: 1) }
+    static var shadowL: UIColor { UIColor(red: 0.69, green: 0.69, blue: 0.69, alpha: 1) }
+    static var shadowD: UIColor { UIColor(red: 0.125, green: 0.098, blue: 0.137, alpha: 1) }
 
     static var textGrayL: UIColor { UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1) }
     static var textGrayD: UIColor { UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1) }
+
+    static var ratingL: UIColor { UIColor(red: 0.988, green: 0.819, blue: 0.164, alpha: 1) }
+    static var ratingD: UIColor { UIColor(red: 0.988, green: 0.819, blue: 0.164, alpha: 1) }
 }

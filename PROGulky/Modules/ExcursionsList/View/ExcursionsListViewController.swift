@@ -6,14 +6,17 @@
 //
 
 import UIKit
+import SnapKit
 
 // MARK: - ExcursionsListViewController
 
 final class ExcursionsListViewController: UIViewController {
     var output: ExcursionsListViewOutput!
 
-    private let filterBar = ExcursionsFilterBarView(frame: .zero)
-    private var excursionsTable = UITableView(frame: .zero, style: .insetGrouped)
+    private let greetingMessageView = GreetingMessageView(frame: .zero, name: "Semyon")
+    private let searchTextField = SearchTextField(placeholder: "Поиск экскурсий")
+    private let filterButton = FilterButton()
+    private var excursionsTable = UITableView(frame: .zero, style: .plain)
     private let loader = UIActivityIndicatorView(frame: .zero)
     private let errorView = ErrorView(frame: .zero)
 
@@ -31,7 +34,8 @@ final class ExcursionsListViewController: UIViewController {
 
     private func setupUI() {
         setupNavBar()
-        setupFilterBar()
+        setupGreetingMessageView()
+        setupSearchTextField()
         setupTableView()
         setupLoader()
         setupErrorView()
@@ -41,9 +45,24 @@ final class ExcursionsListViewController: UIViewController {
         excursionsTable.reloadData()
     }
 
+    private func setupGreetingMessageView() {
+        view.addSubview(greetingMessageView)
+
+        setupGreetingMessageViewConstraints()
+    }
+
+    private func setupSearchTextField() {
+        view.addSubview(searchTextField)
+
+        searchTextField.rightView = filterButton
+        searchTextField.rightViewMode = .always
+
+        setupSearchTextFieldConstraints()
+    }
+
     // Настройка нав бара
     private func setupNavBar() {
-        navigationItem.title = ExcursionsListConstants.NavBar.title
+//        navigationItem.title = ExcursionsListConstants.NavBar.title
         navigationController?.view.backgroundColor = ExcursionsListConstants.NavBar.backgroundColor
 
         let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButton))
@@ -55,23 +74,24 @@ final class ExcursionsListViewController: UIViewController {
         output.didAddExcursionButtonTapped()
     }
 
-    // Настройка топ бара
-    private func setupFilterBar() {
-        view.addSubview(filterBar)
-
-        setupFilterBarConstraints()
+    private func setupGreetingMessageViewConstraints() {
+        greetingMessageView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(ExcursionsListConstants.GreetingMessage.height)
+            make.left.right.equalToSuperview().inset(ExcursionsListConstants.Screen.padding)
+        }
     }
 
-    private func setupFilterBarConstraints() {
-        filterBar.translatesAutoresizingMaskIntoConstraints = false
-        filterBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        filterBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        filterBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        filterBar.heightAnchor.constraint(equalToConstant: ExcursionsListConstants.ExcursionsFilterBar.height).isActive = true
+    private func setupSearchTextFieldConstraints() {
+        searchTextField.snp.makeConstraints { make in
+            make.top.equalTo(greetingMessageView.snp.bottom).offset(ExcursionsListConstants.SearchTextField.offset)
+            make.left.right.equalToSuperview().inset(ExcursionsListConstants.Screen.padding)
+        }
     }
 
     // Настройка таблицы с экскурсиями
     private func setupTableView() {
+        view.addSubview(excursionsTable)
         excursionsTable.backgroundColor = .prog.Dynamic.background
 
         excursionsTable.layoutMargins = UIEdgeInsets(
@@ -82,12 +102,8 @@ final class ExcursionsListViewController: UIViewController {
         )
         excursionsTable.separatorStyle = .none
 
-        view.addSubview(excursionsTable)
-
         setTableViewDelegate()
-
         excursionsTable.register(ExcursionCell.self, forCellReuseIdentifier: ExcursionsListConstants.ExcursionCell.reuseId)
-
         setTableViewConstraints()
     }
 
@@ -97,11 +113,12 @@ final class ExcursionsListViewController: UIViewController {
     }
 
     private func setTableViewConstraints() {
-        excursionsTable.translatesAutoresizingMaskIntoConstraints = false
-        excursionsTable.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        excursionsTable.topAnchor.constraint(equalTo: filterBar.bottomAnchor).isActive = true
-        excursionsTable.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        excursionsTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        excursionsTable.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.top.equalTo(searchTextField.snp.bottom).offset(ExcursionsListConstants.TableView.offset)
+            make.bottom.equalToSuperview()
+        }
     }
 
     private func setupLoader() {
@@ -110,9 +127,10 @@ final class ExcursionsListViewController: UIViewController {
     }
 
     private func setLoaderConstraints() {
-        loader.translatesAutoresizingMaskIntoConstraints = false
-        loader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        loader.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.centerX.equalToSuperview()
+        }
     }
 
     private func setupErrorView() {
@@ -124,11 +142,12 @@ final class ExcursionsListViewController: UIViewController {
     }
 
     private func setErrorViewConstrints() {
-        errorView.translatesAutoresizingMaskIntoConstraints = false
-        errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        errorView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        errorView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+        errorView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalToSuperview()
+        }
     }
 }
 
