@@ -58,6 +58,12 @@ struct ExcursionsListConstants {
         static let width: CGFloat = 40
     }
 
+    enum SearchButton {
+        static let icon: String = "magnifyingglass"
+        static let color: UIColor = .prog.Dynamic.primary
+        static let width: CGFloat = 40
+    }
+
     enum TableView {
         static let offset = 15
     }

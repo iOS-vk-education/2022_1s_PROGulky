@@ -24,20 +24,17 @@ final class GreetingMessageView: UIView {
         return button
     }()
 
-    init(frame: CGRect, name: String?) {
-        super.init(frame: .zero)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         addSubviews(label, button)
-
-        if name != nil {
-            label.text = ExcursionsListConstants.GreetingMessage.labelTextIsLoggedUser
-            button.setTitle("\(name!)!", for: .normal)
-        } else {
-            label.text = ExcursionsListConstants.GreetingMessage.labelTextIsNotLoggedUser
-            button.setTitle(ExcursionsListConstants.GreetingMessage.buttonTextIsNotLoggedUser, for: .normal)
-        }
 
         configureLabelConstraints()
         configureButtonConstraints()
+    }
+
+    func set(viewModel: GreetingViewModel) {
+        label.text = viewModel.labelText
+        button.setTitle(viewModel.buttonText, for: .normal)
     }
 
     private func configureLabelConstraints() {

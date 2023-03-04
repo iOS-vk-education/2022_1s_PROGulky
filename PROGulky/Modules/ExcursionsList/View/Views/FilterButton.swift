@@ -7,7 +7,17 @@
 
 import UIKit
 
+// MARK: - FilterButtonDelegate
+
+protocol FilterButtonDelegate: AnyObject {
+    func didFiterButtonTapped()
+}
+
+// MARK: - FilterButton
+
 final class FilterButton: UIButton {
+    var delegate: FilterButtonDelegate?
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupFilterButton()
@@ -21,6 +31,14 @@ final class FilterButton: UIButton {
     private func setupFilterButton() {
         setImage(UIImage(systemName: ExcursionsListConstants.FilterButton.icon), for: .normal)
         tintColor = ExcursionsListConstants.FilterButton.color
-        widthAnchor.constraint(equalToConstant: ExcursionsListConstants.FilterButton.width).isActive = true
+        addTarget(self, action: #selector(didButtonTapped), for: .touchUpInside)
+
+        snp.makeConstraints { make in
+            make.width.equalTo(ExcursionsListConstants.FilterButton.width)
+        }
+    }
+
+    @objc private func didButtonTapped() {
+        delegate?.didFiterButtonTapped()
     }
 }

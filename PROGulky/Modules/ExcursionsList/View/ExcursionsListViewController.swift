@@ -13,9 +13,10 @@ import SnapKit
 final class ExcursionsListViewController: UIViewController {
     var output: ExcursionsListViewOutput!
 
-    private let greetingMessageView = GreetingMessageView(frame: .zero, name: "Semyon")
+    private var greetingMessageView = GreetingMessageView()
     private let searchTextField = SearchTextField(placeholder: "Поиск экскурсий")
     private let filterButton = FilterButton()
+    private let searchButton = SearchButton()
     private var excursionsTable = UITableView(frame: .zero, style: .plain)
     private let loader = UIActivityIndicatorView(frame: .zero)
     private let errorView = ErrorView(frame: .zero)
@@ -30,6 +31,10 @@ final class ExcursionsListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         output.didLoadView()
+    }
+
+    private func setupGreetingMessaageText(with viewModel: GreetingViewModel) {
+        greetingMessageView.set(viewModel: viewModel)
     }
 
     private func setupUI() {
@@ -56,6 +61,11 @@ final class ExcursionsListViewController: UIViewController {
 
         searchTextField.rightView = filterButton
         searchTextField.rightViewMode = .always
+
+        searchTextField.delegate = self
+
+        filterButton.delegate = self
+        searchButton.delegate = self
 
         setupSearchTextFieldConstraints()
     }
@@ -154,6 +164,10 @@ final class ExcursionsListViewController: UIViewController {
 // MARK: ExcursionsListViewInput
 
 extension ExcursionsListViewController: ExcursionsListViewInput {
+    func configureGreetingMessage(with viewModel: GreetingViewModel) {
+        setupGreetingMessaageText(with: viewModel)
+    }
+
     func hideErrorView() {
         errorView.isHidden = true
         loader.stopAnimating()
@@ -185,6 +199,14 @@ extension ExcursionsListViewController: ExcursionsListViewInput {
             notLoginAlert.dismiss(animated: true, completion: nil)
         }))
         present(notLoginAlert, animated: true, completion: nil)
+    }
+
+    func setSearchButtonToTextField() {
+        searchTextField.rightView = searchButton
+    }
+
+    func setFilterButtonToTextField() {
+        searchTextField.rightView = filterButton
     }
 }
 
@@ -223,5 +245,30 @@ extension ExcursionsListViewController: UITableViewDelegate {
 extension ExcursionsListViewController: ErrorViewDelegate {
     func didRepeatButtonTapped() {
         output.didRepeatButtonTapped()
+    }
+}
+
+// MARK: FilterButtonDelegate
+
+extension ExcursionsListViewController: FilterButtonDelegate {
+    func didFiterButtonTapped() {
+        output.didFilterButtonTapped()
+    }
+}
+
+// MARK: SearchButtonDelegate
+
+extension ExcursionsListViewController: SearchButtonDelegate {
+    func didSearchButtonTapped() {
+        output.didSearchButtonTapped()
+    }
+}
+
+// MARK: UITextFieldDelegate
+
+extension ExcursionsListViewController: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        output.textFieldShouldBeginEditing()
+        return true
     }
 }

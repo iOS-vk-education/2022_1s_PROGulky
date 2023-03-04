@@ -54,12 +54,28 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
         interactor.loadExcursionsList()
     }
 
+    func didSearchButtonTapped() {
+        view.hideKeyboard()
+        view.setFilterButtonToTextField()
+        print("search is tapped")
+    }
+
+    func didFilterButtonTapped() {
+        print("filter is tapped")
+    }
+
+    func textFieldShouldBeginEditing() {
+        view.setSearchButtonToTextField()
+        print("text field editind")
+    }
+
     func didSelectCell(at indexPath: IndexPath) {
         moduleOutput?.excursionsListModuleWantsToOpenMapDetailModule(excursion: excursions[indexPath.row])
     }
 
     func didLoadView() {
         interactor.loadExcursionsList()
+        interactor.loadUserInstance()
         view.startLoader() // Запуск анимации лоадера
     }
 
@@ -98,5 +114,10 @@ extension ExcursionsListPresenter: ExcursionsListInteractorOutput {
         view.hideErrorView() // Скрыть сообщение об ошибках
         view.reloadView() // Перезагрузить тейбл вью
         view.stopLoader() // Выключить анимацию лоадера
+    }
+
+    func didLoadUserInstance(user: UserData?) {
+        let viewModel = factory.getGreetingViewModel(for: user)
+        view.configureGreetingMessage(with: viewModel)
     }
 }
