@@ -31,4 +31,18 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
             parameters: "\(excursion.numberOfPoints.wordEnding(for: "мест")) | \(excursion.distance) км | \(excursion.duration) мин"
         )
     }
+
+    func getGreetingViewModel(for user: UserData?) -> GreetingViewModel {
+        guard let user = user else {
+            return GreetingViewModel(
+                labelText: ExcursionsListConstants.GreetingMessage.labelTextIsNotLoggedUser,
+                buttonText: ExcursionsListConstants.GreetingMessage.buttonTextIsNotLoggedUser
+            )
+        }
+
+        return GreetingViewModel(
+            labelText: ExcursionsListConstants.GreetingMessage.labelTextIsLoggedUser,
+            buttonText: "\(user.name)!"
+        )
+    }
 }

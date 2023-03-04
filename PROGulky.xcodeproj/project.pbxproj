@@ -40,6 +40,9 @@
 		4FF78E5B66DB288D78967914 /* ExcursionsListInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D28233730CF25DD0C0AD76 /* ExcursionsListInteractorIO.swift */; };
 		527308AC21EE31AD2021C736 /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3913E1F7ACBA08F04736A7B /* ProfilePresenter.swift */; };
 		5402F408D6CF6940CF013078 /* DetailExcursionInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C546C37FB5B431E527B15F9F /* DetailExcursionInteractorIO.swift */; };
+		54118FF129B3884B0048A40B /* GreetingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54118FF029B3884B0048A40B /* GreetingViewModel.swift */; };
+		54118FF329B399110048A40B /* SearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54118FF229B399110048A40B /* SearchButton.swift */; };
+		5417A2AE29B1F23600C63D8E /* GreetingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5417A2AD29B1F23600C63D8E /* GreetingMessageView.swift */; };
 		542594E92936AA8600FD9747 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542594E82936AA8600FD9747 /* ApiManager.swift */; };
 		542594EB2936AF9F00FD9747 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542594EA2936AF9F00FD9747 /* Owner.swift */; };
 		5438B65329573A97007F2127 /* UserAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438B65229573A97007F2127 /* UserAuthService.swift */; };
@@ -62,13 +65,14 @@
 		545FE1AA291DA58F00890693 /* ExcursionsListConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */; };
 		545FE1AC291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */; };
 		5478D22329439C0D00A3C23D /* AddExcursionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5478D22229439C0D00A3C23D /* AddExcursionConstants.swift */; };
+		54837E0529B0EE4700450FC2 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54837E0429B0EE4700450FC2 /* SearchTextField.swift */; };
+		54837E0729B0FD0800450FC2 /* FilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54837E0629B0FD0800450FC2 /* FilterButton.swift */; };
 		548ABFDA29205592001CFDA9 /* Excursion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548ABFD929205592001CFDA9 /* Excursion.swift */; };
 		54A50C46291714E10042769E /* ExcursionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A50C45291714E10042769E /* ExcursionCell.swift */; };
 		54A50C482917199E0042769E /* ExcursionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A50C472917199E0042769E /* ExcursionViewModel.swift */; };
 		54B1A403293DC91F00A232B9 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B1A402293DC91F00A232B9 /* ErrorView.swift */; };
 		54C089D3291A87FD000497FE /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C089D2291A87FD000497FE /* UIView+Extensions.swift */; };
 		54C089D5291A8AC7000497FE /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C089D4291A8AC7000497FE /* UILabel+Extensions.swift */; };
-		54C089D7291ACB76000497FE /* ExcursionsFilterBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54C089D6291ACB76000497FE /* ExcursionsFilterBarView.swift */; };
 		54D91DBE2930C1ED0097AF52 /* FavouritesExcursionsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D91DBD2930C1ED0097AF52 /* FavouritesExcursionsConstants.swift */; };
 		54D91DC12930C5150097AF52 /* FavouritesExcursionMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D91DC02930C5150097AF52 /* FavouritesExcursionMessageView.swift */; };
 		58650139389367223C2EFB8B /* DetailPlaceInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9D40BD2E032FE9D70ED86A /* DetailPlaceInteractorIO.swift */; };
@@ -222,6 +226,9 @@
 		50BA4A7906722E491708A6B7 /* LoginInteractor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
 		52697DF6ECE8C9DFEB65C474 /* AddExcursionBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddExcursionBuilder.swift; sourceTree = "<group>"; };
 		539079D5625F18BF3BB5D1B0 /* AddExcursionRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddExcursionRouter.swift; sourceTree = "<group>"; };
+		54118FF029B3884B0048A40B /* GreetingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewModel.swift; sourceTree = "<group>"; };
+		54118FF229B399110048A40B /* SearchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchButton.swift; sourceTree = "<group>"; };
+		5417A2AD29B1F23600C63D8E /* GreetingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingMessageView.swift; sourceTree = "<group>"; };
 		542594E82936AA8600FD9747 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		542594EA2936AF9F00FD9747 /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		5438B65229573A97007F2127 /* UserAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthService.swift; sourceTree = "<group>"; };
@@ -244,6 +251,8 @@
 		545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsListConstants.swift; sourceTree = "<group>"; };
 		545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsListDisplayDataFactory.swift; sourceTree = "<group>"; };
 		5478D22229439C0D00A3C23D /* AddExcursionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExcursionConstants.swift; sourceTree = "<group>"; };
+		54837E0429B0EE4700450FC2 /* SearchTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTextField.swift; sourceTree = "<group>"; };
+		54837E0629B0FD0800450FC2 /* FilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterButton.swift; sourceTree = "<group>"; };
 		548ABFD929205592001CFDA9 /* Excursion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Excursion.swift; sourceTree = "<group>"; };
 		548D4153B0E81CB47D3509CC /* MapDetailBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MapDetailBuilder.swift; sourceTree = "<group>"; };
 		54A50C45291714E10042769E /* ExcursionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionCell.swift; sourceTree = "<group>"; };
@@ -251,7 +260,6 @@
 		54B1A402293DC91F00A232B9 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		54C089D2291A87FD000497FE /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		54C089D4291A8AC7000497FE /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
-		54C089D6291ACB76000497FE /* ExcursionsFilterBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsFilterBarView.swift; sourceTree = "<group>"; };
 		54D91DBD2930C1ED0097AF52 /* FavouritesExcursionsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExcursionsConstants.swift; sourceTree = "<group>"; };
 		54D91DC02930C5150097AF52 /* FavouritesExcursionMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExcursionMessageView.swift; sourceTree = "<group>"; };
 		55949AAC5795E04EFB3A815D /* LoginBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginBuilder.swift; sourceTree = "<group>"; };
@@ -574,14 +582,23 @@
 		502A06642192EE2D13A1E47C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				54118FEF29B387F60048A40B /* ViewModels */,
 				54B1A401293DC7D700A232B9 /* Views */,
 				54A50C45291714E10042769E /* ExcursionCell.swift */,
-				54A50C472917199E0042769E /* ExcursionViewModel.swift */,
 				545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */,
 				D678140C434AD6CB7AD2B0DA /* ExcursionsListViewController.swift */,
 				8B40B87087FB4903DCB6BD7C /* ExcursionsListViewIO.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		54118FEF29B387F60048A40B /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				54A50C472917199E0042769E /* ExcursionViewModel.swift */,
+				54118FF029B3884B0048A40B /* GreetingViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		5419566111C6EDD122E88D45 /* View */ = {
@@ -642,7 +659,6 @@
 			isa = PBXGroup;
 			children = (
 				54B1A402293DC91F00A232B9 /* ErrorView.swift */,
-				545A208E29511E2D0085E4AF /* NotAuthView.swift */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -662,7 +678,10 @@
 		54B1A401293DC7D700A232B9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				54C089D6291ACB76000497FE /* ExcursionsFilterBarView.swift */,
+				54837E0429B0EE4700450FC2 /* SearchTextField.swift */,
+				54837E0629B0FD0800450FC2 /* FilterButton.swift */,
+				5417A2AD29B1F23600C63D8E /* GreetingMessageView.swift */,
+				54118FF229B399110048A40B /* SearchButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1538,15 +1557,18 @@
 				91A3262CA89266F64C125380 /* ProfileRouterInput.swift in Sources */,
 				543F2CAD292E724C00120116 /* DetailExcursionInfoViewModel.swift in Sources */,
 				6607194D294A0A5200375384 /* UITextView+DoneButton.swift in Sources */,
+				54837E0529B0EE4700450FC2 /* SearchTextField.swift in Sources */,
 				A553F1DA291A6F27001E679C /* TextConstants.swift in Sources */,
 				666A036A2935DE0F006E3A98 /* MapViewController.swift in Sources */,
 				545FE1AC291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift in Sources */,
 				542594EB2936AF9F00FD9747 /* Owner.swift in Sources */,
 				A6ACA2679B16F08F548F337C /* ProfileRouter.swift in Sources */,
+				54837E0729B0FD0800450FC2 /* FilterButton.swift in Sources */,
 				CBD0B55BA488383EBB017ECB /* ProfileBuilder.swift in Sources */,
 				10F870708172AC94BED055CD /* FavouritesExcursionsViewIO.swift in Sources */,
 				D881BF6CBAF8E07985F93B19 /* FavouritesExcursionsViewController.swift in Sources */,
 				54B1A403293DC91F00A232B9 /* ErrorView.swift in Sources */,
+				54118FF129B3884B0048A40B /* GreetingViewModel.swift in Sources */,
 				6884644A93D5EB0CEBEEE732 /* FavouritesExcursionsModuleIO.swift in Sources */,
 				543F2CAB292E724C00120116 /* PlaceViewModel.swift in Sources */,
 				E9F972D6925AAE35541A6A7A /* FavouritesExcursionsPresenter.swift in Sources */,
@@ -1583,6 +1605,7 @@
 				A553F1D229199288001E679C /* UIColorExtension.swift in Sources */,
 				E1F490979D6E53196362D9CE /* AddExcursionPresenter.swift in Sources */,
 				B8F0BCCE71C38DB82043139E /* AddExcursionInteractorIO.swift in Sources */,
+				54118FF329B399110048A40B /* SearchButton.swift in Sources */,
 				66366C2D2959BCEB00E21D07 /* AddExcursionDescriptionCell.swift in Sources */,
 				8260001A1AB8D66D8579165D /* AddExcursionInteractor.swift in Sources */,
 				66366C322959D83100E21D07 /* AddPlaceView.swift in Sources */,
@@ -1598,10 +1621,10 @@
 				6675D20F291270570058A4B0 /* ExcursionListCoordinator.swift in Sources */,
 				A5462DCF2954C9B2009DD1ED /* UserInfoHeaderDisplayDataFactory.swift in Sources */,
 				543F2CBE292E72CA00120116 /* DetailExcursionSettingsSection.swift in Sources */,
-				54C089D7291ACB76000497FE /* ExcursionsFilterBarView.swift in Sources */,
 				545A208929510A630085E4AF /* ExcursionsRepository.swift in Sources */,
 				54A50C482917199E0042769E /* ExcursionViewModel.swift in Sources */,
 				543F2CB8292E728B00120116 /* PlaceCell.swift in Sources */,
+				5417A2AE29B1F23600C63D8E /* GreetingMessageView.swift in Sources */,
 				66496F6F295876E1000308D6 /* CreateExcursionSettingsSections.swift in Sources */,
 				6629F878295A150400FC985A /* UIApplication+endEditing.swift in Sources */,
 				A5074CE5292DC9AF005692EB /* CustomButton.swift in Sources */,

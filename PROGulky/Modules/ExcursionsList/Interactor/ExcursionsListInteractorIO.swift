@@ -12,6 +12,8 @@ import Foundation
 protocol ExcursionsListInteractorOutput: AnyObject {
     func didLoadExcursionsList(excursions: Excursions)
 
+    func didLoadUserInstance(user: UserData?)
+
     func getNetworkError()
 }
 
@@ -19,4 +21,6 @@ protocol ExcursionsListInteractorOutput: AnyObject {
 
 protocol ExcursionsListInteractorInput: AnyObject {
     func loadExcursionsList()
+
+    func loadUserInstance() // Загрузка экземляра пользователя из хранилища
 }

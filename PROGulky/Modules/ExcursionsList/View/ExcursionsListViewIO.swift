@@ -21,6 +21,12 @@ protocol ExcursionsListViewOutput: AnyObject {
     func didRepeatButtonTapped()
 
     func didAddExcursionButtonTapped()
+
+    func didSearchButtonTapped()
+
+    func didFilterButtonTapped()
+
+    func textFieldShouldBeginEditing()
 }
 
 // MARK: - ExcursionsListViewInput
@@ -36,4 +42,12 @@ protocol ExcursionsListViewInput: AnyObject {
 
     func showAuthView()
     func hideErrorView()
+
+    func configureGreetingMessage(with user: GreetingViewModel) // Конфигурация вьюхи приветствия
+
+    func setSearchButtonToTextField() // В поле поиска показать иконку поиска
+
+    func setFilterButtonToTextField() // В поле поиска показать иконку фильтра
+
+    func hideKeyboard() // Скрытие клавиатуры после нажатия на кнопку поиска
 }
