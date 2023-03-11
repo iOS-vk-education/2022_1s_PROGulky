@@ -43,6 +43,8 @@
 		54118FF129B3884B0048A40B /* GreetingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54118FF029B3884B0048A40B /* GreetingViewModel.swift */; };
 		54118FF329B399110048A40B /* SearchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54118FF229B399110048A40B /* SearchButton.swift */; };
 		5417A2AE29B1F23600C63D8E /* GreetingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5417A2AD29B1F23600C63D8E /* GreetingMessageView.swift */; };
+		542011B829BBCD81009F8A1C /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542011B729BBCD81009F8A1C /* CustomViewController.swift */; };
+		542011BB29BBD422009F8A1C /* ErrorHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542011BA29BBD422009F8A1C /* ErrorHUDView.swift */; };
 		542594E92936AA8600FD9747 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542594E82936AA8600FD9747 /* ApiManager.swift */; };
 		542594EB2936AF9F00FD9747 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542594EA2936AF9F00FD9747 /* Owner.swift */; };
 		5438B65329573A97007F2127 /* UserAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438B65229573A97007F2127 /* UserAuthService.swift */; };
@@ -229,6 +231,8 @@
 		54118FF029B3884B0048A40B /* GreetingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewModel.swift; sourceTree = "<group>"; };
 		54118FF229B399110048A40B /* SearchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchButton.swift; sourceTree = "<group>"; };
 		5417A2AD29B1F23600C63D8E /* GreetingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingMessageView.swift; sourceTree = "<group>"; };
+		542011B729BBCD81009F8A1C /* CustomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
+		542011BA29BBD422009F8A1C /* ErrorHUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHUDView.swift; sourceTree = "<group>"; };
 		542594E82936AA8600FD9747 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		542594EA2936AF9F00FD9747 /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		5438B65229573A97007F2127 /* UserAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthService.swift; sourceTree = "<group>"; };
@@ -610,6 +614,23 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		542011B629BBCD5A009F8A1C /* CustomComponents */ = {
+			isa = PBXGroup;
+			children = (
+				542011B929BBD410009F8A1C /* Views */,
+				542011B729BBCD81009F8A1C /* CustomViewController.swift */,
+			);
+			path = CustomComponents;
+			sourceTree = "<group>";
+		};
+		542011B929BBD410009F8A1C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				542011BA29BBD422009F8A1C /* ErrorHUDView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		543F2CA4292E722C00120116 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -760,6 +781,7 @@
 		661A0D872902996D00312A0B /* PROGulky */ = {
 			isa = PBXGroup;
 			children = (
+				542011B629BBCD5A009F8A1C /* CustomComponents */,
 				A553F1DB291A7354001E679C /* Constants */,
 				6675D20929126F350058A4B0 /* Coordinators */,
 				54C089D1291A87C2000497FE /* Extensions */,
@@ -1523,6 +1545,7 @@
 				661A0D892902996D00312A0B /* AppDelegate.swift in Sources */,
 				CA16E5FF3470878ABCAD8F11 /* ExcursionsListViewIO.swift in Sources */,
 				66510468295A39D300562760 /* AddExcursionTableViewHeader.swift in Sources */,
+				542011BB29BBD422009F8A1C /* ErrorHUDView.swift in Sources */,
 				A55CD31B293E835A00C4F1A6 /* UserDefaultsKeys.swift in Sources */,
 				A6870B67FEAA859C2BBA0908 /* ExcursionsListViewController.swift in Sources */,
 				41F7A17B895BE5DF38BCC83C /* ExcursionsListModuleIO.swift in Sources */,
@@ -1564,6 +1587,7 @@
 				542594EB2936AF9F00FD9747 /* Owner.swift in Sources */,
 				A6ACA2679B16F08F548F337C /* ProfileRouter.swift in Sources */,
 				54837E0729B0FD0800450FC2 /* FilterButton.swift in Sources */,
+				542011B829BBCD81009F8A1C /* CustomViewController.swift in Sources */,
 				CBD0B55BA488383EBB017ECB /* ProfileBuilder.swift in Sources */,
 				10F870708172AC94BED055CD /* FavouritesExcursionsViewIO.swift in Sources */,
 				D881BF6CBAF8E07985F93B19 /* FavouritesExcursionsViewController.swift in Sources */,

@@ -105,7 +105,11 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
 extension ExcursionsListPresenter: ExcursionsListInteractorOutput {
     func getNetworkError() {
         excursions = []
-        view.showErrorView()
+
+        // TODO: брать ошибки с API
+        let error = NSError(domain: "Ошибка сети", code: 400)
+
+        view.showErrorView(with: error)
         view.reloadView() // Перезагрузить тейбл вью
     }
 
