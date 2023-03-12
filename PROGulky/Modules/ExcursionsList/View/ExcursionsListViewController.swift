@@ -10,7 +10,7 @@ import SnapKit
 
 // MARK: - ExcursionsListViewController
 
-final class ExcursionsListViewController: UIViewController {
+final class ExcursionsListViewController: CustomViewController {
     var output: ExcursionsListViewOutput!
 
     private var greetingMessageView = GreetingMessageView()
@@ -18,12 +18,10 @@ final class ExcursionsListViewController: UIViewController {
     private let filterButton = FilterButton()
     private let searchButton = SearchButton()
     private var excursionsTable = UITableView(frame: .zero, style: .plain)
-    private let loader = UIActivityIndicatorView(frame: .zero)
-    private let errorView = ErrorView(frame: .zero)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        showActivity()
         setupUI()
         output.didLoadView()
     }
@@ -42,8 +40,6 @@ final class ExcursionsListViewController: UIViewController {
         setupGreetingMessageView()
         setupSearchTextField()
         setupTableView()
-        setupLoader()
-        setupErrorView()
     }
 
     func reload() {
@@ -130,35 +126,6 @@ final class ExcursionsListViewController: UIViewController {
             make.bottom.equalToSuperview()
         }
     }
-
-    private func setupLoader() {
-        view.addSubview(loader)
-        setLoaderConstraints()
-    }
-
-    private func setLoaderConstraints() {
-        loader.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.centerX.equalToSuperview()
-        }
-    }
-
-    private func setupErrorView() {
-        view.addSubview(errorView)
-        errorView.delegate = self
-
-        errorView.isHidden = true
-        setErrorViewConstrints()
-    }
-
-    private func setErrorViewConstrints() {
-        errorView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.centerX.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.equalToSuperview()
-        }
-    }
 }
 
 // MARK: ExcursionsListViewInput
@@ -169,15 +136,12 @@ extension ExcursionsListViewController: ExcursionsListViewInput {
     }
 
     func hideErrorView() {
-        errorView.isHidden = true
-        loader.stopAnimating()
+        hideActivity()
     }
 
-    func showErrorView() {
-        DispatchQueue.main.async {
-            self.errorView.isHidden = false
-            self.loader.stopAnimating()
-        }
+    func showErrorView(with error: Error) {
+        showHUD(with: error)
+        hideActivity()
     }
 
     func reloadView() {
@@ -185,12 +149,11 @@ extension ExcursionsListViewController: ExcursionsListViewInput {
     }
 
     func startLoader() {
-        loader.hidesWhenStopped = true
-        loader.startAnimating()
+        showActivity()
     }
 
     func stopLoader() {
-        loader.stopAnimating()
+        hideActivity()
     }
 
     func showAuthView() {
@@ -237,14 +200,6 @@ extension ExcursionsListViewController: UITableViewDataSource {
 extension ExcursionsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         output.didSelectCell(at: indexPath)
-    }
-}
-
-// MARK: ErrorViewDelegate
-
-extension ExcursionsListViewController: ErrorViewDelegate {
-    func didRepeatButtonTapped() {
-        output.didRepeatButtonTapped()
     }
 }
 
