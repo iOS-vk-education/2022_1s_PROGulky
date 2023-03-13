@@ -14,9 +14,7 @@ final class ExcursionsListViewController: UIViewController {
     var output: ExcursionsListViewOutput!
 
     private var greetingMessageView = GreetingMessageView()
-    private let searchTextField = SearchTextField(placeholder: "Поиск экскурсий")
-    private let filterButton = FilterButton()
-    private let searchButton = SearchButton()
+    private let searchController = UISearchController()
     private var excursionsTable = UITableView(frame: .zero, style: .plain)
     private let loader = UIActivityIndicatorView(frame: .zero)
     private let errorView = ErrorView(frame: .zero)
@@ -38,9 +36,8 @@ final class ExcursionsListViewController: UIViewController {
     }
 
     private func setupUI() {
+        setupSearchController()
         setupNavBar()
-        setupGreetingMessageView()
-        setupSearchTextField()
         setupTableView()
         setupLoader()
         setupErrorView()
@@ -50,24 +47,12 @@ final class ExcursionsListViewController: UIViewController {
         excursionsTable.reloadData()
     }
 
-    private func setupGreetingMessageView() {
-        view.addSubview(greetingMessageView)
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Найти экскурсию"
 
-        setupGreetingMessageViewConstraints()
-    }
-
-    private func setupSearchTextField() {
-        view.addSubview(searchTextField)
-
-        searchTextField.rightView = filterButton
-        searchTextField.rightViewMode = .always
-
-        searchTextField.delegate = self
-
-        filterButton.delegate = self
-        searchButton.delegate = self
-
-        setupSearchTextFieldConstraints()
+        definesPresentationContext = true
     }
 
     // Настройка нав бара
@@ -77,26 +62,17 @@ final class ExcursionsListViewController: UIViewController {
 
         let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButton))
         navigationItem.rightBarButtonItem = rightBarButtonItem
+
+        let leftBarButtonItem = UIBarButtonItem(customView: greetingMessageView)
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.searchController = searchController
     }
 
     @objc
     private func didTapAddButton() {
         output.didAddExcursionButtonTapped()
-    }
-
-    private func setupGreetingMessageViewConstraints() {
-        greetingMessageView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(ExcursionsListConstants.GreetingMessage.height)
-            make.left.right.equalToSuperview().inset(ExcursionsListConstants.Screen.padding)
-        }
-    }
-
-    private func setupSearchTextFieldConstraints() {
-        searchTextField.snp.makeConstraints { make in
-            make.top.equalTo(greetingMessageView.snp.bottom).offset(ExcursionsListConstants.SearchTextField.offset)
-            make.left.right.equalToSuperview().inset(ExcursionsListConstants.Screen.padding)
-        }
     }
 
     // Настройка таблицы с экскурсиями
@@ -126,7 +102,7 @@ final class ExcursionsListViewController: UIViewController {
         excursionsTable.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.top.equalTo(searchTextField.snp.bottom).offset(ExcursionsListConstants.TableView.offset)
+            make.top.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalToSuperview()
         }
     }
@@ -200,14 +176,6 @@ extension ExcursionsListViewController: ExcursionsListViewInput {
         }))
         present(notLoginAlert, animated: true, completion: nil)
     }
-
-    func setSearchButtonToTextField() {
-        searchTextField.rightView = searchButton
-    }
-
-    func setFilterButtonToTextField() {
-        searchTextField.rightView = filterButton
-    }
 }
 
 // MARK: UITableViewDataSource
@@ -248,27 +216,10 @@ extension ExcursionsListViewController: ErrorViewDelegate {
     }
 }
 
-// MARK: FilterButtonDelegate
+// MARK: UISearchResultsUpdating
 
-extension ExcursionsListViewController: FilterButtonDelegate {
-    func didFiterButtonTapped() {
-        output.didFilterButtonTapped()
-    }
-}
-
-// MARK: SearchButtonDelegate
-
-extension ExcursionsListViewController: SearchButtonDelegate {
-    func didSearchButtonTapped() {
-        output.didSearchButtonTapped()
-    }
-}
-
-// MARK: UITextFieldDelegate
-
-extension ExcursionsListViewController: UITextFieldDelegate {
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        output.textFieldShouldBeginEditing()
-        return true
+extension ExcursionsListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        print(1234)
     }
 }
