@@ -42,6 +42,8 @@
 		5402F408D6CF6940CF013078 /* DetailExcursionInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C546C37FB5B431E527B15F9F /* DetailExcursionInteractorIO.swift */; };
 		54118FF129B3884B0048A40B /* GreetingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54118FF029B3884B0048A40B /* GreetingViewModel.swift */; };
 		5417A2AE29B1F23600C63D8E /* GreetingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5417A2AD29B1F23600C63D8E /* GreetingMessageView.swift */; };
+		5418EA5B29C0B6B600BF70C1 /* ErrorHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418EA5929C0B6B600BF70C1 /* ErrorHUDView.swift */; };
+		5418EA5C29C0B6B600BF70C1 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418EA5A29C0B6B600BF70C1 /* CustomViewController.swift */; };
 		542594E92936AA8600FD9747 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542594E82936AA8600FD9747 /* ApiManager.swift */; };
 		542594EB2936AF9F00FD9747 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542594EA2936AF9F00FD9747 /* Owner.swift */; };
 		5438B65329573A97007F2127 /* UserAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438B65229573A97007F2127 /* UserAuthService.swift */; };
@@ -225,6 +227,8 @@
 		539079D5625F18BF3BB5D1B0 /* AddExcursionRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddExcursionRouter.swift; sourceTree = "<group>"; };
 		54118FF029B3884B0048A40B /* GreetingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewModel.swift; sourceTree = "<group>"; };
 		5417A2AD29B1F23600C63D8E /* GreetingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingMessageView.swift; sourceTree = "<group>"; };
+		5418EA5929C0B6B600BF70C1 /* ErrorHUDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHUDView.swift; sourceTree = "<group>"; };
+		5418EA5A29C0B6B600BF70C1 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		542594E82936AA8600FD9747 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		542594EA2936AF9F00FD9747 /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		5438B65229573A97007F2127 /* UserAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthService.swift; sourceTree = "<group>"; };
@@ -595,6 +599,23 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		5418EA5729C0B6B600BF70C1 /* CustomComponents */ = {
+			isa = PBXGroup;
+			children = (
+				5418EA5829C0B6B600BF70C1 /* Views */,
+				5418EA5A29C0B6B600BF70C1 /* CustomViewController.swift */,
+			);
+			path = CustomComponents;
+			sourceTree = "<group>";
+		};
+		5418EA5829C0B6B600BF70C1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5418EA5929C0B6B600BF70C1 /* ErrorHUDView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		5419566111C6EDD122E88D45 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -751,6 +772,7 @@
 		661A0D872902996D00312A0B /* PROGulky */ = {
 			isa = PBXGroup;
 			children = (
+				5418EA5729C0B6B600BF70C1 /* CustomComponents */,
 				A553F1DB291A7354001E679C /* Constants */,
 				6675D20929126F350058A4B0 /* Coordinators */,
 				54C089D1291A87C2000497FE /* Extensions */,
@@ -1578,6 +1600,7 @@
 				545FE1AA291DA58F00890693 /* ExcursionsListConstants.swift in Sources */,
 				66A96A672930D09C007935C9 /* ProgColors+Colors.swift in Sources */,
 				66496F6C295876DB000308D6 /* SelectedPlaceCell.swift in Sources */,
+				5418EA5C29C0B6B600BF70C1 /* CustomViewController.swift in Sources */,
 				5402F408D6CF6940CF013078 /* DetailExcursionInteractorIO.swift in Sources */,
 				4D431C4CFA090AAF737BFDA6 /* DetailExcursionInteractor.swift in Sources */,
 				4F067BBCAC8AC547A90F181F /* DetailExcursionRouterInput.swift in Sources */,
@@ -1654,6 +1677,7 @@
 				543F2CB1292E726D00120116 /* Int+Extensions.swift in Sources */,
 				43E940EF32E87EED733BEB02 /* RegistrationBuilder.swift in Sources */,
 				19211BC64ECA200A2201879D /* MapDetailViewIO.swift in Sources */,
+				5418EA5B29C0B6B600BF70C1 /* ErrorHUDView.swift in Sources */,
 				66665F2D295A2B9F005126F2 /* SelectedPlacesManager.swift in Sources */,
 				5438B65729578EB2007F2127 /* NotLoginMessageView.swift in Sources */,
 				666A03742935E23B006E3A98 /* MapDetailTransitionHandlerProtocol.swift in Sources */,

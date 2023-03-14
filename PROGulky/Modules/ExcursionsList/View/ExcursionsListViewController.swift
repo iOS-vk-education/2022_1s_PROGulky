@@ -19,7 +19,6 @@ final class ExcursionsListViewController: CustomViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        showActivity()
         setupUI()
         output.didLoadView()
     }
@@ -181,5 +180,8 @@ extension ExcursionsListViewController: ErrorViewDelegate {
 
 // MARK: UISearchResultsUpdating
 
+extension ExcursionsListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        print(1234)
     }
 }
