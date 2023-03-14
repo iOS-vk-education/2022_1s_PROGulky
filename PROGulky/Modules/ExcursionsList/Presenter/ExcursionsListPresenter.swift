@@ -54,21 +54,6 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
         interactor.loadExcursionsList()
     }
 
-    func didSearchButtonTapped() {
-        view.hideKeyboard()
-        view.setFilterButtonToTextField()
-        print("search is tapped")
-    }
-
-    func didFilterButtonTapped() {
-        print("filter is tapped")
-    }
-
-    func textFieldShouldBeginEditing() {
-        view.setSearchButtonToTextField()
-        print("text field editind")
-    }
-
     func didSelectCell(at indexPath: IndexPath) {
         moduleOutput?.excursionsListModuleWantsToOpenMapDetailModule(excursion: excursions[indexPath.row])
     }
