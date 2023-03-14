@@ -92,7 +92,7 @@ enum ApiType {
 final class ApiManager {
     static let shared = ApiManager()
 
-    func getExcursions(completion: @escaping (Result<Excursions, Error>) -> Void, token: String?) {
+    func getExcursions(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, token: String?) {
         let request = ApiType.getExcursions(token: token).request
 
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
@@ -101,7 +101,7 @@ final class ApiManager {
             }
             guard let data = data else { return }
             do {
-                let excursions = try JSONDecoder().decode(Excursions.self, from: data)
+                let excursions = try JSONDecoder().decode(PreviewExcursions.self, from: data)
                 DispatchQueue.main.async {
                     completion(.success(excursions))
                 }
@@ -165,7 +165,7 @@ final class ApiManager {
         task.resume()
     }
 
-    func getFavoritesExcursions(completion: @escaping (Result<Excursions, Error>) -> Void, token: String) {
+    func getFavoritesExcursions(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, token: String) {
         let request = ApiType.getFavoritesExcursions(token: token).request
 
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
@@ -174,7 +174,7 @@ final class ApiManager {
             }
             guard let data = data else { return }
             do {
-                let excursions = try JSONDecoder().decode(Excursions.self, from: data)
+                let excursions = try JSONDecoder().decode(PreviewExcursions.self, from: data)
                 DispatchQueue.main.async {
                     completion(.success(excursions))
                 }

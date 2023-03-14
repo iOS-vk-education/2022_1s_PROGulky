@@ -10,7 +10,7 @@ import Foundation
 final class ExcursionsRepository {
     static let shared = ExcursionsRepository()
 
-    func getExcursionsList(completion: @escaping (Result<Excursions, Error>) -> Void) {
+    func getExcursionsList(completion: @escaping (Result<PreviewExcursions, Error>) -> Void) {
         var token: String?
 
         if UserAuthService.shared.isLogged {
@@ -34,7 +34,7 @@ final class ExcursionsRepository {
         )
     }
 
-    func getFavoritesExcursionsList(completion: @escaping (Result<Excursions, Error>) -> Void, token: String) {
+    func getFavoritesExcursionsList(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, token: String) {
         ApiManager.shared.getFavoritesExcursions(
             completion: { excursions in
                 switch excursions {
