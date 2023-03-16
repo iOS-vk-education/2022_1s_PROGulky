@@ -46,6 +46,7 @@
 		5418EA5C29C0B6B600BF70C1 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418EA5A29C0B6B600BF70C1 /* CustomViewController.swift */; };
 		542594E92936AA8600FD9747 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542594E82936AA8600FD9747 /* ApiManager.swift */; };
 		542594EB2936AF9F00FD9747 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542594EA2936AF9F00FD9747 /* Owner.swift */; };
+		5430AE5729C3BD33004DCDC9 /* CustomActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5430AE5629C3BD33004DCDC9 /* CustomActivityIndicatorView.swift */; };
 		5438B65329573A97007F2127 /* UserAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438B65229573A97007F2127 /* UserAuthService.swift */; };
 		5438B65529575AAC007F2127 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438B65429575AAC007F2127 /* UserService.swift */; };
 		5438B65729578EB2007F2127 /* NotLoginMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438B65629578EB2007F2127 /* NotLoginMessageView.swift */; };
@@ -232,6 +233,7 @@
 		5418EA5A29C0B6B600BF70C1 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		542594E82936AA8600FD9747 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		542594EA2936AF9F00FD9747 /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
+		5430AE5629C3BD33004DCDC9 /* CustomActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActivityIndicatorView.swift; sourceTree = "<group>"; };
 		5438B65229573A97007F2127 /* UserAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthService.swift; sourceTree = "<group>"; };
 		5438B65429575AAC007F2127 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		5438B65629578EB2007F2127 /* NotLoginMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotLoginMessageView.swift; sourceTree = "<group>"; };
@@ -615,6 +617,7 @@
 			isa = PBXGroup;
 			children = (
 				5418EA5929C0B6B600BF70C1 /* ErrorHUDView.swift */,
+				5430AE5629C3BD33004DCDC9 /* CustomActivityIndicatorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1694,6 +1697,7 @@
 				39BE3AA5F999BC87E1D44BFF /* MapDetailRouterInput.swift in Sources */,
 				8B1E8A88250434D67C31B703 /* MapDetailRouter.swift in Sources */,
 				49F723088C836552D8E6DFB9 /* MapDetailBuilder.swift in Sources */,
+				5430AE5729C3BD33004DCDC9 /* CustomActivityIndicatorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

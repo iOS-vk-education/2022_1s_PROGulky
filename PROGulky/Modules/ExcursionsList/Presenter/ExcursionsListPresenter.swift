@@ -93,6 +93,10 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
 // MARK: ExcursionsListInteractorOutput
 
 extension ExcursionsListPresenter: ExcursionsListInteractorOutput {
+    func showActivity() {
+        view.startLoader()
+    }
+
     func getNetworkError() {
         excursions = []
 

@@ -42,6 +42,7 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
 
     func startSearchExcursions(by text: String) {
         search.makeDelayForLoad(for: text)
+        output?.showActivity() // Показываю активити когда происходит запрос
     }
 }
 

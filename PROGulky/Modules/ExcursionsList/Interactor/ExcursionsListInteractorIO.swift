@@ -15,6 +15,8 @@ protocol ExcursionsListInteractorOutput: AnyObject {
     func didLoadUserInstance(user: UserData?)
 
     func getNetworkError()
+
+    func showActivity()
 }
 
 // MARK: - ExcursionsListInteractorInput
