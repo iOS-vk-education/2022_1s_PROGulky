@@ -42,6 +42,10 @@ extension ExcursionsListPresenter: ExcursionsListModuleInput {
 // MARK: ExcursionsListViewOutput
 
 extension ExcursionsListPresenter: ExcursionsListViewOutput {
+    func didTextTyping(with text: String) {
+        interactor.startSearchExcursions(by: text)
+    }
+
     func didAddExcursionButtonTapped() {
         guard UserAuthService.shared.isLogged else {
             view.showAuthView()

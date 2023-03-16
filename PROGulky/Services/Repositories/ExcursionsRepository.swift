@@ -10,11 +10,17 @@ import Foundation
 final class ExcursionsRepository {
     static let shared = ExcursionsRepository()
 
-    func getExcursionsList(completion: @escaping (Result<PreviewExcursions, Error>) -> Void) {
-        var token: String?
+    func getExcursionsList(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, params: [[String: String]]?) {
+        var resParameters: [URLQueryItem] = []
 
-        if UserAuthService.shared.isLogged {
-            token = UserService.shared.userToken
+        if params != nil {
+            params?.forEach { e in
+                if let key = e.keys.first {
+                    if let value = e.values.first {
+                        resParameters.append(URLQueryItem(name: key, value: value))
+                    }
+                }
+            }
         }
 
         ApiManager.shared.getExcursions(
@@ -30,7 +36,7 @@ final class ExcursionsRepository {
                     }
                 }
             },
-            token: token
+            params: resParameters
         )
     }
 

@@ -4,11 +4,18 @@
 //
 //  Created by SemyonPyatkov on 31/10/2022.
 //
+import Foundation
 
 // MARK: - ExcursionsListInteractor
 
 final class ExcursionsListInteractor {
     weak var output: ExcursionsListInteractorOutput?
+
+    private let search: ExcursionsSearchViewModelInput
+
+    init(searchVM: ExcursionsSearchViewModelInput) {
+        search = searchVM
+    }
 }
 
 // MARK: ExcursionsListInteractorInput
@@ -20,13 +27,41 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
     }
 
     func loadExcursionsList() {
-        ExcursionsRepository.shared.getExcursionsList { [weak self] excursions in
-            switch excursions {
-            case let .success(excursions):
-                self?.output?.didLoadExcursionsList(excursions: excursions)
-            case .failure:
-                self?.output?.getNetworkError()
-            }
-        }
+        ExcursionsRepository.shared.getExcursionsList(
+            completion: { [weak self] excursions in
+                switch excursions {
+                case let .success(excursions):
+                    self?.output?.didLoadExcursionsList(excursions: excursions)
+                case .failure:
+                    self?.output?.getNetworkError()
+                }
+            },
+            params: nil
+        )
+    }
+
+    func startSearchExcursions(by text: String) {
+        search.makeDelayForLoad(for: text)
+    }
+}
+
+// MARK: ExcursionsSearchViewModelOutput
+
+extension ExcursionsListInteractor: ExcursionsSearchViewModelOutput {
+    func loadExcursionsByTitle(includeInTitle text: String) {
+        let searchQuery = [ExcursionsListConstants.Api.searchQueryParameterKey: text]
+        let params = [searchQuery]
+
+        ExcursionsRepository.shared.getExcursionsList(
+            completion: { [weak self] excursions in
+                switch excursions {
+                case let .success(excursions):
+                    self?.output?.didLoadExcursionsList(excursions: excursions)
+                case .failure:
+                    self?.output?.getNetworkError()
+                }
+            },
+            params: params
+        )
     }
 }

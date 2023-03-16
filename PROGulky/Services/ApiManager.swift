@@ -10,7 +10,7 @@ import Foundation
 // MARK: - ApiType
 
 enum ApiType {
-    case getExcursions(token: String?) // Получить список всех экскурсий
+    case getExcursions(params: [URLQueryItem]?) // Получить список всех экскурсий
     case addFavorites(token: String, excursionId: String) // Добавление экскурсии в избранное
     case removeFavorites(token: String, excursionId: String) // Удалить экскурсию из избранного
     case login // Логин
@@ -19,17 +19,12 @@ enum ApiType {
     case getPlaces
     case postExcursion(token: String, excursion: ExcursionForPost)
 
-    var baseURL: String {
-        "http://37.140.195.167:5000"
+    var baseURL: URL {
+        URL(string: "http://37.140.195.167:5000")!
     }
 
     var headers: [String: String] {
         switch self {
-        case let .getExcursions(token):
-            if let token = token {
-                return ["Authorization": "Bearer \(token)"]
-            }
-            return ["Authorization": "Bearer "]
         case let .addFavorites(token, _):
             return ["Authorization": "Bearer \(token)"]
         case let .removeFavorites(token, _):
@@ -45,7 +40,8 @@ enum ApiType {
 
     var path: String {
         switch self {
-        case .getExcursions, .postExcursion: return "api/v1/excursions"
+        case .getExcursions: return "api/v1/excursions"
+        case .postExcursion: return "api/v1/excursions"
         case .addFavorites: return "api/v1/excursions/add_favorite"
         case .removeFavorites: return "api/v1/excursions/delete_favorite"
         case .login: return "api/v1/auth/login"
@@ -55,9 +51,29 @@ enum ApiType {
         }
     }
 
+    var requestURL: URLRequest {
+        let requestURL = baseURL.appendingPathComponent(path)
+
+        switch self {
+        case let .getExcursions(params):
+            var request = URLRequest(url: requestURL)
+            if let params = params {
+                var urlComponents = URLComponents(url: requestURL, resolvingAgainstBaseURL: false)
+                urlComponents?.queryItems = params
+
+                guard let url = urlComponents?.url else {
+                    assertionFailure("Something has gone wrong and URL could not be constructed!")
+                    return URLRequest(url: URL(string: "")!)
+                }
+                request = URLRequest(url: url)
+            }
+            return request
+        default: return URLRequest(url: requestURL)
+        }
+    }
+
     var request: URLRequest {
-        let url = URL(string: path, relativeTo: URL(string: baseURL)!)!
-        var request = URLRequest(url: url)
+        var request = requestURL
         request.allHTTPHeaderFields = headers
 
         switch self {
@@ -92,8 +108,8 @@ enum ApiType {
 final class ApiManager {
     static let shared = ApiManager()
 
-    func getExcursions(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, token: String?) {
-        let request = ApiType.getExcursions(token: token).request
+    func getExcursions(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, params: [URLQueryItem]?) {
+        let request = ApiType.getExcursions(params: params).request
 
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
