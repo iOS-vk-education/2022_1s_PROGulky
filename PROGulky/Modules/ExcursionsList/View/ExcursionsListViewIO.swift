@@ -23,6 +23,8 @@ protocol ExcursionsListViewOutput: AnyObject {
     func didAddExcursionButtonTapped()
 
     func didTextTyping(with text: String)
+
+    func didClearSearchBar()
 }
 
 // MARK: - ExcursionsListViewInput

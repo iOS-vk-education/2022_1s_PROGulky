@@ -7,19 +7,35 @@
 
 import Foundation
 
+// MARK: - ExcursionsRepositoryConstants
+
+struct ExcursionsRepositoryConstants {
+    enum Search {
+        static let delay: Float = 1.0
+        static let queryParameterKey = "q"
+    }
+}
+
+// MARK: - ExcursionsRepository
+
 final class ExcursionsRepository {
     static let shared = ExcursionsRepository()
 
-    func getExcursionsList(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, params: [[String: String]]?) {
+    func getExcursionsList(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, with text: String?) {
         var resParameters: [URLQueryItem] = []
 
-        if params != nil {
-            params?.forEach { e in
-                if let key = e.keys.first {
-                    if let value = e.values.first {
-                        resParameters.append(URLQueryItem(name: key, value: value))
-                    }
-                }
+        // Если в text не nil, то формирую массив [URLQueryItem]
+        if let text = text {
+            let searchQuery = [ExcursionsRepositoryConstants.Search.queryParameterKey: text]
+            let params = [searchQuery]
+
+            params.forEach { e in
+                guard let key = e.keys.first, let value = e.values.first else { return }
+                resParameters.append(URLQueryItem(
+                    name: key,
+                    value: value
+                )
+                )
             }
         }
 

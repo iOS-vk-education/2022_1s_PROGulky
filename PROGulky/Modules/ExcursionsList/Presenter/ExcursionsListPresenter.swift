@@ -46,6 +46,10 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
         interactor.startSearchExcursions(by: text)
     }
 
+    func didClearSearchBar() {
+        interactor.loadExcursionsList()
+    }
+
     func didAddExcursionButtonTapped() {
         guard UserAuthService.shared.isLogged else {
             view.showAuthView()
@@ -85,7 +89,6 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
             return
         }
         if let row = excursions.firstIndex(where: { $0.id == id }) {
-//            excursions[row].isFavorite = isLiked
         }
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 // MARK: - ApiType
 
 enum ApiType {
-    case getExcursions(params: [URLQueryItem]?) // Получить список всех экскурсий
+    case getExcursions(params: [URLQueryItem]) // Получить список всех экскурсий
     case addFavorites(token: String, excursionId: String) // Добавление экскурсии в избранное
     case removeFavorites(token: String, excursionId: String) // Удалить экскурсию из избранного
     case login // Логин
@@ -19,8 +19,8 @@ enum ApiType {
     case getPlaces
     case postExcursion(token: String, excursion: ExcursionForPost)
 
-    var baseURL: URL {
-        URL(string: "http://37.140.195.167:5000")!
+    var baseURLString: String {
+        "http://37.140.195.167:5000"
     }
 
     var headers: [String: String] {
@@ -52,22 +52,22 @@ enum ApiType {
     }
 
     var requestURL: URLRequest {
-        let requestURL = baseURL.appendingPathComponent(path)
+        guard let baseURL = URL(string: baseURLString) else {
+            assertionFailure("Something has gone wrong and URL could not be constructed!")
+            return URLRequest(url: URL(string: "")!)
+        }
 
+        let requestURL = baseURL.appendingPathComponent(path)
         switch self {
         case let .getExcursions(params):
-            var request = URLRequest(url: requestURL)
-            if let params = params {
-                var urlComponents = URLComponents(url: requestURL, resolvingAgainstBaseURL: false)
-                urlComponents?.queryItems = params
+            var urlComponents = URLComponents(url: requestURL, resolvingAgainstBaseURL: false)
+            urlComponents?.queryItems = params
 
-                guard let url = urlComponents?.url else {
-                    assertionFailure("Something has gone wrong and URL could not be constructed!")
-                    return URLRequest(url: URL(string: "")!)
-                }
-                request = URLRequest(url: url)
+            guard let url = urlComponents?.url else {
+                assertionFailure("Something has gone wrong and URL could not be constructed!")
+                return URLRequest(url: URL(string: "")!)
             }
-            return request
+            return URLRequest(url: url)
         default: return URLRequest(url: requestURL)
         }
     }
@@ -108,7 +108,7 @@ enum ApiType {
 final class ApiManager {
     static let shared = ApiManager()
 
-    func getExcursions(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, params: [URLQueryItem]?) {
+    func getExcursions(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, params: [URLQueryItem]) {
         let request = ApiType.getExcursions(params: params).request
 
         let task = URLSession.shared.dataTask(with: request) { data, _, error in

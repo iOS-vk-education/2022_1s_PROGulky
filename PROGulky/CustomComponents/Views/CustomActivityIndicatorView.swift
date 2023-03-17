@@ -66,16 +66,50 @@ final class CustomActivityIndicatorView: UIView {
 
     private func setupContainerViewConstraints() {
         containerView.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
+            make
+                .centerX
+                .centerY
+                .equalToSuperview()
         }
     }
 
     private func setupActivityIndicatorConstraints() {
         activityIndicator.snp.makeConstraints { make in
-            make.left.equalTo(containerView.snp.left).inset(Constants.CustomActivityIndicatorView.ActivityIndicator.inset)
-            make.right.equalTo(containerView.snp.right).inset(Constants.CustomActivityIndicatorView.ActivityIndicator.inset)
-            make.top.equalTo(containerView.snp.top).inset(Constants.CustomActivityIndicatorView.ActivityIndicator.inset)
-            make.bottom.equalTo(containerView.snp.bottom).inset(Constants.CustomActivityIndicatorView.ActivityIndicator.inset)
+            make
+                .left
+                .equalTo(containerView
+                    .snp
+                    .left)
+                .inset(Constants
+                    .CustomActivityIndicatorView
+                    .ActivityIndicator
+                    .inset)
+            make
+                .right
+                .equalTo(containerView
+                    .snp
+                    .right)
+                .inset(Constants
+                    .CustomActivityIndicatorView
+                    .ActivityIndicator
+                    .inset)
+            make
+                .top
+                .equalTo(containerView
+                    .snp
+                    .top)
+                .inset(Constants
+                    .CustomActivityIndicatorView
+                    .ActivityIndicator
+                    .inset)
+            make
+                .bottom
+                .equalTo(containerView
+                    .snp.bottom)
+                .inset(Constants
+                    .CustomActivityIndicatorView
+                    .ActivityIndicator
+                    .inset)
         }
     }
 

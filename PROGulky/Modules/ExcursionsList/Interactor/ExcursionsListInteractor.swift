@@ -11,10 +11,10 @@ import Foundation
 final class ExcursionsListInteractor {
     weak var output: ExcursionsListInteractorOutput?
 
-    private let search: ExcursionsSearchViewModelInput
+    private let search: ExcursionsSearchHelperInput
 
-    init(searchVM: ExcursionsSearchViewModelInput) {
-        search = searchVM
+    init(helper: ExcursionsSearchHelperInput) {
+        search = helper
     }
 }
 
@@ -36,7 +36,7 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
                     self?.output?.getNetworkError()
                 }
             },
-            params: nil
+            with: nil
         )
     }
 
@@ -46,13 +46,10 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
     }
 }
 
-// MARK: ExcursionsSearchViewModelOutput
+// MARK: ExcursionsSearchHelperOutput
 
-extension ExcursionsListInteractor: ExcursionsSearchViewModelOutput {
+extension ExcursionsListInteractor: ExcursionsSearchHelperOutput {
     func loadExcursionsByTitle(includeInTitle text: String) {
-        let searchQuery = [ExcursionsListConstants.Api.searchQueryParameterKey: text]
-        let params = [searchQuery]
-
         ExcursionsRepository.shared.getExcursionsList(
             completion: { [weak self] excursions in
                 switch excursions {
@@ -62,7 +59,7 @@ extension ExcursionsListInteractor: ExcursionsSearchViewModelOutput {
                     self?.output?.getNetworkError()
                 }
             },
-            params: params
+            with: text
         )
     }
 }
