@@ -21,6 +21,10 @@ protocol ExcursionsListViewOutput: AnyObject {
     func didRepeatButtonTapped()
 
     func didAddExcursionButtonTapped()
+
+    func didTextTyping(with text: String)
+
+    func didClearSearchBar()
 }
 
 // MARK: - ExcursionsListViewInput
@@ -35,6 +39,7 @@ protocol ExcursionsListViewInput: AnyObject {
     func showErrorView(with error: Error) // Показать сообщение с ошибкой
 
     func showAuthView()
+
     func hideErrorView()
 
     func configureGreetingMessage(with user: GreetingViewModel) // Конфигурация вьюхи приветствия

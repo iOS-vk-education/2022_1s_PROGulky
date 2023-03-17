@@ -182,6 +182,12 @@ extension ExcursionsListViewController: ErrorViewDelegate {
 
 extension ExcursionsListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        print(1234)
+        if let text = searchController.searchBar.text {
+            if text.isEmpty {
+                output.didClearSearchBar()
+            } else {
+                output.didTextTyping(with: text)
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ import SnapKit
 
 // Класс для единообразного активити индикатора и вьюх ошибок
 class CustomViewController: UIViewController {
-    private let activityIndicatorView: UIActivityIndicatorView = .init()
+    private let activityIndicatorView = CustomActivityIndicatorView()
     private let errorHUDView = ErrorHUDView()
 
     override func viewDidLoad() {
@@ -21,9 +21,8 @@ class CustomViewController: UIViewController {
     }
 
     private func setupActivityIndicator() {
-        activityIndicatorView.hidesWhenStopped = true
         activityIndicatorView.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
-
+        errorHUDView.isHidden = true
         view.addSubview(activityIndicatorView)
 
         activityIndicatorView.snp.makeConstraints { make in
@@ -45,10 +44,12 @@ class CustomViewController: UIViewController {
     }
 
     func showActivity() {
+        activityIndicatorView.isHidden = false
         activityIndicatorView.startAnimating()
     }
 
     func hideActivity() {
+        activityIndicatorView.isHidden = true
         activityIndicatorView.stopAnimating()
     }
 

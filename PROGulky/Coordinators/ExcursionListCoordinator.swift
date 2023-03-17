@@ -48,10 +48,11 @@ final class ExcursionListCoordinator: CoordinatorProtocol {
 // MARK: ExcursionsListModuleOutput
 
 extension ExcursionListCoordinator: ExcursionsListModuleOutput {
-    func excursionsListModuleWantsToOpenMapDetailModule(excursion: Excursion) {
+    func excursionsListModuleWantsToOpenMapDetailModule(excursion: PreviewExcursion) {
         let mapDetailBuilder = MapDetailModuleBuilder()
-        let mapDetailViewController = mapDetailBuilder.build(moduleOutput: self, excursion: excursion)
-        rootNavigationController.pushViewController(mapDetailViewController, animated: true)
+        // TODO: Сломал не работает!
+        // let mapDetailViewController = mapDetailBuilder.build(moduleOutput: self, excursion: excursion)
+        // rootNavigationController.pushViewController(mapDetailViewController, animated: true)
     }
 }
 

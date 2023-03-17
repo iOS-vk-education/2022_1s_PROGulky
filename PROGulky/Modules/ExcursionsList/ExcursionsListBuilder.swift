@@ -13,7 +13,8 @@ final class ExcursionsListModuleBuilder {
     func build(moduleOutput: ExcursionsListModuleOutput) -> UIViewController {
         let viewController = ExcursionsListViewController()
         let router = ExcursionsListRouter()
-        let interactor = ExcursionsListInteractor()
+        let searchHelper = ExcursionsSearchHelper()
+        let interactor = ExcursionsListInteractor(helper: searchHelper)
 
         let presenter = ExcursionsListPresenter(
             interactor: interactor,
@@ -23,6 +24,7 @@ final class ExcursionsListModuleBuilder {
         presenter.view = viewController
 
         interactor.output = presenter
+        searchHelper.output = interactor
         viewController.output = presenter
 
         return viewController

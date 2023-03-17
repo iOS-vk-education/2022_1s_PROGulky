@@ -10,11 +10,13 @@ import Foundation
 // MARK: - ExcursionsListInteractorOutput
 
 protocol ExcursionsListInteractorOutput: AnyObject {
-    func didLoadExcursionsList(excursions: Excursions)
+    func didLoadExcursionsList(excursions: PreviewExcursions)
 
     func didLoadUserInstance(user: UserData?)
 
     func getNetworkError()
+
+    func showActivity()
 }
 
 // MARK: - ExcursionsListInteractorInput
@@ -23,4 +25,6 @@ protocol ExcursionsListInteractorInput: AnyObject {
     func loadExcursionsList()
 
     func loadUserInstance() // Загрузка экземляра пользователя из хранилища
+
+    func startSearchExcursions(by text: String)
 }

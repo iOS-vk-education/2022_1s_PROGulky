@@ -46,6 +46,7 @@
 		5418EA5C29C0B6B600BF70C1 /* CustomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5418EA5A29C0B6B600BF70C1 /* CustomViewController.swift */; };
 		542594E92936AA8600FD9747 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542594E82936AA8600FD9747 /* ApiManager.swift */; };
 		542594EB2936AF9F00FD9747 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542594EA2936AF9F00FD9747 /* Owner.swift */; };
+		5430AE5729C3BD33004DCDC9 /* CustomActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5430AE5629C3BD33004DCDC9 /* CustomActivityIndicatorView.swift */; };
 		5438B65329573A97007F2127 /* UserAuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438B65229573A97007F2127 /* UserAuthService.swift */; };
 		5438B65529575AAC007F2127 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438B65429575AAC007F2127 /* UserService.swift */; };
 		5438B65729578EB2007F2127 /* NotLoginMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5438B65629578EB2007F2127 /* NotLoginMessageView.swift */; };
@@ -62,6 +63,7 @@
 		543F2CBE292E72CA00120116 /* DetailExcursionSettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CBB292E72CA00120116 /* DetailExcursionSettingsSection.swift */; };
 		543F2CBF292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F2CBC292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift */; };
 		543F73D329527901006D7C64 /* ServicesConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543F73D229527901006D7C64 /* ServicesConstants.swift */; };
+		545175E129C1FF4F00AC2898 /* ExcursionsSearchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545175E029C1FF4F00AC2898 /* ExcursionsSearchHelper.swift */; };
 		545A208929510A630085E4AF /* ExcursionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545A208829510A630085E4AF /* ExcursionsRepository.swift */; };
 		545FE1AA291DA58F00890693 /* ExcursionsListConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */; };
 		545FE1AC291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */; };
@@ -231,6 +233,7 @@
 		5418EA5A29C0B6B600BF70C1 /* CustomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomViewController.swift; sourceTree = "<group>"; };
 		542594E82936AA8600FD9747 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		542594EA2936AF9F00FD9747 /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
+		5430AE5629C3BD33004DCDC9 /* CustomActivityIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActivityIndicatorView.swift; sourceTree = "<group>"; };
 		5438B65229573A97007F2127 /* UserAuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthService.swift; sourceTree = "<group>"; };
 		5438B65429575AAC007F2127 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		5438B65629578EB2007F2127 /* NotLoginMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotLoginMessageView.swift; sourceTree = "<group>"; };
@@ -247,6 +250,7 @@
 		543F2CBB292E72CA00120116 /* DetailExcursionSettingsSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionSettingsSection.swift; sourceTree = "<group>"; };
 		543F2CBC292E72CA00120116 /* DetailExcursionHeaderInSectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionHeaderInSectionView.swift; sourceTree = "<group>"; };
 		543F73D229527901006D7C64 /* ServicesConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesConstants.swift; sourceTree = "<group>"; };
+		545175E029C1FF4F00AC2898 /* ExcursionsSearchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsSearchHelper.swift; sourceTree = "<group>"; };
 		545A208829510A630085E4AF /* ExcursionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsRepository.swift; sourceTree = "<group>"; };
 		545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsListConstants.swift; sourceTree = "<group>"; };
 		545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsListDisplayDataFactory.swift; sourceTree = "<group>"; };
@@ -453,6 +457,7 @@
 			children = (
 				5B18CF0E8F6610EA949BC890 /* ExcursionsListInteractor.swift */,
 				86D28233730CF25DD0C0AD76 /* ExcursionsListInteractorIO.swift */,
+				545175E029C1FF4F00AC2898 /* ExcursionsSearchHelper.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -612,6 +617,7 @@
 			isa = PBXGroup;
 			children = (
 				5418EA5929C0B6B600BF70C1 /* ErrorHUDView.swift */,
+				5430AE5629C3BD33004DCDC9 /* CustomActivityIndicatorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1553,6 +1559,7 @@
 				1D19F4AB810FE4440C1F30EF /* ExcursionsListRouter.swift in Sources */,
 				5478D22329439C0D00A3C23D /* AddExcursionConstants.swift in Sources */,
 				94D58836216B679A692591E0 /* ExcursionsListBuilder.swift in Sources */,
+				545175E129C1FF4F00AC2898 /* ExcursionsSearchHelper.swift in Sources */,
 				54D91DBE2930C1ED0097AF52 /* FavouritesExcursionsConstants.swift in Sources */,
 				666A036F2935DE0F006E3A98 /* MapRouterInput.swift in Sources */,
 				A5D309F42928F403005D2275 /* ProfileSettingsCell.swift in Sources */,
@@ -1690,6 +1697,7 @@
 				39BE3AA5F999BC87E1D44BFF /* MapDetailRouterInput.swift in Sources */,
 				8B1E8A88250434D67C31B703 /* MapDetailRouter.swift in Sources */,
 				49F723088C836552D8E6DFB9 /* MapDetailBuilder.swift in Sources */,
+				5430AE5729C3BD33004DCDC9 /* CustomActivityIndicatorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

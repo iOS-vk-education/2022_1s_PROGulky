@@ -14,7 +14,7 @@ protocol FavouritesExcursionsInteractorOutput: AnyObject {
 
     func gotEmptyFavoritesList()
 
-    func didLoadFavoritesExcursionsList(favoritesExcursions: Excursions)
+    func didLoadFavoritesExcursionsList(favoritesExcursions: PreviewExcursions)
 
     func gotNetworkError()
 }

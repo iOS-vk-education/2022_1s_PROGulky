@@ -10,13 +10,13 @@ import UIKit
 // MARK: - ExcursionsListDisplayDataFactoryProtocol
 
 protocol ExcursionsListDisplayDataFactoryProtocol {
-    func getExcursionViewModel(for: Excursion) -> ExcursionViewModel
+    func getExcursionViewModel(for: PreviewExcursion) -> ExcursionViewModel
 }
 
 // MARK: - ExcursionsListDisplayDataFactory
 
 final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryProtocol {
-    func getExcursionViewModel(for excursion: Excursion) -> ExcursionViewModel {
+    func getExcursionViewModel(for excursion: PreviewExcursion) -> ExcursionViewModel {
         var displayRating: String
         if let rating = excursion.rating {
             displayRating = "\(rating)"

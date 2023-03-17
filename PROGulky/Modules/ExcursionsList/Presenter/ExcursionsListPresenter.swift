@@ -21,7 +21,7 @@ final class ExcursionsListPresenter {
     private let router: ExcursionsListRouterInput
 
     private let factory = ExcursionsListDisplayDataFactory()
-    private var excursions: [Excursion] = []
+    private var excursions: [PreviewExcursion] = []
 
     // MARK: - Lifecycle
 
@@ -42,6 +42,14 @@ extension ExcursionsListPresenter: ExcursionsListModuleInput {
 // MARK: ExcursionsListViewOutput
 
 extension ExcursionsListPresenter: ExcursionsListViewOutput {
+    func didTextTyping(with text: String) {
+        interactor.startSearchExcursions(by: text)
+    }
+
+    func didClearSearchBar() {
+        interactor.loadExcursionsList()
+    }
+
     func didAddExcursionButtonTapped() {
         guard UserAuthService.shared.isLogged else {
             view.showAuthView()
@@ -72,6 +80,7 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
         excursions.count
     }
 
+    // TODO: простановка лайка должна быть реализована по другому
     @objc func setLikeStatus(_ notification: Notification) {
         guard let id = notification.userInfo?[NotificationsConstants.Excursions.UserInfoKeys.id] as? Int else {
             return
@@ -80,7 +89,6 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
             return
         }
         if let row = excursions.firstIndex(where: { $0.id == id }) {
-            excursions[row].isFavorite = isLiked
         }
     }
 }
@@ -88,6 +96,10 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
 // MARK: ExcursionsListInteractorOutput
 
 extension ExcursionsListPresenter: ExcursionsListInteractorOutput {
+    func showActivity() {
+        view.startLoader()
+    }
+
     func getNetworkError() {
         excursions = []
 
@@ -98,7 +110,7 @@ extension ExcursionsListPresenter: ExcursionsListInteractorOutput {
         view.reloadView() // Перезагрузить тейбл вью
     }
 
-    func didLoadExcursionsList(excursions: Excursions) {
+    func didLoadExcursionsList(excursions: PreviewExcursions) {
         self.excursions = excursions
         view.hideErrorView() // Скрыть сообщение об ошибках
         view.reloadView() // Перезагрузить тейбл вью

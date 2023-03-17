@@ -27,6 +27,21 @@ struct Excursion: Codable {
 
 typealias Excursions = [Excursion]
 
+// MARK: - PreviewExcursion
+
+struct PreviewExcursion: Codable {
+    let id: Int
+    let title: String
+    var image: String?
+    var rating: Double?
+    var duration: Int // Продолжительность в минутах
+    var distance: Double // Дистанция в километрах
+    var numberOfPoints: Int // Количество точек на маршруте
+    let owner: Owner
+}
+
+typealias PreviewExcursions = [PreviewExcursion]
+
 // MARK: - ExcursionForPost
 
 struct ExcursionForPost {
