@@ -55,14 +55,41 @@ final class ExcursionsListViewController: CustomViewController {
 //        navigationItem.title = ExcursionsListConstants.NavBar.title
         navigationController?.view.backgroundColor = ExcursionsListConstants.NavBar.backgroundColor
 
-        let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButton))
-        navigationItem.rightBarButtonItem = rightBarButtonItem
+        let rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(didTapAddButton)
+        )
+
+        let filterButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "slider.horizontal.3")?.withRenderingMode(.alwaysOriginal),
+            style: .plain,
+            target: self,
+            action: #selector(handleShowBottomSheet)
+        )
+
+        navigationItem.rightBarButtonItems = [
+            rightBarButtonItem,
+            filterButtonItem
+        ]
 
         let leftBarButtonItem = UIBarButtonItem(customView: greetingMessageView)
         navigationItem.leftBarButtonItem = leftBarButtonItem
 
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
+    }
+
+    private var bottomSheetTransitioningDelegate: BottomSheetTransitioningDelegate?
+
+    @objc
+    private func handleShowBottomSheet() {
+        let viewController = ExcursionsListFiltersViewController(initialHeight: 500, delegate: self)
+        bottomSheetTransitioningDelegate = BottomSheetTransitioningDelegate(factory: self)
+        viewController.modalPresentationStyle = .custom
+        viewController.transitioningDelegate = bottomSheetTransitioningDelegate
+
+        present(viewController, animated: true, completion: nil)
     }
 
     @objc
@@ -100,6 +127,23 @@ final class ExcursionsListViewController: CustomViewController {
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalToSuperview()
         }
+    }
+}
+
+// MARK: ExcursionsListFiltersViewOutput
+
+extension ExcursionsListViewController: ExcursionsListFiltersViewOutput {
+    func didSubmitButtonTapped() {
+        performDismissal(animated: true) // Скрыть боттом шит
+        output.didFilterSubmitButtonTapped()
+    }
+
+    func didDistanceFilterButtonTapped(id: Int) {
+        output.didDistanceFilterButtonTapped(on: id)
+    }
+
+    func getDistanceFilterButtons() -> [Int: ChipsButton] {
+        output.getDistanceFilterButtons()
     }
 }
 
@@ -189,5 +233,28 @@ extension ExcursionsListViewController: UISearchResultsUpdating {
                 output.didTextTyping(with: text)
             }
         }
+    }
+}
+
+// MARK: BottomSheetPresentationControllerFactory
+
+extension ExcursionsListViewController: BottomSheetPresentationControllerFactory {
+    func makeBottomSheetPresentationController(
+        presentedViewController: UIViewController,
+        presentingViewController: UIViewController?
+    ) -> BottomSheetPresentationController {
+        .init(
+            presentedViewController: presentedViewController,
+            presentingViewController: presentingViewController,
+            dismissalHandler: self
+        )
+    }
+}
+
+// MARK: BottomSheetModalDismissalHandler
+
+extension ExcursionsListViewController: BottomSheetModalDismissalHandler {
+    func performDismissal(animated: Bool) {
+        presentedViewController?.dismiss(animated: animated, completion: nil)
     }
 }

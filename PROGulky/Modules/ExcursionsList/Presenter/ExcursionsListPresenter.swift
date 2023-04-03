@@ -23,6 +23,9 @@ final class ExcursionsListPresenter {
     private let factory = ExcursionsListDisplayDataFactory()
     private var excursions: [PreviewExcursion] = []
 
+    private var distanceFilterButtons: [Int: ChipsButton] // Кнопки фильтров дистанции
+    private var idSelectedDistanceFilterButton: Int? // Айди выбранного фильтра дистанции
+
     // MARK: - Lifecycle
 
     init(interactor: ExcursionsListInteractorInput,
@@ -31,6 +34,8 @@ final class ExcursionsListPresenter {
         self.interactor = interactor
         self.router = router
         self.moduleOutput = moduleOutput
+
+        distanceFilterButtons = factory.getDistanceFilterParameters()
 
         NotificationCenter.default.addObserver(self, selector: #selector(setLikeStatus), name: Notification.Name(NotificationsConstants.Excursions.name), object: nil)
     }
@@ -42,6 +47,27 @@ extension ExcursionsListPresenter: ExcursionsListModuleInput {
 // MARK: ExcursionsListViewOutput
 
 extension ExcursionsListPresenter: ExcursionsListViewOutput {
+    func didFilterSubmitButtonTapped() {
+        guard let id = idSelectedDistanceFilterButton else { return }
+        guard let params = distanceFilterButtons[id]?.apiParameters else { return }
+
+        interactor.loadExcursionsByFilters(by: params)
+    }
+
+    func didDistanceFilterButtonTapped(on id: Int) {
+        if let idSelectedFilterButton = idSelectedDistanceFilterButton {
+            distanceFilterButtons[id]?.changeColor() // Включается выбираемая
+            distanceFilterButtons[idSelectedFilterButton]?.changeColor() // Выключается выбранная
+        } else {
+            distanceFilterButtons[id]?.changeColor()
+        }
+        idSelectedDistanceFilterButton = id
+    }
+
+    func getDistanceFilterButtons() -> [Int: ChipsButton] {
+        distanceFilterButtons
+    }
+
     func didTextTyping(with text: String) {
         interactor.startSearchExcursions(by: text)
     }

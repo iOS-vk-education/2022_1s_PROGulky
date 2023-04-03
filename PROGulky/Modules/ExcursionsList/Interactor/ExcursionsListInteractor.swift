@@ -26,6 +26,7 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
         output?.didLoadUserInstance(user: user)
     }
 
+    // Загрузка списка экскурсий без фильтров и без поиска
     func loadExcursionsList() {
         ExcursionsRepository.shared.getExcursionsList(
             completion: { [weak self] excursions in
@@ -36,7 +37,24 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
                     self?.output?.getNetworkError()
                 }
             },
-            with: nil
+            with: nil,
+            filterParameters: nil
+        )
+    }
+
+    // Загрузка списка экскурсий с фильтрами
+    func loadExcursionsByFilters(by params: [String: String]) {
+        ExcursionsRepository.shared.getExcursionsList(
+            completion: { [weak self] excursions in
+                switch excursions {
+                case let .success(excursions):
+                    self?.output?.didLoadExcursionsList(excursions: excursions)
+                case .failure:
+                    self?.output?.getNetworkError()
+                }
+            },
+            with: nil,
+            filterParameters: params
         )
     }
 
@@ -59,7 +77,8 @@ extension ExcursionsListInteractor: ExcursionsSearchHelperOutput {
                     self?.output?.getNetworkError()
                 }
             },
-            with: text
+            with: text,
+            filterParameters: nil
         )
     }
 }

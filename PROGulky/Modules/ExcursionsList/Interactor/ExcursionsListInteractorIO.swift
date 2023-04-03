@@ -27,4 +27,6 @@ protocol ExcursionsListInteractorInput: AnyObject {
     func loadUserInstance() // Загрузка экземляра пользователя из хранилища
 
     func startSearchExcursions(by text: String)
+
+    func loadExcursionsByFilters(by filters: [String: String])
 }
