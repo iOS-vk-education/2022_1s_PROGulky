@@ -7,27 +7,27 @@
 
 import UIKit
 
+// MARK: - FilterButtonViewModel
+
+struct FilterButtonViewModel {
+    let title: String
+    let isSelected: Bool
+
+    init(title: String, isSelected: Bool) {
+        self.title = title
+        self.isSelected = isSelected
+    }
+}
+
 // MARK: - ExcursionsListDisplayDataFactoryProtocol
 
 protocol ExcursionsListDisplayDataFactoryProtocol {
     func getExcursionViewModel(for: PreviewExcursion) -> ExcursionViewModel
-
-    func getDistanceFilterParameters() -> [Int: ChipsButton]
 }
 
 // MARK: - ExcursionsListDisplayDataFactory
 
 final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryProtocol {
-    func getDistanceFilterParameters() -> [Int: ChipsButton] {
-        let buttons: [Int: ChipsButton] = [
-            1: ChipsButton(title: "Все", apiParameters: ["l_f_p": "0", "l_s_p": "100"]),
-            2: ChipsButton(title: "1 - 3 км", apiParameters: ["l_f_p": "1", "l_s_p": "3"]),
-            3: ChipsButton(title: "3 - 6 км", apiParameters: ["l_f_p": "3", "l_s_p": "6"]),
-            4: ChipsButton(title: "6 - 10 км", apiParameters: ["l_f_p": "6", "l_s_p": "10"])
-        ]
-        return buttons
-    }
-
     func getExcursionViewModel(for excursion: PreviewExcursion) -> ExcursionViewModel {
         var displayRating: String
         if let rating = excursion.rating {

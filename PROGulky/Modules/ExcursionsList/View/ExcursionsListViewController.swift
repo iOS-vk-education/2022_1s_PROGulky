@@ -133,16 +133,16 @@ final class ExcursionsListViewController: CustomViewController {
 // MARK: ExcursionsListFiltersViewOutput
 
 extension ExcursionsListViewController: ExcursionsListFiltersViewOutput {
+    func didDistanceFilterButtonTapped(with title: String) {
+        output.didDistanceFilterButtonTapped(with: title)
+    }
+
     func didSubmitButtonTapped() {
         performDismissal(animated: true) // Скрыть боттом шит
         output.didFilterSubmitButtonTapped()
     }
 
-    func didDistanceFilterButtonTapped(id: Int) {
-        output.didDistanceFilterButtonTapped(on: id)
-    }
-
-    func getDistanceFilterButtons() -> [Int: ChipsButton] {
+    func getDistanceFilterButtons() -> [FilterButtonViewModel] {
         output.getDistanceFilterButtons()
     }
 }

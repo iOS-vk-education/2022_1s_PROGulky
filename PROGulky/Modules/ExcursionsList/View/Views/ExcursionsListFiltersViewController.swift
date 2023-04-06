@@ -34,7 +34,7 @@ private struct ExcursionsListFiltersConstants {
 final class ExcursionsListFiltersViewController: UIViewController {
     var output: ExcursionsListFiltersViewOutput!
 
-    var distanceButtons: [Int: ChipsButton] // параметры (опции) фильтра по "Дистанции"
+    var distances: [FilterButtonViewModel] // вью модель (опций) фильтра по "Дистанции"
 
     // MARK: - Subviews
 
@@ -61,7 +61,7 @@ final class ExcursionsListFiltersViewController: UIViewController {
 
     init(initialHeight: CGFloat, delegate: ExcursionsListFiltersViewOutput) {
         output = delegate
-        distanceButtons = output.getDistanceFilterButtons()
+        distances = output.getDistanceFilterButtons()
 
         currentHeight = initialHeight
         super.init(nibName: nil, bundle: nil)
@@ -169,17 +169,29 @@ final class ExcursionsListFiltersViewController: UIViewController {
         }
     }
 
+    private var selectedDistanceButton: ChipsButton? // Выбранная кнопка фильтра длины
+
     private func addButtonsToStackView() {
-        for (key, button) in distanceButtons {
+        for d in distances {
+            let button = ChipsButton()
+            if d.isSelected {
+                button.setSelectedColor()
+                selectedDistanceButton = button
+            }
+            button.setTitle(d.title, for: .normal)
             button.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
-            button.tag = key
             stackView.addArrangedSubview(button)
         }
     }
 
     @objc
-    func filterButtonTapped(sender: UIButton) {
-        output.didDistanceFilterButtonTapped(id: sender.tag)
+    func filterButtonTapped(selectableButton: ChipsButton) {
+        guard let title = selectableButton.titleLabel?.text else { return }
+        output.didDistanceFilterButtonTapped(with: title)
+
+        selectedDistanceButton?.setDefaultColor() // Выбранная (старая) становится серой
+        selectableButton.setSelectedColor() // Выбираемая (сейчас нажатая) становится синей
+        selectedDistanceButton = selectableButton
     }
 
     // MARK: - Private methods

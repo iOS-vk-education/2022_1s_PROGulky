@@ -7,6 +7,15 @@
 
 import Foundation
 
+// MARK: - DistanceFilter
+
+enum DistanceFilter: String {
+    case all = "Все"
+    case from1To3 = "1-3 км"
+    case from3To6 = "3-6 км"
+    case from6To10 = "6-10 км"
+}
+
 // MARK: - ExcursionsListPresenter
 
 final class ExcursionsListPresenter {
@@ -23,8 +32,9 @@ final class ExcursionsListPresenter {
     private let factory = ExcursionsListDisplayDataFactory()
     private var excursions: [PreviewExcursion] = []
 
-    private var distanceFilterButtons: [Int: ChipsButton] // Кнопки фильтров дистанции
-    private var idSelectedDistanceFilterButton: Int? // Айди выбранного фильтра дистанции
+    private let distances: [DistanceFilter] = [.all, .from1To3, .from3To6, .from6To10]
+    private var selectedDistance: DistanceFilter = .all
+    private var filterButtonsViewModels: [FilterButtonViewModel] = []
 
     // MARK: - Lifecycle
 
@@ -34,8 +44,6 @@ final class ExcursionsListPresenter {
         self.interactor = interactor
         self.router = router
         self.moduleOutput = moduleOutput
-
-        distanceFilterButtons = factory.getDistanceFilterParameters()
 
         NotificationCenter.default.addObserver(self, selector: #selector(setLikeStatus), name: Notification.Name(NotificationsConstants.Excursions.name), object: nil)
     }
@@ -47,25 +55,20 @@ extension ExcursionsListPresenter: ExcursionsListModuleInput {
 // MARK: ExcursionsListViewOutput
 
 extension ExcursionsListPresenter: ExcursionsListViewOutput {
+    func didDistanceFilterButtonTapped(with title: String) {
+        guard let selectedParameter = DistanceFilter(rawValue: title) else { return }
+        selectedDistance = selectedParameter
+    }
+
     func didFilterSubmitButtonTapped() {
-        guard let id = idSelectedDistanceFilterButton else { return }
-        guard let params = distanceFilterButtons[id]?.apiParameters else { return }
-
-        interactor.loadExcursionsByFilters(by: params)
+        interactor.addDistanceFilterParameter(parameter: selectedDistance) // Добавить параметры к запросу
+        interactor.loadExcursionsList()
     }
 
-    func didDistanceFilterButtonTapped(on id: Int) {
-        if let idSelectedFilterButton = idSelectedDistanceFilterButton {
-            distanceFilterButtons[id]?.changeColor() // Включается выбираемая
-            distanceFilterButtons[idSelectedFilterButton]?.changeColor() // Выключается выбранная
-        } else {
-            distanceFilterButtons[id]?.changeColor()
+    func getDistanceFilterButtons() -> [FilterButtonViewModel] {
+        distances.map { [weak self] distance in
+            FilterButtonViewModel(title: distance.rawValue, isSelected: distance == self?.selectedDistance)
         }
-        idSelectedDistanceFilterButton = id
-    }
-
-    func getDistanceFilterButtons() -> [Int: ChipsButton] {
-        distanceFilterButtons
     }
 
     func didTextTyping(with text: String) {
@@ -73,6 +76,7 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
     }
 
     func didClearSearchBar() {
+        interactor.clearSearchTextQueryParameter()
         interactor.loadExcursionsList()
     }
 

@@ -21,7 +21,11 @@ struct ExcursionsRepositoryConstants {
 final class ExcursionsRepository {
     static let shared = ExcursionsRepository()
 
-    // Получение (запрос) экскурсий из API. Аргументы: 1 - "text" - название экскусрии (для поиска по ILIKE по title), 2 - "params" - параметры фильтра
+    // Получение (запрос) экскурсий из API.
+    // Аргументы:
+    // 1 - "text" - название экскусрии (для поиска по ILIKE по title),
+    // 2 - "params" - параметры фильтра
+
     func getExcursionsList(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, with text: String?, filterParameters: [String: String]?) {
         var resParameters: [URLQueryItem] = []
 

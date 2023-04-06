@@ -10,7 +10,7 @@ import Foundation
 // MARK: - ExcursionsSearchHelperOutput
 
 protocol ExcursionsSearchHelperOutput: AnyObject {
-    func loadExcursionsByTitle(includeInTitle text: String)
+    func addSearchText(text: String)
 }
 
 // MARK: - ExcursionsSearchHelperInput
@@ -31,6 +31,6 @@ final class ExcursionsSearchHelper: NSObject, ExcursionsSearchHelperInput {
     }
 
     @objc func search(_ text: String) {
-        output?.loadExcursionsByTitle(includeInTitle: text)
+        output?.addSearchText(text: text)
     }
 }

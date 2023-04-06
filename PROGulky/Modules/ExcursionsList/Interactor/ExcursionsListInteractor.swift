@@ -13,6 +13,11 @@ final class ExcursionsListInteractor {
 
     private let search: ExcursionsSearchHelperInput
 
+    private var distanceFilterParameters: [String: String]? // Параметры фильтров длины маршрута
+
+    private var filterParameters: [String: String]? // Параметры всех фильтров для поиска
+    private var searchText: String? // Параметр (строка) для поиска экскурсии по названию
+
     init(helper: ExcursionsSearchHelperInput) {
         search = helper
     }
@@ -26,7 +31,22 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
         output?.didLoadUserInstance(user: user)
     }
 
-    // Загрузка списка экскурсий без фильтров и без поиска
+    func addDistanceFilterParameter(parameter: DistanceFilter) {
+        switch parameter {
+        case .all:
+            distanceFilterParameters = ["l_f_p": "1", "l_s_p": "100"]
+        case .from1To3:
+            distanceFilterParameters = ["l_f_p": "1", "l_s_p": "3"]
+        case .from3To6:
+            distanceFilterParameters = ["l_f_p": "3", "l_s_p": "6"]
+        case .from6To10:
+            distanceFilterParameters = ["l_f_p": "6", "l_s_p": "10"]
+        }
+        filterParameters = distanceFilterParameters
+    }
+
+    // Загрузка списка экскурсий.
+    // Параметры "searchText" и "filterParameters" берутся из свойств класса
     func loadExcursionsList() {
         ExcursionsRepository.shared.getExcursionsList(
             completion: { [weak self] excursions in
@@ -37,24 +57,8 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
                     self?.output?.getNetworkError()
                 }
             },
-            with: nil,
-            filterParameters: nil
-        )
-    }
-
-    // Загрузка списка экскурсий с фильтрами
-    func loadExcursionsByFilters(by params: [String: String]) {
-        ExcursionsRepository.shared.getExcursionsList(
-            completion: { [weak self] excursions in
-                switch excursions {
-                case let .success(excursions):
-                    self?.output?.didLoadExcursionsList(excursions: excursions)
-                case .failure:
-                    self?.output?.getNetworkError()
-                }
-            },
-            with: nil,
-            filterParameters: params
+            with: searchText,
+            filterParameters: filterParameters
         )
     }
 
@@ -62,23 +66,17 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
         search.makeDelayForLoad(for: text)
         output?.showActivity() // Показываю активити когда происходит запрос
     }
+
+    func clearSearchTextQueryParameter() {
+        searchText = nil
+    }
 }
 
 // MARK: ExcursionsSearchHelperOutput
 
 extension ExcursionsListInteractor: ExcursionsSearchHelperOutput {
-    func loadExcursionsByTitle(includeInTitle text: String) {
-        ExcursionsRepository.shared.getExcursionsList(
-            completion: { [weak self] excursions in
-                switch excursions {
-                case let .success(excursions):
-                    self?.output?.didLoadExcursionsList(excursions: excursions)
-                case .failure:
-                    self?.output?.getNetworkError()
-                }
-            },
-            with: text,
-            filterParameters: nil
-        )
+    func addSearchText(text: String) {
+        searchText = text
+        loadExcursionsList()
     }
 }
