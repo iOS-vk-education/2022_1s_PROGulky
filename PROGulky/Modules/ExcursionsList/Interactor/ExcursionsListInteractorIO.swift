@@ -27,4 +27,8 @@ protocol ExcursionsListInteractorInput: AnyObject {
     func loadUserInstance() // Загрузка экземляра пользователя из хранилища
 
     func startSearchExcursions(by text: String)
+
+    func clearSearchTextQueryParameter() // Очистить параметры поиска
+
+    func addDistanceFilterParameter(parameter: DistanceFilter) // Добавить параметры фильтра по дистанции к запросу
 }

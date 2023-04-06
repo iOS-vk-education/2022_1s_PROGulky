@@ -7,6 +7,18 @@
 
 import UIKit
 
+// MARK: - FilterButtonViewModel
+
+struct FilterButtonViewModel {
+    let title: String
+    let isSelected: Bool
+
+    init(title: String, isSelected: Bool) {
+        self.title = title
+        self.isSelected = isSelected
+    }
+}
+
 // MARK: - ExcursionsListDisplayDataFactoryProtocol
 
 protocol ExcursionsListDisplayDataFactoryProtocol {

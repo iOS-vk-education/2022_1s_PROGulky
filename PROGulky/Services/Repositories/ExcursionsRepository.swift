@@ -21,7 +21,12 @@ struct ExcursionsRepositoryConstants {
 final class ExcursionsRepository {
     static let shared = ExcursionsRepository()
 
-    func getExcursionsList(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, with text: String?) {
+    // Получение (запрос) экскурсий из API.
+    // Аргументы:
+    // 1 - "text" - название экскусрии (для поиска по ILIKE по title),
+    // 2 - "params" - параметры фильтра
+
+    func getExcursionsList(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, with text: String?, filterParameters: [String: String]?) {
         var resParameters: [URLQueryItem] = []
 
         // Если в text не nil, то формирую массив [URLQueryItem]
@@ -34,6 +39,17 @@ final class ExcursionsRepository {
                 resParameters.append(URLQueryItem(
                     name: key,
                     value: value
+                )
+                )
+            }
+        }
+
+        // Если в params не nil, то формирую массив [URLQueryItem]
+        if let filterParameters = filterParameters {
+            filterParameters.forEach { e in
+                resParameters.append(URLQueryItem(
+                    name: e.key,
+                    value: e.value
                 )
                 )
             }

@@ -25,6 +25,23 @@ protocol ExcursionsListViewOutput: AnyObject {
     func didTextTyping(with text: String)
 
     func didClearSearchBar()
+
+    // Методы фильра
+    func getDistanceFilterButtons() -> [FilterButtonViewModel] // Получить параметры фильтра "Длина маршрута"
+
+    func didDistanceFilterButtonTapped(with title: String) // Нажата кнопка фильтра "Длина маршрута" (в нее передано название нажатой кнопки)
+
+    func didFilterSubmitButtonTapped() // Нажали на кнопку "Применить" в фильтре
+}
+
+// MARK: - ExcursionsListFiltersViewOutput
+
+protocol ExcursionsListFiltersViewOutput: AnyObject {
+    func getDistanceFilterButtons() -> [FilterButtonViewModel]
+
+    func didDistanceFilterButtonTapped(with title: String)
+
+    func didSubmitButtonTapped()
 }
 
 // MARK: - ExcursionsListViewInput

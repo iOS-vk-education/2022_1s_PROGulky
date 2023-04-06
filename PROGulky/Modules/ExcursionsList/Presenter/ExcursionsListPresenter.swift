@@ -7,6 +7,15 @@
 
 import Foundation
 
+// MARK: - DistanceFilter
+
+enum DistanceFilter: String {
+    case all = "Все"
+    case from1To3 = "1-3 км"
+    case from3To6 = "3-6 км"
+    case from6To10 = "6-10 км"
+}
+
 // MARK: - ExcursionsListPresenter
 
 final class ExcursionsListPresenter {
@@ -22,6 +31,10 @@ final class ExcursionsListPresenter {
 
     private let factory = ExcursionsListDisplayDataFactory()
     private var excursions: [PreviewExcursion] = []
+
+    private let distances: [DistanceFilter] = [.all, .from1To3, .from3To6, .from6To10]
+    private var selectedDistance: DistanceFilter = .all
+    private var filterButtonsViewModels: [FilterButtonViewModel] = []
 
     // MARK: - Lifecycle
 
@@ -42,11 +55,28 @@ extension ExcursionsListPresenter: ExcursionsListModuleInput {
 // MARK: ExcursionsListViewOutput
 
 extension ExcursionsListPresenter: ExcursionsListViewOutput {
+    func didDistanceFilterButtonTapped(with title: String) {
+        guard let selectedParameter = DistanceFilter(rawValue: title) else { return }
+        selectedDistance = selectedParameter
+    }
+
+    func didFilterSubmitButtonTapped() {
+        interactor.addDistanceFilterParameter(parameter: selectedDistance) // Добавить параметры к запросу
+        interactor.loadExcursionsList()
+    }
+
+    func getDistanceFilterButtons() -> [FilterButtonViewModel] {
+        distances.map { [weak self] distance in
+            FilterButtonViewModel(title: distance.rawValue, isSelected: distance == self?.selectedDistance)
+        }
+    }
+
     func didTextTyping(with text: String) {
         interactor.startSearchExcursions(by: text)
     }
 
     func didClearSearchBar() {
+        interactor.clearSearchTextQueryParameter()
         interactor.loadExcursionsList()
     }
 
