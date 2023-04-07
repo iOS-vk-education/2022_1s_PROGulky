@@ -33,4 +33,6 @@ protocol ExcursionsListInteractorInput: AnyObject {
     func addDistanceFilterParameter(parameter: DistanceFilter) // Добавить параметры фильтра по дистанции к запросу
 
     func addTimeFilterParameter(parameter: TimeFilter) // Добавить параметры фильтра по времени к запросу
+
+    func addRatingFilterParameter(parameter: RatingFilter) // Добавить параметры фильтра по рейтингу
 }

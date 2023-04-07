@@ -25,6 +25,15 @@ enum TimeFilter: String {
     case from2hTo3h = "2-3 ч"
 }
 
+// MARK: - RatingFilter
+
+enum RatingFilter: String {
+    case all = "Все"
+    case high = "Лучшее"
+    case middle = "Хорошее"
+    case low = "3.5-4.0"
+}
+
 // MARK: - ExcursionsListPresenter
 
 final class ExcursionsListPresenter {
@@ -50,6 +59,8 @@ final class ExcursionsListPresenter {
     private var selectedTime: TimeFilter = .all
 
     // Параметры для фильтра "Рейтинг"
+    private let ratings: [RatingFilter] = [.all, .high, .middle]
+    private var selectedRating: RatingFilter = .all
 
     // MARK: - Lifecycle
 
@@ -80,9 +91,15 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
         selectedTime = selectedParameter
     }
 
+    func didRatingFilterButtonTapped(with title: String) {
+        guard let selectedParameter = RatingFilter(rawValue: title) else { return }
+        selectedRating = selectedParameter
+    }
+
     func didFilterSubmitButtonTapped() {
         interactor.addDistanceFilterParameter(parameter: selectedDistance)
         interactor.addTimeFilterParameter(parameter: selectedTime)
+        interactor.addRatingFilterParameter(parameter: selectedRating)
         interactor.loadExcursionsList()
     }
 
@@ -95,6 +112,12 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
     func getTimesFilterButtons() -> [FilterButtonViewModel] {
         times.map { [weak self] t in
             FilterButtonViewModel(title: t.rawValue, isSelected: t == self?.selectedTime)
+        }
+    }
+
+    func getRatingFilterButtons() -> [FilterButtonViewModel] {
+        ratings.map { [weak self] rating in
+            FilterButtonViewModel(title: rating.rawValue, isSelected: rating == self?.selectedRating)
         }
     }
 

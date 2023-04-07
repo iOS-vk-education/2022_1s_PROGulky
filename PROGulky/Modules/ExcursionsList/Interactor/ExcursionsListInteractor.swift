@@ -15,6 +15,7 @@ final class ExcursionsListInteractor {
 
     private var distanceFilterParameters: [String: String]? // Параметры фильтров длины маршрута
     private var timeFilterParameters: [String: String]? // Параметры фильтра времени
+    private var ratingFilterParameters: [String: String]? // Параметры фильтра рейтинга
 
     private var filterParameters: [String: String] = [:] // Параметры всех фильтров для поиска
     private var searchText: String? // Параметр (строка) для поиска экскурсии по названию
@@ -60,6 +61,22 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
             timeFilterParameters = ["t_f_p": "120", "t_s_p": "180"]
         }
         timeFilterParameters?.forEach { key, value in
+            filterParameters[key] = value
+        }
+    }
+
+    func addRatingFilterParameter(parameter: RatingFilter) {
+        switch parameter {
+        case .all:
+            ratingFilterParameters = ["rating": "all"]
+        case .high:
+            ratingFilterParameters = ["rating": "high"]
+        case .middle:
+            ratingFilterParameters = ["rating": "middle"]
+        case .low:
+            ratingFilterParameters = ["rating": "low"]
+        }
+        ratingFilterParameters?.forEach { key, value in
             filterParameters[key] = value
         }
     }

@@ -35,6 +35,10 @@ protocol ExcursionsListViewOutput: AnyObject {
 
     func didTimeFilterButtonTapped(with title: String) // Нажата кнопка фильтра "Время прогулки"
 
+    func getRatingFilterButtons() -> [FilterButtonViewModel] // Получить параметры фильтра "Рейтинг"
+
+    func didRatingFilterButtonTapped(with title: String) // Нажата кнопка фильтра "Рейтинг"
+
     func didFilterSubmitButtonTapped() // Нажали на кнопку "Применить" в фильтре
 }
 
@@ -48,6 +52,10 @@ protocol ExcursionsListFiltersViewOutput: AnyObject {
     func getTimesFilterButtons() -> [FilterButtonViewModel]
 
     func didTimeFilterButtonTapped(with title: String)
+
+    func getRatingFilterButtons() -> [FilterButtonViewModel]
+
+    func didRatingFilterButtonTapped(with title: String)
 
     func didSubmitButtonTapped()
 }

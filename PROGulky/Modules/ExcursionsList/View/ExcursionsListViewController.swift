@@ -141,6 +141,10 @@ extension ExcursionsListViewController: ExcursionsListFiltersViewOutput {
         output.didTimeFilterButtonTapped(with: title)
     }
 
+    func didRatingFilterButtonTapped(with title: String) {
+        output.didRatingFilterButtonTapped(with: title)
+    }
+
     func didSubmitButtonTapped() {
         performDismissal(animated: true) // Скрыть боттом шит
         output.didFilterSubmitButtonTapped()
@@ -152,6 +156,10 @@ extension ExcursionsListViewController: ExcursionsListFiltersViewOutput {
 
     func getTimesFilterButtons() -> [FilterButtonViewModel] {
         output.getTimesFilterButtons()
+    }
+
+    func getRatingFilterButtons() -> [FilterButtonViewModel] {
+        output.getRatingFilterButtons()
     }
 }
 

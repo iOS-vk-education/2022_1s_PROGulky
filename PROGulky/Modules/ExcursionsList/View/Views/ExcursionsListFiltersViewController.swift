@@ -27,6 +27,11 @@ private struct ExcursionsListFiltersConstants {
         static let offset: CGFloat = 20
     }
 
+    enum RatingLabel {
+        static let text: String = "Рейтинг"
+        static let offset: CGFloat = 20
+    }
+
     enum SubmitButton {
         static let height: CGFloat = 50
         static let cornerRadius: CGFloat = 12
@@ -41,10 +46,11 @@ final class ExcursionsListFiltersViewController: UIViewController {
 
     var distances: [FilterButtonViewModel] // вью модель (опций) фильтра по "Дистанции"
     var times: [FilterButtonViewModel]
+    var ratings: [FilterButtonViewModel]
 
     private var selectedDistanceButton: ChipsButton? // Выбранная кнопка фильтра длины
-
     private var selectedTimeButton: ChipsButton? // Выбранная кнопка фильтра продолжительности
+    private var selectedRatingButton: ChipsButton? // Выбранная кнопка фильтра рейтинга
 
     // MARK: - Subviews
 
@@ -64,9 +70,18 @@ final class ExcursionsListFiltersViewController: UIViewController {
         return label
     }()
 
+    private let ratingLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.font = UIFont.boldSystemFont(ofSize: 21.0)
+        label.text = ExcursionsListFiltersConstants.RatingLabel.text
+        return label
+    }()
+
     private let _scrollView = UIScrollView()
     private let distanceStackView = UIStackView() // Стек вью фильтра длины
     private let timeStackView = UIStackView() // Стек вью фильтра длительности
+    private let ratingStackView = UIStackView() // Стек вью фильтра
 
     private let submitButton = UIButton()
 
@@ -82,6 +97,7 @@ final class ExcursionsListFiltersViewController: UIViewController {
         output = delegate
         distances = output.getDistanceFilterButtons()
         times = output.getTimesFilterButtons()
+        ratings = output.getRatingFilterButtons()
 
         currentHeight = initialHeight
         super.init(nibName: nil, bundle: nil)
@@ -118,6 +134,8 @@ final class ExcursionsListFiltersViewController: UIViewController {
         configureDistanceStackView()
         configurationTimeLabel()
         configurationTimeStackView()
+        configureRatingLabel()
+        configureRatingStackView()
         confugureSubmitButton()
     }
 
@@ -134,6 +152,11 @@ final class ExcursionsListFiltersViewController: UIViewController {
     private func configurationTimeLabel() {
         _scrollView.addSubviews(timeLabel)
         setTimeLabelConstraint()
+    }
+
+    private func configureRatingLabel() {
+        _scrollView.addSubview(ratingLabel)
+        setRatingLabelConstraint()
     }
 
     private func configureDistanceStackView() {
@@ -164,6 +187,21 @@ final class ExcursionsListFiltersViewController: UIViewController {
             function: #selector(timeButtonTapped)
         )
         setTimeStackViewConstratins()
+    }
+
+    private func configureRatingStackView() {
+        _scrollView.addSubview(ratingStackView)
+        ratingStackView.axis = .horizontal
+        ratingStackView.distribution = .fillEqually
+        ratingStackView.spacing = ExcursionsListFiltersConstants.StackView.spacing
+
+        addButtonToStackView(
+            for: ratingStackView,
+            items: ratings,
+            selectedTmpButton: &selectedRatingButton,
+            function: #selector(ratingButtonTapped)
+        )
+        setRatingStackViewConstraints()
     }
 
     private func confugureSubmitButton() {
@@ -205,6 +243,13 @@ final class ExcursionsListFiltersViewController: UIViewController {
         }
     }
 
+    private func setRatingLabelConstraint() {
+        ratingLabel.snp.makeConstraints { make in
+            make.top.equalTo(timeStackView.snp.bottom).offset(ExcursionsListFiltersConstants.RatingLabel.offset)
+            make.left.right.equalToSuperview().inset(ExcursionsListConstants.Screen.padding)
+        }
+    }
+
     private func setStackViewConstratins() {
         distanceStackView.snp.makeConstraints { make in
             make.top.equalTo(distanceLabel.snp.bottom).offset(ExcursionsListFiltersConstants.StackView.topOffset)
@@ -217,6 +262,15 @@ final class ExcursionsListFiltersViewController: UIViewController {
     private func setTimeStackViewConstratins() {
         timeStackView.snp.makeConstraints { make in
             make.top.equalTo(timeLabel.snp.bottom).offset(ExcursionsListFiltersConstants.StackView.topOffset)
+            make.width.equalToSuperview().offset(ExcursionsListFiltersConstants.StackView.widthOffset)
+            make.left.right.equalToSuperview().inset(ExcursionsListConstants.Screen.padding)
+            make.height.equalTo(ExcursionsListFiltersConstants.StackView.height)
+        }
+    }
+
+    private func setRatingStackViewConstraints() {
+        ratingStackView.snp.makeConstraints { make in
+            make.top.equalTo(ratingLabel.snp.bottom).offset(ExcursionsListFiltersConstants.StackView.topOffset)
             make.width.equalToSuperview().offset(ExcursionsListFiltersConstants.StackView.widthOffset)
             make.left.right.equalToSuperview().inset(ExcursionsListConstants.Screen.padding)
             make.height.equalTo(ExcursionsListFiltersConstants.StackView.height)
@@ -263,6 +317,16 @@ final class ExcursionsListFiltersViewController: UIViewController {
         selectedTimeButton?.setDefaultColor()
         selectableButton.setSelectedColor()
         selectedTimeButton = selectableButton
+    }
+
+    @objc
+    func ratingButtonTapped(selectableButton: ChipsButton) {
+        guard let title = selectableButton.titleLabel?.text else { return }
+        output.didRatingFilterButtonTapped(with: title)
+
+        selectedRatingButton?.setDefaultColor()
+        selectableButton.setSelectedColor()
+        selectedRatingButton = selectableButton
     }
 
     // MARK: - Private methods
