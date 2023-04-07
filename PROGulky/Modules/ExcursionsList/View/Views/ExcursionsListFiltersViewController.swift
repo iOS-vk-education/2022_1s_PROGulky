@@ -287,13 +287,13 @@ final class ExcursionsListFiltersViewController: UIViewController {
     }
 
     private func addButtonToStackView(for stackView: UIStackView, items: [FilterButtonViewModel], selectedTmpButton: inout ChipsButton?, function: Selector) {
-        for i in items {
+        for item in items {
             let button = ChipsButton()
-            if i.isSelected {
+            if item.isSelected {
                 button.setSelectedColor()
                 selectedTmpButton = button
             }
-            button.setTitle(i.title, for: .normal)
+            button.setTitle(item.title, for: .normal)
             button.addTarget(self, action: function, for: .touchUpInside)
             stackView.addArrangedSubview(button)
         }
