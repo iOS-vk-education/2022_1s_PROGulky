@@ -20,7 +20,7 @@ enum DistanceFilter: String {
 
 enum TimeFilter: String {
     case all = "Все"
-    case from30mTo60m = "30-60 мин"
+    case from30mTo60m = "30-60 м"
     case from1hTo2h = "1-2 ч"
     case from2hTo3h = "2-3 ч"
 }
@@ -101,6 +101,7 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
         interactor.addTimeFilterParameter(parameter: selectedTime)
         interactor.addRatingFilterParameter(parameter: selectedRating)
         interactor.loadExcursionsList()
+        view.startLoader()
     }
 
     func getDistanceFilterButtons() -> [FilterButtonViewModel] {

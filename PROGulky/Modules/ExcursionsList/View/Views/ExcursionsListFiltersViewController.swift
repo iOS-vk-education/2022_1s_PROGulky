@@ -132,8 +132,8 @@ final class ExcursionsListFiltersViewController: UIViewController {
         configureScrollView()
         configureDistanceLabel()
         configureDistanceStackView()
-        configurationTimeLabel()
-        configurationTimeStackView()
+        configureTimeLabel()
+        configureTimeStackView()
         configureRatingLabel()
         configureRatingStackView()
         confugureSubmitButton()
@@ -146,10 +146,10 @@ final class ExcursionsListFiltersViewController: UIViewController {
 
     private func configureDistanceLabel() {
         _scrollView.addSubview(distanceLabel)
-        setDurationLabelConstraint()
+        setDistanceLabelConstraint()
     }
 
-    private func configurationTimeLabel() {
+    private func configureTimeLabel() {
         _scrollView.addSubviews(timeLabel)
         setTimeLabelConstraint()
     }
@@ -174,7 +174,7 @@ final class ExcursionsListFiltersViewController: UIViewController {
         setStackViewConstratins()
     }
 
-    private func configurationTimeStackView() {
+    private func configureTimeStackView() {
         _scrollView.addSubviews(timeStackView)
         timeStackView.axis = .horizontal
         timeStackView.distribution = .fillEqually
@@ -229,7 +229,7 @@ final class ExcursionsListFiltersViewController: UIViewController {
         }
     }
 
-    private func setDurationLabelConstraint() {
+    private func setDistanceLabelConstraint() {
         distanceLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(ExcursionsListFiltersConstants.DistanceLabel.inset)
             make.left.right.equalToSuperview().inset(ExcursionsListConstants.Screen.padding)
