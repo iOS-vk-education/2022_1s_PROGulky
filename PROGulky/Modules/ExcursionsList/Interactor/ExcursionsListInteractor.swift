@@ -14,8 +14,9 @@ final class ExcursionsListInteractor {
     private let search: ExcursionsSearchHelperInput
 
     private var distanceFilterParameters: [String: String]? // Параметры фильтров длины маршрута
+    private var timeFilterParameters: [String: String]? // Параметры фильтра времени
 
-    private var filterParameters: [String: String]? // Параметры всех фильтров для поиска
+    private var filterParameters: [String: String] = [:] // Параметры всех фильтров для поиска
     private var searchText: String? // Параметр (строка) для поиска экскурсии по названию
 
     init(helper: ExcursionsSearchHelperInput) {
@@ -42,7 +43,25 @@ extension ExcursionsListInteractor: ExcursionsListInteractorInput {
         case .from6To10:
             distanceFilterParameters = ["l_f_p": "6", "l_s_p": "10"]
         }
-        filterParameters = distanceFilterParameters
+        distanceFilterParameters?.forEach { key, value in
+            filterParameters[key] = value
+        }
+    }
+
+    func addTimeFilterParameter(parameter: TimeFilter) {
+        switch parameter {
+        case .all:
+            timeFilterParameters = ["t_f_p": "0", "t_s_p": "1000"]
+        case .from30mTo60m:
+            timeFilterParameters = ["t_f_p": "30", "t_s_p": "60"]
+        case .from1hTo2h:
+            timeFilterParameters = ["t_f_p": "60", "t_s_p": "120"]
+        case .from2hTo3h:
+            timeFilterParameters = ["t_f_p": "120", "t_s_p": "180"]
+        }
+        timeFilterParameters?.forEach { key, value in
+            filterParameters[key] = value
+        }
     }
 
     // Загрузка списка экскурсий.

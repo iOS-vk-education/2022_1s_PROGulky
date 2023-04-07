@@ -31,4 +31,6 @@ protocol ExcursionsListInteractorInput: AnyObject {
     func clearSearchTextQueryParameter() // Очистить параметры поиска
 
     func addDistanceFilterParameter(parameter: DistanceFilter) // Добавить параметры фильтра по дистанции к запросу
+
+    func addTimeFilterParameter(parameter: TimeFilter) // Добавить параметры фильтра по времени к запросу
 }

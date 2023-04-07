@@ -16,6 +16,15 @@ enum DistanceFilter: String {
     case from6To10 = "6-10 км"
 }
 
+// MARK: - TimeFilter
+
+enum TimeFilter: String {
+    case all = "Все"
+    case from30mTo60m = "30-60 мин"
+    case from1hTo2h = "1-2 ч"
+    case from2hTo3h = "2-3 ч"
+}
+
 // MARK: - ExcursionsListPresenter
 
 final class ExcursionsListPresenter {
@@ -32,9 +41,15 @@ final class ExcursionsListPresenter {
     private let factory = ExcursionsListDisplayDataFactory()
     private var excursions: [PreviewExcursion] = []
 
+    // Параметры для фильтра "Длина маршрута"
     private let distances: [DistanceFilter] = [.all, .from1To3, .from3To6, .from6To10]
     private var selectedDistance: DistanceFilter = .all
-    private var filterButtonsViewModels: [FilterButtonViewModel] = []
+
+    // Параметры для фильтра "Время прогулки"
+    private let times: [TimeFilter] = [.all, .from30mTo60m, .from1hTo2h, .from2hTo3h]
+    private var selectedTime: TimeFilter = .all
+
+    // Параметры для фильтра "Рейтинг"
 
     // MARK: - Lifecycle
 
@@ -60,14 +75,26 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
         selectedDistance = selectedParameter
     }
 
+    func didTimeFilterButtonTapped(with title: String) {
+        guard let selectedParameter = TimeFilter(rawValue: title) else { return }
+        selectedTime = selectedParameter
+    }
+
     func didFilterSubmitButtonTapped() {
-        interactor.addDistanceFilterParameter(parameter: selectedDistance) // Добавить параметры к запросу
+        interactor.addDistanceFilterParameter(parameter: selectedDistance)
+        interactor.addTimeFilterParameter(parameter: selectedTime)
         interactor.loadExcursionsList()
     }
 
     func getDistanceFilterButtons() -> [FilterButtonViewModel] {
         distances.map { [weak self] distance in
             FilterButtonViewModel(title: distance.rawValue, isSelected: distance == self?.selectedDistance)
+        }
+    }
+
+    func getTimesFilterButtons() -> [FilterButtonViewModel] {
+        times.map { [weak self] t in
+            FilterButtonViewModel(title: t.rawValue, isSelected: t == self?.selectedTime)
         }
     }
 

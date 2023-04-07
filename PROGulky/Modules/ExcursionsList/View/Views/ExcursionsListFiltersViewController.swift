@@ -22,6 +22,11 @@ private struct ExcursionsListFiltersConstants {
         static let inset: CGFloat = 20
     }
 
+    enum TimeLabel {
+        static let text: String = "Время прогулки"
+        static let offset: CGFloat = 20
+    }
+
     enum SubmitButton {
         static let height: CGFloat = 50
         static let cornerRadius: CGFloat = 12
@@ -35,6 +40,11 @@ final class ExcursionsListFiltersViewController: UIViewController {
     var output: ExcursionsListFiltersViewOutput!
 
     var distances: [FilterButtonViewModel] // вью модель (опций) фильтра по "Дистанции"
+    var times: [FilterButtonViewModel]
+
+    private var selectedDistanceButton: ChipsButton? // Выбранная кнопка фильтра длины
+
+    private var selectedTimeButton: ChipsButton? // Выбранная кнопка фильтра продолжительности
 
     // MARK: - Subviews
 
@@ -46,8 +56,17 @@ final class ExcursionsListFiltersViewController: UIViewController {
         return label
     }()
 
+    private let timeLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.font = UIFont.boldSystemFont(ofSize: 21.0)
+        label.text = ExcursionsListFiltersConstants.TimeLabel.text
+        return label
+    }()
+
     private let _scrollView = UIScrollView()
-    private let stackView = UIStackView()
+    private let distanceStackView = UIStackView() // Стек вью фильтра длины
+    private let timeStackView = UIStackView() // Стек вью фильтра длительности
 
     private let submitButton = UIButton()
 
@@ -62,6 +81,7 @@ final class ExcursionsListFiltersViewController: UIViewController {
     init(initialHeight: CGFloat, delegate: ExcursionsListFiltersViewOutput) {
         output = delegate
         distances = output.getDistanceFilterButtons()
+        times = output.getTimesFilterButtons()
 
         currentHeight = initialHeight
         super.init(nibName: nil, bundle: nil)
@@ -94,8 +114,10 @@ final class ExcursionsListFiltersViewController: UIViewController {
         view.addSubview(_scrollView)
 
         configureScrollView()
-        configureDurationLabel()
-        configureStackView()
+        configureDistanceLabel()
+        configureDistanceStackView()
+        configurationTimeLabel()
+        configurationTimeStackView()
         confugureSubmitButton()
     }
 
@@ -104,19 +126,44 @@ final class ExcursionsListFiltersViewController: UIViewController {
         setScrollViewConstratints()
     }
 
-    private func configureDurationLabel() {
+    private func configureDistanceLabel() {
         _scrollView.addSubview(distanceLabel)
         setDurationLabelConstraint()
     }
 
-    private func configureStackView() {
-        _scrollView.addSubview(stackView)
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = ExcursionsListFiltersConstants.StackView.spacing
+    private func configurationTimeLabel() {
+        _scrollView.addSubviews(timeLabel)
+        setTimeLabelConstraint()
+    }
 
-        addButtonsToStackView()
+    private func configureDistanceStackView() {
+        _scrollView.addSubview(distanceStackView)
+        distanceStackView.axis = .horizontal
+        distanceStackView.distribution = .fillEqually
+        distanceStackView.spacing = ExcursionsListFiltersConstants.StackView.spacing
+
+        addButtonToStackView(
+            for: distanceStackView,
+            items: distances,
+            selectedTmpButton: &selectedDistanceButton,
+            function: #selector(filterButtonTapped)
+        )
         setStackViewConstratins()
+    }
+
+    private func configurationTimeStackView() {
+        _scrollView.addSubviews(timeStackView)
+        timeStackView.axis = .horizontal
+        timeStackView.distribution = .fillEqually
+        timeStackView.spacing = ExcursionsListFiltersConstants.StackView.spacing
+
+        addButtonToStackView(
+            for: timeStackView,
+            items: times,
+            selectedTmpButton: &selectedTimeButton,
+            function: #selector(timeButtonTapped)
+        )
+        setTimeStackViewConstratins()
     }
 
     private func confugureSubmitButton() {
@@ -151,9 +198,25 @@ final class ExcursionsListFiltersViewController: UIViewController {
         }
     }
 
+    private func setTimeLabelConstraint() {
+        timeLabel.snp.makeConstraints { make in
+            make.top.equalTo(distanceStackView.snp.bottom).offset(ExcursionsListFiltersConstants.TimeLabel.offset)
+            make.left.right.equalToSuperview().inset(ExcursionsListConstants.Screen.padding)
+        }
+    }
+
     private func setStackViewConstratins() {
-        stackView.snp.makeConstraints { make in
+        distanceStackView.snp.makeConstraints { make in
             make.top.equalTo(distanceLabel.snp.bottom).offset(ExcursionsListFiltersConstants.StackView.topOffset)
+            make.width.equalToSuperview().offset(ExcursionsListFiltersConstants.StackView.widthOffset)
+            make.left.right.equalToSuperview().inset(ExcursionsListConstants.Screen.padding)
+            make.height.equalTo(ExcursionsListFiltersConstants.StackView.height)
+        }
+    }
+
+    private func setTimeStackViewConstratins() {
+        timeStackView.snp.makeConstraints { make in
+            make.top.equalTo(timeLabel.snp.bottom).offset(ExcursionsListFiltersConstants.StackView.topOffset)
             make.width.equalToSuperview().offset(ExcursionsListFiltersConstants.StackView.widthOffset)
             make.left.right.equalToSuperview().inset(ExcursionsListConstants.Screen.padding)
             make.height.equalTo(ExcursionsListFiltersConstants.StackView.height)
@@ -169,17 +232,15 @@ final class ExcursionsListFiltersViewController: UIViewController {
         }
     }
 
-    private var selectedDistanceButton: ChipsButton? // Выбранная кнопка фильтра длины
-
-    private func addButtonsToStackView() {
-        for d in distances {
+    private func addButtonToStackView(for stackView: UIStackView, items: [FilterButtonViewModel], selectedTmpButton: inout ChipsButton?, function: Selector) {
+        for i in items {
             let button = ChipsButton()
-            if d.isSelected {
+            if i.isSelected {
                 button.setSelectedColor()
-                selectedDistanceButton = button
+                selectedTmpButton = button
             }
-            button.setTitle(d.title, for: .normal)
-            button.addTarget(self, action: #selector(filterButtonTapped), for: .touchUpInside)
+            button.setTitle(i.title, for: .normal)
+            button.addTarget(self, action: function, for: .touchUpInside)
             stackView.addArrangedSubview(button)
         }
     }
@@ -192,6 +253,16 @@ final class ExcursionsListFiltersViewController: UIViewController {
         selectedDistanceButton?.setDefaultColor() // Выбранная (старая) становится серой
         selectableButton.setSelectedColor() // Выбираемая (сейчас нажатая) становится синей
         selectedDistanceButton = selectableButton
+    }
+
+    @objc
+    func timeButtonTapped(selectableButton: ChipsButton) {
+        guard let title = selectableButton.titleLabel?.text else { return }
+        output.didTimeFilterButtonTapped(with: title)
+
+        selectedTimeButton?.setDefaultColor()
+        selectableButton.setSelectedColor()
+        selectedTimeButton = selectableButton
     }
 
     // MARK: - Private methods
