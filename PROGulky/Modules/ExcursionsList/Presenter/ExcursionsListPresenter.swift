@@ -59,7 +59,7 @@ final class ExcursionsListPresenter {
     private var selectedTime: TimeFilter = .all
 
     // Параметры для фильтра "Рейтинг"
-    private let ratings: [RatingFilter] = [.all, .high, .middle]
+    private let ratings: [RatingFilter] = [.all, .middle, .high]
     private var selectedRating: RatingFilter = .all
 
     // MARK: - Lifecycle
@@ -111,8 +111,8 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
     }
 
     func getTimesFilterButtons() -> [FilterButtonViewModel] {
-        times.map { [weak self] t in
-            FilterButtonViewModel(title: t.rawValue, isSelected: t == self?.selectedTime)
+        times.map { [weak self] time in
+            FilterButtonViewModel(title: time.rawValue, isSelected: time == self?.selectedTime)
         }
     }
 
