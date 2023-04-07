@@ -102,6 +102,27 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
         interactor.addRatingFilterParameter(parameter: selectedRating)
         interactor.loadExcursionsList()
         view.startLoader()
+        configureCountSelectedFilters()
+    }
+
+    // Вычислить количество выбранных фильтров и показать это количество во вью
+    private func configureCountSelectedFilters() {
+        var countFilters = 0
+        if selectedDistance != .all {
+            countFilters += 1
+        }
+        if selectedTime != .all {
+            countFilters += 1
+        }
+        if selectedRating != .all {
+            countFilters += 1
+        }
+
+        if countFilters != 0 {
+            view.configureFilterButtonBadge(with: "\(countFilters)")
+        } else {
+            view.hideFilterButtonBadge()
+        }
     }
 
     func getDistanceFilterButtons() -> [FilterButtonViewModel] {

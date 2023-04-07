@@ -17,6 +17,28 @@ final class ExcursionsListViewController: CustomViewController {
     private let searchController = UISearchController()
     private var excursionsTable = UITableView(frame: .zero, style: .plain)
 
+    private let badgeCount: UILabel = {
+        let label = UILabel(frame: CGRect(x: 20, y: -10, width: 20, height: 20))
+        label.layer.borderColor = UIColor.clear.cgColor
+        label.layer.borderWidth = 2
+        label.layer.cornerRadius = label.bounds.size.height / 2
+        label.textAlignment = .center
+        label.layer.masksToBounds = true
+        label.textColor = .white
+        label.font = label.font.withSize(12)
+        label.backgroundColor = .red
+        label.text = "2"
+
+        return label
+    }()
+
+    // Кнопка фильтра
+    private let filterButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: 22))
+        button.setBackgroundImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
+        return button
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -55,12 +77,14 @@ final class ExcursionsListViewController: CustomViewController {
 //        navigationItem.title = ExcursionsListConstants.NavBar.title
         navigationController?.view.backgroundColor = ExcursionsListConstants.NavBar.backgroundColor
 
+        // TODO: Сделать показ только для пользователя с определенной ролью
         let rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .add,
             target: self,
             action: #selector(didTapAddButton)
         )
 
+        //  Не используется
         let filterButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "slider.horizontal.3")?.withRenderingMode(.alwaysOriginal),
             style: .plain,
@@ -68,10 +92,18 @@ final class ExcursionsListViewController: CustomViewController {
             action: #selector(handleShowBottomSheet)
         )
 
-        navigationItem.rightBarButtonItems = [
-            rightBarButtonItem,
-            filterButtonItem
-        ]
+        badgeCount.isHidden = true
+        filterButton.addSubview(badgeCount)
+        let rightBarFilterButtonItem = UIBarButtonItem(customView: filterButton)
+        filterButton.addTarget(self, action: #selector(handleShowBottomSheet), for: .touchUpInside)
+
+        navigationItem.rightBarButtonItem = rightBarFilterButtonItem
+
+//        navigationItem.rightBarButtonItems = [
+//            rightBarButtonItem,
+//            filterButtonItem,
+//            l
+//        ]
 
         let leftBarButtonItem = UIBarButtonItem(customView: greetingMessageView)
         navigationItem.leftBarButtonItem = leftBarButtonItem
@@ -166,6 +198,15 @@ extension ExcursionsListViewController: ExcursionsListFiltersViewOutput {
 // MARK: ExcursionsListViewInput
 
 extension ExcursionsListViewController: ExcursionsListViewInput {
+    func configureFilterButtonBadge(with value: String) {
+        badgeCount.isHidden = false
+        badgeCount.text = value
+    }
+
+    func hideFilterButtonBadge() {
+        badgeCount.isHidden = true
+    }
+
     func configureGreetingMessage(with viewModel: GreetingViewModel) {
         setupGreetingMessaageText(with: viewModel)
     }
