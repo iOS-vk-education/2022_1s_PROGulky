@@ -77,7 +77,7 @@ protocol ExcursionsListViewInput: AnyObject {
 
     func configureGreetingMessage(with user: GreetingViewModel) // Конфигурация вьюхи приветствия
 
-    func configureFilterButtonBadge(with count: String) // Установить бейдж с количеством выбранных фильтров
+    func showFilterButtonBadge(with text: String) // Показать бейдж
 
-    func hideFilterButtonBadge() // Убрать бейдж с количеством выбранных фильтров
+    func hideFilterButtonBadge() // Скрыть бейдж с количеством выбранных фильтров
 }
