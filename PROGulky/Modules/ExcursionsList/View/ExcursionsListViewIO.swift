@@ -76,4 +76,8 @@ protocol ExcursionsListViewInput: AnyObject {
     func hideErrorView()
 
     func configureGreetingMessage(with user: GreetingViewModel) // Конфигурация вьюхи приветствия
+
+    func showFilterButtonBadge(with text: String) // Показать бейдж
+
+    func hideFilterButtonBadge() // Скрыть бейдж с количеством выбранных фильтров
 }

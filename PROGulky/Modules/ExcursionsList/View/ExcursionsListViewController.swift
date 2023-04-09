@@ -13,6 +13,7 @@ import SnapKit
 final class ExcursionsListViewController: CustomViewController {
     var output: ExcursionsListViewOutput!
 
+    private let filterBadgeButton = FilterBadgeButton(frame: CGRect(x: 0, y: 0, width: 25, height: 22))
     private var greetingMessageView = GreetingMessageView()
     private let searchController = UISearchController()
     private var excursionsTable = UITableView(frame: .zero, style: .plain)
@@ -55,23 +56,17 @@ final class ExcursionsListViewController: CustomViewController {
 //        navigationItem.title = ExcursionsListConstants.NavBar.title
         navigationController?.view.backgroundColor = ExcursionsListConstants.NavBar.backgroundColor
 
+        // TODO: Сделать показ только для пользователя с определенной ролью
         let rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .add,
             target: self,
             action: #selector(didTapAddButton)
         )
 
-        let filterButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "slider.horizontal.3")?.withRenderingMode(.alwaysOriginal),
-            style: .plain,
-            target: self,
-            action: #selector(handleShowBottomSheet)
-        )
+        let rightBarFilterButtonItem = UIBarButtonItem(customView: filterBadgeButton)
+        filterBadgeButton.addTarget(self, action: #selector(handleShowBottomSheet), for: .touchUpInside)
 
-        navigationItem.rightBarButtonItems = [
-            rightBarButtonItem,
-            filterButtonItem
-        ]
+        navigationItem.rightBarButtonItem = rightBarFilterButtonItem
 
         let leftBarButtonItem = UIBarButtonItem(customView: greetingMessageView)
         navigationItem.leftBarButtonItem = leftBarButtonItem
@@ -166,6 +161,15 @@ extension ExcursionsListViewController: ExcursionsListFiltersViewOutput {
 // MARK: ExcursionsListViewInput
 
 extension ExcursionsListViewController: ExcursionsListViewInput {
+    func showFilterButtonBadge(with text: String) {
+        filterBadgeButton.setupTextToBadgeLabel(with: text)
+        filterBadgeButton.showBadge()
+    }
+
+    func hideFilterButtonBadge() {
+        filterBadgeButton.hideBadge()
+    }
+
     func configureGreetingMessage(with viewModel: GreetingViewModel) {
         setupGreetingMessaageText(with: viewModel)
     }

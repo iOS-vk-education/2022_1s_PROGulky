@@ -7,31 +7,49 @@
 
 import Foundation
 
+// MARK: - BaseFilter
+
+protocol BaseFilter {
+    var isDefault: Bool { get }
+}
+
 // MARK: - DistanceFilter
 
-enum DistanceFilter: String {
+enum DistanceFilter: String, BaseFilter {
     case all = "Все"
     case from1To3 = "1-3 км"
     case from3To6 = "3-6 км"
     case from6To10 = "6-10 км"
+
+    var isDefault: Bool {
+        self == .all
+    }
 }
 
 // MARK: - TimeFilter
 
-enum TimeFilter: String {
+enum TimeFilter: String, BaseFilter {
     case all = "Все"
     case from30mTo60m = "30-60 м"
     case from1hTo2h = "1-2 ч"
     case from2hTo3h = "2-3 ч"
+
+    var isDefault: Bool {
+        self == .all
+    }
 }
 
 // MARK: - RatingFilter
 
-enum RatingFilter: String {
+enum RatingFilter: String, BaseFilter {
     case all = "Все"
     case high = "Лучшее"
     case middle = "Хорошее"
     case low = "3.5-4.0"
+
+    var isDefault: Bool {
+        self == .all
+    }
 }
 
 // MARK: - ExcursionsListPresenter
@@ -102,6 +120,22 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
         interactor.addRatingFilterParameter(parameter: selectedRating)
         interactor.loadExcursionsList()
         view.startLoader()
+        configureCountSelectedFilters()
+    }
+
+    // Вычислить количество выбранных фильтров и показать это количество во вью
+    private func configureCountSelectedFilters() {
+        let selectedFilters = [selectedDistance, selectedTime, selectedRating] as [BaseFilter]
+        let selectedFiltersCount = selectedFilters.reduce(0) { current, filter in
+            let increment = !filter.isDefault ? 1 : 0
+            return current + increment
+        }
+
+        if selectedFiltersCount != 0 {
+            view.showFilterButtonBadge(with: "\(selectedFiltersCount)")
+        } else {
+            view.hideFilterButtonBadge()
+        }
     }
 
     func getDistanceFilterButtons() -> [FilterButtonViewModel] {

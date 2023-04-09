@@ -81,6 +81,7 @@
 		54D192F929D4DDB40031F9E1 /* BottomSheetNavigationPullBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D192F829D4DDB40031F9E1 /* BottomSheetNavigationPullBar.swift */; };
 		54D91DBE2930C1ED0097AF52 /* FavouritesExcursionsConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D91DBD2930C1ED0097AF52 /* FavouritesExcursionsConstants.swift */; };
 		54D91DC12930C5150097AF52 /* FavouritesExcursionMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D91DC02930C5150097AF52 /* FavouritesExcursionMessageView.swift */; };
+		54E1A43D29E1F52A0065305A /* FilterBadgeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54E1A43C29E1F5290065305A /* FilterBadgeButton.swift */; };
 		54FD291829DA2C16001E1112 /* ChipsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54FD291729DA2C16001E1112 /* ChipsButton.swift */; };
 		58650139389367223C2EFB8B /* DetailPlaceInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9D40BD2E032FE9D70ED86A /* DetailPlaceInteractorIO.swift */; };
 		59C9841865DA4E7E9DE9D0D2 /* MapDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA531D5B3741522C9B7B6B5 /* MapDetailInteractor.swift */; };
@@ -275,6 +276,7 @@
 		54D192F829D4DDB40031F9E1 /* BottomSheetNavigationPullBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetNavigationPullBar.swift; sourceTree = "<group>"; };
 		54D91DBD2930C1ED0097AF52 /* FavouritesExcursionsConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExcursionsConstants.swift; sourceTree = "<group>"; };
 		54D91DC02930C5150097AF52 /* FavouritesExcursionMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExcursionMessageView.swift; sourceTree = "<group>"; };
+		54E1A43C29E1F5290065305A /* FilterBadgeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterBadgeButton.swift; sourceTree = "<group>"; };
 		54FD291729DA2C16001E1112 /* ChipsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipsButton.swift; sourceTree = "<group>"; };
 		55949AAC5795E04EFB3A815D /* LoginBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoginBuilder.swift; sourceTree = "<group>"; };
 		55C2ACAEFEC5D0707DD2828D /* MapDetailPresenter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MapDetailPresenter.swift; sourceTree = "<group>"; };
@@ -758,6 +760,7 @@
 		54FD291629DA2BA0001E1112 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				54E1A43C29E1F5290065305A /* FilterBadgeButton.swift */,
 				54FD291729DA2C16001E1112 /* ChipsButton.swift */,
 			);
 			path = Buttons;
@@ -1590,6 +1593,7 @@
 				666A036B2935DE0F006E3A98 /* MapInteractor.swift in Sources */,
 				DD491B525EE911A4E7C8429F /* ExcursionsListInteractor.swift in Sources */,
 				6675D20B29126FD80058A4B0 /* CoordinatorProtocol.swift in Sources */,
+				54E1A43D29E1F52A0065305A /* FilterBadgeButton.swift in Sources */,
 				F83E1A9F4C1F8D6516201126 /* ExcursionsListRouterInput.swift in Sources */,
 				1D19F4AB810FE4440C1F30EF /* ExcursionsListRouter.swift in Sources */,
 				5478D22329439C0D00A3C23D /* AddExcursionConstants.swift in Sources */,
