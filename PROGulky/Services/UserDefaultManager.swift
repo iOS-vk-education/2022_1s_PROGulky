@@ -10,7 +10,8 @@ import Foundation
 // MARK: - UserDefaultsLoginServiceProtocol
 
 protocol UserDefaultsLoginServiceProtocol {
-    func setUserAuthData(user: User)
+    func setUserData(user: User)
+    func setUserAuthData(token: Auth)
     func removeUserAuthData()
     func getUserData() -> UserData
 }
@@ -21,13 +22,19 @@ final class UserDefaultsManager: UserDefaultsLoginServiceProtocol {
     static let shared = UserDefaultsManager()
     private let defaults = UserDefaults.standard
 
-    func setUserAuthData(user: User) {
-        defaults.set(user.token, forKey: UserKeys.token.rawValue)
+    func setUserAuthData(token: Auth) {
+        defaults.set(token.accessToken, forKey: UserKeys.accessToken.rawValue)
+        defaults.set(token.refreshToken, forKey: UserKeys.refreshToken.rawValue)
+        defaults.set(true, forKey: UserKeys.isLogin.rawValue)
+    }
+
+    func setUserData(user: User) {
+//        defaults.set(user.token, forKey: UserKeys.token.rawValue)
         defaults.set(user.id, forKey: UserKeys.id.rawValue)
         defaults.set(user.email, forKey: UserKeys.email.rawValue)
         defaults.set(user.name, forKey: UserKeys.name.rawValue)
-        defaults.set(user.role.description, forKey: UserKeys.role.rawValue)
-        defaults.set(true, forKey: UserKeys.isLogin.rawValue)
+        defaults.set(user.role?.description, forKey: UserKeys.role.rawValue)
+//        defaults.set(true, forKey: UserKeys.isLogin.rawValue)
         defaults.synchronize()
     }
 
@@ -75,5 +82,20 @@ final class UserDefaultsManager: UserDefaultsLoginServiceProtocol {
             role: displayRole ?? ""
         )
         return userData
+    }
+
+    func getToken() -> Auth {
+        let accessToken = defaults.string(forKey: UserKeys.accessToken.rawValue)
+        let refreshToken = defaults.string(forKey: UserKeys.refreshToken.rawValue)
+        let refreshExpiresAt = defaults.string(forKey: UserKeys.refreshExpiresAt.rawValue)
+
+        let token = Auth(
+            accessToken: accessToken ?? "",
+            refreshToken: refreshToken ?? "",
+            refreshExpiresAt: refreshExpiresAt ?? "",
+            message: "",
+            statusCode: 0
+        )
+        return token
     }
 }

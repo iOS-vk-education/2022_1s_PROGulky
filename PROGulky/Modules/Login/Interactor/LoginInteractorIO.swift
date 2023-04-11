@@ -10,7 +10,7 @@ import Foundation
 // MARK: - LoginInteractorOutput
 
 protocol LoginInteractorOutput: AnyObject {
-    func successLogin(user: User)
+    func successLogin(id: User)
     func handleError(error: Error)
 }
 

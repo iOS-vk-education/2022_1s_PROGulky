@@ -145,6 +145,7 @@
 		A553F1D229199288001E679C /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D129199288001E679C /* UIColorExtension.swift */; };
 		A553F1DA291A6F27001E679C /* TextConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A553F1D9291A6F27001E679C /* TextConstants.swift */; };
 		A55CD31B293E835A00C4F1A6 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CD31A293E835A00C4F1A6 /* UserDefaultsKeys.swift */; };
+		A566E47029DB06530018EC85 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566E46F29DB06530018EC85 /* ApiError.swift */; };
 		A57A639B2954B15100D0F4A7 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57A639A2954B15100D0F4A7 /* UserDefaultManager.swift */; };
 		A5B7537F2913FBA4001D1978 /* ProfileUserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */; };
 		A5D309F42928F403005D2275 /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */; };
@@ -344,6 +345,7 @@
 		A553F1D129199288001E679C /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		A553F1D9291A6F27001E679C /* TextConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextConstants.swift; sourceTree = "<group>"; };
 		A55CD31A293E835A00C4F1A6 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
+		A566E46F29DB06530018EC85 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		A57A639A2954B15100D0F4A7 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoHeader.swift; sourceTree = "<group>"; };
 		A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
@@ -692,6 +694,7 @@
 				543F2CAE292E726000120116 /* Place.swift */,
 				A52CA44F2939C333008CBE64 /* User.swift */,
 				A55CD31A293E835A00C4F1A6 /* UserDefaultsKeys.swift */,
+				A566E46F29DB06530018EC85 /* ApiError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1644,6 +1647,7 @@
 				543F2CB8292E728B00120116 /* PlaceCell.swift in Sources */,
 				5417A2AE29B1F23600C63D8E /* GreetingMessageView.swift in Sources */,
 				66496F6F295876E1000308D6 /* CreateExcursionSettingsSections.swift in Sources */,
+				A566E47029DB06530018EC85 /* ApiError.swift in Sources */,
 				6629F878295A150400FC985A /* UIApplication+endEditing.swift in Sources */,
 				A5074CE5292DC9AF005692EB /* CustomButton.swift in Sources */,
 				666A03682935DE0F006E3A98 /* MapBuilder.swift in Sources */,

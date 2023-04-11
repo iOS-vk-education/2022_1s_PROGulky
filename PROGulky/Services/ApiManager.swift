@@ -14,10 +14,12 @@ enum ApiType {
     case addFavorites(token: String, excursionId: String) // Добавление экскурсии в избранное
     case removeFavorites(token: String, excursionId: String) // Удалить экскурсию из избранного
     case login // Логин
+    case getUserInfo(token: String) // получение информации о себе
     case registration // Регистрация
     case getFavoritesExcursions(token: String) // Избранные по токену для пользователя
     case getPlaces
     case postExcursion(token: String, excursion: ExcursionForPost)
+    case updateAccessTokenByRefresh
 
     var baseURLString: String {
         "http://37.140.195.167:5000"
@@ -32,6 +34,8 @@ enum ApiType {
         case let .getFavoritesExcursions(token):
             return ["Authorization": "Bearer \(token)"]
         case let .postExcursion(token, _):
+            return ["Authorization": "Bearer \(token)"]
+        case let .getUserInfo(token):
             return ["Authorization": "Bearer \(token)"]
         default:
             return [:]
@@ -48,6 +52,8 @@ enum ApiType {
         case .registration: return "api/v1/auth/registration"
         case .getFavoritesExcursions: return "api/v1/excursions/favorites_excursions"
         case .getPlaces: return "api/v1/places"
+        case .getUserInfo: return "api/v1/auth/me"
+        case .updateAccessTokenByRefresh: return "api/v1/auth/token/refresh"
         }
     }
 
@@ -97,7 +103,13 @@ enum ApiType {
             return request
         case .postExcursion:
             request.httpMethod = "POST"
-
+            return request
+        case .getUserInfo:
+            request.httpMethod = "GET"
+            return request
+        case .updateAccessTokenByRefresh:
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
         }
     }
@@ -201,14 +213,76 @@ final class ApiManager {
         task.resume()
     }
 
-    func login(_ loginDTO: LoginDTO, completion: @escaping (Result<User, Error>) -> Void) {
+    func login(_ loginDTO: LoginDTO, completion: @escaping (Result<Auth, Error>) -> Void) {
         let json: [String: Any] = [
             "email": loginDTO.email,
-            "password": loginDTO.password
+            "password": loginDTO.password,
+            "deviceFingerprint": "iOS"
         ]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
 
         var request = ApiType.login.request
+        request.httpBody = jsonData
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+            guard let data = data else { return }
+            print(data)
+            do {
+                let token = try JSONDecoder().decode(Auth.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(token))
+                }
+                print("accessToken", token.accessToken)
+            } catch let jsonError {
+                print("Failed decode error:", jsonError)
+                DispatchQueue.main.async {
+                    completion(.failure(jsonError))
+                }
+            }
+        }
+        task.resume()
+    }
+
+    func getUserInfo(completion: @escaping (Result<User, Error>) -> Void, token: String) {
+        let request = ApiType.getUserInfo(token: token).request
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error = error {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+            guard let data = data else { return }
+            print(data)
+            do {
+                let user = try JSONDecoder().decode(User.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(user))
+                }
+                print("accessToken", user.name)
+            } catch let jsonError {
+                print("Failed decode error:", jsonError)
+                DispatchQueue.main.async {
+                    completion(.failure(jsonError))
+                }
+            }
+        }
+        task.resume()
+    }
+
+    func registration(_ registrtionDTO: RegistrationDTO, completion: @escaping (Result<User, Error>) -> Void) {
+        let json: [String: Any] = [
+            "name": registrtionDTO.nickname,
+            "email": registrtionDTO.email,
+            "password": registrtionDTO.password,
+            "deviceFingerprint": "iOS"
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+        var request = ApiType.registration.request
         request.httpBody = jsonData
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
@@ -233,15 +307,19 @@ final class ApiManager {
         task.resume()
     }
 
-    func registration(_ registrtionDTO: RegistrationDTO, completion: @escaping (Result<User, Error>) -> Void) {
+    func updateAccessTokenByRefresh(completion: @escaping (Result<Auth, Error>) -> Void) {
+        guard let token = UserDefaults.standard.string(forKey: UserKeys.refreshToken.rawValue) else {
+            return
+        }
+        print("updateAccessTokenByRefresh")
         let json: [String: Any] = [
-            "name": registrtionDTO.nickname,
-            "email": registrtionDTO.email,
-            "password": registrtionDTO.password
+            "deviceFingerprint": "iOS",
+            "refreshToken": token
         ]
+        print(json)
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
 
-        var request = ApiType.registration.request
+        var request = ApiType.updateAccessTokenByRefresh.request
         request.httpBody = jsonData
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
@@ -250,12 +328,12 @@ final class ApiManager {
                 }
             }
             guard let data = data else { return }
-
             do {
-                let user = try JSONDecoder().decode(User.self, from: data)
+                let token = try JSONDecoder().decode(Auth.self, from: data)
                 DispatchQueue.main.async {
-                    completion(.success(user))
+                    completion(.success(token))
                 }
+                print("accessToken", token.accessToken)
             } catch let jsonError {
                 print("Failed decode error:", jsonError)
                 DispatchQueue.main.async {

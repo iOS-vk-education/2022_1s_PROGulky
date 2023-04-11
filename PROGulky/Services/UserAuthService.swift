@@ -25,7 +25,7 @@ final class UserAuthService {
         ApiManager.shared.registration(dto) { result in
             switch result {
             case let .success(user):
-                UserDefaultsManager.shared.setUserAuthData(user: user)
+                UserDefaultsManager.shared.setUserData(user: user)
                 DispatchQueue.main.async {
                     completion(.success(user))
                 }
@@ -37,13 +37,13 @@ final class UserAuthService {
         }
     }
 
-    func login(dto: LoginDTO, completion: @escaping (Result<User, Error>) -> Void) {
+    func login(dto: LoginDTO, completion: @escaping (Result<Auth, Error>) -> Void) {
         ApiManager.shared.login(dto) { result in
             switch result {
-            case let .success(user):
-                UserDefaultsManager.shared.setUserAuthData(user: user)
+            case let .success(token):
+                UserDefaultsManager.shared.setUserAuthData(token: token)
                 DispatchQueue.main.async {
-                    completion(.success(user))
+                    completion(.success(token))
                 }
             case let .failure(failure):
                 DispatchQueue.main.async {
@@ -51,6 +51,26 @@ final class UserAuthService {
                 }
             }
         }
+    }
+
+    func setUserInfo(completion: @escaping (Result<User, Error>) -> Void) {
+        let token = UserService.shared.userToken
+        ApiManager.shared.getUserInfo(
+            completion: { result in
+                switch result {
+                case let .success(user):
+                    UserDefaultsManager.shared.setUserData(user: user)
+                    DispatchQueue.main.async {
+                        completion(.success(user))
+                    }
+                case let .failure(failure):
+                    DispatchQueue.main.async {
+                        completion(.failure(failure))
+                    }
+                }
+            },
+            token: token
+        )
     }
 
     func logout() {

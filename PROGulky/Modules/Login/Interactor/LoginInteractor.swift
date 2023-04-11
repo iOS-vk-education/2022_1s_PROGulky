@@ -19,8 +19,16 @@ extension LoginInteractor: LoginInteractorInput {
     func login(_ loginDTO: LoginDTO) {
         UserAuthService.shared.login(dto: loginDTO) { [weak self] result in
             switch result {
-            case let .success(user):
-                self?.output?.successLogin(user: user)
+            case let .success(token):
+                UserAuthService.shared.setUserInfo { [weak self] result in
+                    switch result {
+                    case let .success(token):
+                        self?.output?.successLogin(id: token)
+                    case let .failure(error):
+                        self?.output?.handleError(error: error)
+                    }
+                }
+            //                self?.output?.successLogin(token: token)
             case let .failure(error):
                 self?.output?.handleError(error: error)
             }

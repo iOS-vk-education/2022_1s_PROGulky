@@ -49,7 +49,7 @@ extension LoginPresenter: LoginViewOutput {
 // MARK: LoginInteractorOutput
 
 extension LoginPresenter: LoginInteractorOutput {
-    func successLogin(user: User) {
+    func successLogin(id token: User) {
         moduleOutput?.loginModuleWantsToOpenProfile()
     }
 
