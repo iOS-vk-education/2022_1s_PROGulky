@@ -8,12 +8,10 @@
 // MARK: - User
 
 struct User: Codable {
-    let id: Int?
-    let name: String?
-    let email: String?
-    let role: Role?
-    let message: String?
-    let statusCode: Int?
+    let id: Int
+    let name: String
+    let email: String
+    let role: Role
 }
 
 // MARK: - Role
@@ -30,8 +28,6 @@ struct Auth: Codable {
     let accessToken: String?
     let refreshToken: String?
     let refreshExpiresAt: String?
-    let message: String?
-    let statusCode: Int?
 }
 
 // MARK: - LoginDTO

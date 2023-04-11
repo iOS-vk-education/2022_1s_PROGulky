@@ -16,21 +16,25 @@ final class LoginInteractor {
 // MARK: LoginInteractorInput
 
 extension LoginInteractor: LoginInteractorInput {
+    // Для логина необходимо
+    // 1. Получить токены пользователя (ручка /login)
+    // 2. Получить персональные данные пользователя (ручка /me)
+    // Тут это происходит во такой нетривиальной вложенности
     func login(_ loginDTO: LoginDTO) {
         UserAuthService.shared.login(dto: loginDTO) { [weak self] result in
             switch result {
-            case let .success(token):
-                UserAuthService.shared.setUserInfo { [weak self] result in
+            case let .success(authData):
+                guard let token = authData.accessToken else { return }
+                UserAuthService.shared.getMeInfo(completion: { [weak self] result in
                     switch result {
-                    case let .success(token):
-                        self?.output?.successLogin(id: token)
+                    case let .success(userData):
+                        self?.output?.didSuccessLogin(with: userData)
                     case let .failure(error):
-                        self?.output?.handleError(error: error)
+                        self?.output?.didHandleError(with: error)
                     }
-                }
-            //                self?.output?.successLogin(token: token)
+                }, token: token)
             case let .failure(error):
-                self?.output?.handleError(error: error)
+                self?.output?.didHandleError(with: error)
             }
         }
     }

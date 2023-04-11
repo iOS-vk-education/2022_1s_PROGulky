@@ -25,7 +25,7 @@ final class UserAuthService {
         ApiManager.shared.registration(dto) { result in
             switch result {
             case let .success(user):
-                UserDefaultsManager.shared.setUserData(user: user)
+                UserDefaultsManager.shared.saveUserData(user: user)
                 DispatchQueue.main.async {
                     completion(.success(user))
                 }
@@ -37,13 +37,14 @@ final class UserAuthService {
         }
     }
 
+    // Получение токенов
     func login(dto: LoginDTO, completion: @escaping (Result<Auth, Error>) -> Void) {
         ApiManager.shared.login(dto) { result in
             switch result {
-            case let .success(token):
-                UserDefaultsManager.shared.setUserAuthData(token: token)
+            case let .success(authData):
+                UserDefaultsManager.shared.saveUserAuthData(authData: authData)
                 DispatchQueue.main.async {
-                    completion(.success(token))
+                    completion(.success(authData))
                 }
             case let .failure(failure):
                 DispatchQueue.main.async {
@@ -53,13 +54,12 @@ final class UserAuthService {
         }
     }
 
-    func setUserInfo(completion: @escaping (Result<User, Error>) -> Void) {
-        let token = UserService.shared.userToken
-        ApiManager.shared.getUserInfo(
+    func getMeInfo(completion: @escaping (Result<User, Error>) -> Void, token: String) {
+        ApiManager.shared.getMeInfo(
             completion: { result in
                 switch result {
                 case let .success(user):
-                    UserDefaultsManager.shared.setUserData(user: user)
+                    UserDefaultsManager.shared.saveUserData(user: user)
                     DispatchQueue.main.async {
                         completion(.success(user))
                     }
@@ -70,6 +70,31 @@ final class UserAuthService {
                 }
             },
             token: token
+        )
+    }
+
+    func updateTokens() {
+        guard let refreshToken = UserDefaults.standard.string(forKey: UserKeys.refreshToken.rawValue) else {
+            return
+        }
+
+        ApiManager.shared.updateAccessTokenByRefresh(
+            completion: { result in
+                switch result {
+                case let .success(authData):
+                    UserDefaultsManager.shared.saveUserAuthData(authData: authData)
+                case let .failure(error):
+                    switch error.code {
+                    case 401:
+                        // TODO: чистить локальное хранилище. т к истек рефреш
+                        print("[Debug]: resresh is expired")
+                        UserDefaultsManager.shared.removeUserAuthData()
+                    default:
+                        break
+                    }
+                }
+            },
+            refreshToken: refreshToken
         )
     }
 

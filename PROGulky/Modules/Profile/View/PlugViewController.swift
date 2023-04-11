@@ -10,7 +10,7 @@ import UIKit
 // MARK: - PlugViewController
 
 final class PlugViewController: UIViewController {
-//    var output: ProfileViewOutput
+    //    var output: ProfileViewOutput
     private let moduleImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -31,11 +31,12 @@ final class PlugViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .prog.Dynamic.background
         configureUI()
-        testToken { [weak self] result in
+
+        testToken { result in
             switch result {
             case .success:
                 print("SUCCESS")
-            case let .failure(error):
+            case .failure:
                 print("FAILURE")
             }
         }
@@ -43,74 +44,78 @@ final class PlugViewController: UIViewController {
 
     private func testToken(completion: @escaping (Result<Auth, Error>) -> Void) {
         let token = UserDefaults.standard.string(forKey: UserKeys.accessToken.rawValue)
-        print("[DEBUG] test token", token)
-        ApiManager.shared.getUserInfo(
+//        UserDefaultsManager.shared.removeUserAuthData()
+        print("[DEBUG]: \(UserDefaultsManager.shared.isLogged)")
+
+        guard let token = token else { return }
+
+        ApiManager.shared.getMeInfo(
             completion: { result in
                 switch result {
-                case let .success(user):
-                    print(user.statusCode)
-                    switch user.statusCode {
+                case let .success(userData):
+                    print("OK: \(userData)")
+                case let .failure(error):
+                    switch error.code {
                     case 401:
-//                        print("[DEBUG] test token 401")
-//                        print("[DEBUG] refresh:", UserDefaults.standard.string(forKey: UserKeys.refreshToken.rawValue))
-//                        print("[DEBUG] access:", UserDefaults.standard.string(forKey: UserKeys.accessToken.rawValue))
+                        print("[DEBUG]: access is proebal")
+                        UserAuthService.shared.updateTokens()
 
-                        self.updateData { [weak self] result in
-                            switch result {
-                            case let .success(token):
-//                                print("HOROSHO")
-//                                print(print("[DEBUG] access:", UserDefaults.standard.string(forKey: UserKeys.accessToken.rawValue)))
-                                break
-                            case let .failure:
-//                                print("NE HOROSHO")
-                                break
-                            }
-                        }
-                        if token == nil {
-                            self.logout()
-                        }
+                        // TODO: с 61 по 79 надо как-то переделать запрос на запрос с интерцептором
+                        let token = UserDefaults.standard.string(forKey: UserKeys.accessToken.rawValue)
+                        guard let token = token else { return }
+                        ApiManager.shared.getMeInfo(
+                            completion: { result in
+                                switch result {
+                                case let .success(userData):
+                                    print("OK: \(userData)")
+                                case let .failure(error):
+                                    switch error.code {
+                                    case 401:
+                                        UserAuthService.shared.updateTokens()
+                                    default:
+                                        // TODO: непредвиденная ошибка
+                                        break
+                                    }
+                                }
+                            },
+                            token: token
+                        )
 
-                    case nil:
-//                        print("[DEBUG] test token OK")
-//                        print("[DEBUG] access:", UserDefaults.standard.string(forKey: UserKeys.accessToken.rawValue))
-//                        print("[DEBUG] refresh:", UserDefaults.standard.string(forKey: UserKeys.refreshToken.rawValue))
-                        break
                     default:
-                        print("[DEBUG] test token ERROR")
+                        print("Произшла ошибка хз какая")
+                        // TODO: непредвиденная ошибка
                     }
-                case let .failure(failure):
-//                    print("[DEBUG] test token NOT")
-                    break
                 }
             },
-            token: token ?? "0"
+            token: token
         )
     }
 
     func logout() {
         print("здесь выбрасывать на логин и чистить кэш")
-//        UserDefaultsManager.shared.removeUserAuthData() // removeUserAuthData()
-//        let vc = LoginViewController()
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
-//        output.logoutButtonTapped()
+        //        UserDefaultsManager.shared.removeUserAuthData() // removeUserAuthData()
+        //        let vc = LoginViewController()
+        //        vc.modalPresentationStyle = .fullScreen
+        //        present(vc, animated: true)
+        //        output.logoutButtonTapped()
     }
 
     func updateData(completion: @escaping (Result<Auth, Error>) -> Void) {
-        ApiManager.shared.updateAccessTokenByRefresh { result in
-            print(result)
-            switch result {
-            case let .success(token):
-                UserDefaultsManager.shared.setUserAuthData(token: token)
-                DispatchQueue.main.async {
-                    completion(.success(token))
-                }
-            case let .failure(failure):
-                DispatchQueue.main.async {
-                    completion(.failure(failure))
-                }
-            }
-        }
+        ApiManager.shared.updateAccessTokenByRefresh(completion: { result in
+                                                         print(result)
+                                                         switch result {
+                                                         case let .success(token):
+                                                             UserDefaultsManager.shared.saveUserAuthData(authData: token)
+                                                             DispatchQueue.main.async {
+                                                                 completion(.success(token))
+                                                             }
+                                                         case let .failure(failure):
+                                                             DispatchQueue.main.async {
+                                                                 completion(.failure(failure))
+                                                             }
+                                                         }
+                                                     },
+                                                     refreshToken: "")
     }
 
     private func configureUI() {

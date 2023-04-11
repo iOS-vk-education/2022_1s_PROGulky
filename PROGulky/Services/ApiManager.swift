@@ -13,12 +13,13 @@ enum ApiType {
     case getExcursions(params: [URLQueryItem]) // Получить список всех экскурсий
     case addFavorites(token: String, excursionId: String) // Добавление экскурсии в избранное
     case removeFavorites(token: String, excursionId: String) // Удалить экскурсию из избранного
-    case login // Логин
-    case getUserInfo(token: String) // получение информации о себе
-    case registration // Регистрация
     case getFavoritesExcursions(token: String) // Избранные по токену для пользователя
     case getPlaces
     case postExcursion(token: String, excursion: ExcursionForPost)
+
+    case login // Логин
+    case getMeInfo(token: String) // получение информации о себе
+    case registration // Регистрация
     case updateAccessTokenByRefresh
 
     var baseURLString: String {
@@ -35,7 +36,7 @@ enum ApiType {
             return ["Authorization": "Bearer \(token)"]
         case let .postExcursion(token, _):
             return ["Authorization": "Bearer \(token)"]
-        case let .getUserInfo(token):
+        case let .getMeInfo(token):
             return ["Authorization": "Bearer \(token)"]
         default:
             return [:]
@@ -48,11 +49,12 @@ enum ApiType {
         case .postExcursion: return "api/v1/excursions"
         case .addFavorites: return "api/v1/excursions/add_favorite"
         case .removeFavorites: return "api/v1/excursions/delete_favorite"
-        case .login: return "api/v1/auth/login"
-        case .registration: return "api/v1/auth/registration"
         case .getFavoritesExcursions: return "api/v1/excursions/favorites_excursions"
         case .getPlaces: return "api/v1/places"
-        case .getUserInfo: return "api/v1/auth/me"
+
+        case .login: return "api/v1/auth/login"
+        case .registration: return "api/v1/auth/registration"
+        case .getMeInfo: return "api/v1/auth/me"
         case .updateAccessTokenByRefresh: return "api/v1/auth/token/refresh"
         }
     }
@@ -104,7 +106,7 @@ enum ApiType {
         case .postExcursion:
             request.httpMethod = "POST"
             return request
-        case .getUserInfo:
+        case .getMeInfo:
             request.httpMethod = "GET"
             return request
         case .updateAccessTokenByRefresh:
@@ -247,26 +249,38 @@ final class ApiManager {
         task.resume()
     }
 
-    func getUserInfo(completion: @escaping (Result<User, Error>) -> Void, token: String) {
-        let request = ApiType.getUserInfo(token: token).request
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+    func getMeInfo(completion: @escaping (Result<User, NSError>) -> Void, token: String) {
+        let request = ApiType.getMeInfo(token: token).request
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+
             if let error = error {
                 DispatchQueue.main.async {
+                    let error = NSError(domain: "Непредвиденная ошибка", code: 0)
                     completion(.failure(error))
                 }
             }
-            guard let data = data else { return }
-            print(data)
-            do {
-                let user = try JSONDecoder().decode(User.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(user))
+
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
+
+            if statusCode != 401 {
+                guard let data = data else { return }
+
+                do {
+                    let user = try JSONDecoder().decode(User.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(.success(user))
+                    }
+                } catch let jsonError {
+                    print("Failed decode error:", jsonError)
+                    DispatchQueue.main.async {
+                        let error = NSError(domain: jsonError.localizedDescription, code: 0)
+                        completion(.failure(error))
+                    }
                 }
-                print("accessToken", user.name)
-            } catch let jsonError {
-                print("Failed decode error:", jsonError)
+            } else {
                 DispatchQueue.main.async {
-                    completion(.failure(jsonError))
+                    let error = NSError(domain: "Протух ацесс", code: 401)
+                    completion(.failure(error))
                 }
             }
         }
@@ -307,36 +321,36 @@ final class ApiManager {
         task.resume()
     }
 
-    func updateAccessTokenByRefresh(completion: @escaping (Result<Auth, Error>) -> Void) {
-        guard let token = UserDefaults.standard.string(forKey: UserKeys.refreshToken.rawValue) else {
-            return
-        }
-        print("updateAccessTokenByRefresh")
-        let json: [String: Any] = [
+    func updateAccessTokenByRefresh(completion: @escaping (Result<Auth, NSError>) -> Void, refreshToken: String) {
+        let json: [String: String] = [
             "deviceFingerprint": "iOS",
-            "refreshToken": token
+            "refreshToken": refreshToken
         ]
-        print(json)
+
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
 
         var request = ApiType.updateAccessTokenByRefresh.request
         request.httpBody = jsonData
+
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
             if let error = error {
                 DispatchQueue.main.async {
+                    let error = NSError(domain: error.localizedDescription, code: 0)
                     completion(.failure(error))
                 }
             }
+
             guard let data = data else { return }
+
             do {
-                let token = try JSONDecoder().decode(Auth.self, from: data)
+                let authData = try JSONDecoder().decode(Auth.self, from: data)
                 DispatchQueue.main.async {
-                    completion(.success(token))
+                    completion(.success(authData))
                 }
-                print("accessToken", token.accessToken)
             } catch let jsonError {
                 print("Failed decode error:", jsonError)
                 DispatchQueue.main.async {
+                    let jsonError = NSError(domain: jsonError.localizedDescription, code: 0)
                     completion(.failure(jsonError))
                 }
             }

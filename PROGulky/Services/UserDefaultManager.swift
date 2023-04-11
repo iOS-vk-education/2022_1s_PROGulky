@@ -10,8 +10,8 @@ import Foundation
 // MARK: - UserDefaultsLoginServiceProtocol
 
 protocol UserDefaultsLoginServiceProtocol {
-    func setUserData(user: User)
-    func setUserAuthData(token: Auth)
+    func saveUserData(user: User)
+    func saveUserAuthData(authData: Auth)
     func removeUserAuthData()
     func getUserData() -> UserData
 }
@@ -22,18 +22,18 @@ final class UserDefaultsManager: UserDefaultsLoginServiceProtocol {
     static let shared = UserDefaultsManager()
     private let defaults = UserDefaults.standard
 
-    func setUserAuthData(token: Auth) {
-        defaults.set(token.accessToken, forKey: UserKeys.accessToken.rawValue)
-        defaults.set(token.refreshToken, forKey: UserKeys.refreshToken.rawValue)
+    func saveUserAuthData(authData: Auth) {
+        defaults.set(authData.accessToken, forKey: UserKeys.accessToken.rawValue)
+        defaults.set(authData.refreshToken, forKey: UserKeys.refreshToken.rawValue)
         defaults.set(true, forKey: UserKeys.isLogin.rawValue)
     }
 
-    func setUserData(user: User) {
+    func saveUserData(user: User) {
 //        defaults.set(user.token, forKey: UserKeys.token.rawValue)
         defaults.set(user.id, forKey: UserKeys.id.rawValue)
         defaults.set(user.email, forKey: UserKeys.email.rawValue)
         defaults.set(user.name, forKey: UserKeys.name.rawValue)
-        defaults.set(user.role?.description, forKey: UserKeys.role.rawValue)
+        defaults.set(user.role.description, forKey: UserKeys.role.rawValue)
 //        defaults.set(true, forKey: UserKeys.isLogin.rawValue)
         defaults.synchronize()
     }
@@ -42,7 +42,9 @@ final class UserDefaultsManager: UserDefaultsLoginServiceProtocol {
         UserKeys.AllCases().forEach { key in
             defaults.removeObject(forKey: key.rawValue)
         }
+        print(1)
         defaults.set(false, forKey: UserKeys.isLogin.rawValue)
+        print(2)
         defaults.synchronize()
     }
 
@@ -92,9 +94,7 @@ final class UserDefaultsManager: UserDefaultsLoginServiceProtocol {
         let token = Auth(
             accessToken: accessToken ?? "",
             refreshToken: refreshToken ?? "",
-            refreshExpiresAt: refreshExpiresAt ?? "",
-            message: "",
-            statusCode: 0
+            refreshExpiresAt: refreshExpiresAt ?? ""
         )
         return token
     }
