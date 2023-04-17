@@ -42,53 +42,20 @@ final class PlugViewController: UIViewController {
         }
     }
 
-    private func testToken(completion: @escaping (Result<Auth, Error>) -> Void) {
+    private func testToken(completion: @escaping (Result<Auth, ApiCustomErrors>) -> Void) {
         let token = UserDefaults.standard.string(forKey: UserKeys.accessToken.rawValue)
 //        UserDefaultsManager.shared.removeUserAuthData()
+//        return
         print("[DEBUG]: \(UserDefaultsManager.shared.isLogged)")
 
-        guard let token = token else { return }
+        ApiManager.shared.getMeInfo2(success: { data in
+            guard let data = data else { return }
 
-        ApiManager.shared.getMeInfo(
-            completion: { result in
-                switch result {
-                case let .success(userData):
-                    print("OK: \(userData)")
-                case let .failure(error):
-                    switch error.code {
-                    case 401:
-                        print("[DEBUG]: access is proebal")
-                        UserAuthService.shared.updateTokens()
+            print("[DEBUG] AnyObjectData: \(data)")
 
-                        // TODO: с 61 по 79 надо как-то переделать запрос на запрос с интерцептором
-                        let token = UserDefaults.standard.string(forKey: UserKeys.accessToken.rawValue)
-                        guard let token = token else { return }
-                        ApiManager.shared.getMeInfo(
-                            completion: { result in
-                                switch result {
-                                case let .success(userData):
-                                    print("OK: \(userData)")
-                                case let .failure(error):
-                                    switch error.code {
-                                    case 401:
-                                        UserAuthService.shared.updateTokens()
-                                    default:
-                                        // TODO: непредвиденная ошибка
-                                        break
-                                    }
-                                }
-                            },
-                            token: token
-                        )
-
-                    default:
-                        print("Произшла ошибка хз какая")
-                        // TODO: непредвиденная ошибка
-                    }
-                }
-            },
-            token: token
-        )
+        }, failure: { error in
+            print("ERRRRRr: \(error)")
+        })
     }
 
     func logout() {

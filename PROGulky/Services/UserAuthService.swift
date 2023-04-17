@@ -73,30 +73,59 @@ final class UserAuthService {
         )
     }
 
-    func updateTokens() {
-        guard let refreshToken = UserDefaults.standard.string(forKey: UserKeys.refreshToken.rawValue) else {
-            return
-        }
+//    func updateTokens() {
+//        guard let refreshToken = UserDefaults.standard.string(forKey: UserKeys.refreshToken.rawValue) else {
+//            return
+//        }
+//        print("Начинаю обновление токенов")
+//
+//        ApiManager.shared.updateAccessTokenByRefresh(
+//            completion: { result in
+//                switch result {
+//                case let .success(authData):
+//                    print("Устанавливаю новые токены: \(authData)")
+//                    UserDefaultsManager.shared.saveUserAuthData(authData: authData)
+//                case let .failure(error):
+//                    switch error.code {
+//                    case 401:
+//                        // TODO: чистить локальное хранилище. т к истек рефреш
+//                        print("[Debug]: resresh is expired")
+//                        UserDefaultsManager.shared.removeUserAuthData()
+//                    default:
+//                        break
+//                    }
+//                }
+//            },
+//            refreshToken: refreshToken
+//        )
+//    }
 
-        ApiManager.shared.updateAccessTokenByRefresh(
-            completion: { result in
-                switch result {
-                case let .success(authData):
-                    UserDefaultsManager.shared.saveUserAuthData(authData: authData)
-                case let .failure(error):
-                    switch error.code {
-                    case 401:
-                        // TODO: чистить локальное хранилище. т к истек рефреш
-                        print("[Debug]: resresh is expired")
-                        UserDefaultsManager.shared.removeUserAuthData()
-                    default:
-                        break
-                    }
-                }
-            },
-            refreshToken: refreshToken
-        )
-    }
+//    func updateTokens(completion: @escaping (_ result: Bool?) -> Void) {
+//        guard let refreshToken = UserDefaults.standard.string(forKey: UserKeys.refreshToken.rawValue) else { return }
+//        print("Начинаю обновление токенов")
+//
+//        ApiManager.shared.updateAccessTokenByRefresh(
+//            completion: { result in
+//                switch result {
+//                case let .success(authData):
+//                    print("Устанавливаю новые токены: \(authData)")
+//                    UserDefaultsManager.shared.saveUserAuthData(authData: authData)
+//                    completion(true)
+//                case let .failure(error):
+//                    switch error.code {
+//                    case 401:
+//                        // TODO: чистить локальное хранилище. т к истек рефреш
+//                        print("[Debug]: resresh is expired")
+//                        UserDefaultsManager.shared.removeUserAuthData()
+//                        completion(false)
+//                    default:
+//                        break
+//                    }
+//                }
+//            },
+//            refreshToken: refreshToken
+//        )
+//    }
 
     func logout() {
         UserDefaultsManager.shared.removeUserAuthData()

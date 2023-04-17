@@ -119,7 +119,7 @@ enum ApiType {
 
 // MARK: - ApiManager
 
-final class ApiManager {
+final class ApiManager: BaseService {
     static let shared = ApiManager()
 
     func getExcursions(completion: @escaping (Result<PreviewExcursions, Error>) -> Void, params: [URLQueryItem]) {
@@ -249,6 +249,14 @@ final class ApiManager {
         task.resume()
     }
 
+    func getMeInfo2(
+        success: @escaping ((_ responseObject: AnyObject?) -> Void),
+        failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
+    ) {
+        let request = ApiType.getMeInfo(token: getAccessToken()).request
+        callWebService(request, success: success, failure: failure)
+    }
+
     func getMeInfo(completion: @escaping (Result<User, NSError>) -> Void, token: String) {
         let request = ApiType.getMeInfo(token: token).request
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -321,7 +329,10 @@ final class ApiManager {
         task.resume()
     }
 
-    func updateAccessTokenByRefresh(completion: @escaping (Result<Auth, NSError>) -> Void, refreshToken: String) {
+    func updateAccessTokenByRefresh(
+        completion: @escaping (Result<Auth, ApiCustomErrors>) -> Void,
+        refreshToken: String
+    ) {
         let json: [String: String] = [
             "deviceFingerprint": "iOS",
             "refreshToken": refreshToken
@@ -332,27 +343,38 @@ final class ApiManager {
         var request = ApiType.updateAccessTokenByRefresh.request
         request.httpBody = jsonData
 
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            if let error = error {
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            print("Обновление токенов по рефрешу: \(refreshToken)")
+            if error != nil {
                 DispatchQueue.main.async {
-                    let error = NSError(domain: error.localizedDescription, code: 0)
-                    completion(.failure(error))
+                    completion(.failure(ApiCustomErrors.AnotherError))
                 }
             }
 
             guard let data = data else { return }
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
 
-            do {
-                let authData = try JSONDecoder().decode(Auth.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(authData))
+            print("Status Code: \(statusCode)")
+
+            switch statusCode {
+            case 200 ... 300:
+                do {
+                    print("SUCCESS")
+                    let authData = try JSONDecoder().decode(Auth.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(.success(authData))
+                    }
+                } catch let jsonError {
+                    print("Failed decode error:", jsonError)
+                    DispatchQueue.main.async {
+                        completion(.failure(ApiCustomErrors.JSONParseError))
+                    }
                 }
-            } catch let jsonError {
-                print("Failed decode error:", jsonError)
-                DispatchQueue.main.async {
-                    let jsonError = NSError(domain: jsonError.localizedDescription, code: 0)
-                    completion(.failure(jsonError))
-                }
+            case 401: // Протух рефреш
+                print("FAIL")
+                completion(.failure(ApiCustomErrors.RefreshIsExpired))
+            default:
+                print("ANOTHER")
             }
         }
         task.resume()
@@ -439,5 +461,86 @@ final class ApiManager {
             }
         }
         task.resume()
+    }
+}
+
+// MARK: - ApiCustomErrors
+
+enum ApiCustomErrors: String, Error {
+    case JSONParseError = "Ошибка приведения JSON"
+    case AccessIsExpired = "Токен доступа истек" // 401 протух ацесс
+    case RefreshIsExpired = "Токен обновления истек" // протух рефреш
+    case AnotherError = "Непредвиденная ошибка" // Любая непонятная ошибка
+}
+
+// MARK: - BaseService
+
+//
+// struct Result: Codable {
+//    let me: OwnerInstance
+// }
+
+class BaseService: NSObject {
+    func callWebService(
+        _ request: URLRequest,
+        success: @escaping ((_ responseObject: AnyObject?) -> Void),
+        failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
+    ) {
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+
+            if error != nil {
+                DispatchQueue.main.async {
+                    failure(ApiCustomErrors.AnotherError)
+                }
+            }
+            guard let data = data else { return }
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
+
+            if statusCode == 200 {
+                success(data as AnyObject)
+            } else if statusCode == 401 {
+                self.requestForGetNewAccessToken(request: request, success: success, failure: failure)
+            } else {
+                failure(ApiCustomErrors.AnotherError)
+            }
+        }
+        task.resume()
+    }
+}
+
+extension BaseService {
+    func getAccessToken() -> String {
+        let accessToken = UserDefaults.standard.string(forKey: UserKeys.accessToken.rawValue)
+        guard let accessToken = accessToken else { return "" }
+        return accessToken
+    }
+
+    func requestForGetNewAccessToken(
+        request: URLRequest,
+        success: @escaping ((_ responseObject: AnyObject?) -> Void),
+        failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
+    ) {
+        let refreshToken = UserDefaults.standard.string(forKey: UserKeys.refreshToken.rawValue)
+        guard let refreshToken = refreshToken else { return }
+
+        ApiManager.shared.updateAccessTokenByRefresh(
+            completion: { result in
+                switch result {
+                case let .success(authData):
+                    print("Устанавливаю новые токены: \(authData)")
+                    UserDefaultsManager.shared.saveUserAuthData(authData: authData)
+                    print("Создаю новый реквест вызов сервиса")
+
+                    var requestWithNewToken: URLRequest = request
+                    requestWithNewToken.setValue("Bearer \(self.getAccessToken())", forHTTPHeaderField: "Authorization")
+                    self.callWebService(requestWithNewToken, success: success, failure: failure)
+                case let .failure(error):
+                    // TODO: чистить локальное хранилище. т к истек рефреш
+                    print("[DEBUG]: \(error)")
+                    failure(error)
+                }
+            },
+            refreshToken: refreshToken
+        )
     }
 }
