@@ -22,9 +22,9 @@ struct Role: Codable {
     let description: String
 }
 
-// MARK: - Auth
+// MARK: - AuthData
 
-struct Auth: Codable {
+struct AuthData: Codable {
     let accessToken: String?
     let refreshToken: String?
     let refreshExpiresAt: String?

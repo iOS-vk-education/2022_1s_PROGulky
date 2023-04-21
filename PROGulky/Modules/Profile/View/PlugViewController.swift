@@ -42,19 +42,17 @@ final class PlugViewController: UIViewController {
         }
     }
 
-    private func testToken(completion: @escaping (Result<Auth, ApiCustomErrors>) -> Void) {
+    private func testToken(completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
         let token = UserDefaults.standard.string(forKey: UserKeys.accessToken.rawValue)
 //        UserDefaultsManager.shared.removeUserAuthData()
 //        return
-        print("[DEBUG]: \(UserDefaultsManager.shared.isLogged)")
+        print("[DEBUG] user isLogin: \(UserDefaultsManager.shared.isLogged)")
 
         ApiManager.shared.getMeInfo2(success: { data in
-            guard let data = data else { return }
-
-            print("[DEBUG] AnyObjectData: \(data)")
-
+            print("[DEBUG] result: \(data)")
         }, failure: { error in
-            print("ERRRRRr: \(error)")
+            // TODO: тут реализуется бизнес логика на какой экран пойти пользователю, если при запросе токены протухли и хранилище с данными очистилось
+            print("[DEBUG] error: \(error)")
         })
     }
 
@@ -65,24 +63,6 @@ final class PlugViewController: UIViewController {
         //        vc.modalPresentationStyle = .fullScreen
         //        present(vc, animated: true)
         //        output.logoutButtonTapped()
-    }
-
-    func updateData(completion: @escaping (Result<Auth, Error>) -> Void) {
-        ApiManager.shared.updateAccessTokenByRefresh(completion: { result in
-                                                         print(result)
-                                                         switch result {
-                                                         case let .success(token):
-                                                             UserDefaultsManager.shared.saveUserAuthData(authData: token)
-                                                             DispatchQueue.main.async {
-                                                                 completion(.success(token))
-                                                             }
-                                                         case let .failure(failure):
-                                                             DispatchQueue.main.async {
-                                                                 completion(.failure(failure))
-                                                             }
-                                                         }
-                                                     },
-                                                     refreshToken: "")
     }
 
     private func configureUI() {

@@ -215,7 +215,7 @@ final class ApiManager: BaseService {
         task.resume()
     }
 
-    func login(_ loginDTO: LoginDTO, completion: @escaping (Result<Auth, Error>) -> Void) {
+    func login(_ loginDTO: LoginDTO, completion: @escaping (Result<AuthData, Error>) -> Void) {
         let json: [String: Any] = [
             "email": loginDTO.email,
             "password": loginDTO.password,
@@ -234,7 +234,7 @@ final class ApiManager: BaseService {
             guard let data = data else { return }
             print(data)
             do {
-                let token = try JSONDecoder().decode(Auth.self, from: data)
+                let token = try JSONDecoder().decode(AuthData.self, from: data)
                 DispatchQueue.main.async {
                     completion(.success(token))
                 }
@@ -249,12 +249,28 @@ final class ApiManager: BaseService {
         task.resume()
     }
 
+    // Пример метода, который требует наличие access-токена для запроса,
+    // и в случае, если токен не валиден (истек), пытается его обновить,
+    // сделать запрос заново и вернуть валидный объект.
+    // Если же обновление токенов невозможно (истек рефреш) кидает ошибку RefreshIsExpired
     func getMeInfo2(
-        success: @escaping ((_ responseObject: AnyObject?) -> Void),
+        success: @escaping ((_ user: User) -> Void),
         failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
     ) {
         let request = ApiType.getMeInfo(token: getAccessToken()).request
-        callWebService(request, success: success, failure: failure)
+        callWebService(request) { data in
+            do {
+                let user = try JSONDecoder().decode(User.self, from: data)
+                DispatchQueue.main.async {
+                    success(user)
+                }
+            } catch let jsonError {
+                print("Failed decode error:", jsonError)
+            }
+        }
+        failure: { error in
+            failure(error)
+        }
     }
 
     func getMeInfo(completion: @escaping (Result<User, NSError>) -> Void, token: String) {
@@ -329,8 +345,9 @@ final class ApiManager: BaseService {
         task.resume()
     }
 
+    // Запрос на ручку /refresh для обновление пары токенов по рефреш токену
     func updateAccessTokenByRefresh(
-        completion: @escaping (Result<Auth, ApiCustomErrors>) -> Void,
+        completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void,
         refreshToken: String
     ) {
         let json: [String: String] = [
@@ -344,7 +361,6 @@ final class ApiManager: BaseService {
         request.httpBody = jsonData
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            print("Обновление токенов по рефрешу: \(refreshToken)")
             if error != nil {
                 DispatchQueue.main.async {
                     completion(.failure(ApiCustomErrors.AnotherError))
@@ -354,13 +370,10 @@ final class ApiManager: BaseService {
             guard let data = data else { return }
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
 
-            print("Status Code: \(statusCode)")
-
             switch statusCode {
             case 200 ... 300:
                 do {
-                    print("SUCCESS")
-                    let authData = try JSONDecoder().decode(Auth.self, from: data)
+                    let authData = try JSONDecoder().decode(AuthData.self, from: data)
                     DispatchQueue.main.async {
                         completion(.success(authData))
                     }
@@ -371,10 +384,9 @@ final class ApiManager: BaseService {
                     }
                 }
             case 401: // Протух рефреш
-                print("FAIL")
                 completion(.failure(ApiCustomErrors.RefreshIsExpired))
-            default:
-                print("ANOTHER")
+            default: // Непонятный статус код (непонятная ошибка)
+                completion(.failure(ApiCustomErrors.AnotherError))
             }
         }
         task.resume()
@@ -465,7 +477,6 @@ final class ApiManager: BaseService {
 }
 
 // MARK: - ApiCustomErrors
-
 enum ApiCustomErrors: String, Error {
     case JSONParseError = "Ошибка приведения JSON"
     case AccessIsExpired = "Токен доступа истек" // 401 протух ацесс
@@ -474,16 +485,12 @@ enum ApiCustomErrors: String, Error {
 }
 
 // MARK: - BaseService
-
-//
-// struct Result: Codable {
-//    let me: OwnerInstance
-// }
-
 class BaseService: NSObject {
+    // Запрос на API с реквестом, которые создается до запроса и прокидывается сюда
+    // для обновления в случае истечения токена
     func callWebService(
         _ request: URLRequest,
-        success: @escaping ((_ responseObject: AnyObject?) -> Void),
+        success: @escaping ((_ responseObject: Data) -> Void),
         failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
     ) {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -493,14 +500,19 @@ class BaseService: NSObject {
                     failure(ApiCustomErrors.AnotherError)
                 }
             }
+
             guard let data = data else { return }
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
 
-            if statusCode == 200 {
-                success(data as AnyObject)
-            } else if statusCode == 401 {
-                self.requestForGetNewAccessToken(request: request, success: success, failure: failure)
-            } else {
+            if statusCode == 200 { // Запрос успешный -> возвращается данные с типом Data
+                success(data)
+            } else if statusCode == 401 { // Истек access-токен и требуется его обновить
+                self.requestForGetNewAccessToken(
+                    request: request,
+                    success: success,
+                    failure: failure
+                )
+            } else { // Непредвиденная ошибка
                 failure(ApiCustomErrors.AnotherError)
             }
         }
@@ -515,28 +527,27 @@ extension BaseService {
         return accessToken
     }
 
+    // Поулчение нового access-токена по refresh-токену
     func requestForGetNewAccessToken(
         request: URLRequest,
-        success: @escaping ((_ responseObject: AnyObject?) -> Void),
+        success: @escaping ((_ responseObject: Data) -> Void),
         failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
     ) {
         let refreshToken = UserDefaults.standard.string(forKey: UserKeys.refreshToken.rawValue)
         guard let refreshToken = refreshToken else { return }
 
+        // Запрос за новыми токенами по рефреш-токену
         ApiManager.shared.updateAccessTokenByRefresh(
             completion: { result in
                 switch result {
-                case let .success(authData):
-                    print("Устанавливаю новые токены: \(authData)")
-                    UserDefaultsManager.shared.saveUserAuthData(authData: authData)
-                    print("Создаю новый реквест вызов сервиса")
+                case let .success(authData): // При успехе вовзращается объект с AuthData с новой парой токенов
+                    UserDefaultsManager.shared.saveUserAuthData(authData: authData) // Сохранение новых токенов
 
-                    var requestWithNewToken: URLRequest = request
-                    requestWithNewToken.setValue("Bearer \(self.getAccessToken())", forHTTPHeaderField: "Authorization")
+                    var requestWithNewToken: URLRequest = request // Модернизация исходного запроса
+                    requestWithNewToken.setValue("Bearer \(self.getAccessToken())", forHTTPHeaderField: "Authorization") // Добавление к исходному запросу нового токена
                     self.callWebService(requestWithNewToken, success: success, failure: failure)
                 case let .failure(error):
-                    // TODO: чистить локальное хранилище. т к истек рефреш
-                    print("[DEBUG]: \(error)")
+                    UserDefaultsManager.shared.removeUserAuthData() // Удаление данных пользователя
                     failure(error)
                 }
             },

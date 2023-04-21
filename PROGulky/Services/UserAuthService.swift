@@ -38,7 +38,7 @@ final class UserAuthService {
     }
 
     // Получение токенов
-    func login(dto: LoginDTO, completion: @escaping (Result<Auth, Error>) -> Void) {
+    func login(dto: LoginDTO, completion: @escaping (Result<AuthData, Error>) -> Void) {
         ApiManager.shared.login(dto) { result in
             switch result {
             case let .success(authData):

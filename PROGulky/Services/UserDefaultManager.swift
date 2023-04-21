@@ -11,7 +11,7 @@ import Foundation
 
 protocol UserDefaultsLoginServiceProtocol {
     func saveUserData(user: User)
-    func saveUserAuthData(authData: Auth)
+    func saveUserAuthData(authData: AuthData)
     func removeUserAuthData()
     func getUserData() -> UserData
 }
@@ -22,7 +22,7 @@ final class UserDefaultsManager: UserDefaultsLoginServiceProtocol {
     static let shared = UserDefaultsManager()
     private let defaults = UserDefaults.standard
 
-    func saveUserAuthData(authData: Auth) {
+    func saveUserAuthData(authData: AuthData) {
         defaults.set(authData.accessToken, forKey: UserKeys.accessToken.rawValue)
         defaults.set(authData.refreshToken, forKey: UserKeys.refreshToken.rawValue)
         defaults.set(true, forKey: UserKeys.isLogin.rawValue)
@@ -86,12 +86,12 @@ final class UserDefaultsManager: UserDefaultsLoginServiceProtocol {
         return userData
     }
 
-    func getToken() -> Auth {
+    func getToken() -> AuthData {
         let accessToken = defaults.string(forKey: UserKeys.accessToken.rawValue)
         let refreshToken = defaults.string(forKey: UserKeys.refreshToken.rawValue)
         let refreshExpiresAt = defaults.string(forKey: UserKeys.refreshExpiresAt.rawValue)
 
-        let token = Auth(
+        let token = AuthData(
             accessToken: accessToken ?? "",
             refreshToken: refreshToken ?? "",
             refreshExpiresAt: refreshExpiresAt ?? ""
