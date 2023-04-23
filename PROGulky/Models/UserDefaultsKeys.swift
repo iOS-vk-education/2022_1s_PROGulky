@@ -12,4 +12,7 @@ enum UserKeys: String, CaseIterable {
     case email
     case role
     case isLogin
+    case accessToken
+    case refreshToken
+    case refreshExpiresAt
 }

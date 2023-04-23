@@ -10,6 +10,7 @@ import UIKit
 // MARK: - PlugViewController
 
 final class PlugViewController: UIViewController {
+    //    var output: ProfileViewOutput
     private let moduleImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -30,6 +31,38 @@ final class PlugViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .prog.Dynamic.background
         configureUI()
+
+        testToken { result in
+            switch result {
+            case .success:
+                print("SUCCESS")
+            case .failure:
+                print("FAILURE")
+            }
+        }
+    }
+
+    private func testToken(completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
+        let token = UserDefaults.standard.string(forKey: UserKeys.accessToken.rawValue)
+//        UserDefaultsManager.shared.removeUserAuthData()
+//        return
+        print("[DEBUG] user isLogin: \(UserDefaultsManager.shared.isLogged)")
+
+        ApiManager.shared.getMeInfo2(success: { data in
+            print("[DEBUG] result: \(data)")
+        }, failure: { error in
+            // TODO: тут реализуется бизнес логика на какой экран пойти пользователю, если при запросе токены протухли и хранилище с данными очистилось
+            print("[DEBUG] error: \(error)")
+        })
+    }
+
+    func logout() {
+        print("здесь выбрасывать на логин и чистить кэш")
+        //        UserDefaultsManager.shared.removeUserAuthData() // removeUserAuthData()
+        //        let vc = LoginViewController()
+        //        vc.modalPresentationStyle = .fullScreen
+        //        present(vc, animated: true)
+        //        output.logoutButtonTapped()
     }
 
     private func configureUI() {

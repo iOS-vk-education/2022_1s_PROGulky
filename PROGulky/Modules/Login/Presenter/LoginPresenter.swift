@@ -49,11 +49,11 @@ extension LoginPresenter: LoginViewOutput {
 // MARK: LoginInteractorOutput
 
 extension LoginPresenter: LoginInteractorOutput {
-    func successLogin(user: User) {
+    func didSuccessLogin(with token: User) {
         moduleOutput?.loginModuleWantsToOpenProfile()
     }
 
-    func handleError(error: Error) {
+    func didHandleError(with error: Error) {
         let text = error.localizedDescription
         view.showAlert(message: text)
     }

@@ -8,7 +8,6 @@
 // MARK: - User
 
 struct User: Codable {
-    let token: String
     let id: Int
     let name: String
     let email: String
@@ -21,6 +20,14 @@ struct Role: Codable {
     let id: Int
     let value: String
     let description: String
+}
+
+// MARK: - AuthData
+
+struct AuthData: Codable {
+    let accessToken: String?
+    let refreshToken: String?
+    let refreshExpiresAt: String?
 }
 
 // MARK: - LoginDTO
