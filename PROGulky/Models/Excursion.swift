@@ -12,16 +12,15 @@ import UIKit
 
 struct Excursion: Codable {
     let id: Int
-    let title, description: String
-    let ownerId: Int
+    let title: String
+    let description: String
     var image: String?
     var rating: Double?
     var duration: Int // Продолжительность в минутах
     var distance: Double // Дистанция в километрах
     var numberOfPoints: Int // Количество точек на маршруте
-    let ownerRoleValue: String
-    let owner: Owner
-    var places: [Place]
+    let owner: OwnerInstance
+    var places: [PreviewPlace]
     var isFavorite: Bool
 }
 

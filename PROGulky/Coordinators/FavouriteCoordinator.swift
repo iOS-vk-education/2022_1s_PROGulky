@@ -62,12 +62,3 @@ extension FavouriteCoordinator: MapDetailModuleOutput {
         rootNavigationController.tabBarController?.tabBar.isHidden = false
     }
 }
-
-// MARK: DetailExcursionModuleOutput
-
-extension FavouriteCoordinator: DetailExcursionModuleOutput {
-    func detailExcursionModuleWantsToClose() {
-        rootNavigationController.popViewController(animated: true)
-        rootNavigationController.tabBarController?.tabBar.isHidden = false
-    }
-}

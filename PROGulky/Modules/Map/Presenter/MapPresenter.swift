@@ -19,8 +19,6 @@ final class MapPresenter {
 
     // MARK: - Private Properties
 
-    private let interactor: MapInteractorInput
-    private let router: MapRouterInput
     private let excursion: Excursion
     private var massTransitSession: YMKMasstransitSession?
     private var requestPoints = [YMKRequestPoint]()
@@ -28,11 +26,8 @@ final class MapPresenter {
 
     // MARK: - Lifecycle
 
-    init(interactor: MapInteractorInput, router: MapRouterInput, excursion: Excursion, moduleOutput: MapModuleOutput) {
-        self.interactor = interactor
-        self.router = router
+    init(excursion: Excursion) {
         self.excursion = excursion
-        self.moduleOutput = moduleOutput
     }
 
     private func onRoutesReceived(_ routes: [YMKMasstransitRoute]) {
@@ -91,7 +86,4 @@ extension MapPresenter: MapViewOutput {
             routeHandler: responseHandler
         )
     }
-}
-
-extension MapPresenter: MapInteractorOutput {
 }

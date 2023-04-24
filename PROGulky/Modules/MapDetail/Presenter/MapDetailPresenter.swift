@@ -40,7 +40,7 @@ extension MapDetailPresenter: MapDetailModuleInput {
 extension MapDetailPresenter: MapDetailViewOutput {
     func didLoadView() {
         router.embedMapModule(output: self)
-        router.embedDetailModule(output: self)
+        router.embedDetailModule()
     }
 
     func didTapBackButton() {
@@ -49,9 +49,6 @@ extension MapDetailPresenter: MapDetailViewOutput {
 }
 
 extension MapDetailPresenter: MapDetailInteractorOutput {
-}
-
-extension MapDetailPresenter: DetailExcursionModuleOutput {
 }
 
 extension MapDetailPresenter: MapModuleOutput {
