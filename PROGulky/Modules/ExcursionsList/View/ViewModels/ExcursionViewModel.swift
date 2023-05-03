@@ -15,4 +15,5 @@ struct ExcursionViewModel {
     var rating: String
     var parameters: String
     var owner: String
+    var ownerImage: String?
 }

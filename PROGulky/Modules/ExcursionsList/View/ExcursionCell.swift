@@ -58,6 +58,7 @@ final class ExcursionCell: UITableViewCell {
 
     func set(excursion: ExcursionViewModel) {
         setupImage(with: excursion.image)
+        setupOwnerImage(with: excursion.ownerImage)
 
         excursionTitleLabel.text = excursion.title
         excursionRatingImage.image = UIImage(systemName: ExcursionsListConstants.ExcursionCell.RatingImage.name)?
@@ -73,6 +74,15 @@ final class ExcursionCell: UITableViewCell {
             excursionImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "placeholderImage"))
         } else {
             excursionImageView.image = UIImage(named: "placeholderImage")
+        }
+    }
+
+    private func setupOwnerImage(with image: String?) {
+        if let image = image {
+            let imageURL = "\(ExcursionsListConstants.Api.ownerImageURL)/\(image)"
+            excursionOwnerImage.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(systemName: "person.fill"))
+        } else {
+            excursionOwnerImage.image = UIImage(systemName: "person.fill")
         }
     }
 
@@ -137,7 +147,6 @@ final class ExcursionCell: UITableViewCell {
     }
 
     private func configureOwnerImage() {
-        excursionOwnerImage.image = UIImage(named: "placeholderImage")
         excursionOwnerImage.layer.masksToBounds = false
         excursionOwnerImage.layer.cornerRadius = ExcursionsListConstants.ExcursionCell.OwnerImage.cornerRadius
         excursionOwnerImage.clipsToBounds = true

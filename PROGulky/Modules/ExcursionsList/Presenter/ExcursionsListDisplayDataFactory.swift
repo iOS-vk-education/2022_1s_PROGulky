@@ -41,7 +41,8 @@ final class ExcursionsListDisplayDataFactory: ExcursionsListDisplayDataFactoryPr
             title: excursion.title,
             rating: displayRating,
             parameters: "\(excursion.numberOfPoints.wordEnding(for: "мест")) | \(excursion.distance) км | \(excursion.duration) мин",
-            owner: excursion.owner.name
+            owner: excursion.owner.name,
+            ownerImage: excursion.owner.image
         )
     }
 
