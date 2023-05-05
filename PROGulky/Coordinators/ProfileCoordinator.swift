@@ -49,7 +49,7 @@ final class ProfileCoordinator: CoordinatorProtocol {
 // MARK: ProfileModuleOutput
 
 extension ProfileCoordinator: ProfileModuleOutput {
-    func profileModuleWantsToOpenLoginModule() {
-        rootTabBarController?.selectedIndex = TabBarPage.excursionList.rawValue
+    func profileModuleWantsToOpenScreen(with tabBarIndex: Int) {
+        rootTabBarController?.selectedIndex = tabBarIndex
     }
 }

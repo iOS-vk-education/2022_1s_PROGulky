@@ -43,7 +43,9 @@ extension ProfilePresenter: ProfileViewOutput {
 
     func logoutButtonTapped() {
         interactor.logout()
-        moduleOutput?.profileModuleWantsToOpenLoginModule()
+
+        // Перейти на главный экран (список экскурсий) при логауте
+        moduleOutput?.profileModuleWantsToOpenScreen(with: TabBarPage.excursionList.rawValue)
     }
 }
 

@@ -67,12 +67,13 @@ extension AppCoordinator: UITabBarControllerDelegate {
         }
         selectedPage = page
         if page == .excursionList { return true }
+
         let isLogin = UserDefaults.standard.bool(forKey: UserKeys.isLogin.rawValue)
-        print("[DEBUG] .prof")
+
+        // Если пользователь не заголинен, то показываем ему экран логина
         if !isLogin {
             let builder = LoginModuleBuilder()
             let loginViewController = builder.build(moduleOutput: self)
-            print("[DEBUG] \(loginViewController)")
             let navigationController = UINavigationController(rootViewController: loginViewController)
             tabBarController.present(navigationController, animated: true)
             return false
@@ -85,8 +86,9 @@ extension AppCoordinator: UITabBarControllerDelegate {
 // MARK: LoginModuleOutput
 
 extension AppCoordinator: LoginModuleOutput {
-    func loginModuleWantsToOpenProfile() {
-        tabBarController.selectedIndex = selectedPage.rawValue
+    func loginModuleWantsToOpenSelectedScreen() {
+        // В переменной selectedPage сохраняется таб по которому нажал пользователь,
+        tabBarController.selectedIndex = selectedPage.rawValue // тут устанавлявается выбранным табом тот таб, по которому пользователь нажимал перед логином
         tabBarController.dismiss(animated: true)
     }
 
