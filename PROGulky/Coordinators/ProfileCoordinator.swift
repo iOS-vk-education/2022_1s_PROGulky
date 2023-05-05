@@ -36,16 +36,11 @@ final class ProfileCoordinator: CoordinatorProtocol {
         }
         var viewControllers = [UIViewController]()
         rootNavigationController.tabBarItem = tabBarItemFactory.getTabBarItem(from: TabBarPage.profile)
-        let isLoggedIn = UserDefaults.standard.bool(forKey: UserKeys.isLogin.rawValue)
-        if isLoggedIn {
-            let builder = ProfileModuleBuilder()
-            let profileViewController = builder.build(self)
-            viewControllers = [profileViewController]
-        } else {
-            let builder = LoginModuleBuilder()
-            let loginViewController = builder.build(moduleOutput: self)
-            viewControllers = [loginViewController]
-        }
+
+        let builder = ProfileModuleBuilder()
+        let profileViewController = builder.build(self)
+        viewControllers = [profileViewController]
+
         rootNavigationController.setViewControllers(viewControllers, animated: false)
         rootTabBarController?.setViewControllers(controllers, animated: true)
     }
@@ -55,36 +50,6 @@ final class ProfileCoordinator: CoordinatorProtocol {
 
 extension ProfileCoordinator: ProfileModuleOutput {
     func profileModuleWantsToOpenLoginModule() {
-        let builder = LoginModuleBuilder()
-        let loginViewController = builder.build(moduleOutput: self)
-        rootNavigationController.setViewControllers([loginViewController], animated: true)
-    }
-}
-
-// MARK: RegistrationModuleOutput
-
-extension ProfileCoordinator: RegistrationModuleOutput {
-    func registrationModuleWantsToOpenProfile() {
-        let builder = ProfileModuleBuilder()
-        let profileView = builder.build(self)
-        rootNavigationController.dismiss(animated: false)
-        rootNavigationController.setViewControllers([profileView], animated: true)
-    }
-}
-
-// MARK: LoginModuleOutput
-
-extension ProfileCoordinator: LoginModuleOutput {
-    func loginModuleWantsToOpenRegistrationModule() {
-        let builder = RegistrationModuleBuilder()
-        let regView = builder.build(moduleOutput: self)
-        rootNavigationController.present(regView, animated: true)
-    }
-
-    func loginModuleWantsToOpenProfile() {
-        print("loginModuleWantsToOpenProfile")
-        let builder = ProfileModuleBuilder()
-        let profileView = builder.build(self)
-        rootNavigationController.setViewControllers([profileView], animated: true)
+        rootTabBarController?.selectedIndex = TabBarPage.excursionList.rawValue
     }
 }

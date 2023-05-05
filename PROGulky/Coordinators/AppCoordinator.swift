@@ -15,6 +15,7 @@ final class AppCoordinator: NSObject, CoordinatorProtocol {
 
     var childCoordinators = [CoordinatorProtocol]()
     let tabBarController: UITabBarController
+    private var selectedPage = TabBarPage.excursionList
 
     // MARK: Lifecycle
 
@@ -59,30 +60,23 @@ final class AppCoordinator: NSObject, CoordinatorProtocol {
 
 extension AppCoordinator: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        guard let navVC = viewController as? UINavigationController else { return false }
-        let page = TabBarPage(rawValue: navVC.tabBarItem.tag)
-
-        switch page {
-        case .excursionList:
-            return true
-        case .favourite:
-            return true
-        case .profile:
-            let isLogin = UserDefaults.standard.bool(forKey: UserKeys.isLogin.rawValue)
-            print("[DEBUG] .prof")
-            if !isLogin {
-                let builder = LoginModuleBuilder()
-                let loginViewController = builder.build(moduleOutput: self)
-                print("[DEBUG] \(loginViewController)")
-
-                let navigationController = UINavigationController(rootViewController: loginViewController)
-                tabBarController.present(navigationController, animated: true)
-
-                return false
-            } else {
-                return true
-            }
-        case .none:
+        guard let navVC = viewController as? UINavigationController,
+              let page = TabBarPage(rawValue: navVC.tabBarItem.tag)
+        else {
+            return false
+        }
+        selectedPage = page
+        if page == .excursionList { return true }
+        let isLogin = UserDefaults.standard.bool(forKey: UserKeys.isLogin.rawValue)
+        print("[DEBUG] .prof")
+        if !isLogin {
+            let builder = LoginModuleBuilder()
+            let loginViewController = builder.build(moduleOutput: self)
+            print("[DEBUG] \(loginViewController)")
+            let navigationController = UINavigationController(rootViewController: loginViewController)
+            tabBarController.present(navigationController, animated: true)
+            return false
+        } else {
             return true
         }
     }
@@ -92,25 +86,23 @@ extension AppCoordinator: UITabBarControllerDelegate {
 
 extension AppCoordinator: LoginModuleOutput {
     func loginModuleWantsToOpenProfile() {
-        // TODO: тут надо как то открыть экран профиля
-        let rootNavigationController = UINavigationController()
-        let builder = ProfileModuleBuilder()
-        let profileView = builder.build(self)
-        rootNavigationController.setViewControllers([profileView], animated: true)
+        tabBarController.selectedIndex = selectedPage.rawValue
+        tabBarController.dismiss(animated: true)
     }
 
     func loginModuleWantsToOpenRegistrationModule() {
-        print("ueueueueu")
+        let builder = RegistrationModuleBuilder()
+        let regView = builder.build(moduleOutput: self)
+        guard let navVC = tabBarController.presentedViewController as? UINavigationController else { return }
+        navVC.pushViewController(regView, animated: true)
     }
 }
 
-// MARK: ProfileModuleOutput
+// MARK: RegistrationModuleOutput
 
-extension AppCoordinator: ProfileModuleOutput {
-    func profileModuleWantsToOpenLoginModule() {
-        print("ВЫХОД")
+extension AppCoordinator: RegistrationModuleOutput {
+    func registrationModuleWantsToOpenProfile() {
+        tabBarController.dismiss(animated: true)
+        tabBarController.selectedIndex = selectedPage.rawValue
     }
 }
-
-//        let profileCoordinator = ProfileCoordinator(rootTabBarController: tabBarController)
-//        profileCoordinator.start(animated: false)
