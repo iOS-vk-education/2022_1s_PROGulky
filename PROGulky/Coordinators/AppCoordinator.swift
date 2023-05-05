@@ -58,4 +58,59 @@ final class AppCoordinator: NSObject, CoordinatorProtocol {
 // MARK: UITabBarControllerDelegate
 
 extension AppCoordinator: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        guard let navVC = viewController as? UINavigationController else { return false }
+        let page = TabBarPage(rawValue: navVC.tabBarItem.tag)
+
+        switch page {
+        case .excursionList:
+            return true
+        case .favourite:
+            return true
+        case .profile:
+            let isLogin = UserDefaults.standard.bool(forKey: UserKeys.isLogin.rawValue)
+            print("[DEBUG] .prof")
+            if !isLogin {
+                let builder = LoginModuleBuilder()
+                let loginViewController = builder.build(moduleOutput: self)
+                print("[DEBUG] \(loginViewController)")
+
+                let navigationController = UINavigationController(rootViewController: loginViewController)
+                tabBarController.present(navigationController, animated: true)
+
+                return false
+            } else {
+                return true
+            }
+        case .none:
+            return true
+        }
+    }
 }
+
+// MARK: LoginModuleOutput
+
+extension AppCoordinator: LoginModuleOutput {
+    func loginModuleWantsToOpenProfile() {
+        // TODO: тут надо как то открыть экран профиля
+        let rootNavigationController = UINavigationController()
+        let builder = ProfileModuleBuilder()
+        let profileView = builder.build(self)
+        rootNavigationController.setViewControllers([profileView], animated: true)
+    }
+
+    func loginModuleWantsToOpenRegistrationModule() {
+        print("ueueueueu")
+    }
+}
+
+// MARK: ProfileModuleOutput
+
+extension AppCoordinator: ProfileModuleOutput {
+    func profileModuleWantsToOpenLoginModule() {
+        print("ВЫХОД")
+    }
+}
+
+//        let profileCoordinator = ProfileCoordinator(rootTabBarController: tabBarController)
+//        profileCoordinator.start(animated: false)

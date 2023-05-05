@@ -28,12 +28,15 @@ extension LoginInteractor: LoginInteractorInput {
                 UserAuthService.shared.getMeInfo(completion: { [weak self] result in
                     switch result {
                     case let .success(userData):
+                        print("[DEBUG] \(userData)")
                         self?.output?.didSuccessLogin(with: userData)
                     case let .failure(error):
+                        print("[DEBUG] \(error)")
                         self?.output?.didHandleError(with: error)
                     }
                 }, token: token)
             case let .failure(error):
+                print("[DEBUG] \(error)")
                 self?.output?.didHandleError(with: error)
             }
         }

@@ -82,6 +82,7 @@ extension ProfileCoordinator: LoginModuleOutput {
     }
 
     func loginModuleWantsToOpenProfile() {
+        print("loginModuleWantsToOpenProfile")
         let builder = ProfileModuleBuilder()
         let profileView = builder.build(self)
         rootNavigationController.setViewControllers([profileView], animated: true)

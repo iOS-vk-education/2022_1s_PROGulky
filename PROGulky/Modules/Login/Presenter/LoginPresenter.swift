@@ -50,6 +50,7 @@ extension LoginPresenter: LoginViewOutput {
 
 extension LoginPresenter: LoginInteractorOutput {
     func didSuccessLogin(with token: User) {
+        print("didSuccessLogin")
         moduleOutput?.loginModuleWantsToOpenProfile()
     }
 
