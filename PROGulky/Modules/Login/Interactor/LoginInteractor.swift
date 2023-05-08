@@ -36,7 +36,6 @@ extension LoginInteractor: LoginInteractorInput {
                     }
                 }, token: token)
             case let .failure(error):
-                print("[DEBUG] \(error)")
                 self?.output?.didHandleError(with: error)
             }
         }
