@@ -33,7 +33,7 @@ struct TextConstantsProfile {
 
 struct TextConstantsLogin {
     static let titleProgramName = "PROгулки"
-    static let titleEmail = "Email"
+    static let titleEmail = "Электронная почта"
     static let titlePassword = "Пароль"
     static let titleSignIn = "Войти"
     static let titleSignUp = "Зарегистрироваться"
@@ -45,7 +45,7 @@ struct TextConstantsLogin {
 
 struct TextConstantsSignUp {
     static let titleTop = "Регистрация"
-    static let titleEmail = "Email"
+    static let titleEmail = "Электронная почта"
     static let titlePassword = "Пароль"
     static let titlePasswordSecond = "Повторите пароль"
     static let titleSignIn = "уже есть аккаунт, войти"
