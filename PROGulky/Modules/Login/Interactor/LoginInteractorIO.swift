@@ -11,7 +11,7 @@ import Foundation
 
 protocol LoginInteractorOutput: AnyObject {
     func didSuccessLogin(with user: User)
-    
+
     func didHandleError(with error: ApiCustomErrors)
 }
 

@@ -47,12 +47,6 @@ protocol TabBarItemFactoryProtocol {
 
 // MARK: - TabBarItemFactory
 
-// final class TabBarItemFactory: TabBarItemFactoryProtocol {
-//    func getTabBarItem(from page: TabBarPage) -> UITabBarItem {
-//        UITabBarItem(title: nil, image: page.image, selectedImage: page.selectedImage)
-//    }
-// }
-
 final class TabBarItemFactory: TabBarItemFactoryProtocol {
     func getTabBarItem(from page: TabBarPage) -> UITabBarItem {
         let item = UITabBarItem(title: nil, image: page.image, selectedImage: page.selectedImage)

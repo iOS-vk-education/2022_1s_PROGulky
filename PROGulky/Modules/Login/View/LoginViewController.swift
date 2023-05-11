@@ -86,6 +86,8 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
     private func setupUI() {
         view.backgroundColor = .prog.Dynamic.background
 
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
+
         configureImage()
         configureLoginLabel()
         configureEmailField()

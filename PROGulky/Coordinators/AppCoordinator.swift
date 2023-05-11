@@ -71,15 +71,13 @@ extension AppCoordinator: UITabBarControllerDelegate {
         let isLogin = UserDefaults.standard.bool(forKey: UserKeys.isLogin.rawValue)
 
         // Если пользователь не заголинен, то показываем ему экран логина
-        if !isLogin {
-            let builder = LoginModuleBuilder()
-            let loginViewController = builder.build(moduleOutput: self)
-            let navigationController = UINavigationController(rootViewController: loginViewController)
-            tabBarController.present(navigationController, animated: true)
-            return false
-        } else {
-            return true
-        }
+        guard !isLogin else { return true }
+
+        let builder = LoginModuleBuilder()
+        let loginViewController = builder.build(moduleOutput: self)
+        let navigationController = UINavigationController(rootViewController: loginViewController)
+        tabBarController.present(navigationController, animated: true)
+        return false
     }
 }
 

@@ -87,11 +87,8 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
     }
 
     private func setupUI() {
-        // TODO: сделать кнопку назад по русски, сейчас почему то так не работает
-        let barButton = UIBarButtonItem(title: "Назад")
-        navigationItem.backBarButtonItem = barButton
-
         view.backgroundColor = .prog.Dynamic.background
+        navigationController?.navigationBar.tintColor = .white
 
         configureImage()
         configureRegistrationLabel()
@@ -219,17 +216,14 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
         switch textField {
         case nameField:
             emailField.becomeFirstResponder()
-
         case emailField:
             passwordField.becomeFirstResponder()
-
         case passwordField:
             passwordSecondField.becomeFirstResponder()
-
         case passwordSecondField:
             didTapButtonSignUp()
         default:
-            print("error")
+            assertionFailure("error")
         }
         return true
     }

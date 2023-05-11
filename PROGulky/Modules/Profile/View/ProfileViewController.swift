@@ -46,6 +46,11 @@ final class ProfileViewController: UIViewController {
         userInfoHeader.configure(output.headerDisplayData)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        userInfoHeader.configure(output.headerDisplayData)
+    }
+
     private func configureUI() {
         navigationItem.title = TextConstantsProfile.titleProfile
         view.addSubview(userInfoHeader)
