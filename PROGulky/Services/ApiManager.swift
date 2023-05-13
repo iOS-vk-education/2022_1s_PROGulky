@@ -223,7 +223,7 @@ final class ApiManager: BaseService {
         task.resume()
     }
 
-    func login(_ loginDTO: LoginDTO, completion: @escaping (Result<AuthData, Error>) -> Void) {
+    func login(_ loginDTO: LoginDTO, completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
         let json: [String: Any] = [
             "email": loginDTO.email,
             "password": loginDTO.password,
@@ -233,25 +233,31 @@ final class ApiManager: BaseService {
 
         var request = ApiType.login.request
         request.httpBody = jsonData
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            if let error {
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if error != nil {
                 DispatchQueue.main.async {
-                    completion(.failure(error))
+                    completion(.failure(ApiCustomErrors.AnotherError))
                 }
             }
-            guard let data else { return }
-            print(data)
-            do {
-                let token = try JSONDecoder().decode(AuthData.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(token))
+            guard let data = data else { return }
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
+
+            if statusCode == 201 {
+                do {
+                    let authData = try JSONDecoder().decode(AuthData.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(.success(authData))
+                    }
+                } catch _ {
+                    DispatchQueue.main.async {
+                        completion(.failure(ApiCustomErrors.JSONParseError))
+                    }
                 }
-                print("accessToken", token.accessToken)
-            } catch let jsonError {
-                print("Failed decode error:", jsonError)
-                DispatchQueue.main.async {
-                    completion(.failure(jsonError))
-                }
+            } else if statusCode == 400 {
+                completion(.failure(ApiCustomErrors.BadСredentials))
+            } else {
+                completion(.failure(ApiCustomErrors.AnotherError))
             }
         }
         task.resume()
@@ -281,14 +287,13 @@ final class ApiManager: BaseService {
         }
     }
 
-    func getMeInfo(completion: @escaping (Result<User, NSError>) -> Void, token: String) {
+    func getMeInfo(completion: @escaping (Result<User, ApiCustomErrors>) -> Void, token: String) {
         let request = ApiType.getMeInfo(token: token).request
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
-            if let error {
+            if error != nil {
                 DispatchQueue.main.async {
-                    let error = NSError(domain: "Непредвиденная ошибка", code: 0)
-                    completion(.failure(error))
+                    completion(.failure(ApiCustomErrors.AnotherError))
                 }
             }
 
@@ -303,23 +308,21 @@ final class ApiManager: BaseService {
                         completion(.success(user))
                     }
                 } catch let jsonError {
-                    print("Failed decode error:", jsonError)
                     DispatchQueue.main.async {
                         let error = NSError(domain: jsonError.localizedDescription, code: 0)
-                        completion(.failure(error))
+                        completion(.failure(ApiCustomErrors.JSONParseError))
                     }
                 }
             } else {
                 DispatchQueue.main.async {
-                    let error = NSError(domain: "Протух ацесс", code: 401)
-                    completion(.failure(error))
+                    completion(.failure(ApiCustomErrors.AccessIsExpired))
                 }
             }
         }
         task.resume()
     }
 
-    func registration(_ registrtionDTO: RegistrationDTO, completion: @escaping (Result<User, Error>) -> Void) {
+    func registration(_ registrtionDTO: RegistrationDTO, completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
         let json: [String: Any] = [
             "name": registrtionDTO.nickname,
             "email": registrtionDTO.email,
@@ -330,24 +333,30 @@ final class ApiManager: BaseService {
 
         var request = ApiType.registration.request
         request.httpBody = jsonData
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            if let error {
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if error != nil {
                 DispatchQueue.main.async {
-                    completion(.failure(error))
+                    completion(.failure(ApiCustomErrors.AnotherError))
                 }
             }
-            guard let data else { return }
+            guard let data = data else { return }
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
 
-            do {
-                let user = try JSONDecoder().decode(User.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(user))
+            if statusCode == 201 { // Запрос успешный. Можно попробовать разобрать json
+                do {
+                    let authData = try JSONDecoder().decode(AuthData.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(.success(authData))
+                    }
+                } catch _ {
+                    DispatchQueue.main.async {
+                        completion(.failure(ApiCustomErrors.JSONParseError))
+                    }
                 }
-            } catch let jsonError {
-                print("Failed decode error:", jsonError)
-                DispatchQueue.main.async {
-                    completion(.failure(jsonError))
-                }
+            } else if statusCode == 400 { // Пользвоатель с таким email уже сущевствует
+                completion(.failure(ApiCustomErrors.DublicateUserError))
+            } else { // Непредвиденная ошибка
+                completion(.failure(ApiCustomErrors.AnotherError))
             }
         }
         task.resume()
@@ -511,6 +520,8 @@ enum ApiCustomErrors: String, Error {
     case AccessIsExpired = "Токен доступа истек" // 401 протух ацесс
     case RefreshIsExpired = "Токен обновления истек" // протух рефреш
     case AnotherError = "Непредвиденная ошибка" // Любая непонятная ошибка
+    case DublicateUserError = "Пользователь с таким Email уже существует" // Ошибка регистрации (юзер с такмим email уже существует)
+    case BadСredentials = "Неверный Email или пароль" // Ошибка логина (ошибка в кредах)
 }
 
 // MARK: - BaseService

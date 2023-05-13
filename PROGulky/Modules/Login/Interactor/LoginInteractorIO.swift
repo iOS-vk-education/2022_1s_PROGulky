@@ -11,7 +11,8 @@ import Foundation
 
 protocol LoginInteractorOutput: AnyObject {
     func didSuccessLogin(with user: User)
-    func didHandleError(with error: Error)
+
+    func didHandleError(with error: ApiCustomErrors)
 }
 
 // MARK: - LoginInteractorInput

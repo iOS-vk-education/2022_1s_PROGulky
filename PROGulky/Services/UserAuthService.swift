@@ -21,13 +21,14 @@ final class UserAuthService {
         UserDefaultsManager.shared.isLogged
     }
 
-    func registration(dto: RegistrationDTO, completion: @escaping (Result<User, Error>) -> Void) {
+    // Регистрация с получением токенов
+    func registration(dto: RegistrationDTO, completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
         ApiManager.shared.registration(dto) { result in
             switch result {
-            case let .success(user):
-                UserDefaultsManager.shared.saveUserData(user: user)
+            case let .success(authData):
+                UserDefaultsManager.shared.saveUserAuthData(authData: authData)
                 DispatchQueue.main.async {
-                    completion(.success(user))
+                    completion(.success(authData))
                 }
             case let .failure(failure):
                 DispatchQueue.main.async {
@@ -38,7 +39,7 @@ final class UserAuthService {
     }
 
     // Получение токенов
-    func login(dto: LoginDTO, completion: @escaping (Result<AuthData, Error>) -> Void) {
+    func login(dto: LoginDTO, completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
         ApiManager.shared.login(dto) { result in
             switch result {
             case let .success(authData):
@@ -54,7 +55,7 @@ final class UserAuthService {
         }
     }
 
-    func getMeInfo(completion: @escaping (Result<User, Error>) -> Void, token: String) {
+    func getMeInfo(completion: @escaping (Result<User, ApiCustomErrors>) -> Void, token: String) {
         ApiManager.shared.getMeInfo(
             completion: { result in
                 switch result {

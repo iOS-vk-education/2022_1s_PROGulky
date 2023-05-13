@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - TabBarPage
 
-enum TabBarPage: CaseIterable {
+enum TabBarPage: Int, CaseIterable {
     case excursionList
     case favourite
     case profile
@@ -49,6 +49,8 @@ protocol TabBarItemFactoryProtocol {
 
 final class TabBarItemFactory: TabBarItemFactoryProtocol {
     func getTabBarItem(from page: TabBarPage) -> UITabBarItem {
-        UITabBarItem(title: nil, image: page.image, selectedImage: page.selectedImage)
+        let item = UITabBarItem(title: nil, image: page.image, selectedImage: page.selectedImage)
+        item.tag = page.rawValue
+        return item
     }
 }

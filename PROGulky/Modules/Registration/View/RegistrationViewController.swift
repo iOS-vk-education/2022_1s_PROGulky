@@ -13,30 +13,55 @@ import SnapKit
 final class RegistrationViewController: UIViewController, UITextFieldDelegate {
     var output: RegistrationViewOutput!
 
-    private let labelTop = UILabel()
-    private let imageProgramLogo = UIImageView()
-    private var nameField = CustomTextField()
-    private var emailField = CustomTextField()
-    private var passwordField = CustomTextField()
-    private var passwordSecondField = CustomTextField()
-    private var buttonSignUp = CustomButton(title: TextConstantsSignUp.titleSignUp, image: nil, color: .prog.Dynamic.primary, textColor: .prog.Dynamic.lightText)
+    private let image = UIImageView()
+    private let registrationLabel = UILabel()
+
+    private let nameField = CustomTextField(
+        name: TextConstantsSignUp.titleName,
+        security: false
+    )
+
+    private let emailField = CustomTextField(
+        name: TextConstantsSignUp.titleEmail,
+        security: false
+    )
+
+    private let passwordField = CustomTextField(
+        name: TextConstantsSignUp.titlePassword,
+        security: true
+    )
+
+    private let passwordSecondField = CustomTextField(
+        name: TextConstantsSignUp.titlePasswordSecond,
+        security: true
+    )
+
+    private var buttonSignUp = CustomButton(
+        title: TextConstantsSignUp.titleSignUp,
+        color: .prog.Dynamic.primary,
+        textColor: .white,
+        shadow: true
+    )
 
     private enum Constants {
-        enum TextField {
-            static let offset: CGFloat = 20
-            static let height: CGFloat = 48
-            static let firstCenterOffset: CGFloat = -200
+        enum Image {
+            static let height: CGFloat = 200
+        }
+
+        enum TextLabel {
             static let topOffset: CGFloat = 15
-            static let topLabelHeight: CGFloat = 20
-            static let imageLogoSize: CGFloat = 100
-            static let bottomOffset: CGFloat = -20
+        }
+
+        enum TextField {
+            static let height: CGFloat = 48
+            static let topOffset: CGFloat = 15
+            static let offset: CGFloat = 20
         }
 
         enum Button {
+            static let topOffset: CGFloat = 30
             static let offset: CGFloat = 20
-            static let height: CGFloat = 60
-            static var bottomOffset: CGFloat = -60
-            static let topOffset: CGFloat = 10
+            static let height: CGFloat = 50
         }
     }
 
@@ -45,130 +70,105 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
 
         hideKeyboardWhenTappedAround()
 
-        view.backgroundColor = .prog.Dynamic.background
-        imageProgramLogo.image = UIImage(named: "progulkiLabel")
-        labelTop.text = TextConstantsSignUp.titleTop
-        labelTop.font = UIFont.boldSystemFont(ofSize: 20.0)
-        labelTop.textColor = .prog.Dynamic.text
-
-        guard let imagePerson = UIImage(systemName: "person") else {
-            return
-        }
-        nameField = CustomTextField(name: TextConstantsSignUp.titleName, image: imagePerson, security: false)
-        guard let imageEnvelope = UIImage(systemName: "envelope") else {
-            return
-        }
-        emailField = CustomTextField(name: TextConstantsSignUp.titleEmail, image: imageEnvelope, security: false)
-        guard let imageLock = UIImage(systemName: "lock") else {
-            return
-        }
-        passwordField = CustomTextField(name: TextConstantsSignUp.titlePassword, image: imageLock, security: true)
-        passwordSecondField = CustomTextField(name: TextConstantsSignUp.titlePasswordSecond, image: imageLock, security: true)
-        buttonSignUp = CustomButton(title: TextConstantsSignUp.titleSignUp, image: nil, color: .prog.Dynamic.primary, textColor: .prog.Dynamic.lightText)
-
-        nameField.returnKeyType = .next
-        emailField.returnKeyType = .next
-        passwordField.returnKeyType = .next
-        passwordSecondField.returnKeyType = .done
-
-        nameField.delegate = self
-        emailField.delegate = self
-        passwordField.delegate = self
-        passwordSecondField.delegate = self
-
-        buttonSignUp.addTarget(self, action: #selector(didTapButtonSignUp), for: .touchUpInside)
-
-        view.addSubviews(labelTop,
+        view.addSubviews(image,
+                         registrationLabel,
                          nameField,
                          emailField,
                          passwordField,
                          passwordSecondField,
-                         buttonSignUp,
-                         imageProgramLogo)
+                         buttonSignUp)
+
+        setupUI()
+        setupConstraints()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        configureUI()
     }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        switch textField {
-        case nameField:
-            emailField.becomeFirstResponder()
+    private func setupUI() {
+        view.backgroundColor = .prog.Dynamic.background
+        navigationController?.navigationBar.tintColor = .white
 
-        case emailField:
-            passwordField.becomeFirstResponder()
-
-        case passwordField:
-            passwordSecondField.becomeFirstResponder()
-
-        case passwordSecondField:
-            didTapButtonSignUp()
-        default:
-            print("error")
-        }
-        return true
+        configureImage()
+        configureRegistrationLabel()
+        configureNameField()
+        configurePasswordField()
+        configurePasswordSecondField()
+        configureSignUpButton()
     }
 
-    @objc private func didTapButtonSignUp() {
-        guard let email = emailField.text,
-              email != "" else {
-            emailField.layer.borderWidth = 1.0
-            emailField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
-            return
-        }
-        guard passwordField.text != "" else {
-            passwordField.layer.borderWidth = 1.0
-            passwordField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
-            return
-        }
-        guard passwordSecondField.text != "" else {
-            passwordSecondField.layer.borderWidth = 1.0
-            passwordSecondField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
-            return
-        }
-
-        guard passwordField.text == passwordSecondField.text else {
-            passwordSecondField.layer.borderWidth = 1.0
-            passwordSecondField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
-            return
-        }
-
-        guard let password = passwordField.text else { return }
-
-        emailField.layer.borderWidth = 0.5
-        emailField.layer.borderColor = UIColor.lightGray.cgColor
-        passwordField.layer.borderWidth = 0.5
-        passwordField.layer.borderColor = UIColor.lightGray.cgColor
-        passwordSecondField.layer.borderWidth = 0.5
-        passwordSecondField.layer.borderColor = UIColor.lightGray.cgColor
-
-        let registrationDTO = RegistrationDTO(email: email, password: password, nickname: nameField.text ?? "")
-        output?.didTapSignUpButton(registrationDTO: registrationDTO)
+    private func configureImage() {
+        image.image = UIImage(named: "placeholderImage2")
     }
 
-    private func configureUI() {
-        labelTop.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(Constants.TextField.offset)
-            make.centerX.equalToSuperview()
-        }
+    private func configureRegistrationLabel() {
+        registrationLabel.text = TextConstantsSignUp.titleTop
+        registrationLabel.textColor = .prog.Dynamic.primary
+        registrationLabel.font = UIFont.systemFont(ofSize: 23, weight: UIFont.Weight.medium)
+    }
 
-        imageProgramLogo.snp.makeConstraints { make in
-            make.top.equalTo(self.labelTop.snp.bottom).offset(Constants.TextField.offset)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(Constants.TextField.imageLogoSize)
-            make.height.equalTo(Constants.TextField.imageLogoSize)
+    private func configureNameField() {
+        nameField.returnKeyType = .next
+        nameField.delegate = self
+    }
+
+    private func configureEmailField() {
+        emailField.returnKeyType = .next
+        emailField.delegate = self
+    }
+
+    private func configurePasswordField() {
+        passwordField.returnKeyType = .next
+        passwordField.delegate = self
+    }
+
+    private func configurePasswordSecondField() {
+        passwordSecondField.returnKeyType = .next
+        passwordSecondField.delegate = self
+    }
+
+    private func configureSignUpButton() {
+        buttonSignUp.addTarget(self, action: #selector(didTapButtonSignUp), for: .touchUpInside)
+    }
+
+    private func setupConstraints() {
+        setImageConstraints()
+        setRegistrationLabelConstraints()
+        setNameFieldConstraints()
+        setEmailFieldConstraints()
+        setPasswordFieldConstraints()
+        setPasswordSecondFieldConstraints()
+        setSignUpButtonConstraints()
+    }
+
+    private func setImageConstraints() {
+        image.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.height.equalTo(Constants.Image.height)
         }
+    }
+
+    private func setRegistrationLabelConstraints() {
+        registrationLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.image.snp.bottom).offset(Constants.TextLabel.topOffset)
+            make.left.right.equalToSuperview().offset(Constants.TextField.offset)
+        }
+    }
+
+    private func setNameFieldConstraints() {
         nameField.snp.makeConstraints { make in
-            make.top.equalTo(self.imageProgramLogo.snp.bottom).offset(Constants.TextField.offset)
+            make.top.equalTo(self.registrationLabel.snp.bottom).offset(Constants.TextField.offset)
             make.leading.equalToSuperview()
                 .offset(Constants.TextField.offset)
             make.trailing.equalToSuperview()
                 .inset(Constants.TextField.offset)
             make.height.equalTo(Constants.TextField.height)
         }
+    }
 
+    private func setEmailFieldConstraints() {
         emailField.snp.makeConstraints { make in
             make.top.equalTo(self.nameField.snp.bottom).offset(Constants.TextField.topOffset)
             make.leading.equalToSuperview()
@@ -177,7 +177,9 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
                 .inset(Constants.TextField.offset)
             make.height.equalTo(Constants.TextField.height)
         }
+    }
 
+    private func setPasswordFieldConstraints() {
         passwordField.snp.makeConstraints { make in
             make.top.equalTo(self.emailField.snp.bottom).offset(Constants.TextField.topOffset)
             make.leading.equalToSuperview()
@@ -186,7 +188,9 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
                 .inset(Constants.TextField.offset)
             make.height.equalTo(Constants.TextField.height)
         }
+    }
 
+    private func setPasswordSecondFieldConstraints() {
         passwordSecondField.snp.makeConstraints { make in
             make.top.equalTo(self.passwordField.snp.bottom).offset(Constants.TextField.topOffset)
             make.leading.equalToSuperview()
@@ -195,15 +199,56 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
                 .inset(Constants.TextField.offset)
             make.height.equalTo(Constants.TextField.height)
         }
+    }
 
+    private func setSignUpButtonConstraints() {
         buttonSignUp.snp.makeConstraints { make in
-            make.top.equalTo(self.passwordSecondField.snp.bottom).offset(Constants.TextField.offset)
+            make.top.equalTo(self.passwordSecondField.snp.bottom).offset(Constants.Button.topOffset)
             make.leading.equalToSuperview()
                 .offset(Constants.Button.offset)
             make.trailing.equalToSuperview()
                 .inset(Constants.Button.offset)
             make.height.equalTo(Constants.Button.height)
         }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case nameField:
+            emailField.becomeFirstResponder()
+        case emailField:
+            passwordField.becomeFirstResponder()
+        case passwordField:
+            passwordSecondField.becomeFirstResponder()
+        case passwordSecondField:
+            didTapButtonSignUp()
+        default:
+            assertionFailure("error")
+        }
+        return true
+    }
+
+    @objc private func didTapButtonSignUp() {
+        guard let email = emailField.text, email != "" else {
+            emailField.layer.shadowColor = UIColor.red.cgColor
+            return
+        }
+        guard passwordField.text != "" else {
+            passwordField.layer.shadowColor = UIColor.red.cgColor
+            return
+        }
+        guard passwordSecondField.text != "" else {
+            passwordSecondField.layer.shadowColor = UIColor.red.cgColor
+            return
+        }
+        guard passwordField.text == passwordSecondField.text else {
+            passwordSecondField.layer.shadowColor = UIColor.red.cgColor
+            return
+        }
+        guard let password = passwordField.text else { return }
+
+        let registrationDTO = RegistrationDTO(email: email, password: password, nickname: nameField.text ?? "")
+        output?.didTapSignUpButton(registrationDTO: registrationDTO)
     }
 }
 
