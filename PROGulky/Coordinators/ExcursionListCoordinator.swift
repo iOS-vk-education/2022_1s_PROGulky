@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import UIKit
 import SwiftUI
+import UIKit
 
 // MARK: - ExcursionListCoordinator
 
@@ -28,7 +28,7 @@ final class ExcursionListCoordinator: CoordinatorProtocol {
 
     // MARK: Public Methods
 
-    func start(animated: Bool) {
+    func start(animated _: Bool) {
         let builder = ExcursionsListModuleBuilder()
         let excursionListViewController = builder.build(moduleOutput: self)
         rootNavigationController.setViewControllers([excursionListViewController], animated: false)
@@ -49,30 +49,18 @@ final class ExcursionListCoordinator: CoordinatorProtocol {
 
 extension ExcursionListCoordinator: ExcursionsListModuleOutput {
     func excursionsListModuleWantsToOpenMapDetailModule(excursion: PreviewExcursion) {
-        let mapDetailBuilder = MapDetailModuleBuilder()
-        // TODO: Сломал не работает!
-        // let mapDetailViewController = mapDetailBuilder.build(moduleOutput: self, excursion: excursion)
-        // rootNavigationController.pushViewController(mapDetailViewController, animated: true)
-    }
-}
-
-// MARK: MapDetailModuleOutput
-
-extension ExcursionListCoordinator: MapDetailModuleOutput {
-    func mapDetailModuleWantsToClose() {
-        rootNavigationController.popViewController(animated: true)
-        rootNavigationController.tabBarController?.tabBar.isHidden = false
+        let detailExcursionViewModel = DetailExcursionViewModel(excursionId: excursion.id)
+        let detailExcursionView = DetailExcursionView(viewModel: detailExcursionViewModel)
+        let hostingViewController = UIHostingController(rootView: detailExcursionView)
+        rootNavigationController.navigationBar.standardAppearance.configureWithTransparentBackground()
+        rootNavigationController.navigationBar.standardAppearance.backgroundColor = .clear
+        rootNavigationController.pushViewController(hostingViewController, animated: true)
     }
 }
 
 // MARK: DetailExcursionModuleOutput
 
-extension ExcursionListCoordinator: DetailExcursionModuleOutput {
-    func detailExcursionModuleWantsToClose() {
-        rootNavigationController.popViewController(animated: true)
-        rootNavigationController.tabBarController?.tabBar.isHidden = false
-    }
-
+extension ExcursionListCoordinator {
     func excursionsListModuleWantsToOpenAddExcursion() {
         let builder = AddExcursionModuleBuilder()
         let addView = builder.build(moduleOutput: self)

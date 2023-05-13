@@ -16,6 +16,9 @@ enum ApiType {
     case getFavoritesExcursions(token: String) // Избранные по токену для пользователя
     case getPlaces
     case postExcursion(token: String, excursion: ExcursionForPost)
+    case getExcursion(token: String, excursionId: Int)
+    case getPlaceImage(image: String)
+    case getExcursionImage(image: String)
 
     case login // Логин
     case getMeInfo(token: String) // получение информации о себе
@@ -36,6 +39,8 @@ enum ApiType {
             return ["Authorization": "Bearer \(token)"]
         case let .postExcursion(token, _):
             return ["Authorization": "Bearer \(token)"]
+        case let .getExcursion(token, _):
+            return ["Authorization": "Bearer \(token)"]
         case let .getMeInfo(token):
             return ["Authorization": "Bearer \(token)"]
         default:
@@ -51,6 +56,9 @@ enum ApiType {
         case .removeFavorites: return "api/v1/excursions/delete_favorite"
         case .getFavoritesExcursions: return "api/v1/excursions/favorites_excursions"
         case .getPlaces: return "api/v1/places"
+        case let .getExcursion(_, excursionId): return "api/v1/excursions/\(excursionId)"
+        case let .getPlaceImage(image): return "images/places/\(image)"
+        case let .getExcursionImage(image): return "/images/excursions/\(image)"
 
         case .login: return "api/v1/auth/login"
         case .registration: return "api/v1/auth/registration"
@@ -85,7 +93,7 @@ enum ApiType {
         request.allHTTPHeaderFields = headers
 
         switch self {
-        case .getExcursions, .getPlaces:
+        case .getExcursions, .getPlaces, .getExcursion, .getPlaceImage, .getExcursionImage:
             request.httpMethod = "GET"
             return request
         case .addFavorites:
@@ -126,10 +134,10 @@ final class ApiManager: BaseService {
         let request = ApiType.getExcursions(params: params).request
 
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            if let error = error {
+            if let error {
                 completion(.failure(error))
             }
-            guard let data = data else { return }
+            guard let data else { return }
             do {
                 let excursions = try JSONDecoder().decode(PreviewExcursions.self, from: data)
                 DispatchQueue.main.async {
@@ -153,7 +161,7 @@ final class ApiManager: BaseService {
         request.httpBody = jsonData
 
         let task = URLSession.shared.dataTask(with: request) { _, _, error in
-            if let error = error {
+            if let error {
                 completion(.failure(error))
             }
 
@@ -179,7 +187,7 @@ final class ApiManager: BaseService {
         request.httpBody = jsonData
 
         let task = URLSession.shared.dataTask(with: request) { _, _, error in
-            if let error = error {
+            if let error {
                 completion(.failure(error))
             }
 
@@ -199,10 +207,10 @@ final class ApiManager: BaseService {
         let request = ApiType.getFavoritesExcursions(token: token).request
 
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            if let error = error {
+            if let error {
                 completion(.failure(error))
             }
-            guard let data = data else { return }
+            guard let data else { return }
             do {
                 let excursions = try JSONDecoder().decode(PreviewExcursions.self, from: data)
                 DispatchQueue.main.async {
@@ -292,7 +300,7 @@ final class ApiManager: BaseService {
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
 
             if statusCode != 401 {
-                guard let data = data else { return }
+                guard let data else { return }
 
                 do {
                     let user = try JSONDecoder().decode(User.self, from: data)
@@ -376,7 +384,7 @@ final class ApiManager: BaseService {
                 }
             }
 
-            guard let data = data else { return }
+            guard let data else { return }
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
 
             switch statusCode {
@@ -405,12 +413,12 @@ final class ApiManager: BaseService {
         let request = ApiType.getPlaces.request
 
         let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            if let error = error {
+            if let error {
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
             }
-            guard let data = data else { return }
+            guard let data else { return }
             do {
                 let places = try JSONDecoder().decode([Place].self, from: data)
                 DispatchQueue.main.async {
@@ -460,15 +468,15 @@ final class ApiManager: BaseService {
         data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
 
         let task = URLSession.shared.uploadTask(with: request, from: data) { data, response, error in
-            if let error = error {
+            if let error {
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
             }
-            if let response = response {
+            if let response {
                 print(response.description)
             }
-            guard let data = data else { return }
+            guard let data else { return }
             do {
                 let places = try JSONDecoder().decode(ExcursionAfterPost.self, from: data)
                 DispatchQueue.main.async {
@@ -479,6 +487,26 @@ final class ApiManager: BaseService {
                 DispatchQueue.main.async {
                     completion(.failure(jsonError))
                 }
+            }
+        }
+        task.resume()
+    }
+
+    func getExcursion(token: String, excursionId: Int, completion: @escaping (Result<Excursion, Error>) -> Void) {
+        let request = ApiType.getExcursion(token: token, excursionId: excursionId).request
+
+        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+            if let error {
+                completion(.failure(error))
+            }
+            guard let data else { return }
+            do {
+                var excursion = try JSONDecoder().decode(Excursion.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(excursion))
+                }
+            } catch let jsonError {
+                completion(.failure(jsonError))
             }
         }
         task.resume()

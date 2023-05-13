@@ -299,7 +299,7 @@ extension AddExcursionViewController: UITableViewDataSource {
         case .descriptionSection:
             return AddExcursionConstants.DescriptionField.minHeight
         case .selectedPlaces:
-            return DetailExcursionConstants.TableView.PlaceCell.height
+            return 60
         case .addButton:
             return 44
         }

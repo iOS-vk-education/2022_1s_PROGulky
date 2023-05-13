@@ -9,5 +9,5 @@ import Foundation
 
 protocol MapDetailRouterInput: AnyObject {
     func embedMapModule(output: MapModuleOutput)
-    func embedDetailModule(output: DetailExcursionModuleOutput)
+    func embedDetailModule()
 }

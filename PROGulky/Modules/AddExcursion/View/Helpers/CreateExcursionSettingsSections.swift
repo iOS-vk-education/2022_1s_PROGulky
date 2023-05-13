@@ -17,9 +17,9 @@ enum CreateExcursionSettingsSections: Int, CaseIterable {
     var description: String {
         switch self {
         case .selectedPlaces:
-            return DetailExcursionConstants.TableView.Sections.PlacesCells.title
+            return "Точки экскурсии"
         case .addButton:
-            return DetailExcursionConstants.TableView.Sections.DescriptionCell.title
+            return "Описание"
         case .image:
             return "image"
         case .titleSection:
