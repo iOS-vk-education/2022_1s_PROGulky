@@ -12,13 +12,9 @@ import MapKit
 // MARK: - DetailExcursionView
 
 struct DetailExcursionView: View {
-    private struct Constants {
-        enum Api {
-            private static let baseURLString = "http://37.140.195.167:5000"
-            static let imageURL = "\(baseURL)/images/excursions"
-        }
-
-        static let ratingImageName: String = "star.fill"
+    private enum Constants {
+        static let imageURL = "\(baseURL)/images/excursions"
+        static let ratingImageName = "star.fill"
         static let description = "Описание"
         static let buttonImageName = "heart"
         static let backButtonImageName = "chevron.left"
@@ -84,7 +80,7 @@ struct DetailExcursionView: View {
     @ViewBuilder
     private var imageWithLikeButton: some View {
         WebImage(
-            url: URL(string: "\(Constants.Api.imageURL)/\(viewModel.excursion.image)")
+            url: URL(string: "\(Constants.imageURL)/\(viewModel.excursion.image)")
         )
         .resizable()
         .placeholder(Image(systemName: "photo"))
