@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Place
 
-struct Place: Codable {
+struct Place: Codable, Identifiable {
     var id: Int?
     var sort: Int?
     let title: String
@@ -21,17 +21,15 @@ struct Place: Codable {
     let longitude: Double
 }
 
-// MARK: Identifiable
+// MARK: - PreviewPlace
 
-extension Place: Identifiable {
-//    var id: Int {
-//        get {
-//            sort ?? 0
-//        }
-//        set(newVal) {
-//            sort = newVal
-//        }
-//    }
+struct PreviewPlace: Codable {
+    let id: Int
+    let sort: Int?
+    let title: String
+    let address: String
+    let latitude: Double
+    let longitude: Double
 }
 
 // MARK: - PlaceWithImageData
