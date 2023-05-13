@@ -505,6 +505,7 @@ final class ApiManager: BaseService {
 }
 
 // MARK: - ApiCustomErrors
+
 enum ApiCustomErrors: String, Error {
     case JSONParseError = "Ошибка приведения JSON"
     case AccessIsExpired = "Токен доступа истек" // 401 протух ацесс
@@ -513,6 +514,7 @@ enum ApiCustomErrors: String, Error {
 }
 
 // MARK: - BaseService
+
 class BaseService: NSObject {
     // Запрос на API с реквестом, которые создается до запроса и прокидывается сюда
     // для обновления в случае истечения токена

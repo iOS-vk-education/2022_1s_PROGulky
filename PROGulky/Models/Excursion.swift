@@ -19,6 +19,7 @@ struct Excursion: Codable {
     var duration: Int // Продолжительность в минутах
     var distance: Double // Дистанция в километрах
     var numberOfPoints: Int // Количество точек на маршруте
+    let ownerRoleValue: String
     let owner: OwnerInstance
     var places: [PreviewPlace]
     var isFavorite: Bool
@@ -36,7 +37,7 @@ struct PreviewExcursion: Codable {
     var duration: Int // Продолжительность в минутах
     var distance: Double // Дистанция в километрах
     var numberOfPoints: Int // Количество точек на маршруте
-    let owner: Owner
+    let owner: OwnerInstance
 }
 
 typealias PreviewExcursions = [PreviewExcursion]

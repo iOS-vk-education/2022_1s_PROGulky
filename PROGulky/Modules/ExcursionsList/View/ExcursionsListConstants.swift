@@ -75,7 +75,7 @@ struct ExcursionsListConstants {
     enum ExcursionCell {
         static let reuseId = "ExcursionCell" // Идентификатор ячейки
 
-        static let height: CGFloat = 145 // Высота ячейки
+        static let height: CGFloat = 155 // Высота ячейки
         static let contentIndent: CGFloat = 20 // Отступ контента от картинки
         static let cornerRadius: CGFloat = 16 // Скругление у ячейки
 
@@ -92,8 +92,8 @@ struct ExcursionsListConstants {
 
         enum Image {
             static let cornerRadius: CGFloat = 10 // Радиус скургления картинки экскурсии
-            static let height: CGFloat = 100 // Высота картинки
-            static let aspectRatio: CGFloat = 16 / 9 // Соотношение сторон картинки
+            static let height: CGFloat = 110 // Высота картинки
+            static let aspectRatio: CGFloat = 14 / 9 // Соотношение сторон картинки
         }
 
         enum Title {
@@ -123,10 +123,24 @@ struct ExcursionsListConstants {
             static let fontWeight = UIFont.Weight.medium // Толщина текста параметров
             static let textColor: UIColor = .gray // Цвет текста параметров
         }
+
+        enum OwnerLabel {
+            static let bottomInset = 18
+            static let fontSize: CGFloat = 13
+            static let fontWeight = UIFont.Weight.thin
+        }
+
+        enum OwnerImage {
+            static let height: CGFloat = 20
+            static let width: CGFloat = 20
+            static let cornerRadius = height / 2
+            static let bottomInset: CGFloat = 15
+        }
     }
 
     enum Api {
         static let baseURL: String = "http://37.140.195.167:5000"
         static let imageURL: String = "\(baseURL)/images/excursions"
+        static let ownerImageURL: String = "\(baseURL)/images/users"
     }
 }
