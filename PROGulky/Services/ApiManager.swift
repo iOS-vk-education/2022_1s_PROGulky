@@ -492,24 +492,25 @@ final class ApiManager: BaseService {
         task.resume()
     }
 
-    func getExcursion(token: String, excursionId: Int, completion: @escaping (Result<Excursion, Error>) -> Void) {
-        let request = ApiType.getExcursion(token: token, excursionId: excursionId).request
-
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
-            if let error {
-                completion(.failure(error))
-            }
-            guard let data else { return }
+    func getExcursion(
+        excursionId: Int,
+        success: @escaping ((_ excursion: Excursion) -> Void),
+        failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
+    ) {
+        let request = ApiType.getExcursion(token: getAccessToken(), excursionId: excursionId).request
+        callWebService(request) { data in
             do {
-                var excursion = try JSONDecoder().decode(Excursion.self, from: data)
+                let excursion = try JSONDecoder().decode(Excursion.self, from: data)
                 DispatchQueue.main.async {
-                    completion(.success(excursion))
+                    success(excursion)
                 }
             } catch let jsonError {
-                completion(.failure(jsonError))
+                print("Failed decode error:", jsonError)
             }
         }
-        task.resume()
+        failure: { error in
+            failure(error)
+        }
     }
 }
 

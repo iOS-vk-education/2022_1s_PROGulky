@@ -33,7 +33,7 @@ struct ExcursionsListConstants {
 
         static let labelTextIsLoggedUser = "Привет,"
         static let labelTextIsNotLoggedUser = "Привет!"
-        static let buttonTextIsNotLoggedUser = "Войти в аккаунт?"
+        static let buttonTextIsNotLoggedUser = "Войди в аккаунт!"
     }
 
     enum SearchTextField {
