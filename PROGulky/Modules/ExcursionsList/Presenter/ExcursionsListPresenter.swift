@@ -178,6 +178,10 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
     }
 
     func didSelectCell(at indexPath: IndexPath) {
+        guard UserAuthService.shared.isLogged else {
+            view.showAuthView()
+            return
+        }
         moduleOutput?.excursionsListModuleWantsToOpenMapDetailModule(excursion: excursions[indexPath.row])
     }
 

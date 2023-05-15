@@ -71,7 +71,7 @@ protocol ExcursionsListViewInput: AnyObject {
 
     func showErrorView(with error: Error) // Показать сообщение с ошибкой
 
-    func showAuthView()
+    func showAuthView() // Показать сообщение о необходимости авторизации
 
     func hideErrorView()
 

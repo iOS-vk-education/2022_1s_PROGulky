@@ -27,18 +27,16 @@ final class DetailExcursionViewModel: ObservableObject {
 
     private func loadModel() {
         ApiManager.shared.getExcursion(
-            token: UserService.shared.userToken,
-            excursionId: excursion.id
-        ) { result in
-            switch result {
-            case let .success(excursion):
+            excursionId: excursion.id,
+            success: { excursion in
                 self.excursion = DetailExcursionDisplayDataFactory().setupViewModel(excursion: excursion)
                 self.places = DetailExcursionDisplayDataFactory().getPlacesCoordinates(excursion.places)
                 self.getRoute()
-            case let .failure(failure):
-                print(failure.localizedDescription)
+            }, failure: { error in
+                // TODO: тут реализуется бизнес логика на какой экран пойти пользователю, если при запросе токены протухли и хранилище с данными очистилось
+                print("[DEBUG] error: \(error)")
             }
-        }
+        )
     }
 
     private func getRoute() {

@@ -29,7 +29,11 @@ final class ExcursionsListInteractor {
 
 extension ExcursionsListInteractor: ExcursionsListInteractorInput {
     func loadUserInstance() {
-        let user = UserData(name: "Semyon", email: "email", token: "1234", role: "user")
+        guard UserAuthService.shared.isLogged else {
+            output?.didLoadUserInstance(user: nil)
+            return
+        }
+        let user = UserService.shared.userData
         output?.didLoadUserInstance(user: user)
     }
 
