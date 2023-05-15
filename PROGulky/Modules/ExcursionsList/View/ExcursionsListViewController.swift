@@ -47,6 +47,7 @@ final class ExcursionsListViewController: CustomViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Найти экскурсию"
+        searchController.searchBar.setValue("Отмена", forKey: "cancelButtonText")
 
         definesPresentationContext = true
     }
