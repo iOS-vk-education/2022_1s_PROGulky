@@ -46,10 +46,11 @@ final class FavouriteCoordinator: CoordinatorProtocol {
 // MARK: FavouritesExcursionsModuleOutput
 
 extension FavouriteCoordinator: FavouritesExcursionsModuleOutput {
-    func favoritesExcursionsListModuleWantsToOpenMapDetailModule(excursion: Excursion) {
+    func favoritesExcursionsListModuleWantsToOpenMapDetailModule(excursion: PreviewExcursion) {
         let mapDetailBuilder = MapDetailModuleBuilder()
-        let mapDetailViewController = mapDetailBuilder.build(moduleOutput: self, excursion: excursion)
-        rootNavigationController.pushViewController(mapDetailViewController, animated: true)
+        // TODO: Сломал не работает!
+        // let mapDetailViewController = mapDetailBuilder.build(moduleOutput: self, excursion: excursion)
+        // rootNavigationController.pushViewController(mapDetailViewController, animated: true)
     }
 }
 
@@ -57,15 +58,6 @@ extension FavouriteCoordinator: FavouritesExcursionsModuleOutput {
 
 extension FavouriteCoordinator: MapDetailModuleOutput {
     func mapDetailModuleWantsToClose() {
-        rootNavigationController.popViewController(animated: true)
-        rootNavigationController.tabBarController?.tabBar.isHidden = false
-    }
-}
-
-// MARK: DetailExcursionModuleOutput
-
-extension FavouriteCoordinator: DetailExcursionModuleOutput {
-    func detailExcursionModuleWantsToClose() {
         rootNavigationController.popViewController(animated: true)
         rootNavigationController.tabBarController?.tabBar.isHidden = false
     }

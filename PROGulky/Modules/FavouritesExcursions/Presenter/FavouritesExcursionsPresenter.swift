@@ -21,7 +21,7 @@ final class FavouritesExcursionsPresenter {
     private let router: FavouritesExcursionsRouterInput
 
     private let factory = ExcursionsListDisplayDataFactory()
-    private var favoritesExcursions: [Excursion] = []
+    private var favoritesExcursions: [PreviewExcursion] = []
 
     // MARK: - Lifecycle
 
@@ -78,7 +78,7 @@ extension FavouritesExcursionsPresenter: FavouritesExcursionsInteractorOutput {
         view.hideNotLoginMessageView()
     }
 
-    func didLoadFavoritesExcursionsList(favoritesExcursions: Excursions) {
+    func didLoadFavoritesExcursionsList(favoritesExcursions: PreviewExcursions) {
         self.favoritesExcursions = favoritesExcursions
         view.stopLoader()
         view.reloadView()

@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct Owner: Codable {
+// MARK: - OwnerInstance
+
+// Новая стурктура пользователя с его ролью
+struct OwnerInstance: Codable {
     let id: Int
     let name, email: String
+    let image: String?
+    let role: Role
 }

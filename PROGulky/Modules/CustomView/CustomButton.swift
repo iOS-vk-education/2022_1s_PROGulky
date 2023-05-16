@@ -8,18 +8,28 @@
 import UIKit
 
 class CustomButton: UIButton {
-    init(title: String, image: UIImage?, color: UIColor, textColor: UIColor) {
+    init(title: String,
+         color: UIColor,
+         textColor: UIColor,
+         shadow: Bool = false) {
         super.init(frame: .zero)
+
         layer.cornerRadius = 20
         var config = UIButton.Configuration.filled()
         config.title = title
-        config.image = image
         config.imagePlacement = .leading
         config.imagePadding = 10
         config.baseBackgroundColor = color
         config.baseForegroundColor = textColor
         config.background.cornerRadius = 16
         config.cornerStyle = .fixed
+
+        if shadow {
+            layer.shadowRadius = 9
+            layer.shadowColor = UIColor.prog.Dynamic.shadow.cgColor
+            layer.shadowOffset = .zero
+            layer.shadowOpacity = 0.4
+        }
 
         configuration = config
     }

@@ -54,22 +54,6 @@ extension MapDetailViewController: MapDetailViewInput {
 
 extension MapDetailViewController: MapDetailTransitionHandlerProtocol {
     func embedDetailModule(_ viewController: UIViewController) {
-        guard let detailViewController = viewController as? DetailExcursionViewController else { return }
-        detailViewController.viewDidLoad()
-
-        detailViewController.isModalInPresentation = true
-        if let sheet = detailViewController.sheetPresentationController {
-            let smallDetent = UISheetPresentationController.Detent.custom(identifier: .medium) { _ in
-                Constants.smallSheetHeight
-            }
-
-            sheet.detents = [smallDetent, .large()]
-            sheet.preferredCornerRadius = Constants.cornerRadius
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.largestUndimmedDetentIdentifier = .large
-            sheet.prefersGrabberVisible = true
-        }
-        present(detailViewController, animated: true)
     }
 
     func embedMapModule(_ viewController: UIViewController) {

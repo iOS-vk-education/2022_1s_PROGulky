@@ -18,6 +18,6 @@ final class UserService {
     }
 
     var userToken: String {
-        UserDefaultsManager.shared.getUserData().token
+        UserDefaultsManager.shared.getToken().accessToken ?? ""
     }
 }

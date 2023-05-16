@@ -5,6 +5,8 @@
 //  Created by Ivan Tazenkov on 29/11/2022.
 //
 
+import SwiftUI
+
 // MARK: - MapDetailRouter
 
 final class MapDetailRouter {
@@ -21,15 +23,16 @@ final class MapDetailRouter {
 // MARK: MapDetailRouterInput
 
 extension MapDetailRouter: MapDetailRouterInput {
-    func embedDetailModule(output: DetailExcursionModuleOutput) {
-        let builder = DetailExcursionModuleBuilder(excursion: excursion, moduleOutput: output)
-        let detailViewController = builder.build()
-        mapDetailViewController?.embedDetailModule(detailViewController)
+    func embedDetailModule() {
+        let viewModel = DetailExcursionViewModel(excursionId: excursion.id)
+        let detailView = DetailExcursionView(viewModel: viewModel)
+        let hostingViewController = UIHostingController(rootView: detailView)
+        mapDetailViewController?.embedDetailModule(hostingViewController)
     }
 
     func embedMapModule(output: MapModuleOutput) {
         let builder = MapModuleBuilder()
-        let mapViewController = builder.build(moduleOutput: output, excursion: excursion)
+        let mapViewController = builder.build(excursion: excursion)
         mapDetailViewController?.embedMapModule(mapViewController)
     }
 }

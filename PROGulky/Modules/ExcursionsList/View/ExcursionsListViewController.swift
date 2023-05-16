@@ -6,20 +6,20 @@
 //
 
 import UIKit
+import SnapKit
 
 // MARK: - ExcursionsListViewController
 
-final class ExcursionsListViewController: UIViewController {
+final class ExcursionsListViewController: CustomViewController {
     var output: ExcursionsListViewOutput!
 
-    private let filterBar = ExcursionsFilterBarView(frame: .zero)
-    private var excursionsTable = UITableView(frame: .zero, style: .insetGrouped)
-    private let loader = UIActivityIndicatorView(frame: .zero)
-    private let errorView = ErrorView(frame: .zero)
+    private let filterBadgeButton = FilterBadgeButton(frame: CGRect(x: 0, y: 0, width: 25, height: 22))
+    private var greetingMessageView = GreetingMessageView()
+    private let searchController = UISearchController()
+    private var excursionsTable = UITableView(frame: .zero, style: .plain)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupUI()
         output.didLoadView()
     }
@@ -29,25 +29,63 @@ final class ExcursionsListViewController: UIViewController {
         output.didLoadView()
     }
 
+    private func setupGreetingMessaageText(with viewModel: GreetingViewModel) {
+        greetingMessageView.set(viewModel: viewModel)
+    }
+
     private func setupUI() {
+        setupSearchController()
         setupNavBar()
-        setupFilterBar()
         setupTableView()
-        setupLoader()
-        setupErrorView()
     }
 
     func reload() {
         excursionsTable.reloadData()
     }
 
+    private func setupSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Найти экскурсию"
+        searchController.searchBar.setValue("Отмена", forKey: "cancelButtonText")
+
+        definesPresentationContext = true
+    }
+
     // Настройка нав бара
     private func setupNavBar() {
-        navigationItem.title = ExcursionsListConstants.NavBar.title
+//        navigationItem.title = ExcursionsListConstants.NavBar.title
         navigationController?.view.backgroundColor = ExcursionsListConstants.NavBar.backgroundColor
 
-        let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddButton))
-        navigationItem.rightBarButtonItem = rightBarButtonItem
+        // TODO: Сделать показ только для пользователя с определенной ролью
+        let rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .add,
+            target: self,
+            action: #selector(didTapAddButton)
+        )
+
+        let rightBarFilterButtonItem = UIBarButtonItem(customView: filterBadgeButton)
+        filterBadgeButton.addTarget(self, action: #selector(handleShowBottomSheet), for: .touchUpInside)
+
+        navigationItem.rightBarButtonItem = rightBarFilterButtonItem
+
+        let leftBarButtonItem = UIBarButtonItem(customView: greetingMessageView)
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+
+        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.searchController = searchController
+    }
+
+    private var bottomSheetTransitioningDelegate: BottomSheetTransitioningDelegate?
+
+    @objc
+    private func handleShowBottomSheet() {
+        let viewController = ExcursionsListFiltersViewController(initialHeight: 500, delegate: self)
+        bottomSheetTransitioningDelegate = BottomSheetTransitioningDelegate(factory: self)
+        viewController.modalPresentationStyle = .custom
+        viewController.transitioningDelegate = bottomSheetTransitioningDelegate
+
+        present(viewController, animated: true, completion: nil)
     }
 
     @objc
@@ -55,23 +93,9 @@ final class ExcursionsListViewController: UIViewController {
         output.didAddExcursionButtonTapped()
     }
 
-    // Настройка топ бара
-    private func setupFilterBar() {
-        view.addSubview(filterBar)
-
-        setupFilterBarConstraints()
-    }
-
-    private func setupFilterBarConstraints() {
-        filterBar.translatesAutoresizingMaskIntoConstraints = false
-        filterBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        filterBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        filterBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        filterBar.heightAnchor.constraint(equalToConstant: ExcursionsListConstants.ExcursionsFilterBar.height).isActive = true
-    }
-
     // Настройка таблицы с экскурсиями
     private func setupTableView() {
+        view.addSubview(excursionsTable)
         excursionsTable.backgroundColor = .prog.Dynamic.background
 
         excursionsTable.layoutMargins = UIEdgeInsets(
@@ -82,12 +106,8 @@ final class ExcursionsListViewController: UIViewController {
         )
         excursionsTable.separatorStyle = .none
 
-        view.addSubview(excursionsTable)
-
         setTableViewDelegate()
-
         excursionsTable.register(ExcursionCell.self, forCellReuseIdentifier: ExcursionsListConstants.ExcursionCell.reuseId)
-
         setTableViewConstraints()
     }
 
@@ -97,54 +117,71 @@ final class ExcursionsListViewController: UIViewController {
     }
 
     private func setTableViewConstraints() {
-        excursionsTable.translatesAutoresizingMaskIntoConstraints = false
-        excursionsTable.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        excursionsTable.topAnchor.constraint(equalTo: filterBar.bottomAnchor).isActive = true
-        excursionsTable.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        excursionsTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        excursionsTable.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalToSuperview()
+        }
+    }
+}
+
+// MARK: ExcursionsListFiltersViewOutput
+
+extension ExcursionsListViewController: ExcursionsListFiltersViewOutput {
+    func didDistanceFilterButtonTapped(with title: String) {
+        output.didDistanceFilterButtonTapped(with: title)
     }
 
-    private func setupLoader() {
-        view.addSubview(loader)
-        setLoaderConstraints()
+    func didTimeFilterButtonTapped(with title: String) {
+        output.didTimeFilterButtonTapped(with: title)
     }
 
-    private func setLoaderConstraints() {
-        loader.translatesAutoresizingMaskIntoConstraints = false
-        loader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loader.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+    func didRatingFilterButtonTapped(with title: String) {
+        output.didRatingFilterButtonTapped(with: title)
     }
 
-    private func setupErrorView() {
-        view.addSubview(errorView)
-        errorView.delegate = self
-
-        errorView.isHidden = true
-        setErrorViewConstrints()
+    func didSubmitButtonTapped() {
+        performDismissal(animated: true) // Скрыть боттом шит
+        output.didFilterSubmitButtonTapped()
     }
 
-    private func setErrorViewConstrints() {
-        errorView.translatesAutoresizingMaskIntoConstraints = false
-        errorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        errorView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        errorView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        errorView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
+    func getDistanceFilterButtons() -> [FilterButtonViewModel] {
+        output.getDistanceFilterButtons()
+    }
+
+    func getTimesFilterButtons() -> [FilterButtonViewModel] {
+        output.getTimesFilterButtons()
+    }
+
+    func getRatingFilterButtons() -> [FilterButtonViewModel] {
+        output.getRatingFilterButtons()
     }
 }
 
 // MARK: ExcursionsListViewInput
 
 extension ExcursionsListViewController: ExcursionsListViewInput {
-    func hideErrorView() {
-        errorView.isHidden = true
-        loader.stopAnimating()
+    func showFilterButtonBadge(with text: String) {
+        filterBadgeButton.setupTextToBadgeLabel(with: text)
+        filterBadgeButton.showBadge()
     }
 
-    func showErrorView() {
-        DispatchQueue.main.async {
-            self.errorView.isHidden = false
-            self.loader.stopAnimating()
-        }
+    func hideFilterButtonBadge() {
+        filterBadgeButton.hideBadge()
+    }
+
+    func configureGreetingMessage(with viewModel: GreetingViewModel) {
+        setupGreetingMessaageText(with: viewModel)
+    }
+
+    func hideErrorView() {
+        hideActivity()
+    }
+
+    func showErrorView(with error: Error) {
+        showHUD(with: error)
+        hideActivity()
     }
 
     func reloadView() {
@@ -152,12 +189,11 @@ extension ExcursionsListViewController: ExcursionsListViewInput {
     }
 
     func startLoader() {
-        loader.hidesWhenStopped = true
-        loader.startAnimating()
+        showActivity()
     }
 
     func stopLoader() {
-        loader.stopAnimating()
+        hideActivity()
     }
 
     func showAuthView() {
@@ -204,5 +240,42 @@ extension ExcursionsListViewController: UITableViewDelegate {
 extension ExcursionsListViewController: ErrorViewDelegate {
     func didRepeatButtonTapped() {
         output.didRepeatButtonTapped()
+    }
+}
+
+// MARK: UISearchResultsUpdating
+
+extension ExcursionsListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let text = searchController.searchBar.text {
+            if text.isEmpty {
+                output.didClearSearchBar()
+            } else {
+                output.didTextTyping(with: text)
+            }
+        }
+    }
+}
+
+// MARK: BottomSheetPresentationControllerFactory
+
+extension ExcursionsListViewController: BottomSheetPresentationControllerFactory {
+    func makeBottomSheetPresentationController(
+        presentedViewController: UIViewController,
+        presentingViewController: UIViewController?
+    ) -> BottomSheetPresentationController {
+        .init(
+            presentedViewController: presentedViewController,
+            presentingViewController: presentingViewController,
+            dismissalHandler: self
+        )
+    }
+}
+
+// MARK: BottomSheetModalDismissalHandler
+
+extension ExcursionsListViewController: BottomSheetModalDismissalHandler {
+    func performDismissal(animated: Bool) {
+        presentedViewController?.dismiss(animated: animated, completion: nil)
     }
 }

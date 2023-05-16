@@ -15,6 +15,9 @@ final class ExcursionCell: UITableViewCell {
     private let excursionRatingLabel = UILabel()
     private var excursionParametersLabel = UILabel()
 
+    private let excursionOwnerNameLabel = UILabel() // Имя вендора
+    private let excursionOwnerImage = UIImageView() // Аватар вендора
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -22,7 +25,9 @@ final class ExcursionCell: UITableViewCell {
                                 excursionTitleLabel,
                                 excursionRatingImage,
                                 excursionRatingLabel,
-                                excursionParametersLabel)
+                                excursionParametersLabel,
+                                excursionOwnerNameLabel,
+                                excursionOwnerImage)
 
         setupUI()
         setupConstraints()
@@ -31,11 +36,16 @@ final class ExcursionCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
+        contentView.layer.shadowColor = ExcursionsListConstants.ExcursionCell.shadowColor.cgColor
+        contentView.layer.shadowOpacity = ExcursionsListConstants.ExcursionCell.shadowOpacity
+        contentView.layer.shadowOffset = .zero
+        contentView.layer.shadowRadius = ExcursionsListConstants.ExcursionCell.shadowRadius
+
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(
             top: ExcursionsListConstants.ExcursionCell.ContentView.marginTop,
-            left: ExcursionsListConstants.ExcursionCell.ContentView.marginLeft,
+            left: ExcursionsListConstants.Screen.padding,
             bottom: ExcursionsListConstants.ExcursionCell.ContentView.marginBottom,
-            right: ExcursionsListConstants.ExcursionCell.ContentView.marginRight
+            right: ExcursionsListConstants.Screen.padding
         ))
         contentView.layer.cornerRadius = ExcursionsListConstants.ExcursionCell.cornerRadius
         contentView.backgroundColor = .prog.Dynamic.lightBackground
@@ -48,12 +58,14 @@ final class ExcursionCell: UITableViewCell {
 
     func set(excursion: ExcursionViewModel) {
         setupImage(with: excursion.image)
+        setupOwnerImage(with: excursion.ownerImage)
 
         excursionTitleLabel.text = excursion.title
         excursionRatingImage.image = UIImage(systemName: ExcursionsListConstants.ExcursionCell.RatingImage.name)?
-            .withTintColor(.prog.Dynamic.shadow, renderingMode: .alwaysOriginal)
+            .withTintColor(ExcursionsListConstants.ExcursionCell.RatingImage.color, renderingMode: .alwaysOriginal)
         excursionRatingLabel.text = String(excursion.rating)
         excursionParametersLabel.text = String(excursion.parameters)
+        excursionOwnerNameLabel.text = String(excursion.owner)
     }
 
     private func setupImage(with image: String?) {
@@ -62,6 +74,15 @@ final class ExcursionCell: UITableViewCell {
             excursionImageView.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(named: "placeholderImage"))
         } else {
             excursionImageView.image = UIImage(named: "placeholderImage")
+        }
+    }
+
+    private func setupOwnerImage(with image: String?) {
+        if let image = image {
+            let imageURL = "\(ExcursionsListConstants.Api.ownerImageURL)/\(image)"
+            excursionOwnerImage.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(systemName: "person.fill"))
+        } else {
+            excursionOwnerImage.image = UIImage(systemName: "person.fill")
         }
     }
 
@@ -76,6 +97,8 @@ final class ExcursionCell: UITableViewCell {
         configurRatingImage()
         configureRatingLabel()
         configureParametersLabel()
+        configureOwnerLabel()
+        configureOwnerImage()
     }
 
     private func configureCell() {
@@ -89,9 +112,10 @@ final class ExcursionCell: UITableViewCell {
     }
 
     private func configureTitleLabel() {
-        excursionTitleLabel.numberOfLines = 1
+        excursionTitleLabel.numberOfLines = 2
         excursionTitleLabel.contentMode = .bottom
-        excursionTitleLabel.adjustsFontSizeToFitWidth = true
+        excursionTitleLabel.textAlignment = .right
+//        excursionTitleLabel.adjustsFontSizeToFitWidth = true
         excursionTitleLabel.font = UIFont.systemFont(ofSize: ExcursionsListConstants.ExcursionCell.Title.fontSize,
                                                      weight: ExcursionsListConstants.ExcursionCell.Title.fontWeight)
     }
@@ -104,65 +128,97 @@ final class ExcursionCell: UITableViewCell {
         excursionRatingLabel.font = UIFont.systemFont(ofSize: ExcursionsListConstants.ExcursionCell.RatingLabel.fontSize,
                                                       weight: ExcursionsListConstants.ExcursionCell.RatingLabel.fontWeight)
         excursionRatingLabel.textColor = ExcursionsListConstants.ExcursionCell.RatingLabel.textColor
+        excursionRatingLabel.textAlignment = .right
     }
 
     private func configureParametersLabel() {
         excursionParametersLabel.font = UIFont.systemFont(ofSize: ExcursionsListConstants.ExcursionCell.Parameters.fontSize,
                                                           weight: ExcursionsListConstants.ExcursionCell.Parameters.fontWeight)
+        excursionParametersLabel.textAlignment = .right
         excursionParametersLabel.textColor = ExcursionsListConstants.ExcursionCell.Parameters.textColor
+    }
+
+    private func configureOwnerLabel() {
+        excursionOwnerNameLabel.numberOfLines = 1
+        excursionOwnerNameLabel.font = UIFont.systemFont(ofSize: ExcursionsListConstants.ExcursionCell.OwnerLabel.fontSize,
+                                                         weight: ExcursionsListConstants.ExcursionCell.OwnerLabel.fontWeight)
+        excursionOwnerNameLabel.textColor = UIColor.black
+        excursionOwnerNameLabel.textAlignment = .right
+    }
+
+    private func configureOwnerImage() {
+        excursionOwnerImage.layer.masksToBounds = false
+        excursionOwnerImage.layer.cornerRadius = ExcursionsListConstants.ExcursionCell.OwnerImage.cornerRadius
+        excursionOwnerImage.clipsToBounds = true
     }
 
     // MARK: constraints
 
     private func setupConstraints() {
         setImageConstraints()
-        setTitleLabelConstraints()
-        setRatingImageConstraints()
         setRatingLabelConstraint()
+        setRatingImageConstraints()
+        setTitleLabelConstraints()
         setParametersLabelConstraint()
+        setVendorNameLabelConstraint()
+        setVendorImageConstraint()
     }
 
     private func setImageConstraints() {
-        excursionImageView.translatesAutoresizingMaskIntoConstraints = false
-        excursionImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        excursionImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: ExcursionsListConstants.Screen.padding).isActive = true
-        excursionImageView.heightAnchor.constraint(equalToConstant: ExcursionsListConstants.ExcursionCell.Image.height).isActive = true
-        excursionImageView.widthAnchor.constraint(equalTo: excursionImageView.heightAnchor,
-                                                  multiplier: ExcursionsListConstants.ExcursionCell.Image.aspectRatio).isActive = true
-    }
-
-    private func setTitleLabelConstraints() {
-        excursionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        excursionTitleLabel.leadingAnchor.constraint(equalTo: excursionImageView.trailingAnchor,
-                                                     constant: ExcursionsListConstants.ExcursionCell.contentIndent).isActive = true
-        excursionTitleLabel.heightAnchor.constraint(equalToConstant: ExcursionsListConstants.ExcursionCell.Title.heightFrame).isActive = true
-        excursionTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -ExcursionsListConstants.Screen.padding).isActive = true
+        excursionImageView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.left.equalToSuperview().inset(ExcursionsListConstants.Screen.padding)
+            make.height.equalTo(ExcursionsListConstants.ExcursionCell.Image.height)
+            make.width.equalTo(excursionImageView.snp.height).multipliedBy(ExcursionsListConstants.ExcursionCell.Image.aspectRatio)
+        }
     }
 
     private func setRatingImageConstraints() {
-        excursionRatingImage.translatesAutoresizingMaskIntoConstraints = false
-        excursionRatingImage.leadingAnchor.constraint(equalTo: excursionImageView.trailingAnchor,
-                                                      constant: ExcursionsListConstants.ExcursionCell.contentIndent - 3).isActive = true
-        excursionRatingImage.topAnchor.constraint(equalTo: excursionTitleLabel.bottomAnchor,
-                                                  constant: ExcursionsListConstants.ExcursionCell.RatingImage.marginTop).isActive = true
-        excursionRatingImage.heightAnchor.constraint(equalToConstant: ExcursionsListConstants.ExcursionCell.RatingImage.height).isActive = true
-        excursionRatingImage.widthAnchor.constraint(equalTo: excursionRatingImage.heightAnchor,
-                                                    multiplier: ExcursionsListConstants.ExcursionCell.RatingImage.aspectRatio).isActive = true
+        excursionRatingImage.snp.makeConstraints { make in
+            make.right.equalTo(excursionRatingLabel.snp.left)
+            make.top.equalToSuperview().inset(ExcursionsListConstants.ExcursionCell.RatingLabel.inset + ExcursionsListConstants.ExcursionCell.RatingImage.offset)
+            make.height.equalTo(ExcursionsListConstants.ExcursionCell.RatingImage.height)
+            make.width.equalTo(excursionRatingLabel.snp.height).multipliedBy(ExcursionsListConstants.ExcursionCell.RatingImage.aspectRatio)
+        }
     }
 
     private func setRatingLabelConstraint() {
-        excursionRatingLabel.translatesAutoresizingMaskIntoConstraints = false
-        excursionRatingLabel.leadingAnchor.constraint(equalTo: excursionRatingImage.trailingAnchor,
-                                                      constant: ExcursionsListConstants.ExcursionCell.RatingLabel.marginLeft).isActive = true
-        excursionRatingLabel.topAnchor.constraint(equalTo: excursionTitleLabel.bottomAnchor,
-                                                  constant: ExcursionsListConstants.ExcursionCell.RatingLabel.marginTop).isActive = true
+        excursionRatingLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(ExcursionsListConstants.ExcursionCell.RatingLabel.inset)
+            make.right.equalToSuperview().inset(ExcursionsListConstants.ExcursionCell.contentIndent)
+        }
+    }
+
+    private func setTitleLabelConstraints() {
+        excursionTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(excursionRatingLabel.snp.bottom).offset(ExcursionsListConstants.ExcursionCell.Title.offset)
+            make.right.equalToSuperview().inset(ExcursionsListConstants.ExcursionCell.contentIndent)
+            make.left.equalTo(excursionImageView.snp.right).offset(ExcursionsListConstants.ExcursionCell.contentIndent)
+        }
     }
 
     private func setParametersLabelConstraint() {
-        excursionParametersLabel.translatesAutoresizingMaskIntoConstraints = false
-        excursionParametersLabel.leadingAnchor.constraint(equalTo: excursionImageView.trailingAnchor,
-                                                          constant: ExcursionsListConstants.ExcursionCell.contentIndent).isActive = true
-        excursionParametersLabel.topAnchor.constraint(equalTo: excursionRatingImage.bottomAnchor,
-                                                      constant: ExcursionsListConstants.ExcursionCell.Parameters.marginTop).isActive = true
+        excursionParametersLabel.snp.makeConstraints { make in
+            make.top.equalTo(excursionTitleLabel.snp.bottom).offset(ExcursionsListConstants.ExcursionCell.Parameters.offset)
+            make.right.equalToSuperview().inset(ExcursionsListConstants.ExcursionCell.contentIndent)
+            make.left.equalTo(excursionImageView.snp.right).offset(ExcursionsListConstants.ExcursionCell.contentIndent)
+        }
+    }
+
+    private func setVendorImageConstraint() {
+        excursionOwnerImage.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(ExcursionsListConstants.ExcursionCell.OwnerImage.bottomInset)
+            make.height.equalTo(ExcursionsListConstants.ExcursionCell.OwnerImage.height)
+            make.width.equalTo(ExcursionsListConstants.ExcursionCell.OwnerImage.width)
+            make.right.equalToSuperview().inset(ExcursionsListConstants.ExcursionCell.contentIndent)
+        }
+    }
+
+    private func setVendorNameLabelConstraint() {
+        excursionOwnerNameLabel.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().inset(ExcursionsListConstants.ExcursionCell.OwnerLabel.bottomInset)
+            make.right.equalToSuperview().inset(ExcursionsListConstants.ExcursionCell.contentIndent + 25)
+            make.left.equalTo(excursionImageView.snp.right).offset(ExcursionsListConstants.ExcursionCell.contentIndent)
+        }
     }
 }

@@ -12,12 +12,41 @@ import SnapKit
 
 final class LoginViewController: UIViewController, UITextFieldDelegate {
     var output: LoginViewOutput!
-    private let imageProgramLogo = UIImageView()
-    private var emailField = CustomTextField()
-    private var passwordField = CustomTextField()
-    private var buttonSignIn = CustomButton(title: TextConstantsLogin.titleSignIn, image: nil, color: .prog.Dynamic.primary, textColor: .prog.Dynamic.lightText)
-    private let buttonSignUp = CustomButton(title: TextConstantsLogin.titleSignUp, image: nil, color: .prog.Dynamic.background, textColor: .prog.Dynamic.text)
+    private let image = UIImageView()
+    private let loginLabel = UILabel()
+
+    private let emailField = CustomTextField(
+        name: TextConstantsLogin.titleEmail,
+        security: false
+    )
+
+    private var passwordField = CustomTextField(
+        name: TextConstantsLogin.titlePassword,
+        security: true
+    )
+
+    private var buttonSignIn = CustomButton(
+        title: TextConstantsLogin.titleSignIn,
+        color: .prog.Dynamic.primary,
+        textColor: .white,
+        shadow: true
+    )
+
+    private let buttonSignUp = CustomButton(
+        title: TextConstantsLogin.titleSignUp,
+        color: .prog.Dynamic.background,
+        textColor: .prog.Dynamic.primary
+    )
+
     private enum Constants {
+        enum Image {
+            static let height: CGFloat = 200
+        }
+
+        enum TextLabel {
+            static let topOffset: CGFloat = 20
+        }
+
         enum TextField {
             static let offset: CGFloat = 20
             static let height: CGFloat = 48
@@ -28,9 +57,13 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
 
         enum Button {
             static let offset: CGFloat = 20
-            static let height: CGFloat = 60
+            static let height: CGFloat = 50
             static let bottomOffset: CGFloat = -60
-            static let topOffset: CGFloat = 10
+            static let topOffset: CGFloat = 30
+        }
+
+        enum SignUpButton {
+            static let topOffset: CGFloat = 5
         }
     }
 
@@ -39,40 +72,128 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
 
         hideKeyboardWhenTappedAround()
 
-        view.backgroundColor = .prog.Dynamic.background
-
-        guard let imageEnvelope = UIImage(systemName: "envelope") else {
-            return
-        }
-        emailField = CustomTextField(name: TextConstantsLogin.titleEmail, image: imageEnvelope, security: false)
-        guard let imageLock = UIImage(systemName: "lock") else {
-            return
-        }
-        passwordField = CustomTextField(name: TextConstantsLogin.titlePassword, image: imageLock, security: true)
-        buttonSignIn = CustomButton(title: TextConstantsLogin.titleSignIn, image: nil, color: .prog.Dynamic.primary, textColor: .prog.Dynamic.lightText)
-
-        navigationItem.title = TextConstantsLogin.titleNavBar
-
-        imageProgramLogo.image = UIImage(named: "progulkiLabel")
-        emailField.returnKeyType = .next
-        passwordField.returnKeyType = .done
-
-        emailField.delegate = self
-        passwordField.delegate = self
-
-        buttonSignIn.addTarget(self, action: #selector(didTapButtonSignIn), for: .touchUpInside)
-        buttonSignUp.addTarget(self, action: #selector(didTapButtonSignUp), for: .touchUpInside)
-
-        view.addSubviews(imageProgramLogo,
+        view.addSubviews(image,
+                         loginLabel,
                          emailField,
                          passwordField,
                          buttonSignIn,
                          buttonSignUp)
+
+        setupUI()
+        setupConstraints()
+    }
+
+    private func setupUI() {
+        view.backgroundColor = .prog.Dynamic.background
+
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Назад", style: .plain, target: nil, action: nil)
+
+        configureImage()
+        configureLoginLabel()
+        configureEmailField()
+        configurePasswordField()
+        configureButtonSignIn()
+        configureButtonSignUp()
+    }
+
+    private func configureImage() {
+        image.image = UIImage(named: "placeholderImage2")
+    }
+
+    private func configureLoginLabel() {
+        loginLabel.text = TextConstantsLogin.titleNavBar
+        loginLabel.textColor = .prog.Dynamic.primary
+        loginLabel.font = UIFont.systemFont(ofSize: 23, weight: UIFont.Weight.medium)
+    }
+
+    private func configureEmailField() {
+        emailField.returnKeyType = .next
+        emailField.delegate = self
+    }
+
+    private func configurePasswordField() {
+        passwordField.returnKeyType = .done
+        passwordField.delegate = self
+    }
+
+    private func configureButtonSignIn() {
+        buttonSignIn.setTitleColor(.white, for: .normal)
+        buttonSignIn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 22)
+        buttonSignIn.addTarget(self, action: #selector(didTapButtonSignIn), for: .touchUpInside)
+    }
+
+    private func configureButtonSignUp() {
+        buttonSignUp.addTarget(self, action: #selector(didTapButtonSignUp), for: .touchUpInside)
+    }
+
+    private func setupConstraints() {
+        setImageConstraints()
+        setLoginLabelConstraints()
+        setEmailFieldConstraints()
+        setPasswordFieldConstraints()
+        setButtonSignInConstraints()
+        setButtonSignUpConstraints()
+    }
+
+    private func setImageConstraints() {
+        image.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.height.equalTo(Constants.Image.height)
+        }
+    }
+
+    private func setLoginLabelConstraints() {
+        loginLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.image.snp.bottom).offset(Constants.TextLabel.topOffset)
+            make.left.right.equalToSuperview().offset(Constants.TextField.offset)
+        }
+    }
+
+    private func setEmailFieldConstraints() {
+        emailField.snp.makeConstraints { make in
+            make.top.equalTo(self.loginLabel.snp.bottom).offset(Constants.TextField.offset)
+            make.leading.equalToSuperview()
+                .offset(Constants.TextField.offset)
+            make.trailing.equalToSuperview()
+                .inset(Constants.TextField.offset)
+            make.height.equalTo(Constants.TextField.height)
+        }
+    }
+
+    private func setPasswordFieldConstraints() {
+        passwordField.snp.makeConstraints { make in
+            make.top.equalTo(self.emailField.snp.bottom).offset(Constants.TextField.topOffset)
+            make.leading.equalToSuperview()
+                .offset(Constants.TextField.offset)
+            make.trailing.equalToSuperview()
+                .inset(Constants.TextField.offset)
+            make.height.equalTo(Constants.TextField.height)
+        }
+    }
+
+    private func setButtonSignInConstraints() {
+        buttonSignIn.snp.makeConstraints { make in
+            make.top.equalTo(self.passwordField.snp.bottom).offset(Constants.Button.topOffset)
+            make.leading.equalToSuperview()
+                .offset(Constants.Button.offset)
+            make.trailing.equalToSuperview()
+                .inset(Constants.Button.offset)
+            make.height.equalTo(Constants.Button.height)
+        }
+    }
+
+    private func setButtonSignUpConstraints() {
+        buttonSignUp.snp.makeConstraints { make in
+            make.top.equalTo(self.buttonSignIn.snp.bottom)
+                .offset(Constants.SignUpButton.topOffset)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(Constants.TextField.height)
+        }
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        configureUI()
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -90,22 +211,14 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 
     @objc private func didTapButtonSignIn() {
-        guard let email = emailField.text,
-              email != "" else {
-            emailField.layer.borderWidth = 1.0
-            emailField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+        guard let email = emailField.text, email != "" else {
+            emailField.layer.shadowColor = UIColor.red.cgColor
             return
         }
-        guard let password = passwordField.text,
-              password != "" else {
-            passwordField.layer.borderWidth = 1.0
-            passwordField.layer.borderColor = CGColor(red: 255, green: 0, blue: 0, alpha: 1)
+        guard let password = passwordField.text, password != "" else {
+            passwordField.layer.shadowColor = UIColor.red.cgColor
             return
         }
-        emailField.layer.borderWidth = 0.5
-        emailField.layer.borderColor = UIColor.lightGray.cgColor
-        passwordField.layer.borderWidth = 0.5
-        passwordField.layer.borderColor = UIColor.lightGray.cgColor
 
         let login = LoginDTO(email: email, password: password)
         output?.didTapSignInButton(loginDTO: login)
@@ -113,49 +226,6 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @objc private func didTapButtonSignUp() {
         output?.didSelectSignUpBtn()
-    }
-
-    private func configureUI() {
-        imageProgramLogo.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(Constants.TextField.topOffset)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(Constants.TextField.imageLogoSize)
-            make.height.equalTo(Constants.TextField.imageLogoSize)
-        }
-
-        emailField.snp.makeConstraints { make in
-            make.top.equalTo(self.imageProgramLogo.snp.bottom).offset(Constants.TextField.offset)
-            make.leading.equalToSuperview()
-                .offset(Constants.TextField.offset)
-            make.trailing.equalToSuperview()
-                .inset(Constants.TextField.offset)
-            make.height.equalTo(Constants.TextField.height)
-        }
-
-        passwordField.snp.makeConstraints { make in
-            make.top.equalTo(self.emailField.snp.bottom).offset(Constants.TextField.topOffset)
-            make.leading.equalToSuperview()
-                .offset(Constants.TextField.offset)
-            make.trailing.equalToSuperview()
-                .inset(Constants.TextField.offset)
-            make.height.equalTo(Constants.TextField.height)
-        }
-
-        buttonSignIn.snp.makeConstraints { make in
-            make.top.equalTo(self.passwordField.snp.bottom).offset(Constants.Button.offset)
-            make.leading.equalToSuperview()
-                .offset(Constants.Button.offset)
-            make.trailing.equalToSuperview()
-                .inset(Constants.Button.offset)
-            make.height.equalTo(Constants.Button.height)
-        }
-
-        buttonSignUp.snp.makeConstraints { make in
-            make.top.equalTo(self.buttonSignIn.snp.bottom)
-                .offset(Constants.Button.offset)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(Constants.TextField.height)
-        }
     }
 }
 
