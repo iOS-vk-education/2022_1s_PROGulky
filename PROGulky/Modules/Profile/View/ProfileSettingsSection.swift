@@ -37,6 +37,7 @@ enum AccountOptions: Int, CaseIterable, SectionType {
     case achievements
     case history
     case beGuide
+    case changeTheme
 
     var containsSwitch: Bool {
         false
@@ -52,6 +53,8 @@ enum AccountOptions: Int, CaseIterable, SectionType {
             return TextConstantsProfile.titleHistory
         case .beGuide:
             return TextConstantsProfile.titleBeGuide
+        case .changeTheme:
+            return TextConstantsProfile.changeTheme
         }
     }
 
@@ -60,11 +63,13 @@ enum AccountOptions: Int, CaseIterable, SectionType {
         case .personalDataSettings:
             return "person"
         case .achievements:
-            return "character.book.closed"
+            return "trophy"
         case .history:
-            return "chart.bar.doc.horizontal"
+            return "doc.text"
         case .beGuide:
-            return "person.badge.shield.checkmark"
+            return "person.badge.plus"
+        case .changeTheme:
+            return "cloud.sun"
         }
     }
 }

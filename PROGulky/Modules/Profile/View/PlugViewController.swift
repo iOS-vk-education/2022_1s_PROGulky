@@ -22,7 +22,7 @@ final class PlugViewController: UIViewController {
     private let moduleLabel: UILabel = {
         let label = UILabel()
         label.text = "Модуль в разработке"
-        label.textColor = .prog.Dynamic.primary
+        label.textColor = .prog.Dynamic.text
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         return label
     }()
@@ -54,15 +54,6 @@ final class PlugViewController: UIViewController {
             // TODO: тут реализуется бизнес логика на какой экран пойти пользователю, если при запросе токены протухли и хранилище с данными очистилось
             print("[DEBUG] error: \(error)")
         })
-    }
-
-    func logout() {
-        print("здесь выбрасывать на логин и чистить кэш")
-        //        UserDefaultsManager.shared.removeUserAuthData() // removeUserAuthData()
-        //        let vc = LoginViewController()
-        //        vc.modalPresentationStyle = .fullScreen
-        //        present(vc, animated: true)
-        //        output.logoutButtonTapped()
     }
 
     private func configureUI() {

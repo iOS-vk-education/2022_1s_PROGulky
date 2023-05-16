@@ -47,6 +47,11 @@ extension ProfilePresenter: ProfileViewOutput {
         // Перейти на главный экран (список экскурсий) при логауте
         moduleOutput?.profileModuleWantsToOpenScreen(with: TabBarPage.excursionList.rawValue)
     }
+
+    func deleteAccountButtonTapped() {
+        interactor.deleteAccount()
+        moduleOutput?.profileModuleWantsToOpenScreen(with: TabBarPage.excursionList.rawValue)
+    }
 }
 
 extension ProfilePresenter: ProfileInteractorOutput {

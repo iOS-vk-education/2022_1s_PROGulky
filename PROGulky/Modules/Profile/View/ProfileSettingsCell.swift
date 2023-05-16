@@ -12,7 +12,7 @@ final class SettingsCell: UITableViewCell {
         didSet {
             guard let sectionType = sectionType else { return }
             imageView?.image = UIImage(systemName: sectionType.image)?
-                .withTintColor(.prog.Dynamic.primary, renderingMode: .alwaysOriginal)
+                .withTintColor(.prog.Dynamic.text, renderingMode: .alwaysOriginal)
             textLabel?.text = sectionType.description
         }
     }

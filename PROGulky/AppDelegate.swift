@@ -27,6 +27,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mapsConfigurator: MapsConfiguratorServiceProtocol = MapsConfiguratorService()
         mapsConfigurator.activateMaps()
 
+        let isDarkMode = UserDefaults.standard.bool(forKey: UserKeys.isDarkMode.rawValue)
+        if isDarkMode {
+            UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .dark
+        } else {
+            UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .light
+        }
+
         return true
     }
 }

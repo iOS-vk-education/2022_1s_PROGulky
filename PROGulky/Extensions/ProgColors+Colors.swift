@@ -35,6 +35,7 @@ extension ProgColors {
         static let warning: UIColor = dynamicColor(light: warningL, dark: warningD)
         static let base: UIColor = dynamicColor(light: baseL, dark: baseD)
         static let shadow: UIColor = dynamicColor(light: shadowL, dark: shadowD)
+        static let shadowProfile: UIColor = dynamicColor(light: shadowL, dark: noShadow)
         static let textGray: UIColor = dynamicColor(light: textGrayL, dark: textGrayD)
         static let rating: UIColor = dynamicColor(light: ratingL, dark: ratingD)
 
@@ -77,6 +78,7 @@ private extension ProgColors {
 
     static var shadowL: UIColor { UIColor(red: 0.69, green: 0.69, blue: 0.69, alpha: 1) }
     static var shadowD: UIColor { UIColor(red: 0.125, green: 0.098, blue: 0.137, alpha: 1) }
+    static var noShadow: UIColor { UIColor(red: 0.137, green: 0.113, blue: 0.149, alpha: 1) }
 
     static var textGrayL: UIColor { UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1) }
     static var textGrayD: UIColor { UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1) }

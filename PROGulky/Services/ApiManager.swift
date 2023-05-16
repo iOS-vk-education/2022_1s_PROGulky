@@ -24,6 +24,7 @@ enum ApiType {
     case getMeInfo(token: String) // получение информации о себе
     case registration // Регистрация
     case updateAccessTokenByRefresh
+    case delete(token: String)
 
     var baseURLString: String {
         "http://37.140.195.167:5000"
@@ -42,6 +43,8 @@ enum ApiType {
         case let .getExcursion(token, _):
             return ["Authorization": "Bearer \(token)"]
         case let .getMeInfo(token):
+            return ["Authorization": "Bearer \(token)"]
+        case let .delete(token):
             return ["Authorization": "Bearer \(token)"]
         default:
             return [:]
@@ -64,6 +67,7 @@ enum ApiType {
         case .registration: return "api/v1/auth/registration"
         case .getMeInfo: return "api/v1/auth/me"
         case .updateAccessTokenByRefresh: return "api/v1/auth/token/refresh"
+        case .delete: return "api/v1/auth/delete"
         }
     }
 
@@ -120,6 +124,9 @@ enum ApiType {
         case .updateAccessTokenByRefresh:
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            return request
+        case let .delete(token: token):
+            request.httpMethod = "DELETE"
             return request
         }
     }
@@ -511,6 +518,19 @@ final class ApiManager: BaseService {
         failure: { error in
             failure(error)
         }
+    }
+
+    func deleteAccount(completion: @escaping (Result<User, ApiCustomErrors>) -> Void, token: String) {
+        let request = ApiType.delete(token: token).request
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+
+            if error != nil {
+                DispatchQueue.main.async {
+                    completion(.failure(ApiCustomErrors.AnotherError))
+                }
+            }
+        }
+        task.resume()
     }
 }
 

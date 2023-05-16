@@ -16,5 +16,6 @@ protocol ProfileInteractorOutput: AnyObject {
 
 protocol ProfileInteractorInput: AnyObject {
     func logout()
+    func deleteAccount()
 //    func getUserInfo()
 }

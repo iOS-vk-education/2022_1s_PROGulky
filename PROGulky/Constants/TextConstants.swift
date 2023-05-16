@@ -22,11 +22,13 @@ struct TextConstantsProfile {
     static let titleContactUs = "Свяжитесь с нами"
     static let titlePrivacyPolicy = "Политика конфиденциальности"
     static let titleSignOut = "Выйти из аккаунта"
+    static let deleteAccount = "Удалить аккаунт"
     static let titleUserName = "Имя пользователя"
     static let titleUserStatus = "статус"
     static let contactUsMessageTitle = "PROгулки отзыв"
     static let beGuideMessage = "Запрос: изменение статуса на гида"
     static let contactUsMail = "serge2000k@gmail.com"
+    static let changeTheme = "Сменить тему"
 }
 
 // MARK: - TextConstantsLogin

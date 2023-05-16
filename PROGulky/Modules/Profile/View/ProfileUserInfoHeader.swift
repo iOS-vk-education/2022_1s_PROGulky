@@ -19,12 +19,18 @@ final class UserInfoHeader: UIView {
         iv.clipsToBounds = true
         iv.image = UIImage(systemName: "person.crop.circle")?.withTintColor(.prog.Dynamic.primary, renderingMode: .alwaysOriginal)
 
+        iv.layer.shadowOpacity = ProfileViewConstants.Header.shadowOpacity
+        iv.layer.shadowRadius = ProfileViewConstants.Header.cornerRadius
+        iv.layer.cornerRadius = ProfileViewConstants.Header.cornerRadius
+        iv.layer.shadowColor = ProfileViewConstants.Header.shadowColor.cgColor
+
         return iv
     }()
 
     private let usernameLabel: UILabel = {
         let label = UILabel()
         label.text = UserDefaults.standard.string(forKey: UserKeys.name.rawValue)
+        label.textColor = .prog.Dynamic.primary
         label.font = UIFont.systemFont(ofSize: 24)
         return label
     }()
@@ -33,7 +39,7 @@ final class UserInfoHeader: UIView {
         let label = UILabel()
         label.text = TextConstantsProfile.titleUserStatus + " - " + (UserDefaults.standard.string(forKey: UserKeys.role.rawValue) ?? "")
         label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .prog.Dynamic.textGray
+        label.textColor = .prog.Dynamic.text
         return label
     }()
 

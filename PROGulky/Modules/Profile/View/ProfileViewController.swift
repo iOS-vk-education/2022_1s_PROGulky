@@ -10,6 +10,7 @@ import SnapKit
 import MessageUI
 
 private let reuseIdentifier = "SettingsCell"
+private let imagePicker = UIImagePickerController()
 
 // MARK: - ProfileViewController
 
@@ -17,24 +18,7 @@ final class ProfileViewController: UIViewController {
     var output: ProfileViewOutput!
     private let userInfoHeader = UserInfoHeader(frame: .zero)
     private var tableView = UITableView()
-
-    private enum Constants {
-        enum Header {
-            static let topOffset: CGFloat = 20
-            static let height: CGFloat = 100
-        }
-
-        enum TableView {
-            static let topOffset: CGFloat = 32
-            static let rowHeight: CGFloat = 40
-            static let offset: CGFloat = 0
-            static let cornerRadius: CGFloat = 16
-            static let heightForHeader: CGFloat = 40
-            static let height: CGFloat = 420
-            static let contentInsetTop: CGFloat = 0
-            static let leftAnchor: CGFloat = 16
-        }
-    }
+    private let deleteBtn = UIButton()
 
     // MARK: Lifecycle
 
@@ -54,23 +38,46 @@ final class ProfileViewController: UIViewController {
     private func configureUI() {
         navigationItem.title = TextConstantsProfile.titleProfile
         view.addSubview(userInfoHeader)
+
+        // MARK: Здесь делаю аву пользователя
+
+//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+//        userInfoHeader.isUserInteractionEnabled = true
+//        userInfoHeader.addGestureRecognizer(tapGestureRecognizer)
+
         userInfoHeader.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-                .offset(Constants.Header.topOffset)
+                .offset(ProfileViewConstants.Header.topOffset)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(Constants.Header.height)
+            make.height.equalTo(ProfileViewConstants.Header.height)
         }
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.top.equalTo(self.userInfoHeader.snp.bottom)
-                .offset(Constants.TableView.topOffset)
+                .offset(ProfileViewConstants.TableView.topOffset)
             make.leading.equalToSuperview()
-                .offset(Constants.TableView.offset)
+                .offset(ProfileViewConstants.TableView.offset)
             make.trailing.equalToSuperview()
-                .inset(Constants.TableView.offset)
-            make.height.equalTo(Constants.TableView.height)
+                .inset(ProfileViewConstants.TableView.offset)
+            make.height.equalTo(ProfileViewConstants.TableView.height)
+        }
+
+        deleteBtn.backgroundColor = .prog.Dynamic.background
+        deleteBtn.setTitle(TextConstantsProfile.deleteAccount, for: .normal)
+        deleteBtn.setTitleColor(.red, for: .normal)
+        deleteBtn.titleLabel?.font = UIFont.systemFont(ofSize: ProfileViewConstants.DeleteBtn.fontSize)
+        deleteBtn.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+
+        view.addSubview(deleteBtn)
+        deleteBtn.snp.makeConstraints { make in
+            make.top.equalTo(self.tableView.snp.bottom)
+            make.leading.equalToSuperview()
+                .offset(ProfileViewConstants.DeleteBtn.offset)
+            make.trailing.equalToSuperview()
+                .inset(ProfileViewConstants.DeleteBtn.offset)
+            make.height.equalTo(ProfileViewConstants.DeleteBtn.heightBtn)
         }
     }
 
@@ -78,27 +85,53 @@ final class ProfileViewController: UIViewController {
         tableView = UITableView(frame: tableView.frame, style: .insetGrouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.rowHeight = Constants.TableView.rowHeight
+        tableView.rowHeight = ProfileViewConstants.TableView.rowHeight
         tableView.register(SettingsCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.backgroundColor = .prog.Dynamic.background
-        tableView.separatorStyle = .none
-        tableView.contentInset.top = Constants.TableView.contentInsetTop
+        tableView.separatorStyle = .singleLine
+        tableView.contentInset.top = ProfileViewConstants.TableView.contentInsetTop
         tableView.alwaysBounceVertical = false
+        tableView.isScrollEnabled = false
+
+        tableView.subviews.forEach { view in
+            view.layer.masksToBounds = false
+            view.layer.shadowOffset = .zero
+            view.layer.shadowRadius = ProfileViewConstants.Shadow.shadowRadius
+            view.layer.shadowOpacity = ProfileViewConstants.Shadow.shadowOpacity
+            view.layer.shadowColor = ProfileViewConstants.Shadow.shadowColor.cgColor
+        }
     }
 
     private func setupTableViewHeader(section: Int) -> UIView {
         let view = UIView()
         let title = UILabel()
         title.font = UIFont.systemFont(ofSize: 16)
-        title.textColor = .prog.Dynamic.textGray
+        title.textColor = .prog.Dynamic.lightText
         title.text = SettingsSection(rawValue: section)?.description
         view.addSubview(title)
         title.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview()
-                .offset(Constants.TableView.leftAnchor)
+                .offset(ProfileViewConstants.TableView.leftAnchor)
         }
         return view
+    }
+
+    // MARK: Здесь делаю аву пользователя
+
+//    @objc func imageTapped() {
+//        present(imagePicker, animated: true, completion: nil)
+//    }
+
+    @objc func buttonAction(sender: UIButton!) {
+        let alert = UIAlertController(title: "Вы уверены, что хотите удалить аккаунт?", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Удалить", style: .default, handler: { action in
+            self.deleteAccount()
+        }))
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { action in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -130,7 +163,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        Constants.TableView.heightForHeader
+        ProfileViewConstants.TableView.heightForHeader
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -166,6 +199,16 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 print(TextConstantsProfile.titleHistory)
             case 3:
                 showMailComposer(message: TextConstantsProfile.beGuideMessage)
+            case 4:
+                if UserDefaults.standard.bool(forKey: UserKeys.isDarkMode.rawValue) == true {
+                    UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .light
+                    UserDefaults.standard.set(false, forKey: UserKeys.isDarkMode.rawValue)
+                } else {
+                    UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .dark
+                    UserDefaults.standard.set(true, forKey: UserKeys.isDarkMode.rawValue)
+                }
+                UserDefaults.standard.synchronize()
+                print(TextConstantsProfile.changeTheme)
             default:
                 print("no action")
             }
@@ -195,6 +238,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
     func goToLogin() {
         output.logoutButtonTapped()
+    }
+
+    func deleteAccount() {
+        output.deleteAccountButtonTapped()
     }
 
     func showMailComposer(message: String) {
@@ -232,3 +279,16 @@ extension ProfileViewController: MFMailComposeViewControllerDelegate {
         controller.dismiss(animated: true)
     }
 }
+
+// MARK: Здесь делаю аву пользователя
+
+// MARK: UIImagePickerControllerDelegate, UINavigationControllerDelegate
+
+// extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+//        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+//        }
+//
+//        imagePicker.dismiss(animated: true, completion: nil)
+//    }
+// }
