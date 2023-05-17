@@ -20,6 +20,19 @@ extension ProfileInteractor: ProfileInteractorInput {
         UserAuthService.shared.logout()
     }
 
+    func deleteAccount() {
+        UserDefaultsManager.shared.removeUserAuthData()
+        let token = UserService.shared.userToken
+        UserAuthService.shared.deleteAccount(completion: { [weak self] result in
+            switch result {
+            case let .success(userData):
+                print("[DEBUG] \(userData)")
+            case let .failure(error):
+                print("[DEBUG] \(error)")
+            }
+        }, token: token)
+    }
+
     func getUserInfo() {
         print("[UserService]", UserService.shared.userData.token)
 //        UserAuthService.shared.login(dto: loginDTO) { [weak self] result in

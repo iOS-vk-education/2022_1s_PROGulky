@@ -143,6 +143,7 @@
 		A55CD31B293E835A00C4F1A6 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55CD31A293E835A00C4F1A6 /* UserDefaultsKeys.swift */; };
 		A566E47029DB06530018EC85 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566E46F29DB06530018EC85 /* ApiError.swift */; };
 		A57A639B2954B15100D0F4A7 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57A639A2954B15100D0F4A7 /* UserDefaultManager.swift */; };
+		A59F4E692A12ACAE009D2EA8 /* ProfileViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59F4E682A12ACAE009D2EA8 /* ProfileViewConstants.swift */; };
 		A5B7537F2913FBA4001D1978 /* ProfileUserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */; };
 		A5D309F42928F403005D2275 /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */; };
 		A5D309F62928F66C005D2275 /* ProfileSettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D309F52928F66C005D2275 /* ProfileSettingsSection.swift */; };
@@ -337,6 +338,7 @@
 		A55CD31A293E835A00C4F1A6 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
 		A566E46F29DB06530018EC85 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		A57A639A2954B15100D0F4A7 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
+		A59F4E682A12ACAE009D2EA8 /* ProfileViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewConstants.swift; sourceTree = "<group>"; };
 		A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoHeader.swift; sourceTree = "<group>"; };
 		A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
 		A5D309F52928F66C005D2275 /* ProfileSettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsSection.swift; sourceTree = "<group>"; };
@@ -1060,6 +1062,7 @@
 				A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */,
 				A5D309F52928F66C005D2275 /* ProfileSettingsSection.swift */,
 				A5462DD0295AE567009DD1ED /* PlugViewController.swift */,
+				A59F4E682A12ACAE009D2EA8 /* ProfileViewConstants.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1495,6 +1498,7 @@
 				5478D22329439C0D00A3C23D /* AddExcursionConstants.swift in Sources */,
 				94D58836216B679A692591E0 /* ExcursionsListBuilder.swift in Sources */,
 				545175E129C1FF4F00AC2898 /* ExcursionsSearchHelper.swift in Sources */,
+				A59F4E692A12ACAE009D2EA8 /* ProfileViewConstants.swift in Sources */,
 				54D91DBE2930C1ED0097AF52 /* FavouritesExcursionsConstants.swift in Sources */,
 				A5D309F42928F403005D2275 /* ProfileSettingsCell.swift in Sources */,
 				A5462DD1295AE567009DD1ED /* PlugViewController.swift in Sources */,

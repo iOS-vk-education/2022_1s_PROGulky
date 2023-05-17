@@ -10,6 +10,7 @@
 protocol ProfileViewOutput: AnyObject {
     var headerDisplayData: UserInfoHeader.DisplayData { get }
     func logoutButtonTapped()
+    func deleteAccountButtonTapped()
 }
 
 // MARK: - ProfileViewInput

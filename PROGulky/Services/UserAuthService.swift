@@ -74,6 +74,26 @@ final class UserAuthService {
         )
     }
 
+    // Удаление аккаунта
+    func deleteAccount(completion: @escaping (Result<User, ApiCustomErrors>) -> Void, token: String) {
+        ApiManager.shared.deleteAccount(
+            completion: { result in
+                switch result {
+                case let .success(user):
+                    UserDefaultsManager.shared.removeUserAuthData()
+                    DispatchQueue.main.async {
+                        completion(.success(user))
+                    }
+                case let .failure(failure):
+                    DispatchQueue.main.async {
+                        completion(.failure(failure))
+                    }
+                }
+            },
+            token: token
+        )
+    }
+
 //    func updateTokens() {
 //        guard let refreshToken = UserDefaults.standard.string(forKey: UserKeys.refreshToken.rawValue) else {
 //            return
