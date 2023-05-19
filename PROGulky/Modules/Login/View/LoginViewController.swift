@@ -75,7 +75,7 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         setupNotificationCenterForKeyboardResize()
         hideKeyboardWhenTappedAround()
-        
+
         view.addSubviews(image,
                          loginLabel,
                          emailField,
