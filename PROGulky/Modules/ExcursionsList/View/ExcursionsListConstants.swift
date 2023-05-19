@@ -127,7 +127,8 @@ struct ExcursionsListConstants {
         enum OwnerLabel {
             static let bottomInset = 18
             static let fontSize: CGFloat = 13
-            static let fontWeight = UIFont.Weight.thin
+            static let fontWeight = UIFont.Weight.light
+            static let textColor: UIColor = .gray // Цвет текста параметров
         }
 
         enum OwnerImage {

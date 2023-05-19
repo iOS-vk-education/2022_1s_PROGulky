@@ -65,11 +65,15 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
         enum SignUpButton {
             static let topOffset: CGFloat = 5
         }
+
+        enum Keyboard {
+            static let offset: CGFloat = 70
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupNotificationCenterForKeyboardResize()
         hideKeyboardWhenTappedAround()
 
         view.addSubviews(image,
@@ -81,6 +85,23 @@ final class LoginViewController: UIViewController, UITextFieldDelegate {
 
         setupUI()
         setupConstraints()
+    }
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if view.frame.origin.y == 0 {
+            view.frame.origin.y -= Constants.Keyboard.offset
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if view.frame.origin.y != 0 {
+            view.frame.origin.y = 0
+        }
+    }
+
+    private func setupNotificationCenterForKeyboardResize() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     private func setupUI() {

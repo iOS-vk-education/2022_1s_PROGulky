@@ -142,7 +142,7 @@ final class ExcursionCell: UITableViewCell {
         excursionOwnerNameLabel.numberOfLines = 1
         excursionOwnerNameLabel.font = UIFont.systemFont(ofSize: ExcursionsListConstants.ExcursionCell.OwnerLabel.fontSize,
                                                          weight: ExcursionsListConstants.ExcursionCell.OwnerLabel.fontWeight)
-        excursionOwnerNameLabel.textColor = UIColor.black
+        excursionOwnerNameLabel.textColor = ExcursionsListConstants.ExcursionCell.OwnerLabel.textColor
         excursionOwnerNameLabel.textAlignment = .right
     }
 
