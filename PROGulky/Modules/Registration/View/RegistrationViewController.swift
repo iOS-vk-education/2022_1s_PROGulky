@@ -63,11 +63,15 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
             static let offset: CGFloat = 20
             static let height: CGFloat = 50
         }
+
+        enum Keyboard {
+            static let offset: CGFloat = 150
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupNotificationCenterForKeyboardResize()
         hideKeyboardWhenTappedAround()
 
         view.addSubviews(image,
@@ -80,6 +84,23 @@ final class RegistrationViewController: UIViewController, UITextFieldDelegate {
 
         setupUI()
         setupConstraints()
+    }
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if view.frame.origin.y == 0 {
+            view.frame.origin.y -= Constants.Keyboard.offset
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if view.frame.origin.y != 0 {
+            view.frame.origin.y = 0
+        }
+    }
+
+    private func setupNotificationCenterForKeyboardResize() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     override func viewDidLayoutSubviews() {

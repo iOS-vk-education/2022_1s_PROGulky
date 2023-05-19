@@ -97,6 +97,7 @@ final class ExcursionsListViewController: CustomViewController {
     private func setupTableView() {
         view.addSubview(excursionsTable)
         excursionsTable.backgroundColor = .prog.Dynamic.background
+        excursionsTable.keyboardDismissMode = .onDrag
 
         excursionsTable.layoutMargins = UIEdgeInsets(
             top: ExcursionsListConstants.Screen.paddingTop,
