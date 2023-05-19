@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -35,5 +36,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         return true
+    }
+
+    // Свойства для CoreData
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "CoreData")
+        container.loadPersistentStores { description, error in
+            if let error = error {
+                print(error)
+            } else {
+                print("[DEBUG]: ", description.url?.absoluteString ?? "error")
+            }
+        }
+        return container
+    }()
+
+    func saveContext() {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                print("[DEBUG]: error save context")
+            }
+        }
     }
 }

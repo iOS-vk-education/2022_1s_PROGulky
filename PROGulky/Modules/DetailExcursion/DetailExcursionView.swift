@@ -91,7 +91,7 @@ struct DetailExcursionView: View {
         HStack {
             Spacer()
             Button {
-                print("Pressed!")
+                viewModel.didiLikeButtonTapped()
             } label: {
                 Image(systemName: Constants.buttonImageName)
                     .resizable()

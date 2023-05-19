@@ -15,24 +15,33 @@ final class FavouritesExcursionsInteractor {
 
 extension FavouritesExcursionsInteractor: FavouritesExcursionsInteractorInput {
     func loadFavoritesExcursionsList() {
-        let token = UserService.shared.userToken
+//        let token = UserService.shared.userToken
+//
+//        guard UserAuthService.shared.isLogged else {
+//            output?.gotAuthError() // Пользователь не авторизован. Показать сообщение об этом
+//            return
+//        }
+//
+//        ExcursionsRepository.shared.getFavoritesExcursionsList(completion: { excursions in
+//            switch excursions {
+//            case let .success(excursions):
+//                if excursions.isEmpty {
+//                    self.output?.gotEmptyFavoritesList()
+//                } else {
+//                    self.output?.didLoadFavoritesExcursionsList(favoritesExcursions: excursions)
+//                }
+//            case .failure:
+//                self.output?.gotNetworkError()
+//            }
+//        }, token: token)
 
-        guard UserAuthService.shared.isLogged else {
-            output?.gotAuthError() // Пользователь не авторизован. Показать сообщение об этом
-            return
+        // Избранные экскурсии берутся из CoreData
+        let favoritesExcursions = ExcursionsRepository.shared.getFavouritesExcursions()
+
+        if favoritesExcursions.isEmpty {
+            output?.gotEmptyFavoritesList()
+        } else {
+            output?.didLoadFavoritesExcursionsList(favoritesExcursions: favoritesExcursions)
         }
-
-        ExcursionsRepository.shared.getFavoritesExcursionsList(completion: { excursions in
-            switch excursions {
-            case let .success(excursions):
-                if excursions.isEmpty {
-                    self.output?.gotEmptyFavoritesList()
-                } else {
-                    self.output?.didLoadFavoritesExcursionsList(favoritesExcursions: excursions)
-                }
-            case .failure:
-                self.output?.gotNetworkError()
-            }
-        }, token: token)
     }
 }
