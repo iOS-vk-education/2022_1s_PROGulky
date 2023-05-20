@@ -44,14 +44,11 @@ final class PlugViewController: UIViewController {
 
     private func testToken(completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
         let token = UserDefaults.standard.string(forKey: UserKeys.accessToken.rawValue)
-//        UserDefaultsManager.shared.removeUserAuthData()
-//        return
         print("[DEBUG] user isLogin: \(UserDefaultsManager.shared.isLogged)")
 
         ApiManager.shared.getMeInfo2(success: { data in
             print("[DEBUG] result: \(data)")
         }, failure: { error in
-            // TODO: тут реализуется бизнес логика на какой экран пойти пользователю, если при запросе токены протухли и хранилище с данными очистилось
             print("[DEBUG] error: \(error)")
         })
     }

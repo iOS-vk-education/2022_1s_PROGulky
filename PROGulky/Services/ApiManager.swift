@@ -314,6 +314,8 @@ final class ApiManager: BaseService {
                     DispatchQueue.main.async {
                         completion(.success(user))
                     }
+
+                    print("user.image: \(user.image)")
                 } catch let jsonError {
                     DispatchQueue.main.async {
                         let error = NSError(domain: jsonError.localizedDescription, code: 0)

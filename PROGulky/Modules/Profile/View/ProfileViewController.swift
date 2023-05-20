@@ -41,9 +41,9 @@ final class ProfileViewController: UIViewController {
 
         // MARK: Здесь делаю аву пользователя
 
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
-//        userInfoHeader.isUserInteractionEnabled = true
-//        userInfoHeader.addGestureRecognizer(tapGestureRecognizer)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
+        userInfoHeader.profileImageView.isUserInteractionEnabled = true
+        userInfoHeader.profileImageView.addGestureRecognizer(tapGestureRecognizer)
 
         userInfoHeader.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
@@ -119,9 +119,10 @@ final class ProfileViewController: UIViewController {
 
     // MARK: Здесь делаю аву пользователя
 
-//    @objc func imageTapped() {
-//        present(imagePicker, animated: true, completion: nil)
-//    }
+    @objc func imageTapped() {
+        print("change avatar")
+        present(imagePicker, animated: true, completion: nil)
+    }
 
     @objc func buttonAction(sender: UIButton!) {
         let alert = UIAlertController(title: "Вы уверены, что хотите удалить аккаунт?", message: "", preferredStyle: .alert)
@@ -280,15 +281,13 @@ extension ProfileViewController: MFMailComposeViewControllerDelegate {
     }
 }
 
-// MARK: Здесь делаю аву пользователя
-
 // MARK: UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
-// extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-//        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-//        }
-//
-//        imagePicker.dismiss(animated: true, completion: nil)
-//    }
-// }
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            userInfoHeader.profileImageView.image = image
+        }
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+}
