@@ -13,6 +13,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var appCoordinator: AppCoordinator?
     var window: UIWindow?
 
+    lazy var coreDataStack: CoreDataStack = .init(modelName: "CoreData")
+
+    static let sharedAppDelegate: AppDelegate = {
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
+            fatalError("Unexpected app delegate type, did it change? \(String(describing: UIApplication.shared.delegate))")
+        }
+        return delegate
+    }()
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
 
@@ -36,29 +45,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         return true
-    }
-
-    // Свойства для CoreData
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "CoreData")
-        container.loadPersistentStores { description, error in
-            if let error = error {
-                print(error)
-            } else {
-                print("[DEBUG]: ", description.url?.absoluteString ?? "error")
-            }
-        }
-        return container
-    }()
-
-    func saveContext() {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                print("[DEBUG]: error save context")
-            }
-        }
     }
 }

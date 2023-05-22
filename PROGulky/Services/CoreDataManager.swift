@@ -13,12 +13,11 @@ public final class CoreDataManager: NSObject {
     override private init() {}
 
     private var appDelegate: AppDelegate {
-        // swiftlint:disable:next force_cast
-        UIApplication.shared.delegate as! AppDelegate
+        AppDelegate.sharedAppDelegate
     }
 
     private var context: NSManagedObjectContext {
-        appDelegate.persistentContainer.viewContext
+        appDelegate.coreDataStack.managedContext
     }
 
     public func addFavouriteExcursion(
@@ -59,7 +58,7 @@ public final class CoreDataManager: NSObject {
         favouriteExcursion.ownerRoleValue = ownerRoleValue
         favouriteExcursion.ownerRoleDescription = ownerRoleDescription
 
-        appDelegate.saveContext()
+        appDelegate.coreDataStack.saveContext()
     }
 
     public func fetchFavouritesExcursions() -> [FavouriteExcursion] {
@@ -85,7 +84,7 @@ public final class CoreDataManager: NSObject {
             let excursions = try? context.fetch(fetchRequest) as? [FavouriteExcursion]
             excursions?.forEach { context.delete($0) }
         }
-        appDelegate.saveContext()
+        appDelegate.coreDataStack.saveContext()
     }
 
     public func deleteFavouriteExcursion(with id: Int16) {
@@ -97,6 +96,6 @@ public final class CoreDataManager: NSObject {
 
             context.delete(excursion)
         }
-        appDelegate.saveContext()
+        appDelegate.coreDataStack.saveContext()
     }
 }
