@@ -56,7 +56,11 @@
 		545FE1AA291DA58F00890693 /* ExcursionsListConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */; };
 		545FE1AC291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */; };
 		5478D22329439C0D00A3C23D /* AddExcursionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5478D22229439C0D00A3C23D /* AddExcursionConstants.swift */; };
+		548918682A178CFA001375C8 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 548918662A178CFA001375C8 /* CoreData.xcdatamodeld */; };
+		5489186B2A1790F8001375C8 /* FavouriteExcursion+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489186A2A1790F8001375C8 /* FavouriteExcursion+CoreDataClass.swift */; };
+		5489186E2A1791C2001375C8 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489186D2A1791C2001375C8 /* CoreDataManager.swift */; };
 		548ABFDA29205592001CFDA9 /* Excursion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548ABFD929205592001CFDA9 /* Excursion.swift */; };
+		5496757E2A1BDC8800133D8F /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5496757D2A1BDC8800133D8F /* CoreDataStack.swift */; };
 		54A50C46291714E10042769E /* ExcursionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A50C45291714E10042769E /* ExcursionCell.swift */; };
 		54A50C482917199E0042769E /* ExcursionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54A50C472917199E0042769E /* ExcursionViewModel.swift */; };
 		54B1A403293DC91F00A232B9 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B1A402293DC91F00A232B9 /* ErrorView.swift */; };
@@ -241,8 +245,12 @@
 		545FE1A9291DA58F00890693 /* ExcursionsListConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsListConstants.swift; sourceTree = "<group>"; };
 		545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsListDisplayDataFactory.swift; sourceTree = "<group>"; };
 		5478D22229439C0D00A3C23D /* AddExcursionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExcursionConstants.swift; sourceTree = "<group>"; };
+		548918672A178CFA001375C8 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		5489186A2A1790F8001375C8 /* FavouriteExcursion+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "FavouriteExcursion+CoreDataClass.swift"; path = "/Users/semyon/mob_dev/2022_1s_PROGulky/PROGulky/FavouriteExcursion+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		5489186D2A1791C2001375C8 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		548ABFD929205592001CFDA9 /* Excursion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Excursion.swift; sourceTree = "<group>"; };
 		548D4153B0E81CB47D3509CC /* MapDetailBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MapDetailBuilder.swift; sourceTree = "<group>"; };
+		5496757D2A1BDC8800133D8F /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		54A50C45291714E10042769E /* ExcursionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionCell.swift; sourceTree = "<group>"; };
 		54A50C472917199E0042769E /* ExcursionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionViewModel.swift; sourceTree = "<group>"; };
 		54B1A402293DC91F00A232B9 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
@@ -611,6 +619,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		5496757C2A1BDC7500133D8F /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				5489186A2A1790F8001375C8 /* FavouriteExcursion+CoreDataClass.swift */,
+				5496757D2A1BDC8800133D8F /* CoreDataStack.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		54B1A401293DC7D700A232B9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -734,6 +751,7 @@
 		661A0D872902996D00312A0B /* PROGulky */ = {
 			isa = PBXGroup;
 			children = (
+				5496757C2A1BDC7500133D8F /* CoreData */,
 				5418EA5729C0B6B600BF70C1 /* CustomComponents */,
 				A553F1DB291A7354001E679C /* Constants */,
 				6675D20929126F350058A4B0 /* Coordinators */,
@@ -744,6 +762,7 @@
 				545A208D29511DC50085E4AF /* SharedViews */,
 				661A0D882902996D00312A0B /* AppDelegate.swift */,
 				661A0D912902996E00312A0B /* Assets.xcassets */,
+				548918662A178CFA001375C8 /* CoreData.xcdatamodeld */,
 				661A0D962902996E00312A0B /* Info.plist */,
 				661A0D932902996E00312A0B /* LaunchScreen.storyboard */,
 			);
@@ -836,6 +855,7 @@
 				A57A639A2954B15100D0F4A7 /* UserDefaultManager.swift */,
 				543F73D229527901006D7C64 /* ServicesConstants.swift */,
 				66665F2C295A2B9F005126F2 /* SelectedPlacesManager.swift */,
+				5489186D2A1791C2001375C8 /* CoreDataManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1474,6 +1494,7 @@
 			files = (
 				6675D20D29126FF20058A4B0 /* AppCoordinator.swift in Sources */,
 				5BA6C11F29F56A0C00CBD5A9 /* DetailExcursionDisplayDataFactory.swift in Sources */,
+				5489186B2A1790F8001375C8 /* FavouriteExcursion+CoreDataClass.swift in Sources */,
 				54C089D3291A87FD000497FE /* UIView+Extensions.swift in Sources */,
 				666A03672935DE0F006E3A98 /* MapPresenter.swift in Sources */,
 				661A0D892902996D00312A0B /* AppDelegate.swift in Sources */,
@@ -1525,6 +1546,7 @@
 				D881BF6CBAF8E07985F93B19 /* FavouritesExcursionsViewController.swift in Sources */,
 				54B1A403293DC91F00A232B9 /* ErrorView.swift in Sources */,
 				54118FF129B3884B0048A40B /* GreetingViewModel.swift in Sources */,
+				5489186E2A1791C2001375C8 /* CoreDataManager.swift in Sources */,
 				6884644A93D5EB0CEBEEE732 /* FavouritesExcursionsModuleIO.swift in Sources */,
 				E9F972D6925AAE35541A6A7A /* FavouritesExcursionsPresenter.swift in Sources */,
 				54C089D5291A8AC7000497FE /* UILabel+Extensions.swift in Sources */,
@@ -1581,6 +1603,7 @@
 				540E545C29D6193000445107 /* BottomSheetHelpersExtensions.swift in Sources */,
 				5438B65529575AAC007F2127 /* UserService.swift in Sources */,
 				36C36310E3B7177102A045F2 /* DetailPlaceViewIO.swift in Sources */,
+				5496757E2A1BDC8800133D8F /* CoreDataStack.swift in Sources */,
 				39F7D4E76F289DB67B886E4F /* DetailPlaceViewController.swift in Sources */,
 				60AF57BFC01EC107BB9136A0 /* DetailPlaceModuleIO.swift in Sources */,
 				6675D211291271350058A4B0 /* TabBarItemFactory.swift in Sources */,
@@ -1621,6 +1644,7 @@
 				5438B65729578EB2007F2127 /* NotLoginMessageView.swift in Sources */,
 				666A03742935E23B006E3A98 /* MapDetailTransitionHandlerProtocol.swift in Sources */,
 				996A47A6E7C6F3FCF7C5A233 /* MapDetailViewController.swift in Sources */,
+				548918682A178CFA001375C8 /* CoreData.xcdatamodeld in Sources */,
 				273CFD8679A297F27A0DDF36 /* MapDetailModuleIO.swift in Sources */,
 				AF33ABC4E03E0FE9E39A9A15 /* MapDetailPresenter.swift in Sources */,
 				C0F44C81A6403C63D7AB8ED7 /* MapDetailInteractorIO.swift in Sources */,
@@ -1972,6 +1996,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		548918662A178CFA001375C8 /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				548918672A178CFA001375C8 /* CoreData.xcdatamodel */,
+			);
+			currentVersion = 548918672A178CFA001375C8 /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 661A0D7D2902996D00312A0B /* Project object */;
 }

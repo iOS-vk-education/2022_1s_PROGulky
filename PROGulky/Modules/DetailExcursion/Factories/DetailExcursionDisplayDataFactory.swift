@@ -10,7 +10,7 @@ import Foundation
 // MARK: - DetailExcursionDisplayDataFactoryProtocol
 
 protocol DetailExcursionDisplayDataFactoryProtocol {
-    func setupViewModel(excursion: Excursion) -> DetailExcursion
+    func setupViewModel(excursion: Excursion, isFavourite: Bool) -> DetailExcursion
 
     func getPlacesCoordinates(_: [PreviewPlace]) -> [PlaceCoordinates]
 }
@@ -24,13 +24,13 @@ class DetailExcursionDisplayDataFactory: DetailExcursionDisplayDataFactoryProtoc
         }
     }
 
-    func setupViewModel(excursion: Excursion) -> DetailExcursion {
+    func setupViewModel(excursion: Excursion, isFavourite: Bool) -> DetailExcursion {
         DetailExcursion(
             id: excursion.id,
             image: excursion.image ?? "placeholderImage",
             description: excursion.description,
             infoViewModel: infoViewModel(excursion),
-            isLiked: excursion.isFavorite,
+            isLiked: isFavourite,
             places: excursion.places.map(converPlace)
         )
     }

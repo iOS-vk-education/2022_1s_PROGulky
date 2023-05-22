@@ -14,6 +14,9 @@ final class DetailExcursionViewModel: ObservableObject {
     @Published var excursion = DetailExcursion.empty
     @Published var places = [PlaceCoordinates.empty]
 
+    var excursionData: Excursion? // Данные как они приходят с API
+    var isFavourite: Bool = false // Есть ли экскурсия с переданным id в избранном
+
     private var massTransitSession: YMKMasstransitSession?
     private var requestPoints = [YMKRequestPoint]()
 
@@ -25,11 +28,25 @@ final class DetailExcursionViewModel: ObservableObject {
         loadModel()
     }
 
+    public func didiLikeButtonTapped() {
+        excursion.isLiked.toggle()
+        guard let excursion = excursionData else { return }
+
+        if isFavourite == false {
+            ExcursionsRepository.shared.addFavouriveExcursion(with: excursion)
+        } else {
+            ExcursionsRepository.shared.removeFavouriveExcursion(with: excursion.id)
+        }
+    }
+
     private func loadModel() {
         ApiManager.shared.getExcursion(
             excursionId: excursion.id,
             success: { excursion in
-                self.excursion = DetailExcursionDisplayDataFactory().setupViewModel(excursion: excursion)
+                self.isFavourite = ExcursionsRepository.shared.getIssetFavouriveExcursion(with: excursion.id) // Вычисление есть ли экскурсия в избранном
+                self.excursionData = excursion
+
+                self.excursion = DetailExcursionDisplayDataFactory().setupViewModel(excursion: excursion, isFavourite: self.isFavourite)
                 self.places = DetailExcursionDisplayDataFactory().getPlacesCoordinates(excursion.places)
                 self.getRoute()
             }, failure: { error in

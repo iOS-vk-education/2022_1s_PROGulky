@@ -89,4 +89,71 @@ final class ExcursionsRepository {
             token: token
         )
     }
+
+    public func addFavouriveExcursion(with excursion: Excursion) {
+        CoreDataManager.shared.addFavouriteExcursion(
+            Int16(excursion.id),
+            excursion.title,
+            excursion.description,
+            excursion.image,
+            excursion.rating ?? 0,
+            Int16(excursion.duration),
+            excursion.distance,
+            Int16(excursion.numberOfPoints),
+            Int16(excursion.owner.id),
+            excursion.owner.name,
+            excursion.owner.image,
+            Int16(excursion.owner.role.id),
+            excursion.owner.role.value,
+            excursion.owner.role.description
+        )
+    }
+
+    public func removeFavouriveExcursion(with excursionId: Int) {
+        CoreDataManager.shared.deleteFavouriteExcursion(with: Int16(excursionId))
+    }
+
+    public func getFavouritesExcursions() -> [PreviewExcursion] {
+        let favoritesExcursions = CoreDataManager.shared.fetchFavouritesExcursions()
+
+        guard !favoritesExcursions.isEmpty else { return [] }
+
+        var result: [PreviewExcursion] = []
+        favoritesExcursions.forEach {
+            let prepareExcursion = convertCoreDataObjectToPreviewExcursionModel($0)
+            result.append(prepareExcursion)
+        }
+        return result
+    }
+
+    // Проверка на наличие в базе записи экскурсии с переданным id
+    public func getIssetFavouriveExcursion(with id: Int) -> Bool {
+        let coreDataObject = CoreDataManager.shared.fetchFavouriteExcursion(with: Int16(id))
+        return coreDataObject == nil ? false : true
+    }
+
+    // привести модель из базы в модель PreviewExcursion
+    private func convertCoreDataObjectToPreviewExcursionModel(_ obj: FavouriteExcursion) -> PreviewExcursion {
+        let role = Role(
+            id: Int(obj.ownerRoleId),
+            value: obj.ownerRoleValue ?? "undefine",
+            description: obj.ownerRoleDescription ?? "Неизвестно"
+        )
+        let owner = OwnerInstance(
+            id: Int(obj.ownerId),
+            name: obj.ownerName ?? "Имя",
+            email: "email",
+            image: obj.ownerImage,
+            role: role
+        )
+        let excursion = PreviewExcursion(
+            id: Int(obj.id),
+            title: obj.title ?? "Название",
+            duration: Int(obj.duration),
+            distance: obj.distance,
+            numberOfPoints: Int(obj.numberOfPoints),
+            owner: owner
+        )
+        return excursion
+    }
 }
