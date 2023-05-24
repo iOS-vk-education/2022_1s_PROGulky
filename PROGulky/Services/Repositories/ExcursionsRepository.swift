@@ -91,6 +91,8 @@ final class ExcursionsRepository {
     }
 
     public func addFavouriveExcursion(with excursion: Excursion) {
+        guard let userId = UserService.shared.userId else { return }
+
         CoreDataManager.shared.addFavouriteExcursion(
             Int16(excursion.id),
             excursion.title,
@@ -105,7 +107,8 @@ final class ExcursionsRepository {
             excursion.owner.image,
             Int16(excursion.owner.role.id),
             excursion.owner.role.value,
-            excursion.owner.role.description
+            excursion.owner.role.description,
+            Int16(userId)
         )
     }
 
@@ -114,7 +117,8 @@ final class ExcursionsRepository {
     }
 
     public func getFavouritesExcursions() -> [PreviewExcursion] {
-        let favoritesExcursions = CoreDataManager.shared.fetchFavouritesExcursions()
+        guard let userId = UserService.shared.userId else { return [] }
+        let favoritesExcursions = CoreDataManager.shared.fetchFavouritesExcursions(for: Int16(userId))
 
         guard !favoritesExcursions.isEmpty else { return [] }
 
@@ -128,7 +132,9 @@ final class ExcursionsRepository {
 
     // Проверка на наличие в базе записи экскурсии с переданным id
     public func getIssetFavouriveExcursion(with id: Int) -> Bool {
-        let coreDataObject = CoreDataManager.shared.fetchFavouriteExcursion(with: Int16(id))
+        guard let userId = UserService.shared.userId else { return false }
+
+        let coreDataObject = CoreDataManager.shared.fetchFavouriteExcursion(with: Int16(id), for: Int16(userId))
         return coreDataObject == nil ? false : true
     }
 
@@ -149,6 +155,8 @@ final class ExcursionsRepository {
         let excursion = PreviewExcursion(
             id: Int(obj.id),
             title: obj.title ?? "Название",
+            image: obj.image,
+            rating: obj.rating,
             duration: Int(obj.duration),
             distance: obj.distance,
             numberOfPoints: Int(obj.numberOfPoints),

@@ -33,8 +33,10 @@ final class DetailExcursionViewModel: ObservableObject {
         guard let excursion = excursionData else { return }
 
         if isFavourite == false {
+            isFavourite = true
             ExcursionsRepository.shared.addFavouriveExcursion(with: excursion)
         } else {
+            isFavourite = false
             ExcursionsRepository.shared.removeFavouriveExcursion(with: excursion.id)
         }
     }

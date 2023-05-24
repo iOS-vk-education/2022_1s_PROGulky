@@ -21,6 +21,7 @@ final class GreetingMessageView: UIView {
         let button = UIButton()
         button.setTitleColor(ExcursionsListConstants.GreetingMessage.buttonColor, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: ExcursionsListConstants.GreetingMessage.buttonFontSize, weight: .bold)
+        button.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.left
         return button
     }()
 
@@ -48,6 +49,7 @@ final class GreetingMessageView: UIView {
         button.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalTo(label.snp.right).offset(ExcursionsListConstants.GreetingMessage.offset)
+            make.width.equalTo(200)
         }
     }
 

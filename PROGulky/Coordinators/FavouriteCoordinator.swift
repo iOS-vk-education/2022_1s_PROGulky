@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 // MARK: - FavouriteCoordinator
 
@@ -47,10 +48,12 @@ final class FavouriteCoordinator: CoordinatorProtocol {
 
 extension FavouriteCoordinator: FavouritesExcursionsModuleOutput {
     func favoritesExcursionsListModuleWantsToOpenMapDetailModule(excursion: PreviewExcursion) {
-        let mapDetailBuilder = MapDetailModuleBuilder()
-        // TODO: Сломал не работает!
-        // let mapDetailViewController = mapDetailBuilder.build(moduleOutput: self, excursion: excursion)
-        // rootNavigationController.pushViewController(mapDetailViewController, animated: true)
+        let detailExcursionViewModel = DetailExcursionViewModel(excursionId: excursion.id)
+        let detailExcursionView = DetailExcursionView(viewModel: detailExcursionViewModel)
+        let hostingViewController = UIHostingController(rootView: detailExcursionView)
+        rootNavigationController.navigationBar.standardAppearance.configureWithTransparentBackground()
+        rootNavigationController.navigationBar.standardAppearance.backgroundColor = .clear
+        rootNavigationController.pushViewController(hostingViewController, animated: true)
     }
 }
 

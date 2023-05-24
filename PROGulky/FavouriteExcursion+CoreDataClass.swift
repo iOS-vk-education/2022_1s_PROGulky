@@ -33,4 +33,6 @@ public extension FavouriteExcursion {
     @NSManaged var ownerRoleId: Int16
     @NSManaged var ownerRoleValue: String?
     @NSManaged var ownerRoleDescription: String?
+    @NSManaged var datetime: Date
+    @NSManaged var userId: Int16
 }
