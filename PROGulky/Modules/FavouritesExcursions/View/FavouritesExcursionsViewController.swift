@@ -15,7 +15,7 @@ final class FavouritesExcursionsViewController: UIViewController {
 
     private let loader = UIActivityIndicatorView(frame: .zero)
     private let errorView = ErrorView(frame: .zero)
-    private var excursionsTable = UITableView(frame: .zero, style: .insetGrouped)
+    private var excursionsTable = UITableView(frame: .zero, style: .plain)
     private let emptyListMessage = FavouritesExcursionsMessageView(frame: .zero)
     private let notLoginMessage = NotLoginMessageView(frame: .zero)
     private let refreshControl = UIRefreshControl()

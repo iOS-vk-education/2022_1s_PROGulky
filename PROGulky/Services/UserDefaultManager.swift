@@ -71,6 +71,11 @@ final class UserDefaultsManager: UserDefaultsLoginServiceProtocol {
 //        return false
 //    }
 
+    func getUserId() -> Int? {
+        guard let id = defaults.string(forKey: UserKeys.id.rawValue) else { return nil }
+        return Int(id)
+    }
+
     func getUserData() -> UserData {
         let token = defaults.string(forKey: UserKeys.token.rawValue)
         let email = defaults.string(forKey: UserKeys.email.rawValue)

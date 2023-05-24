@@ -99,7 +99,7 @@ struct DetailExcursionView: View {
                     .foregroundColor(.red)
                     .symbolVariant(viewModel.excursion.isLiked ? .fill : .none)
             }
-            .frame(width: 36, height: 36)
+            .frame(width: 52, height: 52)
             .background(backgroundColor)
             .clipShape(Circle())
             .shadow(color: shadowColor, radius: 5, x: 1, y: 1)

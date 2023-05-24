@@ -13,6 +13,10 @@ import Foundation
 final class UserService {
     static let shared = UserService()
 
+    var userId: Int? {
+        UserDefaultsManager.shared.getUserId()
+    }
+
     var userData: UserData {
         UserDefaultsManager.shared.getUserData()
     }
