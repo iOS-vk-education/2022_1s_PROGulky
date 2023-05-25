@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 import YandexMapsMobile
 
 // MARK: - DetailExcursionViewModel
@@ -13,19 +14,23 @@ import YandexMapsMobile
 final class DetailExcursionViewModel: ObservableObject {
     @Published var excursion = DetailExcursion.empty
     @Published var places = [PlaceCoordinates.empty]
-
-    var excursionData: Excursion? // Данные как они приходят с API
+    var excursionData: Excursion?
     var isFavourite: Bool = false // Есть ли экскурсия с переданным id в избранном
-
+    private var excursionCancelable: AnyCancellable?
     private var massTransitSession: YMKMasstransitSession?
     private var requestPoints = [YMKRequestPoint]()
 
     @Published var polyline = YMKPolyline(points: [])
+    @Published var loading = true
     @Published var points = [YMKPoint]()
+
+    var guardedExcursion: Excursion {
+        guard let excursionData else { return .empty }
+        return excursionData
+    }
 
     init(excursionId: Int) {
         excursion.id = excursionId
-        loadModel()
     }
 
     public func didiLikeButtonTapped() {
@@ -41,21 +46,20 @@ final class DetailExcursionViewModel: ObservableObject {
         }
     }
 
-    private func loadModel() {
-        ApiManager.shared.getExcursion(
-            excursionId: excursion.id,
-            success: { excursion in
-                self.isFavourite = ExcursionsRepository.shared.getIssetFavouriveExcursion(with: excursion.id) // Вычисление есть ли экскурсия в избранном
-                self.excursionData = excursion
-
-                self.excursion = DetailExcursionDisplayDataFactory().setupViewModel(excursion: excursion, isFavourite: self.isFavourite)
-                self.places = DetailExcursionDisplayDataFactory().getPlacesCoordinates(excursion.places)
+    func refresh() {
+        excursionCancelable = ApiManager.shared
+            .getExcursion(excursionId: excursion.id)
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] value in
+                guard let self else { return }
+                self.excursionData = value
+                self.isFavourite = ExcursionsRepository.shared.getIssetFavouriveExcursion(with: excursion.id)
+                self.excursion = DetailExcursionDisplayDataFactory()
+                    .setupViewModel(excursion: value, isFavourite: self.isFavourite)
+                self.places = DetailExcursionDisplayDataFactory().getPlacesCoordinates(value.places)
                 self.getRoute()
-            }, failure: { error in
-                // TODO: тут реализуется бизнес логика на какой экран пойти пользователю, если при запросе токены протухли и хранилище с данными очистилось
-                print("[DEBUG] error: \(error)")
-            }
-        )
+                self.loading = false
+            })
     }
 
     private func getRoute() {
@@ -76,8 +80,6 @@ final class DetailExcursionViewModel: ObservableObject {
         let responseHandler = { (routesResponse: [YMKMasstransitRoute]?, error: Error?) in
             if let routes = routesResponse {
                 self.onRoutesReceived(routes)
-            } else {
-                self.onRoutesError(error!)
             }
         }
 
@@ -93,17 +95,5 @@ final class DetailExcursionViewModel: ObservableObject {
         guard let route = routes.first else { return }
         polyline = route.geometry
         points = requestPoints.map(\.point)
-    }
-
-    private func onRoutesError(_ error: Error) {
-        guard let routingError = (error as NSError).userInfo[YRTUnderlyingErrorKey]
-            as? YRTError else { return }
-        var errorMessage = "Unknown error"
-        if routingError.isKind(of: YRTNetworkError.self) {
-            errorMessage = "Network error"
-        } else if routingError.isKind(of: YRTRemoteError.self) {
-            errorMessage = "Remote server error"
-        }
-        // TODO: Show Alert
     }
 }

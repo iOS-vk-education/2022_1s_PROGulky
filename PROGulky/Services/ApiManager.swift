@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 // MARK: - ApiType
 
@@ -19,6 +20,7 @@ enum ApiType {
     case getExcursion(token: String, excursionId: Int)
     case getPlaceImage(image: String)
     case getExcursionImage(image: String)
+    case rateExcursion(token: String, excursionId: Int)
 
     case login // Логин
     case getMeInfo(token: String) // получение информации о себе
@@ -46,6 +48,8 @@ enum ApiType {
             return ["Authorization": "Bearer \(token)"]
         case let .delete(token):
             return ["Authorization": "Bearer \(token)"]
+        case let .rateExcursion(token, _):
+            return ["Authorization": "Bearer \(token)"]
         default:
             return [:]
         }
@@ -62,7 +66,7 @@ enum ApiType {
         case let .getExcursion(_, excursionId): return "api/v1/excursions/\(excursionId)"
         case let .getPlaceImage(image): return "images/places/\(image)"
         case let .getExcursionImage(image): return "/images/excursions/\(image)"
-
+        case .rateExcursion: return "api/v1/rating"
         case .login: return "api/v1/auth/login"
         case .registration: return "api/v1/auth/registration"
         case .getMeInfo: return "api/v1/auth/me"
@@ -100,16 +104,12 @@ enum ApiType {
         case .getExcursions, .getPlaces, .getExcursion, .getPlaceImage, .getExcursionImage:
             request.httpMethod = "GET"
             return request
-        case .addFavorites:
+        case .addFavorites, .login, .registration, .updateAccessTokenByRefresh, .rateExcursion:
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
         case .removeFavorites:
             request.httpMethod = "DELETE"
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            return request
-        case .login, .registration:
-            request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
         case .getFavoritesExcursions:
@@ -121,11 +121,7 @@ enum ApiType {
         case .getMeInfo:
             request.httpMethod = "GET"
             return request
-        case .updateAccessTokenByRefresh:
-            request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            return request
-        case let .delete(token: token):
+        case .delete:
             request.httpMethod = "DELETE"
             return request
         }
@@ -499,25 +495,27 @@ final class ApiManager: BaseService {
         task.resume()
     }
 
-    func getExcursion(
-        excursionId: Int,
-        success: @escaping ((_ excursion: Excursion) -> Void),
-        failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
-    ) {
+    func getExcursion(excursionId: Int) -> AnyPublisher<Excursion, Never> {
         let request = ApiType.getExcursion(token: getAccessToken(), excursionId: excursionId).request
-        callWebService(request) { data in
-            do {
-                let excursion = try JSONDecoder().decode(Excursion.self, from: data)
-                DispatchQueue.main.async {
-                    success(excursion)
-                }
-            } catch let jsonError {
-                print("Failed decode error:", jsonError)
-            }
-        }
-        failure: { error in
-            failure(error)
-        }
+        return fetch(request)
+            .replaceNil(with: .empty)
+            .replaceError(with: .empty)
+            .replaceEmpty(with: .empty)
+            .eraseToAnyPublisher()
+    }
+
+    func rateExcursion(excursionId: Int, rating: Int) -> AnyPublisher<RatingResponse, Never> {
+        var request = ApiType.rateExcursion(token: getAccessToken(), excursionId: excursionId).request
+        let data = RatingRequest(excursionId: excursionId, rating: rating, comment: "")
+        do {
+            let jsonData = try JSONEncoder().encode(data)
+            request.httpBody = jsonData
+        } catch {}
+        return fetch(request)
+            .replaceNil(with: .empty)
+            .replaceError(with: .empty)
+            .replaceEmpty(with: .empty)
+            .eraseToAnyPublisher()
     }
 
     func deleteAccount(completion: @escaping (Result<User, ApiCustomErrors>) -> Void, token: String) {
@@ -579,6 +577,26 @@ class BaseService: NSObject {
             }
         }
         task.resume()
+    }
+
+    func fetch<T: Decodable>(_ request: URLRequest) -> AnyPublisher<T, Error> {
+        URLSession.shared.dataTaskPublisher(for: request)
+            .map { data, response in
+                guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return data }
+                var data: Data = data
+                if statusCode == 401 {
+                    self.requestForGetNewAccessToken(request: request) { responseObj in
+                        data = responseObj
+                    } failure: { _ in
+                        print("error")
+                    }
+                }
+                return data
+            }
+
+            .decode(type: T.self, decoder: JSONDecoder())
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
     }
 }
 
