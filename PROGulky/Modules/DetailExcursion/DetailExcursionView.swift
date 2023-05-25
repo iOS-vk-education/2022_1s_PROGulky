@@ -26,9 +26,9 @@ struct DetailExcursionView: View {
     @ObservedObject var viewModel: DetailExcursionViewModel
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    @State var isMapActive = false
-    @State var showsAlert = false
-    @State var rateText = Constants.ratePlease
+    @State private var isMapActive = false
+    @State private var showsAlert = false
+    @State private var rateText = Constants.ratePlease
 
     init(viewModel: DetailExcursionViewModel) {
         self.viewModel = viewModel
@@ -49,40 +49,10 @@ struct DetailExcursionView: View {
 
     var body: some View {
         ZStack {
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack {
-                    imageWithLikeButton
-                    placesInfoView
-                        .padding([.bottom], 16)
-                    placesView
-                        .skeleton(with: viewModel.loading)
-                        .multiline(lines: 3, scales: [1: 5], spacing: 20)
-                        .padding([.bottom], 20)
-                    descriptionView
-                        .padding([.bottom], 24)
-                    NavigationLink(isActive: $isMapActive) {
-                        MapModuleView(excursion: viewModel.guardedExcursion)
-                            .ignoresSafeArea()
-                            .navigationBarBackButtonHidden()
-                            .navigationBarItems(leading: backButton)
-                    } label: {
-                        RepresentedMapView(polyline: viewModel.polyline, points: viewModel.points)
-                            .frame(width: 350, height: 350)
-                            .padding(.bottom, 20)
-                            .skeleton(with: viewModel.loading, size: CGSize(width: 350, height: 350))
-                    }
-                    HStack {
-                        Spacer()
-                        rate
-                            .skeleton(with: viewModel.loading)
-                    }
-                }
-                .padding(.horizontal, 16)
-            }
-            .disabled(showsAlert ? true : false)
-            .blur(radius: showsAlert ? 5 : 0)
-            .animation(.default, value: showsAlert)
-
+            mainView
+                .disabled(showsAlert ? true : false)
+                .blur(radius: showsAlert ? 5 : 0)
+                .animation(.default, value: showsAlert)
             RatingView(viewModel: RatingViewModel(excursionId: viewModel.excursion.id),
                        isShown: $showsAlert)
                 .opacity(showsAlert ? 1 : 0)
@@ -92,7 +62,6 @@ struct DetailExcursionView: View {
         .background(backgroundColor)
         .navigationBarBackButtonHidden()
         .navigationBarItems(leading: backButton)
-        .onAppear(perform: viewModel.refresh)
     }
 
     @ViewBuilder
@@ -106,6 +75,40 @@ struct DetailExcursionView: View {
                 .symbolRenderingMode(.palette)
                 .foregroundStyle(.white, .black)
                 .fontWeight(.bold)
+        }
+    }
+
+    @ViewBuilder
+    private var mainView: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack {
+                imageWithLikeButton
+                placesInfoView
+                    .padding([.bottom], 16)
+                placesView
+                    .skeleton(with: viewModel.loading)
+                    .multiline(lines: 3, scales: [1: 5], spacing: 20)
+                    .padding([.bottom], 20)
+                descriptionView
+                    .padding([.bottom], 24)
+                NavigationLink(isActive: $isMapActive) {
+                    MapModuleView(excursion: viewModel.guardedExcursion)
+                        .ignoresSafeArea()
+                        .navigationBarBackButtonHidden()
+                        .navigationBarItems(leading: backButton)
+                } label: {
+                    RepresentedMapView(polyline: viewModel.polyline, points: viewModel.points)
+                        .frame(width: 350, height: 350)
+                        .padding(.bottom, 20)
+                        .skeleton(with: viewModel.loading, size: CGSize(width: 350, height: 350))
+                }
+                HStack {
+                    Spacer()
+                    rate
+                        .skeleton(with: viewModel.loading)
+                }
+            }
+            .padding(.horizontal, 16)
         }
     }
 

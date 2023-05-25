@@ -57,7 +57,6 @@
 		545FE1AC291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */; };
 		5478D22329439C0D00A3C23D /* AddExcursionConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5478D22229439C0D00A3C23D /* AddExcursionConstants.swift */; };
 		548918682A178CFA001375C8 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 548918662A178CFA001375C8 /* CoreData.xcdatamodeld */; };
-		5489186B2A1790F8001375C8 /* FavouriteExcursion+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489186A2A1790F8001375C8 /* FavouriteExcursion+CoreDataClass.swift */; };
 		5489186E2A1791C2001375C8 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5489186D2A1791C2001375C8 /* CoreDataManager.swift */; };
 		548ABFDA29205592001CFDA9 /* Excursion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548ABFD929205592001CFDA9 /* Excursion.swift */; };
 		5496757E2A1BDC8800133D8F /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5496757D2A1BDC8800133D8F /* CoreDataStack.swift */; };
@@ -125,6 +124,7 @@
 		66E2ECC52A1F732400B988B0 /* RatingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E2ECC42A1F732400B988B0 /* RatingState.swift */; };
 		66E2ECC72A1F755000B988B0 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E2ECC62A1F755000B988B0 /* RatingView.swift */; };
 		66E2ECC92A1F859000B988B0 /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E2ECC82A1F859000B988B0 /* RatingViewModel.swift */; };
+		66E2ECCB2A1FC36900B988B0 /* FavouriteExcursion+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E2ECCA2A1FC36800B988B0 /* FavouriteExcursion+CoreDataClass.swift */; };
 		6884644A93D5EB0CEBEEE732 /* FavouritesExcursionsModuleIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AD46D3F79C248744CE5F2C /* FavouritesExcursionsModuleIO.swift */; };
 		73F38211B0A1DD7FE5991BF6 /* RegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C8DC0C513957612829BD5B /* RegistrationPresenter.swift */; };
 		747D5FE28C269B46F47D0909 /* LoginInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840A9B700CA2CE0C76061571 /* LoginInteractorIO.swift */; };
@@ -251,7 +251,6 @@
 		545FE1AB291DAF9F00890693 /* ExcursionsListDisplayDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcursionsListDisplayDataFactory.swift; sourceTree = "<group>"; };
 		5478D22229439C0D00A3C23D /* AddExcursionConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExcursionConstants.swift; sourceTree = "<group>"; };
 		548918672A178CFA001375C8 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
-		5489186A2A1790F8001375C8 /* FavouriteExcursion+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "FavouriteExcursion+CoreDataClass.swift"; path = "/Users/semyon/mob_dev/2022_1s_PROGulky/PROGulky/FavouriteExcursion+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		5489186D2A1791C2001375C8 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		548ABFD929205592001CFDA9 /* Excursion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Excursion.swift; sourceTree = "<group>"; };
 		548D4153B0E81CB47D3509CC /* MapDetailBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MapDetailBuilder.swift; sourceTree = "<group>"; };
@@ -327,6 +326,7 @@
 		66E2ECC42A1F732400B988B0 /* RatingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingState.swift; sourceTree = "<group>"; };
 		66E2ECC62A1F755000B988B0 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		66E2ECC82A1F859000B988B0 /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModel.swift; sourceTree = "<group>"; };
+		66E2ECCA2A1FC36800B988B0 /* FavouriteExcursion+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FavouriteExcursion+CoreDataClass.swift"; sourceTree = "<group>"; };
 		6956CF76F0FCD65BE420ABDC /* ProfileRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProfileRouter.swift; sourceTree = "<group>"; };
 		6C070CC38B9431BEF26E6225 /* AddExcursionViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AddExcursionViewController.swift; sourceTree = "<group>"; };
 		6DE36CAA8C99CE8FA62D79F5 /* ProfileInteractorIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ProfileInteractorIO.swift; sourceTree = "<group>"; };
@@ -633,7 +633,7 @@
 		5496757C2A1BDC7500133D8F /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				5489186A2A1790F8001375C8 /* FavouriteExcursion+CoreDataClass.swift */,
+				66E2ECCA2A1FC36800B988B0 /* FavouriteExcursion+CoreDataClass.swift */,
 				5496757D2A1BDC8800133D8F /* CoreDataStack.swift */,
 			);
 			path = CoreData;
@@ -1509,7 +1509,6 @@
 			files = (
 				6675D20D29126FF20058A4B0 /* AppCoordinator.swift in Sources */,
 				5BA6C11F29F56A0C00CBD5A9 /* DetailExcursionDisplayDataFactory.swift in Sources */,
-				5489186B2A1790F8001375C8 /* FavouriteExcursion+CoreDataClass.swift in Sources */,
 				54C089D3291A87FD000497FE /* UIView+Extensions.swift in Sources */,
 				666A03672935DE0F006E3A98 /* MapPresenter.swift in Sources */,
 				661A0D892902996D00312A0B /* AppDelegate.swift in Sources */,
@@ -1653,6 +1652,7 @@
 				62105589AAC90ECD33D1812F /* RegistrationInteractorIO.swift in Sources */,
 				84949E5EEA87D3C81E48166E /* RegistrationInteractor.swift in Sources */,
 				A2994B9518C4E37B13EDCADF /* RegistrationRouterInput.swift in Sources */,
+				66E2ECCB2A1FC36900B988B0 /* FavouriteExcursion+CoreDataClass.swift in Sources */,
 				33FE5454AE4A9E49D98BE1E0 /* RegistrationRouter.swift in Sources */,
 				543F2CB1292E726D00120116 /* Int+Extensions.swift in Sources */,
 				43E940EF32E87EED733BEB02 /* RegistrationBuilder.swift in Sources */,

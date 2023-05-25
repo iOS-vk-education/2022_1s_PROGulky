@@ -21,7 +21,7 @@ final class DetailExcursionViewModel: ObservableObject {
     private var requestPoints = [YMKRequestPoint]()
 
     @Published var polyline = YMKPolyline(points: [])
-    @Published var loading = true
+    @Published var loading: Bool = true
     @Published var points = [YMKPoint]()
 
     var guardedExcursion: Excursion {
@@ -31,6 +31,7 @@ final class DetailExcursionViewModel: ObservableObject {
 
     init(excursionId: Int) {
         excursion.id = excursionId
+        refresh()
     }
 
     public func didiLikeButtonTapped() {
@@ -47,18 +48,20 @@ final class DetailExcursionViewModel: ObservableObject {
     }
 
     func refresh() {
+        guard excursionData == nil else { return }
+        loading = true
         excursionCancelable = ApiManager.shared
             .getExcursion(excursionId: excursion.id)
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] value in
                 guard let self else { return }
-                self.excursionData = value
-                self.isFavourite = ExcursionsRepository.shared.getIssetFavouriveExcursion(with: excursion.id)
-                self.excursion = DetailExcursionDisplayDataFactory()
+                excursionData = value
+                isFavourite = ExcursionsRepository.shared.getIssetFavouriveExcursion(with: excursion.id)
+                excursion = DetailExcursionDisplayDataFactory()
                     .setupViewModel(excursion: value, isFavourite: self.isFavourite)
-                self.places = DetailExcursionDisplayDataFactory().getPlacesCoordinates(value.places)
-                self.getRoute()
-                self.loading = false
+                places = DetailExcursionDisplayDataFactory().getPlacesCoordinates(value.places)
+                getRoute()
+                loading = false
             })
     }
 

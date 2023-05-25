@@ -125,10 +125,10 @@ final class ProfileViewController: UIViewController {
 
     @objc func buttonAction(sender: UIButton!) {
         let alert = UIAlertController(title: "Вы уверены, что хотите удалить аккаунт?", message: "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Удалить", style: .default, handler: { action in
+        alert.addAction(UIAlertAction(title: "Удалить", style: .default, handler: { _ in
             self.deleteAccount()
         }))
-        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { action in
+        alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { _ in
             alert.dismiss(animated: true, completion: nil)
         }))
         present(alert, animated: true, completion: nil)
@@ -222,10 +222,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 }
             case 2:
                 let alert = UIAlertController(title: "Вы уверены, что хотите выйти?", message: "", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Продолжить", style: .default, handler: { action in
+                alert.addAction(UIAlertAction(title: "Продолжить", style: .default, handler: { _ in
                     self.goToLogin()
                 }))
-                alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { action in
+                alert.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: { _ in
                     alert.dismiss(animated: true, completion: nil)
                 }))
                 present(alert, animated: true, completion: nil)
@@ -277,6 +277,14 @@ extension ProfileViewController: MFMailComposeViewControllerDelegate {
         }
 
         controller.dismiss(animated: true)
+    }
+}
+
+extension ProfileViewController {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        tableView.subviews.forEach { view in
+            view.layer.shadowColor = ProfileViewConstants.Shadow.shadowColor.cgColor
+        }
     }
 }
 
