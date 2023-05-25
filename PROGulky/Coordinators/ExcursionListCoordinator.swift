@@ -54,6 +54,7 @@ extension ExcursionListCoordinator: ExcursionsListModuleOutput {
         let hostingViewController = UIHostingController(rootView: detailExcursionView)
         rootNavigationController.navigationBar.standardAppearance.configureWithTransparentBackground()
         rootNavigationController.navigationBar.standardAppearance.backgroundColor = .clear
+        hostingViewController.navigationItem.setHidesBackButton(true, animated: false)
         rootNavigationController.pushViewController(hostingViewController, animated: true)
     }
 }

@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: - CustomTextField
+
 class CustomTextField: UITextField {
     private var security = Bool()
     private var name = String()
@@ -36,5 +38,12 @@ class CustomTextField: UITextField {
         layer.borderColor = UIColor.lightGray.cgColor
         leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: frame.height))
         leftViewMode = .always
+    }
+}
+
+extension CustomTextField {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        layer.shadowColor = UIColor.prog.Dynamic.shadow.cgColor
     }
 }
