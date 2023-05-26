@@ -45,4 +45,16 @@ extension ProfileInteractor: ProfileInteractorInput {
 //            }
 //        }
     }
+
+    func postUserImage(userAvater: UserImageForPost) {
+        ApiManager.shared.sendUserAvatar(userAvater: userAvater) { result in
+            switch result {
+            case let .success(success):
+                print(success.fileName)
+                self.output?.successeded()
+            case let .failure(failure):
+                self.output?.gotError()
+            }
+        }
+    }
 }

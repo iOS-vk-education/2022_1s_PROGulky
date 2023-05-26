@@ -10,6 +10,8 @@ import Foundation
 // MARK: - ProfileInteractorOutput
 
 protocol ProfileInteractorOutput: AnyObject {
+    func successeded()
+    func gotError()
 }
 
 // MARK: - ProfileInteractorInput
@@ -17,5 +19,6 @@ protocol ProfileInteractorOutput: AnyObject {
 protocol ProfileInteractorInput: AnyObject {
     func logout()
     func deleteAccount()
+    func postUserImage(userAvater: UserImageForPost)
 //    func getUserInfo()
 }

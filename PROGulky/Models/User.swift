@@ -7,12 +7,28 @@
 
 // MARK: - User
 
+import UIKit
+
+// MARK: - User
+
 struct User: Codable {
     let id: Int
     let name: String
     let email: String
     let image: String?
     let role: Role
+}
+
+// MARK: - UserImageForPost
+
+struct UserImageForPost {
+    let image: UIImage
+}
+
+// MARK: - UserImageAfterPost
+
+struct UserImageAfterPost: Codable {
+    let fileName: String
 }
 
 // MARK: - Role

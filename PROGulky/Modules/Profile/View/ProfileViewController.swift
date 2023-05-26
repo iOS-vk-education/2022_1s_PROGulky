@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import MessageUI
+import PhotosUI
 
 private let reuseIdentifier = "SettingsCell"
 private let imagePicker = UIImagePickerController()
@@ -121,7 +122,12 @@ final class ProfileViewController: UIViewController {
 
     @objc func imageTapped() {
         print("change avatar")
-        present(imagePicker, animated: true, completion: nil)
+        var configuration = PHPickerConfiguration(photoLibrary: .shared())
+        configuration.selectionLimit = 1
+        configuration.filter = .images
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated: true)
     }
 
     @objc func buttonAction(sender: UIButton!) {
@@ -133,6 +139,14 @@ final class ProfileViewController: UIViewController {
             alert.dismiss(animated: true, completion: nil)
         }))
         present(alert, animated: true, completion: nil)
+    }
+
+    func showErrorView() {
+        let errorAlert = UIAlertController(title: "Произошла ошибка. Повторите позже", message: "", preferredStyle: .alert)
+        errorAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
+            errorAlert.dismiss(animated: true, completion: nil)
+        }))
+        present(errorAlert, animated: true, completion: nil)
     }
 }
 
@@ -281,13 +295,25 @@ extension ProfileViewController: MFMailComposeViewControllerDelegate {
     }
 }
 
-// MARK: UIImagePickerControllerDelegate, UINavigationControllerDelegate
+// MARK: PHPickerViewControllerDelegate
 
-extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            userInfoHeader.profileImageView.image = image
+extension ProfileViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        // Get the first item provider from the results
+        let itemProvider = results.first?.itemProvider
+
+        // Access the UIImage representation for the result
+        if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+                if let image = image as? UIImage {
+                    DispatchQueue.main.async {
+                        self.userInfoHeader.profileImageView.image = image
+                        self.output.saveUserAvatar(image: image)
+//                        self.reload()
+                    }
+                }
+            }
         }
-        imagePicker.dismiss(animated: true, completion: nil)
     }
 }

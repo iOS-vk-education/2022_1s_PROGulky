@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // MARK: - ProfilePresenter
 
@@ -52,7 +53,21 @@ extension ProfilePresenter: ProfileViewOutput {
         interactor.deleteAccount()
         moduleOutput?.profileModuleWantsToOpenScreen(with: TabBarPage.excursionList.rawValue)
     }
+
+    func saveUserAvatar(image: UIImage) {
+        let avatar = UserImageForPost(image: image)
+        interactor.postUserImage(userAvater: avatar)
+    }
 }
 
+// MARK: ProfileInteractorOutput
+
 extension ProfilePresenter: ProfileInteractorOutput {
+    func gotError() {
+        view.showErrorView()
+    }
+
+    func successeded() {
+        print("Success")
+    }
 }

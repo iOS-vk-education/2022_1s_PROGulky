@@ -25,6 +25,7 @@ enum ApiType {
     case registration // Регистрация
     case updateAccessTokenByRefresh
     case delete(token: String)
+    case uploadFiles(userAvater: UserImageForPost) // Загрузка фото профиля
 
     var baseURLString: String {
         "http://37.140.195.167:5000"
@@ -68,6 +69,7 @@ enum ApiType {
         case .getMeInfo: return "api/v1/auth/me"
         case .updateAccessTokenByRefresh: return "api/v1/auth/token/refresh"
         case .delete: return "api/v1/auth/delete"
+        case .uploadFiles: return "api/v1/files/user"
         }
     }
 
@@ -125,8 +127,11 @@ enum ApiType {
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
-        case let .delete(token: token):
+        case .delete:
             request.httpMethod = "DELETE"
+            return request
+        case .uploadFiles:
+            request.httpMethod = "POST"
             return request
         }
     }
@@ -617,5 +622,42 @@ extension BaseService {
             },
             refreshToken: refreshToken
         )
+    }
+
+    func sendUserAvatar(userAvater: UserImageForPost, completion: @escaping (Result<UserImageAfterPost, Error>) -> Void) {
+        var request = ApiType.uploadFiles(userAvater: userAvater).request
+
+        let boundary = UUID().uuidString
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        var data = Data()
+
+        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+        data.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(userAvater.image.hashValue)\"\r\n".data(using: .utf8)!)
+        data.append("Content-Type: file\r\n\r\n".data(using: .utf8)!)
+        data.append(userAvater.image.jpegData(compressionQuality: 1) ?? Data())
+
+        let task = URLSession.shared.uploadTask(with: request, from: data) { data, response, error in
+            if let error {
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+            if let response {
+                print(response.description)
+            }
+            guard let data else { return }
+            do {
+                let fileName = try JSONDecoder().decode(UserImageAfterPost.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(fileName))
+                }
+            } catch let jsonError {
+                print("Failed decode error:", jsonError)
+                DispatchQueue.main.async {
+                    completion(.failure(jsonError))
+                }
+            }
+        }
+        task.resume()
     }
 }
