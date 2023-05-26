@@ -498,9 +498,10 @@ final class ApiManager: BaseService {
     func getExcursion(excursionId: Int) -> AnyPublisher<Excursion, Never> {
         let request = ApiType.getExcursion(token: getAccessToken(), excursionId: excursionId).request
         return fetch(request)
-            .replaceNil(with: .empty)
-            .replaceError(with: .empty)
-            .replaceEmpty(with: .empty)
+            .catch { _ in
+                Empty(completeImmediately: true)
+            }
+            .retry(3)
             .eraseToAnyPublisher()
     }
 
