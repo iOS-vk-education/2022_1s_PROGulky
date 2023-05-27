@@ -40,8 +40,6 @@ final class ProfileViewController: UIViewController {
         navigationItem.title = TextConstantsProfile.titleProfile
         view.addSubview(userInfoHeader)
 
-        // MARK: Здесь делаю аву пользователя
-
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped))
         userInfoHeader.profileImageView.isUserInteractionEnabled = true
         userInfoHeader.profileImageView.addGestureRecognizer(tapGestureRecognizer)
@@ -121,7 +119,6 @@ final class ProfileViewController: UIViewController {
     // MARK: Здесь делаю аву пользователя
 
     @objc func imageTapped() {
-        print("change avatar")
         var configuration = PHPickerConfiguration(photoLibrary: .shared())
         configuration.selectionLimit = 1
         configuration.filter = .images
@@ -179,6 +176,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         ProfileViewConstants.TableView.heightForHeader
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        ProfileViewConstants.TableView.Cell.height
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

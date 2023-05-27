@@ -56,7 +56,7 @@ final class UserInfoHeader: UIView {
 
     private enum Constants {
         static let offset: CGFloat = 10
-        static let imagesSize: CGFloat = 60
+        static let imagesSize: CGFloat = 80
     }
 
     override init(frame: CGRect) {
@@ -69,7 +69,7 @@ final class UserInfoHeader: UIView {
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
             make.width.equalTo(Constants.imagesSize)
-            make.height.equalTo(Constants.imagesSize + 4)
+            make.height.equalTo(Constants.imagesSize)
         }
 
         usernameLabel.snp.makeConstraints { make in
