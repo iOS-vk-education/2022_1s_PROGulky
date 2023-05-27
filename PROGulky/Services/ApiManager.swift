@@ -635,6 +635,7 @@ extension BaseService {
         data.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(userAvater.image.hashValue)\"\r\n".data(using: .utf8)!)
         data.append("Content-Type: file\r\n\r\n".data(using: .utf8)!)
         data.append(userAvater.image.jpegData(compressionQuality: 1) ?? Data())
+        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
 
         let task = URLSession.shared.uploadTask(with: request, from: data) { data, response, error in
             if let error {
