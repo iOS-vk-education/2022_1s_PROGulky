@@ -21,5 +21,8 @@ struct FavouritesExcursionsConstants {
     enum MessageView {
         static let text: String = "Список избранного пуст"
         static let font: UIFont = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
+        static let width: CGFloat = 190
+        static let height: CGFloat = 190
+        static let labelOffset: CGFloat = -27
     }
 }

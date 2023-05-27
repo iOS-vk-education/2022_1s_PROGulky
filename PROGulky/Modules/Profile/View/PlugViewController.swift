@@ -42,7 +42,7 @@ final class PlugViewController: UIViewController {
         }
     }
 
-    private func testToken(completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
+    private func testToken(completion: @escaping (Result<AuthData, ApiCustomError>) -> Void) {
         let token = UserDefaults.standard.string(forKey: UserKeys.accessToken.rawValue)
         print("[DEBUG] user isLogin: \(UserDefaultsManager.shared.isLogged)")
 

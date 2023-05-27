@@ -24,6 +24,30 @@ struct Excursion: Codable {
     var isFavorite: Bool
 }
 
+extension Excursion {
+    static var empty: Excursion = .init(
+        id: 0,
+        title: "",
+        description: "",
+        duration: 0,
+        distance: 0,
+        numberOfPoints: 0,
+        owner: OwnerInstance(
+            id: 0,
+            name: "",
+            email: "",
+            image: "",
+            role: Role(
+                id: 0,
+                value: "",
+                description: ""
+            )
+        ),
+        places: [],
+        isFavorite: false
+    )
+}
+
 typealias Excursions = [Excursion]
 
 // MARK: - PreviewExcursion

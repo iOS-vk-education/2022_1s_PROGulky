@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: - UserInfoHeader
+
 final class UserInfoHeader: UIView {
     struct DisplayData {
         let username: String
@@ -89,5 +91,13 @@ final class UserInfoHeader: UIView {
     func configure(_ displayData: DisplayData) {
         usernameLabel.text = displayData.username
         statusLabel.text = displayData.status
+    }
+}
+
+extension UserInfoHeader {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        profileImageView.layer.shadowColor = ProfileViewConstants.Header.shadowColor.cgColor
+        layer.shadowColor = UIColor.prog.Dynamic.shadow.cgColor
     }
 }

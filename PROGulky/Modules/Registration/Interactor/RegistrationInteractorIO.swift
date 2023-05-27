@@ -12,7 +12,7 @@ import Foundation
 protocol RegistrationInteractorOutput: AnyObject {
     func successRegistration(user: User)
 
-    func handleError(error: ApiCustomErrors)
+    func handleError(error: ApiCustomError)
 }
 
 // MARK: - RegistrationInteractorInput

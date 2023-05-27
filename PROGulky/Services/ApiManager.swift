@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 // MARK: - ApiType
 
@@ -19,6 +20,7 @@ enum ApiType {
     case getExcursion(token: String, excursionId: Int)
     case getPlaceImage(image: String)
     case getExcursionImage(image: String)
+    case rateExcursion(token: String, excursionId: Int)
 
     case login // Логин
     case getMeInfo(token: String) // получение информации о себе
@@ -48,6 +50,8 @@ enum ApiType {
             return ["Authorization": "Bearer \(token)"]
         case let .delete(token):
             return ["Authorization": "Bearer \(token)"]
+        case let .rateExcursion(token, _):
+            return ["Authorization": "Bearer \(token)"]
         case let .setUserImage(token, _):
             return ["Authorization": "Bearer \(token)"]
         default:
@@ -66,7 +70,7 @@ enum ApiType {
         case let .getExcursion(_, excursionId): return "api/v1/excursions/\(excursionId)"
         case let .getPlaceImage(image): return "images/places/\(image)"
         case let .getExcursionImage(image): return "/images/excursions/\(image)"
-
+        case .rateExcursion: return "api/v1/rating"
         case .login: return "api/v1/auth/login"
         case .registration: return "api/v1/auth/registration"
         case .getMeInfo: return "api/v1/auth/me"
@@ -106,16 +110,12 @@ enum ApiType {
         case .getExcursions, .getPlaces, .getExcursion, .getPlaceImage, .getExcursionImage:
             request.httpMethod = "GET"
             return request
-        case .addFavorites:
+        case .addFavorites, .login, .registration, .updateAccessTokenByRefresh, .rateExcursion:
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
         case .removeFavorites:
             request.httpMethod = "DELETE"
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            return request
-        case .login, .registration:
-            request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
         case .getFavoritesExcursions:
@@ -243,7 +243,7 @@ final class ApiManager: BaseService {
         task.resume()
     }
 
-    func login(_ loginDTO: LoginDTO, completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
+    func login(_ loginDTO: LoginDTO, completion: @escaping (Result<AuthData, ApiCustomError>) -> Void) {
         let json: [String: Any] = [
             "email": loginDTO.email,
             "password": loginDTO.password,
@@ -257,7 +257,7 @@ final class ApiManager: BaseService {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 DispatchQueue.main.async {
-                    completion(.failure(ApiCustomErrors.AnotherError))
+                    completion(.failure(ApiCustomError.anotherError))
                 }
             }
             guard let data = data else { return }
@@ -271,13 +271,13 @@ final class ApiManager: BaseService {
                     }
                 } catch _ {
                     DispatchQueue.main.async {
-                        completion(.failure(ApiCustomErrors.JSONParseError))
+                        completion(.failure(ApiCustomError.JSONParseError))
                     }
                 }
             } else if statusCode == 400 {
-                completion(.failure(ApiCustomErrors.BadСredentials))
+                completion(.failure(ApiCustomError.badСredentials))
             } else {
-                completion(.failure(ApiCustomErrors.AnotherError))
+                completion(.failure(ApiCustomError.anotherError))
             }
         }
         task.resume()
@@ -289,7 +289,7 @@ final class ApiManager: BaseService {
     // Если же обновление токенов невозможно (истек рефреш) кидает ошибку RefreshIsExpired
     func getMeInfo2(
         success: @escaping ((_ user: User) -> Void),
-        failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
+        failure: @escaping ((_ error: ApiCustomError?) -> Void)
     ) {
         let request = ApiType.getMeInfo(token: getAccessToken()).request
         callWebService(request) { data in
@@ -307,13 +307,13 @@ final class ApiManager: BaseService {
         }
     }
 
-    func getMeInfo(completion: @escaping (Result<User, ApiCustomErrors>) -> Void, token: String) {
+    func getMeInfo(completion: @escaping (Result<User, ApiCustomError>) -> Void, token: String) {
         let request = ApiType.getMeInfo(token: token).request
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
             if error != nil {
                 DispatchQueue.main.async {
-                    completion(.failure(ApiCustomErrors.AnotherError))
+                    completion(.failure(ApiCustomError.anotherError))
                 }
             }
 
@@ -330,19 +330,19 @@ final class ApiManager: BaseService {
                 } catch let jsonError {
                     DispatchQueue.main.async {
                         let error = NSError(domain: jsonError.localizedDescription, code: 0)
-                        completion(.failure(ApiCustomErrors.JSONParseError))
+                        completion(.failure(ApiCustomError.JSONParseError))
                     }
                 }
             } else {
                 DispatchQueue.main.async {
-                    completion(.failure(ApiCustomErrors.AccessIsExpired))
+                    completion(.failure(ApiCustomError.accessIsExpired))
                 }
             }
         }
         task.resume()
     }
 
-    func registration(_ registrtionDTO: RegistrationDTO, completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
+    func registration(_ registrtionDTO: RegistrationDTO, completion: @escaping (Result<AuthData, ApiCustomError>) -> Void) {
         let json: [String: Any] = [
             "name": registrtionDTO.nickname,
             "email": registrtionDTO.email,
@@ -356,7 +356,7 @@ final class ApiManager: BaseService {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 DispatchQueue.main.async {
-                    completion(.failure(ApiCustomErrors.AnotherError))
+                    completion(.failure(ApiCustomError.anotherError))
                 }
             }
             guard let data = data else { return }
@@ -370,13 +370,13 @@ final class ApiManager: BaseService {
                     }
                 } catch _ {
                     DispatchQueue.main.async {
-                        completion(.failure(ApiCustomErrors.JSONParseError))
+                        completion(.failure(ApiCustomError.JSONParseError))
                     }
                 }
             } else if statusCode == 400 { // Пользвоатель с таким email уже сущевствует
-                completion(.failure(ApiCustomErrors.DublicateUserError))
+                completion(.failure(ApiCustomError.dublicateUserError))
             } else { // Непредвиденная ошибка
-                completion(.failure(ApiCustomErrors.AnotherError))
+                completion(.failure(ApiCustomError.anotherError))
             }
         }
         task.resume()
@@ -384,7 +384,7 @@ final class ApiManager: BaseService {
 
     // Запрос на ручку /refresh для обновление пары токенов по рефреш токену
     func updateAccessTokenByRefresh(
-        completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void,
+        completion: @escaping (Result<AuthData, ApiCustomError>) -> Void,
         refreshToken: String
     ) {
         let json: [String: String] = [
@@ -400,7 +400,7 @@ final class ApiManager: BaseService {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 DispatchQueue.main.async {
-                    completion(.failure(ApiCustomErrors.AnotherError))
+                    completion(.failure(ApiCustomError.anotherError))
                 }
             }
 
@@ -417,13 +417,13 @@ final class ApiManager: BaseService {
                 } catch let jsonError {
                     print("Failed decode error:", jsonError)
                     DispatchQueue.main.async {
-                        completion(.failure(ApiCustomErrors.JSONParseError))
+                        completion(.failure(ApiCustomError.JSONParseError))
                     }
                 }
             case 401: // Протух рефреш
-                completion(.failure(ApiCustomErrors.RefreshIsExpired))
+                completion(.failure(ApiCustomError.refreshIsExpired))
             default: // Непонятный статус код (непонятная ошибка)
-                completion(.failure(ApiCustomErrors.AnotherError))
+                completion(.failure(ApiCustomError.anotherError))
             }
         }
         task.resume()
@@ -509,34 +509,41 @@ final class ApiManager: BaseService {
         task.resume()
     }
 
-    func getExcursion(
-        excursionId: Int,
-        success: @escaping ((_ excursion: Excursion) -> Void),
-        failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
-    ) {
+    func getExcursion(excursionId: Int) -> AnyPublisher<Excursion, ApiCustomError> {
         let request = ApiType.getExcursion(token: getAccessToken(), excursionId: excursionId).request
-        callWebService(request) { data in
-            do {
-                let excursion = try JSONDecoder().decode(Excursion.self, from: data)
-                DispatchQueue.main.async {
-                    success(excursion)
+        return fetch(request)
+            .retry(3)
+            .mapError { error in
+                switch error {
+                case _ as URLError:
+                    return .networkAccess
+                default: return .anotherError
                 }
-            } catch let jsonError {
-                print("Failed decode error:", jsonError)
             }
-        }
-        failure: { error in
-            failure(error)
-        }
+            .eraseToAnyPublisher()
     }
 
-    func deleteAccount(completion: @escaping (Result<User, ApiCustomErrors>) -> Void, token: String) {
+    func rateExcursion(excursionId: Int, rating: Int) -> AnyPublisher<RatingResponse, Never> {
+        var request = ApiType.rateExcursion(token: getAccessToken(), excursionId: excursionId).request
+        let data = RatingRequest(excursionId: excursionId, rating: rating, comment: "")
+        do {
+            let jsonData = try JSONEncoder().encode(data)
+            request.httpBody = jsonData
+        } catch {}
+        return fetch(request)
+            .replaceNil(with: .error)
+            .replaceError(with: .error)
+            .replaceEmpty(with: .error)
+            .eraseToAnyPublisher()
+    }
+
+    func deleteAccount(completion: @escaping (Result<User, ApiCustomError>) -> Void, token: String) {
         let request = ApiType.delete(token: token).request
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
             if error != nil {
                 DispatchQueue.main.async {
-                    completion(.failure(ApiCustomErrors.AnotherError))
+                    completion(.failure(ApiCustomError.anotherError))
                 }
             }
         }
@@ -605,15 +612,16 @@ final class ApiManager: BaseService {
     }
 }
 
-// MARK: - ApiCustomErrors
+// MARK: - ApiCustomError
 
-enum ApiCustomErrors: String, Error {
+enum ApiCustomError: String, Error {
     case JSONParseError = "Ошибка приведения JSON"
-    case AccessIsExpired = "Токен доступа истек" // 401 протух ацесс
-    case RefreshIsExpired = "Токен обновления истек" // протух рефреш
-    case AnotherError = "Непредвиденная ошибка" // Любая непонятная ошибка
-    case DublicateUserError = "Пользователь с таким Email уже существует" // Ошибка регистрации (юзер с такмим email уже существует)
-    case BadСredentials = "Неверный Email или пароль" // Ошибка логина (ошибка в кредах)
+    case accessIsExpired = "Токен доступа истек" // 401 протух ацесс
+    case refreshIsExpired = "Токен обновления истек" // протух рефреш
+    case anotherError = "Непредвиденная ошибка" // Любая непонятная ошибка
+    case dublicateUserError = "Пользователь с таким Email уже существует" // Ошибка регистрации (юзер с такмим email уже существует)
+    case badСredentials = "Неверный Email или пароль" // Ошибка логина (ошибка в кредах)
+    case networkAccess = "Отсутствует соединение"
 }
 
 // MARK: - BaseService
@@ -624,13 +632,13 @@ class BaseService: NSObject {
     func callWebService(
         _ request: URLRequest,
         success: @escaping ((_ responseObject: Data) -> Void),
-        failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
+        failure: @escaping ((_ error: ApiCustomError?) -> Void)
     ) {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
             if error != nil {
                 DispatchQueue.main.async {
-                    failure(ApiCustomErrors.AnotherError)
+                    failure(ApiCustomError.anotherError)
                 }
             }
 
@@ -646,10 +654,29 @@ class BaseService: NSObject {
                     failure: failure
                 )
             } else { // Непредвиденная ошибка
-                failure(ApiCustomErrors.AnotherError)
+                failure(ApiCustomError.anotherError)
             }
         }
         task.resume()
+    }
+
+    func fetch<T: Decodable>(_ request: URLRequest) -> AnyPublisher<T, Error> {
+        URLSession.shared.dataTaskPublisher(for: request)
+            .map { data, response in
+                guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return data }
+                var data: Data = data
+                if statusCode == 401 {
+                    self.requestForGetNewAccessToken(request: request) { responseObj in
+                        data = responseObj
+                    } failure: { _ in
+                        print("error")
+                    }
+                }
+                return data
+            }
+
+            .decode(type: T.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
     }
 }
 
@@ -664,7 +691,7 @@ extension BaseService {
     func requestForGetNewAccessToken(
         request: URLRequest,
         success: @escaping ((_ responseObject: Data) -> Void),
-        failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
+        failure: @escaping ((_ error: ApiCustomError?) -> Void)
     ) {
         let refreshToken = UserDefaults.standard.string(forKey: UserKeys.refreshToken.rawValue)
         guard let refreshToken = refreshToken else { return }

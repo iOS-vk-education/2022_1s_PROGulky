@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 import YandexMapsMobile
 
 // MARK: - DetailExcursionViewModel
@@ -13,30 +14,63 @@ import YandexMapsMobile
 final class DetailExcursionViewModel: ObservableObject {
     @Published var excursion = DetailExcursion.empty
     @Published var places = [PlaceCoordinates.empty]
-
+    var excursionData: Excursion?
+    var isFavourite: Bool = false // Есть ли экскурсия с переданным id в избранном
+    private var excursionCancelable: AnyCancellable?
     private var massTransitSession: YMKMasstransitSession?
     private var requestPoints = [YMKRequestPoint]()
 
     @Published var polyline = YMKPolyline(points: [])
+    @Published var loading: Bool = true
     @Published var points = [YMKPoint]()
+    @Published var error: ApiCustomError?
+
+    var guardedExcursion: Excursion {
+        guard let excursionData else { return .empty }
+        return excursionData
+    }
 
     init(excursionId: Int) {
         excursion.id = excursionId
-        loadModel()
+        refresh()
     }
 
-    private func loadModel() {
-        ApiManager.shared.getExcursion(
-            excursionId: excursion.id,
-            success: { excursion in
-                self.excursion = DetailExcursionDisplayDataFactory().setupViewModel(excursion: excursion)
-                self.places = DetailExcursionDisplayDataFactory().getPlacesCoordinates(excursion.places)
+    public func didiLikeButtonTapped() {
+        excursion.isLiked.toggle()
+        guard let excursion = excursionData else { return }
+
+        if isFavourite == false {
+            isFavourite = true
+            ExcursionsRepository.shared.addFavouriveExcursion(with: excursion)
+        } else {
+            isFavourite = false
+            ExcursionsRepository.shared.removeFavouriveExcursion(with: excursion.id)
+        }
+    }
+
+    func refresh() {
+        guard excursionData == nil else { return }
+        loading = true
+        excursionCancelable = ApiManager.shared
+            .getExcursion(excursionId: excursion.id)
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { [weak self] response in
+                switch response {
+                case let .failure(error):
+                    self?.error = error
+                case .finished: break
+                }
+            }, receiveValue: { [weak self] value in
+                guard let self else { return }
+                self.excursionData = value
+                self.isFavourite = ExcursionsRepository.shared
+                    .getIssetFavouriveExcursion(with: self.excursion.id)
+                self.excursion = DetailExcursionDisplayDataFactory()
+                    .setupViewModel(excursion: value, isFavourite: self.isFavourite)
+                self.places = DetailExcursionDisplayDataFactory().getPlacesCoordinates(value.places)
                 self.getRoute()
-            }, failure: { error in
-                // TODO: тут реализуется бизнес логика на какой экран пойти пользователю, если при запросе токены протухли и хранилище с данными очистилось
-                print("[DEBUG] error: \(error)")
-            }
-        )
+                self.loading = false
+            })
     }
 
     private func getRoute() {
@@ -57,8 +91,6 @@ final class DetailExcursionViewModel: ObservableObject {
         let responseHandler = { (routesResponse: [YMKMasstransitRoute]?, error: Error?) in
             if let routes = routesResponse {
                 self.onRoutesReceived(routes)
-            } else {
-                self.onRoutesError(error!)
             }
         }
 
@@ -74,17 +106,5 @@ final class DetailExcursionViewModel: ObservableObject {
         guard let route = routes.first else { return }
         polyline = route.geometry
         points = requestPoints.map(\.point)
-    }
-
-    private func onRoutesError(_ error: Error) {
-        guard let routingError = (error as NSError).userInfo[YRTUnderlyingErrorKey]
-            as? YRTError else { return }
-        var errorMessage = "Unknown error"
-        if routingError.isKind(of: YRTNetworkError.self) {
-            errorMessage = "Network error"
-        } else if routingError.isKind(of: YRTRemoteError.self) {
-            errorMessage = "Remote server error"
-        }
-        // TODO: Show Alert
     }
 }

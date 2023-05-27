@@ -127,7 +127,8 @@ struct ExcursionsListConstants {
         enum OwnerLabel {
             static let bottomInset = 18
             static let fontSize: CGFloat = 13
-            static let fontWeight = UIFont.Weight.thin
+            static let fontWeight = UIFont.Weight.light
+            static let textColor: UIColor = .gray // Цвет текста параметров
         }
 
         enum OwnerImage {
@@ -136,6 +137,14 @@ struct ExcursionsListConstants {
             static let cornerRadius = height / 2
             static let bottomInset: CGFloat = 15
         }
+    }
+
+    enum EmptyListAnimationView {
+        static let labelText: String = "По запросу ничего не найдено"
+        static let labelFont: UIFont = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
+        static let height: CGFloat = 150
+        static let width: CGFloat = 150
+        static let offset: CGFloat = -60
     }
 
     enum Api {
