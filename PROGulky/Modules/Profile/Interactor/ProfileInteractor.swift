@@ -45,7 +45,6 @@ extension ProfileInteractor: ProfileInteractorInput {
         }, token: token)
     }
 
-
     func postUserImage(userAvater: UserImageForPost) {
         ApiManager.shared.sendUserAvatar(userAvater: userAvater) { result in
             switch result {

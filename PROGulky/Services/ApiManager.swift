@@ -8,6 +8,18 @@
 import Foundation
 import Combine
 
+// MARK: - ApiCustomError
+
+enum ApiCustomError: String, Error {
+    case JSONParseError = "Ошибка приведения JSON"
+    case accessIsExpired = "Токен доступа истек" // 401 протух ацесс
+    case refreshIsExpired = "Токен обновления истек" // протух рефреш
+    case anotherError = "Непредвиденная ошибка" // Любая непонятная ошибка
+    case dublicateUserError = "Пользователь с таким Email уже существует" // Ошибка регистрации (юзер с такмим email уже существует)
+    case badСredentials = "Неверный Email или пароль" // Ошибка логина (ошибка в кредах)
+    case networkAccess = "Отсутствует соединение"
+}
+
 // MARK: - ApiType
 
 enum ApiType {
@@ -126,10 +138,6 @@ enum ApiType {
             return request
         case .getMeInfo:
             request.httpMethod = "GET"
-            return request
-        case .updateAccessTokenByRefresh:
-            request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
         case .delete:
             request.httpMethod = "DELETE"
@@ -552,7 +560,7 @@ final class ApiManager: BaseService {
 
     func sendUserAvatar(
         userAvater: UserImageForPost,
-        completion: @escaping (Result<UserImageAfterPost, ApiCustomErrors>) -> Void
+        completion: @escaping (Result<UserImageAfterPost, ApiCustomError>) -> Void
     ) {
         var request = ApiType.uploadFiles(userAvater: userAvater).request
 
@@ -569,7 +577,7 @@ final class ApiManager: BaseService {
         let task = URLSession.shared.uploadTask(with: request, from: data) { data, response, error in
             if error != nil {
                 DispatchQueue.main.async {
-                    completion(.failure(ApiCustomErrors.AnotherError))
+                    completion(.failure(ApiCustomError.anotherError))
                 }
             }
             guard let data else { return }
@@ -580,7 +588,7 @@ final class ApiManager: BaseService {
                 }
             } catch _ {
                 DispatchQueue.main.async {
-                    completion(.failure(ApiCustomErrors.JSONParseError))
+                    completion(.failure(ApiCustomError.JSONParseError))
                 }
             }
         }
@@ -588,7 +596,7 @@ final class ApiManager: BaseService {
     }
 
     func setUserImage(
-        completion: @escaping (Result<String, ApiCustomErrors>) -> Void,
+        completion: @escaping (Result<String, ApiCustomError>) -> Void,
         fileName: String
     ) {
         let json: [String: String] = [
@@ -606,22 +614,10 @@ final class ApiManager: BaseService {
         }
         failure: { _ in
             DispatchQueue.main.async {
-                completion(.failure(ApiCustomErrors.AnotherError))
+                completion(.failure(ApiCustomError.anotherError))
             }
         }
     }
-}
-
-// MARK: - ApiCustomError
-
-enum ApiCustomError: String, Error {
-    case JSONParseError = "Ошибка приведения JSON"
-    case accessIsExpired = "Токен доступа истек" // 401 протух ацесс
-    case refreshIsExpired = "Токен обновления истек" // протух рефреш
-    case anotherError = "Непредвиденная ошибка" // Любая непонятная ошибка
-    case dublicateUserError = "Пользователь с таким Email уже существует" // Ошибка регистрации (юзер с такмим email уже существует)
-    case badСredentials = "Неверный Email или пароль" // Ошибка логина (ошибка в кредах)
-    case networkAccess = "Отсутствует соединение"
 }
 
 // MARK: - BaseService

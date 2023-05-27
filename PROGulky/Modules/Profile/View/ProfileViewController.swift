@@ -303,6 +303,7 @@ extension ProfileViewController {
     }
 }
 
+// MARK: PHPickerViewControllerDelegate
 
 extension ProfileViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
