@@ -139,6 +139,14 @@ struct ExcursionsListConstants {
         }
     }
 
+    enum EmptyListAnimationView {
+        static let labelText: String = "По запросу ничего не найдено"
+        static let labelFont: UIFont = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.medium)
+        static let height: CGFloat = 150
+        static let width: CGFloat = 150
+        static let offset: CGFloat = -60
+    }
+
     enum Api {
         static let baseURL: String = "http://37.140.195.167:5000"
         static let imageURL: String = "\(baseURL)/images/excursions"
