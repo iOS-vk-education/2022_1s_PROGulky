@@ -16,6 +16,18 @@ final class ProfileInteractor {
 // MARK: ProfileInteractorInput
 
 extension ProfileInteractor: ProfileInteractorInput {
+    func setUserImage(with fileName: String) {
+        ApiManager.shared.setUserImage(completion: { [weak self] result in
+            switch result {
+            case let .success(imageName):
+                UserDefaultsManager.shared.setImageData(imageName: imageName)
+                self?.output?.successSetImage()
+            case .failure:
+                self?.output?.gotError()
+            }
+        }, fileName: fileName)
+    }
+
     func logout() {
         UserAuthService.shared.logout()
     }
@@ -33,25 +45,12 @@ extension ProfileInteractor: ProfileInteractorInput {
         }, token: token)
     }
 
-    func getUserInfo() {
-        print("[UserService]", UserService.shared.userData.token)
-//        UserAuthService.shared.login(dto: loginDTO) { [weak self] result in
-//            switch result {
-//            case let .success(token):
-//                print("HERE OPEN PROFILE")
-//                self?.output?.successLogin(token: token)
-//            case let .failure(error):
-//                self?.output?.handleError(error: error)
-//            }
-//        }
-    }
 
     func postUserImage(userAvater: UserImageForPost) {
         ApiManager.shared.sendUserAvatar(userAvater: userAvater) { result in
             switch result {
             case let .success(success):
-                print(success.fileName)
-                self.output?.successeded()
+                self.output?.successLoadImage(with: success.fileName)
             case let .failure(failure):
                 self.output?.gotError()
             }

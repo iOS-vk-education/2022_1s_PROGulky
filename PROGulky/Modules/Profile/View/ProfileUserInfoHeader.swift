@@ -13,8 +13,6 @@ final class UserInfoHeader: UIView {
         let status: String
     }
 
-    // http://37.140.195.167:5000/images/users/
-
     private let imagePicker = UIImagePickerController()
     var profileImageView: UIImageView = {
         let iv = UIImageView()
@@ -26,16 +24,14 @@ final class UserInfoHeader: UIView {
         iv.layer.cornerRadius = ProfileViewConstants.Header.cornerRadius
         iv.layer.shadowColor = ProfileViewConstants.Header.shadowColor.cgColor
 
-        print("test: \(UserDefaults.standard.string(forKey: UserKeys.image.rawValue))")
-
-//        setupUserImage(with: User)
-
         guard let image = UserDefaults.standard.string(forKey: UserKeys.image.rawValue) else {
-            iv.image = UIImage(systemName: "person.crop.circle")?.withTintColor(.prog.Dynamic.primary, renderingMode: .alwaysOriginal)
+            iv.image = UIImage(
+                systemName: "person.crop.circle")?.withTintColor(.prog.Dynamic.primary, renderingMode: .alwaysOriginal)
             return iv
         }
-        let imageUrl = baseURL + "/images/users/" + image
-        iv.downloadedFrom(link: imageUrl ?? "")
+
+        let imageURL = "\(ExcursionsListConstants.Api.ownerImageURL)/\(image)"
+        iv.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(systemName: "person.crop.circle"))
 
         return iv
     }()
@@ -66,6 +62,7 @@ final class UserInfoHeader: UIView {
         addSubviews(profileImageView,
                     usernameLabel,
                     statusLabel)
+
         profileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
@@ -93,43 +90,4 @@ final class UserInfoHeader: UIView {
         usernameLabel.text = displayData.username
         statusLabel.text = displayData.status
     }
-
-    private func setupUserImage(with image: String?) {
-//        if let image = image {
-//            let imageURL = "\(ExcursionsListConstants.Api.ownerImageURL)/\(image)"
-//            excursionOwnerImage.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(systemName: "person.fill"))
-//        } else {
-//            excursionOwnerImage.image = UIImage(systemName: "person.fill")
-//        }
-    }
-
-    func saveImage(image: UIImage?) {
-    }
-//        let storage = Storage.storage()
-//        let storageRef = storage.reference()
-//
-//        guard let data = image?.pngData(), let uid = Auth.auth().currentUser?.uid else {
-//            return
-//        }
-//
-//        let riversRef = storageRef.child(uid)
-//
-//        riversRef.putData(data, metadata: nil) { (metadata, error) in
-//            guard error == nil else {
-//                return
-//            }
-//            riversRef.downloadURL { (url, error) in
-//                guard let downloadURL = url?.absoluteURL, error == nil, let image = image else {
-//                    return
-//                }
-//                let url = "\(downloadURL)"
-//                let ref = Database.database().reference().child("users").child(uid)
-//                let update = ["height": image.size.height, "url": url, "width": image.size.width] as [String : Any]
-//                ref.child("picture").child("data").updateChildValues(update) { (error, ref) in
-//                    guard error == nil else {
-//                        return
-//                    }
-//                }
-//            }
-//        }
 }

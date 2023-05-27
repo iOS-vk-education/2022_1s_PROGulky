@@ -28,6 +28,11 @@ final class UserDefaultsManager: UserDefaultsLoginServiceProtocol {
         defaults.set(true, forKey: UserKeys.isLogin.rawValue)
     }
 
+    func setImageData(imageName: String) {
+        defaults.set(imageName, forKey: UserKeys.image.rawValue)
+        defaults.synchronize()
+    }
+
     func saveUserData(user: User) {
 //        defaults.set(user.token, forKey: UserKeys.token.rawValue)
         defaults.set(user.id, forKey: UserKeys.id.rawValue)

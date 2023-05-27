@@ -26,6 +26,7 @@ enum ApiType {
     case updateAccessTokenByRefresh
     case delete(token: String)
     case uploadFiles(userAvater: UserImageForPost) // Загрузка фото профиля
+    case setUserImage(token: String, imageName: String)
 
     var baseURLString: String {
         "http://37.140.195.167:5000"
@@ -46,6 +47,8 @@ enum ApiType {
         case let .getMeInfo(token):
             return ["Authorization": "Bearer \(token)"]
         case let .delete(token):
+            return ["Authorization": "Bearer \(token)"]
+        case let .setUserImage(token, _):
             return ["Authorization": "Bearer \(token)"]
         default:
             return [:]
@@ -70,6 +73,7 @@ enum ApiType {
         case .updateAccessTokenByRefresh: return "api/v1/auth/token/refresh"
         case .delete: return "api/v1/auth/delete"
         case .uploadFiles: return "api/v1/files/user"
+        case .setUserImage: return "/api/v1/users/set_image"
         }
     }
 
@@ -132,6 +136,10 @@ enum ApiType {
             return request
         case .uploadFiles:
             request.httpMethod = "POST"
+            return request
+        case .setUserImage:
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
         }
     }
@@ -319,8 +327,6 @@ final class ApiManager: BaseService {
                     DispatchQueue.main.async {
                         completion(.success(user))
                     }
-
-                    print("user.image: \(user.image)")
                 } catch let jsonError {
                     DispatchQueue.main.async {
                         let error = NSError(domain: jsonError.localizedDescription, code: 0)
@@ -487,9 +493,6 @@ final class ApiManager: BaseService {
                     completion(.failure(error))
                 }
             }
-            if let response {
-                print(response.description)
-            }
             guard let data else { return }
             do {
                 let places = try JSONDecoder().decode(ExcursionAfterPost.self, from: data)
@@ -539,6 +542,67 @@ final class ApiManager: BaseService {
         }
         task.resume()
     }
+
+    func sendUserAvatar(
+        userAvater: UserImageForPost,
+        completion: @escaping (Result<UserImageAfterPost, ApiCustomErrors>) -> Void
+    ) {
+        var request = ApiType.uploadFiles(userAvater: userAvater).request
+
+        let boundary = UUID().uuidString
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        var data = Data()
+
+        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+        data.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(userAvater.image.hashValue)\"\r\n".data(using: .utf8)!)
+        data.append("Content-Type: file\r\n\r\n".data(using: .utf8)!)
+        data.append(userAvater.image.jpegData(compressionQuality: 1) ?? Data())
+        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+
+        let task = URLSession.shared.uploadTask(with: request, from: data) { data, response, error in
+            if error != nil {
+                DispatchQueue.main.async {
+                    completion(.failure(ApiCustomErrors.AnotherError))
+                }
+            }
+            guard let data else { return }
+            do {
+                let fileName = try JSONDecoder().decode(UserImageAfterPost.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(fileName))
+                }
+            } catch _ {
+                DispatchQueue.main.async {
+                    completion(.failure(ApiCustomErrors.JSONParseError))
+                }
+            }
+        }
+        task.resume()
+    }
+
+    func setUserImage(
+        completion: @escaping (Result<String, ApiCustomErrors>) -> Void,
+        fileName: String
+    ) {
+        let json: [String: String] = [
+            "imageName": fileName
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+        var request = ApiType.setUserImage(token: getAccessToken(), imageName: fileName).request
+        request.httpBody = jsonData
+
+        callWebService(request) { _ in
+            DispatchQueue.main.async {
+                completion(.success(fileName))
+            }
+        }
+        failure: { _ in
+            DispatchQueue.main.async {
+                completion(.failure(ApiCustomErrors.AnotherError))
+            }
+        }
+    }
 }
 
 // MARK: - ApiCustomErrors
@@ -573,7 +637,7 @@ class BaseService: NSObject {
             guard let data = data else { return }
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
 
-            if statusCode == 200 { // Запрос успешный -> возвращается данные с типом Data
+            if statusCode == 200 || statusCode == 201 { // Запрос успешный -> возвращается данные с типом Data
                 success(data)
             } else if statusCode == 401 { // Истек access-токен и требуется его обновить
                 self.requestForGetNewAccessToken(
@@ -622,43 +686,5 @@ extension BaseService {
             },
             refreshToken: refreshToken
         )
-    }
-
-    func sendUserAvatar(userAvater: UserImageForPost, completion: @escaping (Result<UserImageAfterPost, Error>) -> Void) {
-        var request = ApiType.uploadFiles(userAvater: userAvater).request
-
-        let boundary = UUID().uuidString
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        var data = Data()
-
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(userAvater.image.hashValue)\"\r\n".data(using: .utf8)!)
-        data.append("Content-Type: file\r\n\r\n".data(using: .utf8)!)
-        data.append(userAvater.image.jpegData(compressionQuality: 1) ?? Data())
-        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-
-        let task = URLSession.shared.uploadTask(with: request, from: data) { data, response, error in
-            if let error {
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
-            }
-            if let response {
-                print(response.description)
-            }
-            guard let data else { return }
-            do {
-                let fileName = try JSONDecoder().decode(UserImageAfterPost.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(fileName))
-                }
-            } catch let jsonError {
-                print("Failed decode error:", jsonError)
-                DispatchQueue.main.async {
-                    completion(.failure(jsonError))
-                }
-            }
-        }
-        task.resume()
     }
 }

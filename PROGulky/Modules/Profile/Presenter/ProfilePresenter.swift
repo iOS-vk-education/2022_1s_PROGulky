@@ -56,6 +56,7 @@ extension ProfilePresenter: ProfileViewOutput {
 
     func saveUserAvatar(image: UIImage) {
         let avatar = UserImageForPost(image: image)
+        // TODO: добавить запуск лоадера
         interactor.postUserImage(userAvater: avatar)
     }
 }
@@ -63,11 +64,16 @@ extension ProfilePresenter: ProfileViewOutput {
 // MARK: ProfileInteractorOutput
 
 extension ProfilePresenter: ProfileInteractorOutput {
-    func gotError() {
-        view.showErrorView()
+    func successSetImage() {
+        // TODO: добавить остановку лоадера
+        print("Success Set")
     }
 
-    func successeded() {
-        print("Success")
+    func successLoadImage(with fileName: String) {
+        interactor.setUserImage(with: fileName)
+    }
+
+    func gotError() {
+        view.showErrorView()
     }
 }
