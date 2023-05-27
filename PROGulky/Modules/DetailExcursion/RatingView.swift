@@ -7,18 +7,23 @@
 
 import SwiftUI
 struct RatingView: View {
-    @ObservedObject var viewModel: RatingViewModel
-    @State var rating: Int = 0
-    @Binding var isShown: Bool
-    @Environment(\.colorScheme) var colorScheme
+    @ObservedObject private var viewModel: RatingViewModel
+    @State private var rating: Int = 0
+    @Binding private var isShown: Bool
+    @Environment(\.colorScheme) private var colorScheme
 
-    var maximumRating = 5
-    var image = Image(systemName: "star.fill")
+    private let maximumRating = 5
+    private let image = Image(systemName: "star.fill")
 
-    var offColor = Color.gray
-    var onColor = Color.yellow
+    private let offColor = Color.gray
+    private let onColor = Color.yellow
     private var backgroundColor: Color {
         colorScheme == .light ? .backgroundL : .backgroundD
+    }
+
+    init(viewModel: RatingViewModel, isShown: Binding<Bool>) {
+        self.viewModel = viewModel
+        _isShown = isShown
     }
 
     var body: some View {
