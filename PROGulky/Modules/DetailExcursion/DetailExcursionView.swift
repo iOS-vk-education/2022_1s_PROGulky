@@ -23,9 +23,9 @@ struct DetailExcursionView: View {
         static let ratePlease = "Оцените экскурсию"
     }
 
-    @ObservedObject var viewModel: DetailExcursionViewModel
-    @Environment(\.colorScheme) var colorScheme
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @ObservedObject private var viewModel: DetailExcursionViewModel
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @State private var isMapActive = false
     @State private var showsAlert = false
     @State private var rateText = Constants.ratePlease
@@ -48,7 +48,7 @@ struct DetailExcursionView: View {
     }
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .center) {
             mainView
                 .disabled(showsAlert ? true : false)
                 .blur(radius: showsAlert ? 5 : 0)
@@ -57,6 +57,10 @@ struct DetailExcursionView: View {
                        isShown: $showsAlert)
                 .opacity(showsAlert ? 1 : 0)
                 .animation(.default, value: showsAlert)
+            if let errorMessage = viewModel.error?.rawValue {
+                RepresentedErrorHUDView(errorMessage: errorMessage)
+                    .frame(width: 200, height: 100, alignment: .center)
+            }
         }
         .edgesIgnoringSafeArea(.top)
         .background(backgroundColor)
@@ -101,6 +105,7 @@ struct DetailExcursionView: View {
                         .frame(width: 350, height: 350)
                         .padding(.bottom, 20)
                         .skeleton(with: viewModel.loading, size: CGSize(width: 350, height: 350))
+                        .shape(type: .rectangle)
                 }
                 HStack {
                     Spacer()
@@ -239,3 +244,11 @@ struct DetailExcursionView: View {
         .padding([.bottom], 12)
     }
 }
+
+// struct ErrorView: View {
+//    private let errorMessage: String
+//
+//    var body: some View {
+//
+//    }
+// }

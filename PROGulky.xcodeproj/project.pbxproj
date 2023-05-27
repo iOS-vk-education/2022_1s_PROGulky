@@ -84,8 +84,9 @@
 		5BA6C12129F56AAF00CBD5A9 /* DetailExcursionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6C12029F56AAF00CBD5A9 /* DetailExcursionModel.swift */; };
 		5BA6C12329F56AD800CBD5A9 /* DetailExcursionInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6C12229F56AD800CBD5A9 /* DetailExcursionInfoViewModel.swift */; };
 		5BA6C12529F56BD400CBD5A9 /* PreviewPlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6C12429F56BD400CBD5A9 /* PreviewPlaceViewModel.swift */; };
-		5BA6C12929F573C900CBD5A9 /* MapViewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6C12829F573C900CBD5A9 /* MapViewBuilder.swift */; };
+		5BA6C12929F573C900CBD5A9 /* RepresentedMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6C12829F573C900CBD5A9 /* RepresentedMapView.swift */; };
 		5BA6C12B29F57ACE00CBD5A9 /* PlaceCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6C12A29F57ACE00CBD5A9 /* PlaceCoordinates.swift */; };
+		5BC3806F2A2246D200C6BB64 /* RepresentedErrorHUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3806E2A2246D200C6BB64 /* RepresentedErrorHUDView.swift */; };
 		60AF57BFC01EC107BB9136A0 /* DetailPlaceModuleIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BE7B784112553130AFECE0 /* DetailPlaceModuleIO.swift */; };
 		62105589AAC90ECD33D1812F /* RegistrationInteractorIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4BC081045FC069A1B238C0 /* RegistrationInteractorIO.swift */; };
 		655B60CD5F361A727A7F17AE /* DetailPlacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ED23E4CF57993B76618F431 /* DetailPlacePresenter.swift */; };
@@ -287,8 +288,9 @@
 		5BA6C12029F56AAF00CBD5A9 /* DetailExcursionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionModel.swift; sourceTree = "<group>"; };
 		5BA6C12229F56AD800CBD5A9 /* DetailExcursionInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailExcursionInfoViewModel.swift; sourceTree = "<group>"; };
 		5BA6C12429F56BD400CBD5A9 /* PreviewPlaceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewPlaceViewModel.swift; sourceTree = "<group>"; };
-		5BA6C12829F573C900CBD5A9 /* MapViewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewBuilder.swift; sourceTree = "<group>"; };
+		5BA6C12829F573C900CBD5A9 /* RepresentedMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepresentedMapView.swift; sourceTree = "<group>"; };
 		5BA6C12A29F57ACE00CBD5A9 /* PlaceCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCoordinates.swift; sourceTree = "<group>"; };
+		5BC3806E2A2246D200C6BB64 /* RepresentedErrorHUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepresentedErrorHUDView.swift; sourceTree = "<group>"; };
 		5E4BC081045FC069A1B238C0 /* RegistrationInteractorIO.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RegistrationInteractorIO.swift; sourceTree = "<group>"; };
 		6607194C294A0A5200375384 /* UITextView+DoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+DoneButton.swift"; sourceTree = "<group>"; };
 		6607194E294A0C1900375384 /* UITextField+DoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+DoneButton.swift"; sourceTree = "<group>"; };
@@ -967,10 +969,11 @@
 				5BA6C12629F572FD00CBD5A9 /* Models */,
 				B434111035862A4121532B06 /* DetailExcursionView.swift */,
 				66E2ECC02A1F519800B988B0 /* MapModuleView.swift */,
-				5BA6C12829F573C900CBD5A9 /* MapViewBuilder.swift */,
+				5BA6C12829F573C900CBD5A9 /* RepresentedMapView.swift */,
 				5BA6C11A29F569B600CBD5A9 /* DetailExcursionViewModel.swift */,
 				66E2ECC62A1F755000B988B0 /* RatingView.swift */,
 				66E2ECC82A1F859000B988B0 /* RatingViewModel.swift */,
+				5BC3806E2A2246D200C6BB64 /* RepresentedErrorHUDView.swift */,
 			);
 			path = DetailExcursion;
 			sourceTree = "<group>";
@@ -1554,6 +1557,7 @@
 				DD491B525EE911A4E7C8429F /* ExcursionsListInteractor.swift in Sources */,
 				6675D20B29126FD80058A4B0 /* CoordinatorProtocol.swift in Sources */,
 				54E1A43D29E1F52A0065305A /* FilterBadgeButton.swift in Sources */,
+				5BC3806F2A2246D200C6BB64 /* RepresentedErrorHUDView.swift in Sources */,
 				5BA6C12329F56AD800CBD5A9 /* DetailExcursionInfoViewModel.swift in Sources */,
 				F83E1A9F4C1F8D6516201126 /* ExcursionsListRouterInput.swift in Sources */,
 				1D19F4AB810FE4440C1F30EF /* ExcursionsListRouter.swift in Sources */,
@@ -1616,7 +1620,7 @@
 				A5074CE2292DC97E005692EB /* CustomTextField.swift in Sources */,
 				082089B7A9D25203031384D5 /* AddExcursionModuleIO.swift in Sources */,
 				5BA6C12129F56AAF00CBD5A9 /* DetailExcursionModel.swift in Sources */,
-				5BA6C12929F573C900CBD5A9 /* MapViewBuilder.swift in Sources */,
+				5BA6C12929F573C900CBD5A9 /* RepresentedMapView.swift in Sources */,
 				A553F1D229199288001E679C /* UIColorExtension.swift in Sources */,
 				E1F490979D6E53196362D9CE /* AddExcursionPresenter.swift in Sources */,
 				B8F0BCCE71C38DB82043139E /* AddExcursionInteractorIO.swift in Sources */,

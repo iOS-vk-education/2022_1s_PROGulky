@@ -23,7 +23,7 @@ struct RatingResponse: Decodable {
 }
 
 extension RatingResponse {
-    static var empty: RatingResponse {
-        RatingResponse(status: "", message: "")
+    static var error: RatingResponse {
+        RatingResponse(status: "error", message: "Произошла ошибка")
     }
 }

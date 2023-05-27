@@ -48,7 +48,7 @@ extension RegistrationPresenter: RegistrationInteractorOutput {
         moduleOutput?.registrationModuleWantsToOpenProfile()
     }
 
-    func handleError(error: ApiCustomErrors) {
+    func handleError(error: ApiCustomError) {
         view.showAlert(message: error.rawValue)
     }
 }

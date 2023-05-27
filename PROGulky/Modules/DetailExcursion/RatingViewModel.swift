@@ -11,12 +11,8 @@ import Combine
 // MARK: - DetailExcursionViewModel
 
 final class RatingViewModel: ObservableObject {
-    enum Constants {
-        static let alreadyRated = "Вы уже оценили"
-    }
-
     @Published var ratingState = RatingState.notYet
-    var excursionId = 0
+    private var excursionId = 0
     private var ratingCancelable: AnyCancellable?
 
     init(excursionId: Int) {

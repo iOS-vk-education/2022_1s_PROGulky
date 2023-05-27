@@ -53,7 +53,7 @@ extension LoginPresenter: LoginInteractorOutput {
         moduleOutput?.loginModuleWantsToOpenSelectedScreen()
     }
 
-    func didHandleError(with error: ApiCustomErrors) {
+    func didHandleError(with error: ApiCustomError) {
         view.showAlert(message: error.rawValue)
     }
 }

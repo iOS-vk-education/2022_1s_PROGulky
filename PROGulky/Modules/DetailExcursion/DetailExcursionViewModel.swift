@@ -23,6 +23,7 @@ final class DetailExcursionViewModel: ObservableObject {
     @Published var polyline = YMKPolyline(points: [])
     @Published var loading: Bool = true
     @Published var points = [YMKPoint]()
+    @Published var error: ApiCustomError?
 
     var guardedExcursion: Excursion {
         guard let excursionData else { return .empty }
@@ -53,10 +54,17 @@ final class DetailExcursionViewModel: ObservableObject {
         excursionCancelable = ApiManager.shared
             .getExcursion(excursionId: excursion.id)
             .receive(on: RunLoop.main)
-            .sink(receiveValue: { [weak self] value in
+            .sink(receiveCompletion: { [weak self] response in
+                switch response {
+                case let .failure(error):
+                    self?.error = error
+                case .finished: break
+                }
+            }, receiveValue: { [weak self] value in
                 guard let self else { return }
                 self.excursionData = value
-                self.isFavourite = ExcursionsRepository.shared.getIssetFavouriveExcursion(with: self.excursion.id)
+                self.isFavourite = ExcursionsRepository.shared
+                    .getIssetFavouriveExcursion(with: self.excursion.id)
                 self.excursion = DetailExcursionDisplayDataFactory()
                     .setupViewModel(excursion: value, isFavourite: self.isFavourite)
                 self.places = DetailExcursionDisplayDataFactory().getPlacesCoordinates(value.places)
