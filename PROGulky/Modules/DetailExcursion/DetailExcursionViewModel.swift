@@ -55,13 +55,13 @@ final class DetailExcursionViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] value in
                 guard let self else { return }
-                excursionData = value
-                isFavourite = ExcursionsRepository.shared.getIssetFavouriveExcursion(with: excursion.id)
-                excursion = DetailExcursionDisplayDataFactory()
+                self.excursionData = value
+                self.isFavourite = ExcursionsRepository.shared.getIssetFavouriveExcursion(with: self.excursion.id)
+                self.excursion = DetailExcursionDisplayDataFactory()
                     .setupViewModel(excursion: value, isFavourite: self.isFavourite)
-                places = DetailExcursionDisplayDataFactory().getPlacesCoordinates(value.places)
-                getRoute()
-                loading = false
+                self.places = DetailExcursionDisplayDataFactory().getPlacesCoordinates(value.places)
+                self.getRoute()
+                self.loading = false
             })
     }
 

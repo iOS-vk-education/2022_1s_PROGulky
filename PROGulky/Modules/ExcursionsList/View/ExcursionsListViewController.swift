@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Lottie
 
 // MARK: - ExcursionsListViewController
 
@@ -17,6 +18,7 @@ final class ExcursionsListViewController: CustomViewController {
     private var greetingMessageView = GreetingMessageView()
     private let searchController = UISearchController()
     private var excursionsTable = UITableView(frame: .zero, style: .plain)
+    private let emptyListMessageView = ExcursionsListMessageView(frame: .zero)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +37,7 @@ final class ExcursionsListViewController: CustomViewController {
 
     private func setupUI() {
         setupSearchController()
+        setupEmptyListMessageView()
         setupNavBar()
         setupTableView()
     }
@@ -50,6 +53,12 @@ final class ExcursionsListViewController: CustomViewController {
         searchController.searchBar.setValue("Отмена", forKey: "cancelButtonText")
 
         definesPresentationContext = true
+    }
+
+    private func setupEmptyListMessageView() {
+        excursionsTable.addSubview(emptyListMessageView)
+        emptyListMessageView.isHidden = true
+        setupEmptyListMessageViewConstraints()
     }
 
     // Настройка нав бара
@@ -125,6 +134,13 @@ final class ExcursionsListViewController: CustomViewController {
             make.bottom.equalToSuperview()
         }
     }
+
+    private func setupEmptyListMessageViewConstraints() {
+        emptyListMessageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+    }
 }
 
 // MARK: ExcursionsListFiltersViewOutput
@@ -163,6 +179,14 @@ extension ExcursionsListViewController: ExcursionsListFiltersViewOutput {
 // MARK: ExcursionsListViewInput
 
 extension ExcursionsListViewController: ExcursionsListViewInput {
+    func showEmptyListView() {
+        emptyListMessageView.isHidden = false
+    }
+
+    func hideEmptyListView() {
+        emptyListMessageView.isHidden = true
+    }
+
     func showFilterButtonBadge(with text: String) {
         filterBadgeButton.setupTextToBadgeLabel(with: text)
         filterBadgeButton.showBadge()
