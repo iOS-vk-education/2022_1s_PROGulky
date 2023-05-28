@@ -108,7 +108,7 @@ struct DetailExcursionView: View {
                         .shape(type: .rectangle)
                 }
                 HStack {
-                    Spacer()
+//                    Spacer()
                     rate
                         .skeleton(with: viewModel.loading)
                 }
@@ -240,8 +240,8 @@ struct DetailExcursionView: View {
         Button(Constants.ratePlease) {
             showsAlert.toggle()
         }
-        .buttonStyle(.bordered)
-        .padding([.bottom], 12)
+        .padding([.bottom], 40)
+        .foregroundColor(.none)
     }
 }
 

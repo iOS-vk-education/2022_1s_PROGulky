@@ -29,7 +29,11 @@ struct RatingView: View {
     var body: some View {
         VStack(spacing: 12) {
             Text(viewModel.ratingState.message)
-                .padding([.top], 12)
+                .padding([.top], 20)
+                .padding([.leading], 12)
+                .padding([.trailing], 12)
+                .padding([.bottom], 4)
+                .multilineTextAlignment(.center)
             HStack {
                 ForEach(1 ..< maximumRating + 1, id: \.self) { number in
                     image
@@ -44,11 +48,13 @@ struct RatingView: View {
                     Button("Ок") {
                         isShown.toggle()
                     }
+                    .padding([.bottom], 10)
+                    .padding([.top], 10)
                 } else {
                     Button("Отмена") {
                         isShown.toggle()
                     }.tint(.gray)
-                    Divider().frame(height: 20)
+                    Divider().frame(height: 40)
                     Button("Выставить") {
                         viewModel.rate(rating: rating)
                     }
@@ -56,7 +62,7 @@ struct RatingView: View {
             }
             .padding([.bottom], 8)
         }
-        .frame(width: 250)
+        .frame(width: 280)
         .background(backgroundColor)
         .cornerRadius(20)
     }

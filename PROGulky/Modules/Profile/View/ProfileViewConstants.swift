@@ -10,8 +10,8 @@ import UIKit
 struct ProfileViewConstants {
     enum Header {
         static let topOffset: CGFloat = 20
-        static let height: CGFloat = 100
-        static let cornerRadius: CGFloat = 30
+        static let height: CGFloat = 130
+        static let cornerRadius: CGFloat = 40
         static let shadowColor: UIColor = UIColor.prog.Dynamic.primary
         static let shadowOpacity: Float = 0.6
     }
@@ -22,9 +22,13 @@ struct ProfileViewConstants {
         static let offset: CGFloat = 0
         static let cornerRadius: CGFloat = 16
         static let heightForHeader: CGFloat = 40
-        static let height: CGFloat = 440
+        static let height: CGFloat = 490
         static let contentInsetTop: CGFloat = 0
         static let leftAnchor: CGFloat = 16
+
+        enum Cell {
+            static let height: CGFloat = 45
+        }
     }
 
     enum Shadow {
