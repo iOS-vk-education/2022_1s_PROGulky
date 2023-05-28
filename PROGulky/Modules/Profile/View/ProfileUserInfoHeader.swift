@@ -15,16 +15,25 @@ final class UserInfoHeader: UIView {
         let status: String
     }
 
-    private let profileImageView: UIImageView = {
+    private let imagePicker = UIImagePickerController()
+    var profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.image = UIImage(systemName: "person.crop.circle")?.withTintColor(.prog.Dynamic.primary, renderingMode: .alwaysOriginal)
 
         iv.layer.shadowOpacity = ProfileViewConstants.Header.shadowOpacity
         iv.layer.shadowRadius = ProfileViewConstants.Header.cornerRadius
         iv.layer.cornerRadius = ProfileViewConstants.Header.cornerRadius
         iv.layer.shadowColor = ProfileViewConstants.Header.shadowColor.cgColor
+
+        guard let image = UserDefaults.standard.string(forKey: UserKeys.image.rawValue) else {
+            iv.image = UIImage(
+                systemName: "person.crop.circle")?.withTintColor(.prog.Dynamic.primary, renderingMode: .alwaysOriginal)
+            return iv
+        }
+
+        let imageURL = "\(ExcursionsListConstants.Api.ownerImageURL)/\(image)"
+        iv.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(systemName: "person.crop.circle"))
 
         return iv
     }()
@@ -55,6 +64,7 @@ final class UserInfoHeader: UIView {
         addSubviews(profileImageView,
                     usernameLabel,
                     statusLabel)
+
         profileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()

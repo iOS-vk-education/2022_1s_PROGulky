@@ -158,6 +158,7 @@
 		A566E47029DB06530018EC85 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A566E46F29DB06530018EC85 /* ApiError.swift */; };
 		A57A639B2954B15100D0F4A7 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57A639A2954B15100D0F4A7 /* UserDefaultManager.swift */; };
 		A59F4E692A12ACAE009D2EA8 /* ProfileViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59F4E682A12ACAE009D2EA8 /* ProfileViewConstants.swift */; };
+		A59F4E6B2A1614B2009D2EA8 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59F4E6A2A1614B2009D2EA8 /* UIImageView+Extensions.swift */; };
 		A5B7537F2913FBA4001D1978 /* ProfileUserInfoHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */; };
 		A5D309F42928F403005D2275 /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */; };
 		A5D309F62928F66C005D2275 /* ProfileSettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D309F52928F66C005D2275 /* ProfileSettingsSection.swift */; };
@@ -366,6 +367,7 @@
 		A566E46F29DB06530018EC85 /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		A57A639A2954B15100D0F4A7 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		A59F4E682A12ACAE009D2EA8 /* ProfileViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewConstants.swift; sourceTree = "<group>"; };
+		A59F4E6A2A1614B2009D2EA8 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		A5B7537E2913FBA4001D1978 /* ProfileUserInfoHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileUserInfoHeader.swift; sourceTree = "<group>"; };
 		A5D309F32928F403005D2275 /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
 		A5D309F52928F66C005D2275 /* ProfileSettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsSection.swift; sourceTree = "<group>"; };
@@ -681,6 +683,7 @@
 				A517195C2934B7AE003454FF /* UIViewController+Extentions.swift */,
 				6629F877295A150400FC985A /* UIApplication+endEditing.swift */,
 				5BA6C11829F535CC00CBD5A9 /* ColorExtension.swift */,
+				A59F4E6A2A1614B2009D2EA8 /* UIImageView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1701,6 +1704,7 @@
 				AF33ABC4E03E0FE9E39A9A15 /* MapDetailPresenter.swift in Sources */,
 				C0F44C81A6403C63D7AB8ED7 /* MapDetailInteractorIO.swift in Sources */,
 				66496F6D295876DB000308D6 /* AddPlaceCell.swift in Sources */,
+				A59F4E6B2A1614B2009D2EA8 /* UIImageView+Extensions.swift in Sources */,
 				59C9841865DA4E7E9DE9D0D2 /* MapDetailInteractor.swift in Sources */,
 				39BE3AA5F999BC87E1D44BFF /* MapDetailRouterInput.swift in Sources */,
 				8B1E8A88250434D67C31B703 /* MapDetailRouter.swift in Sources */,

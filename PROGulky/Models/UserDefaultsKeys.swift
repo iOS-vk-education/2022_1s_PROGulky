@@ -16,4 +16,5 @@ enum UserKeys: String, CaseIterable {
     case refreshToken
     case refreshExpiresAt
     case isDarkMode
+    case image
 }

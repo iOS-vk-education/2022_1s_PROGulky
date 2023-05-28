@@ -8,6 +8,18 @@
 import Foundation
 import Combine
 
+// MARK: - ApiCustomError
+
+enum ApiCustomError: String, Error {
+    case JSONParseError = "Ошибка приведения JSON"
+    case accessIsExpired = "Токен доступа истек" // 401 протух ацесс
+    case refreshIsExpired = "Токен обновления истек" // протух рефреш
+    case anotherError = "Непредвиденная ошибка" // Любая непонятная ошибка
+    case dublicateUserError = "Пользователь с таким Email уже существует" // Ошибка регистрации (юзер с такмим email уже существует)
+    case badСredentials = "Неверный Email или пароль" // Ошибка логина (ошибка в кредах)
+    case networkAccess = "Отсутствует соединение"
+}
+
 // MARK: - ApiType
 
 enum ApiType {
@@ -27,6 +39,8 @@ enum ApiType {
     case registration // Регистрация
     case updateAccessTokenByRefresh
     case delete(token: String)
+    case uploadFiles(userAvater: UserImageForPost) // Загрузка фото профиля
+    case setUserImage(token: String, imageName: String)
 
     var baseURLString: String {
         "http://37.140.195.167:5000"
@@ -50,6 +64,8 @@ enum ApiType {
             return ["Authorization": "Bearer \(token)"]
         case let .rateExcursion(token, _):
             return ["Authorization": "Bearer \(token)"]
+        case let .setUserImage(token, _):
+            return ["Authorization": "Bearer \(token)"]
         default:
             return [:]
         }
@@ -72,6 +88,8 @@ enum ApiType {
         case .getMeInfo: return "api/v1/auth/me"
         case .updateAccessTokenByRefresh: return "api/v1/auth/token/refresh"
         case .delete: return "api/v1/auth/delete"
+        case .uploadFiles: return "api/v1/files/user"
+        case .setUserImage: return "/api/v1/users/set_image"
         }
     }
 
@@ -123,6 +141,13 @@ enum ApiType {
             return request
         case .delete:
             request.httpMethod = "DELETE"
+            return request
+        case .uploadFiles:
+            request.httpMethod = "POST"
+            return request
+        case .setUserImage:
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
         }
     }
@@ -476,9 +501,6 @@ final class ApiManager: BaseService {
                     completion(.failure(error))
                 }
             }
-            if let response {
-                print(response.description)
-            }
             guard let data else { return }
             do {
                 let places = try JSONDecoder().decode(ExcursionAfterPost.self, from: data)
@@ -535,18 +557,67 @@ final class ApiManager: BaseService {
         }
         task.resume()
     }
-}
 
-// MARK: - ApiCustomError
+    func sendUserAvatar(
+        userAvater: UserImageForPost,
+        completion: @escaping (Result<UserImageAfterPost, ApiCustomError>) -> Void
+    ) {
+        var request = ApiType.uploadFiles(userAvater: userAvater).request
 
-enum ApiCustomError: String, Error {
-    case JSONParseError = "Ошибка приведения JSON"
-    case accessIsExpired = "Токен доступа истек" // 401 протух ацесс
-    case refreshIsExpired = "Токен обновления истек" // протух рефреш
-    case anotherError = "Непредвиденная ошибка" // Любая непонятная ошибка
-    case dublicateUserError = "Пользователь с таким Email уже существует" // Ошибка регистрации (юзер с такмим email уже существует)
-    case badСredentials = "Неверный Email или пароль" // Ошибка логина (ошибка в кредах)
-    case networkAccess = "Отсутствует соединение"
+        let boundary = UUID().uuidString
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        var data = Data()
+
+        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+        data.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(userAvater.image.hashValue)\"\r\n".data(using: .utf8)!)
+        data.append("Content-Type: file\r\n\r\n".data(using: .utf8)!)
+        data.append(userAvater.image.jpegData(compressionQuality: 1) ?? Data())
+        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+
+        let task = URLSession.shared.uploadTask(with: request, from: data) { data, response, error in
+            if error != nil {
+                DispatchQueue.main.async {
+                    completion(.failure(ApiCustomError.anotherError))
+                }
+            }
+            guard let data else { return }
+            do {
+                let fileName = try JSONDecoder().decode(UserImageAfterPost.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(fileName))
+                }
+            } catch _ {
+                DispatchQueue.main.async {
+                    completion(.failure(ApiCustomError.JSONParseError))
+                }
+            }
+        }
+        task.resume()
+    }
+
+    func setUserImage(
+        completion: @escaping (Result<String, ApiCustomError>) -> Void,
+        fileName: String
+    ) {
+        let json: [String: String] = [
+            "imageName": fileName
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+        var request = ApiType.setUserImage(token: getAccessToken(), imageName: fileName).request
+        request.httpBody = jsonData
+
+        callWebService(request) { _ in
+            DispatchQueue.main.async {
+                completion(.success(fileName))
+            }
+        }
+        failure: { _ in
+            DispatchQueue.main.async {
+                completion(.failure(ApiCustomError.anotherError))
+            }
+        }
+    }
 }
 
 // MARK: - BaseService
@@ -570,7 +641,7 @@ class BaseService: NSObject {
             guard let data = data else { return }
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
 
-            if statusCode == 200 { // Запрос успешный -> возвращается данные с типом Data
+            if statusCode == 200 || statusCode == 201 { // Запрос успешный -> возвращается данные с типом Data
                 success(data)
             } else if statusCode == 401 { // Истек access-токен и требуется его обновить
                 self.requestForGetNewAccessToken(
