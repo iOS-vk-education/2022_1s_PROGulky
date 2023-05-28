@@ -204,18 +204,18 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         switch section {
         case .Account:
             switch AccountOptions(rawValue: indexPath.row)!.rawValue {
+//            case 0:
+//                present(PlugViewController(), animated: true) // Заглушка
+//                print(TextConstantsProfile.titlePersonalData)
+//            case 1:
+//                present(PlugViewController(), animated: true) // Заглушка
+//                print(TextConstantsProfile.titleAchievements)
+//            case 2:
+//                present(PlugViewController(), animated: true) // Заглушка
+//                print(TextConstantsProfile.titleHistory)
             case 0:
-                present(PlugViewController(), animated: true) // Заглушка
-                print(TextConstantsProfile.titlePersonalData)
-            case 1:
-                present(PlugViewController(), animated: true) // Заглушка
-                print(TextConstantsProfile.titleAchievements)
-            case 2:
-                present(PlugViewController(), animated: true) // Заглушка
-                print(TextConstantsProfile.titleHistory)
-            case 3:
                 showMailComposer(message: TextConstantsProfile.beGuideMessage)
-            case 4:
+            case 1:
                 if UserDefaults.standard.bool(forKey: UserKeys.isDarkMode.rawValue) == true {
                     UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .light
                     UserDefaults.standard.set(false, forKey: UserKeys.isDarkMode.rawValue)
