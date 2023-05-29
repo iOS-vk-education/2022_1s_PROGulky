@@ -46,12 +46,12 @@ extension ProfilePresenter: ProfileViewOutput {
         interactor.logout()
 
         // Перейти на главный экран (список экскурсий) при логауте
-        moduleOutput?.profileModuleWantsToOpenScreen(with: TabBarPage.excursionList.rawValue)
+        moduleOutput?.profileModuleWantsToOpenScreen(with: .excursionList)
     }
 
     func deleteAccountButtonTapped() {
         interactor.deleteAccount()
-        moduleOutput?.profileModuleWantsToOpenScreen(with: TabBarPage.excursionList.rawValue)
+        moduleOutput?.profileModuleWantsToOpenScreen(with: .excursionList)
     }
 
     func saveUserAvatar(image: UIImage) {

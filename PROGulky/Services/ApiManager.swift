@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 // MARK: - ApiCustomError
 
@@ -41,6 +42,7 @@ enum ApiType {
     case delete(token: String)
     case uploadFiles(userAvater: UserImageForPost) // Загрузка фото профиля
     case setUserImage(token: String, imageName: String)
+    case uploadExcursionImage(token: String)
 
     var baseURLString: String {
         "http://37.140.195.167:5000"
@@ -66,6 +68,8 @@ enum ApiType {
             return ["Authorization": "Bearer \(token)"]
         case let .setUserImage(token, _):
             return ["Authorization": "Bearer \(token)"]
+        case let .uploadExcursionImage(token):
+            return ["Authorization": "Bearer \(token)"]
         default:
             return [:]
         }
@@ -90,6 +94,7 @@ enum ApiType {
         case .delete: return "api/v1/auth/delete"
         case .uploadFiles: return "api/v1/files/user"
         case .setUserImage: return "/api/v1/users/set_image"
+        case .uploadExcursionImage: return "api/v1/files/excursion"
         }
     }
 
@@ -135,6 +140,7 @@ enum ApiType {
             return request
         case .postExcursion:
             request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
         case .getMeInfo:
             request.httpMethod = "GET"
@@ -142,7 +148,7 @@ enum ApiType {
         case .delete:
             request.httpMethod = "DELETE"
             return request
-        case .uploadFiles:
+        case .uploadFiles, .uploadExcursionImage:
             request.httpMethod = "POST"
             return request
         case .setUserImage:
@@ -462,39 +468,9 @@ final class ApiManager: BaseService {
         task.resume()
     }
 
-    func sendExcursion(excursion: ExcursionForPost, token: String, completion: @escaping (Result<ExcursionAfterPost, Error>) -> Void) {
-        var request = ApiType.postExcursion(token: token, excursion: excursion).request
-
-        let boundary = UUID().uuidString
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        var data = Data()
-
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"title\"\r\n\r\n".data(using: .utf8)!)
-        data.append("\(excursion.title)".data(using: .utf8)!)
-
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"description\"\r\n\r\n".data(using: .utf8)!)
-        data.append("\(excursion.description)".data(using: .utf8)!)
-
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(excursion.image.hashValue)\"\r\n".data(using: .utf8)!)
-        data.append("Content-Type: file\r\n\r\n".data(using: .utf8)!)
-        data.append(excursion.image.jpegData(compressionQuality: 1) ?? Data())
-
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"duration\"\r\n\r\n".data(using: .utf8)!)
-        data.append("\(excursion.duration)".data(using: .utf8)!)
-
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"distance\"\r\n\r\n".data(using: .utf8)!)
-        data.append("\(excursion.distance)".data(using: .utf8)!)
-
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"placesIds\"\r\n\r\n".data(using: .utf8)!)
-        data.append("\(excursion.placesIds)".data(using: .utf8)!)
-        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-
+    func sendExcursion(excursion: ExcursionForPost, completion: @escaping (Result<ExcursionAfterPost, Error>) -> Void) {
+        var request = ApiType.postExcursion(token: getAccessToken(), excursion: excursion).request
+        let data = try? JSONEncoder().encode(excursion)
         let task = URLSession.shared.uploadTask(with: request, from: data) { data, response, error in
             if let error {
                 DispatchQueue.main.async {
@@ -522,6 +498,7 @@ final class ApiManager: BaseService {
         return fetch(request)
             .retry(3)
             .mapError { error in
+                print(error.localizedDescription)
                 switch error {
                 case _ as URLError:
                     return .networkAccess
@@ -617,6 +594,43 @@ final class ApiManager: BaseService {
                 completion(.failure(ApiCustomError.anotherError))
             }
         }
+    }
+
+    func sendExcursionImage(
+        image: UIImage,
+        completion: @escaping (Result<UserImageAfterPost, ApiCustomError>) -> Void
+    ) {
+        var request = ApiType.uploadExcursionImage(token: getAccessToken()).request
+
+        let boundary = UUID().uuidString
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        var data = Data()
+
+        data.append("\r\n--\(boundary)\r\n".data(using: .utf8) ?? Data())
+        data.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(image.hashValue)\"\r\n".data(using: .utf8) ?? Data())
+        data.append("Content-Type: file\r\n\r\n".data(using: .utf8) ?? Data())
+        data.append(image.jpegData(compressionQuality: 1) ?? Data())
+        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8) ?? Data())
+
+        let task = URLSession.shared.uploadTask(with: request, from: data) { data, _, error in
+            if error != nil {
+                DispatchQueue.main.async {
+                    completion(.failure(ApiCustomError.anotherError))
+                }
+            }
+            guard let data else { return }
+            do {
+                let fileName = try JSONDecoder().decode(UserImageAfterPost.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(fileName))
+                }
+            } catch _ {
+                DispatchQueue.main.async {
+                    completion(.failure(ApiCustomError.JSONParseError))
+                }
+            }
+        }
+        task.resume()
     }
 }
 

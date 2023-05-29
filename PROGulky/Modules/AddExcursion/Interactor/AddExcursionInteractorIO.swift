@@ -5,7 +5,7 @@
 //  Created by SemyonPyatkov on 31/10/2022.
 //
 
-import Foundation
+import UIKit
 
 // MARK: - AddExcursionInteractorOutput
 
@@ -18,5 +18,5 @@ protocol AddExcursionInteractorOutput: AnyObject {
 // MARK: - AddExcursionInteractorInput
 
 protocol AddExcursionInteractorInput: AnyObject {
-    func sendExcursion(excursion: ExcursionForPost)
+    func sendExcursion(excursion: ExcursionForPost, image: UIImage)
 }

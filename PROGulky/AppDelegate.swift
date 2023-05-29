@@ -8,11 +8,13 @@
 import UIKit
 import CoreData
 
+// MARK: - AppDelegate
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var appCoordinator: AppCoordinator?
     var window: UIWindow?
-
+    var deeplinkCoordinator = DeeplinkCoordinator()
     lazy var coreDataStack: CoreDataStack = .init(modelName: "CoreData")
 
     static let sharedAppDelegate: AppDelegate = {
@@ -30,7 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
 
-        let appCoordinator = AppCoordinator(tabBarController: tabBarController)
+        let appCoordinator = AppCoordinator.shared
+        appCoordinator.tabBarController = tabBarController
         self.appCoordinator = appCoordinator
         appCoordinator.start(animated: false)
 
@@ -45,5 +48,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         return true
+    }
+}
+
+extension AppDelegate {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
+        deeplinkCoordinator.handleURL(url)
     }
 }
