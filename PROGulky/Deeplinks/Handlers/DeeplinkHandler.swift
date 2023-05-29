@@ -11,11 +11,3 @@ import Foundation
 protocol DeeplinkHandlerProtocol {
     func openDeeplink(_: DeeplinkType) -> Bool
 }
-
-// MARK: - DeeplinkHandler
-
-final class DeeplinkHandler: DeeplinkHandlerProtocol {
-    func openDeeplink(_ deeplink: DeeplinkType) -> Bool {
-        deeplink.handler.openDeeplink(deeplink)
-    }
-}
