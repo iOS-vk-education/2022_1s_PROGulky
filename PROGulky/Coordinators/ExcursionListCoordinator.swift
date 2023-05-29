@@ -18,6 +18,10 @@ final class ExcursionListCoordinator: CoordinatorProtocol {
     private var rootNavigationController: UINavigationController
     private let tabBarItemFactory: TabBarItemFactoryProtocol
 
+    var navigationController: UINavigationController {
+        rootNavigationController
+    }
+
     // MARK: Lifecycle
 
     init(rootTabBarController: UITabBarController) {
@@ -28,10 +32,10 @@ final class ExcursionListCoordinator: CoordinatorProtocol {
 
     // MARK: Public Methods
 
-    func start(animated _: Bool) {
+    func start(animated: Bool) {
         let builder = ExcursionsListModuleBuilder()
         let excursionListViewController = builder.build(moduleOutput: self)
-        rootNavigationController.setViewControllers([excursionListViewController], animated: false)
+        rootNavigationController.setViewControllers([excursionListViewController], animated: animated)
 
         rootNavigationController.tabBarItem = tabBarItemFactory.getTabBarItem(from: TabBarPage.excursionList)
 
@@ -41,15 +45,19 @@ final class ExcursionListCoordinator: CoordinatorProtocol {
         } else {
             controllers?.append(rootNavigationController)
         }
-        rootTabBarController?.setViewControllers(controllers, animated: true)
+        rootTabBarController?.setViewControllers(controllers, animated: animated)
+    }
+
+    func restart() {
+        rootNavigationController.popToRootViewController(animated: true)
     }
 }
 
 // MARK: ExcursionsListModuleOutput
 
 extension ExcursionListCoordinator: ExcursionsListModuleOutput {
-    func excursionsListModuleWantsToOpenMapDetailModule(excursion: PreviewExcursion) {
-        let detailExcursionViewModel = DetailExcursionViewModel(excursionId: excursion.id)
+    func excursionsListModuleWantsToOpenDetailModule(excursionId: Int) {
+        let detailExcursionViewModel = DetailExcursionViewModel(excursionId: excursionId)
         let detailExcursionView = DetailExcursionView(viewModel: detailExcursionViewModel)
         let hostingViewController = UIHostingController(rootView: detailExcursionView)
         rootNavigationController.navigationBar.standardAppearance.configureWithTransparentBackground()

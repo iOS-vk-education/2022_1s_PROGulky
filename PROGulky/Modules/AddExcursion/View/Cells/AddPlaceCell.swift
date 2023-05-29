@@ -34,7 +34,7 @@ final class AddPlaceCell: UITableViewCell {
         title.font = AddExcursionConstants.TableView.AddPlaceButtonCell.Title.font
         title.text = AddExcursionConstants.TableView.AddPlaceButtonCell.Title.text
         backgroundColor = .prog.Dynamic.primary
-        title.textColor = .prog.Dynamic.lightText
+        title.textColor = .white
     }
 
     // MARK: constraints

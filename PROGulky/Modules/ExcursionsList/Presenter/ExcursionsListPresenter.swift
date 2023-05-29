@@ -180,7 +180,7 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
             view.showAuthView()
             return
         }
-        moduleOutput?.excursionsListModuleWantsToOpenMapDetailModule(excursion: excursions[indexPath.row])
+        moduleOutput?.excursionsListModuleWantsToOpenDetailModule(excursionId: excursions[indexPath.row].id)
     }
 
     func didLoadView() {

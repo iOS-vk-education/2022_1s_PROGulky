@@ -37,6 +37,12 @@ enum TabBarPage: Int, CaseIterable {
             return UIImage(systemName: "person")
         }
     }
+
+    static func fromNavigationController(_ navigationController: UINavigationController?) -> TabBarPage {
+        guard let tag = navigationController?.tabBarItem.tag,
+              let page = TabBarPage(rawValue: tag) else { return .excursionList }
+        return page
+    }
 }
 
 // MARK: - TabBarItemFactoryProtocol

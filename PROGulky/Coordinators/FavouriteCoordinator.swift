@@ -17,6 +17,10 @@ final class FavouriteCoordinator: CoordinatorProtocol {
     private var rootNavigationController: UINavigationController
     private let tabBarItemFactory: TabBarItemFactoryProtocol
 
+    var navigationController: UINavigationController {
+        rootNavigationController
+    }
+
     // MARK: Lifecycle
 
     init(rootTabBarController: UITabBarController) {
@@ -30,7 +34,7 @@ final class FavouriteCoordinator: CoordinatorProtocol {
     func start(animated: Bool) {
         let builder = FavouritesExcursionsModuleBuilder()
         let favouriteViewController = builder.build(moduleOutput: self)
-        rootNavigationController.setViewControllers([favouriteViewController], animated: false)
+        rootNavigationController.setViewControllers([favouriteViewController], animated: animated)
 
         rootNavigationController.tabBarItem = tabBarItemFactory.getTabBarItem(from: TabBarPage.favourite)
 
@@ -40,7 +44,13 @@ final class FavouriteCoordinator: CoordinatorProtocol {
         } else {
             controllers?.append(rootNavigationController)
         }
-        rootTabBarController?.setViewControllers(controllers, animated: true)
+        rootTabBarController?.setViewControllers(controllers, animated: animated)
+    }
+
+    func restart() {
+        let builder = FavouritesExcursionsModuleBuilder()
+        let favouriteViewController = builder.build(moduleOutput: self)
+        rootNavigationController.setViewControllers([favouriteViewController], animated: false)
     }
 }
 

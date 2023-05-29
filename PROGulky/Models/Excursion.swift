@@ -67,10 +67,10 @@ typealias PreviewExcursions = [PreviewExcursion]
 
 // MARK: - ExcursionForPost
 
-struct ExcursionForPost {
+struct ExcursionForPost: Encodable {
     let title: String
     let description: String
-    let image: UIImage
+    var image: String
     let duration: Int
     let distance: Double
     let placesIds: String
@@ -78,7 +78,7 @@ struct ExcursionForPost {
 
 // MARK: - ExcursionAfterPost
 
-struct ExcursionAfterPost: Codable {
+struct ExcursionAfterPost: Decodable {
     let id: Int?
     let title: String?
 }
