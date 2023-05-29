@@ -95,11 +95,11 @@ extension AddExcursionPresenter: AddExcursionViewOutput {
         let placeIds = places.joined(separator: ",")
         let excursion = ExcursionForPost(title: name,
                                          description: description,
-                                         image: image,
+                                         image: "",
                                          duration: duration,
                                          distance: distance,
                                          placesIds: placeIds)
-        interactor.sendExcursion(excursion: excursion)
+        interactor.sendExcursion(excursion: excursion, image: image)
     }
 
     var selectedPlacesCount: Int {

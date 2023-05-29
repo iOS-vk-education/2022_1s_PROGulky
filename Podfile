@@ -10,6 +10,7 @@ target 'PROGulky' do
   pod 'YandexMapsMobile', '4.2.2-full'
   pod 'SDWebImage', '~> 5.14'
   pod 'SDWebImageSwiftUI', '~> 2.2.1'
+  pod 'SkeletonUI', '~> 1.0.11'
 
   target 'PROGulkyTests' do
     inherit! :search_paths

@@ -12,13 +12,14 @@ final class SettingsCell: UITableViewCell {
         didSet {
             guard let sectionType = sectionType else { return }
             imageView?.image = UIImage(systemName: sectionType.image)?
-                .withTintColor(.prog.Dynamic.primary, renderingMode: .alwaysOriginal)
+                .withTintColor(.prog.Dynamic.text, renderingMode: .alwaysOriginal)
             textLabel?.text = sectionType.description
         }
     }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        contentView.backgroundColor = .prog.Dynamic.lightBackground
     }
 
     @available(*, unavailable)

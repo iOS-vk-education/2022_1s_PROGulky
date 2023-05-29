@@ -13,5 +13,5 @@ protocol ProfileModuleInput: AnyObject {
 // MARK: - ProfileModuleOutput
 
 protocol ProfileModuleOutput: AnyObject {
-    func profileModuleWantsToOpenScreen(with tabBarIndex: Int) // Открыть экран по id таббара
+    func profileModuleWantsToOpenScreen(with page: TabBarPage) // Открыть экран по id таббара
 }

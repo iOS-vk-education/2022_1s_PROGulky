@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 // MARK: - FavouriteCoordinator
 
@@ -15,6 +16,10 @@ final class FavouriteCoordinator: CoordinatorProtocol {
     private weak var rootTabBarController: UITabBarController?
     private var rootNavigationController: UINavigationController
     private let tabBarItemFactory: TabBarItemFactoryProtocol
+
+    var navigationController: UINavigationController {
+        rootNavigationController
+    }
 
     // MARK: Lifecycle
 
@@ -29,7 +34,7 @@ final class FavouriteCoordinator: CoordinatorProtocol {
     func start(animated: Bool) {
         let builder = FavouritesExcursionsModuleBuilder()
         let favouriteViewController = builder.build(moduleOutput: self)
-        rootNavigationController.setViewControllers([favouriteViewController], animated: false)
+        rootNavigationController.setViewControllers([favouriteViewController], animated: animated)
 
         rootNavigationController.tabBarItem = tabBarItemFactory.getTabBarItem(from: TabBarPage.favourite)
 
@@ -39,7 +44,7 @@ final class FavouriteCoordinator: CoordinatorProtocol {
         } else {
             controllers?.append(rootNavigationController)
         }
-        rootTabBarController?.setViewControllers(controllers, animated: true)
+        rootTabBarController?.setViewControllers(controllers, animated: animated)
     }
 }
 
@@ -47,10 +52,12 @@ final class FavouriteCoordinator: CoordinatorProtocol {
 
 extension FavouriteCoordinator: FavouritesExcursionsModuleOutput {
     func favoritesExcursionsListModuleWantsToOpenMapDetailModule(excursion: PreviewExcursion) {
-        let mapDetailBuilder = MapDetailModuleBuilder()
-        // TODO: Сломал не работает!
-        // let mapDetailViewController = mapDetailBuilder.build(moduleOutput: self, excursion: excursion)
-        // rootNavigationController.pushViewController(mapDetailViewController, animated: true)
+        let detailExcursionViewModel = DetailExcursionViewModel(excursionId: excursion.id)
+        let detailExcursionView = DetailExcursionView(viewModel: detailExcursionViewModel)
+        let hostingViewController = UIHostingController(rootView: detailExcursionView)
+        rootNavigationController.navigationBar.standardAppearance.configureWithTransparentBackground()
+        rootNavigationController.navigationBar.standardAppearance.backgroundColor = .clear
+        rootNavigationController.pushViewController(hostingViewController, animated: true)
     }
 }
 

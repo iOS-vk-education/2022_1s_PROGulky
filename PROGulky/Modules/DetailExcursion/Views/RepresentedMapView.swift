@@ -42,29 +42,18 @@ final class MapView: UIView {
         mapObjects.addPolyline(with: polyline)
         if !points.isEmpty {
             for (index, point) in points.enumerated() {
-                mapObjects.addPlacemark(with: point, image: pointImage(index + 1))
+                mapObjects.addPlacemark(with: point, image: Self.pointImage(index + 1))
             }
-            var sumPoint = points.reduce(YMKPoint(latitude: 0, longitude: 0)) { partialResult, point in
-                YMKPoint(
-                    latitude: partialResult.latitude + point.latitude,
-                    longitude: partialResult.longitude + point.longitude
-                )
-            }
-
-            let centerPoint = YMKPoint(
-                latitude: sumPoint.latitude / Double(points.count),
-                longitude: sumPoint.longitude / Double(points.count)
-            )
             mapView.mapWindow.map.move(
-                with: YMKCameraPosition(target: centerPoint,
-                                        zoom: 14,
+                with: YMKCameraPosition(target: points[0],
+                                        zoom: 13.5,
                                         azimuth: 0,
                                         tilt: 0)
             )
         }
     }
 
-    func pointImage(_ num: Int) -> UIImage {
+    static func pointImage(_ num: Int) -> UIImage {
         let scale = UIScreen.main.scale
         let text = (num as NSNumber).stringValue
         let font = UIFont.systemFont(ofSize: 12 * scale)

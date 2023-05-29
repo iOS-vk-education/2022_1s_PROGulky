@@ -88,8 +88,6 @@ final class ExcursionsListPresenter {
         self.interactor = interactor
         self.router = router
         self.moduleOutput = moduleOutput
-
-        NotificationCenter.default.addObserver(self, selector: #selector(setLikeStatus), name: Notification.Name(NotificationsConstants.Excursions.name), object: nil)
     }
 }
 
@@ -182,7 +180,7 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
             view.showAuthView()
             return
         }
-        moduleOutput?.excursionsListModuleWantsToOpenMapDetailModule(excursion: excursions[indexPath.row])
+        moduleOutput?.excursionsListModuleWantsToOpenDetailModule(excursionId: excursions[indexPath.row].id)
     }
 
     func didLoadView() {
@@ -197,18 +195,6 @@ extension ExcursionsListPresenter: ExcursionsListViewOutput {
 
     func itemsCount() -> Int {
         excursions.count
-    }
-
-    // TODO: простановка лайка должна быть реализована по другому
-    @objc func setLikeStatus(_ notification: Notification) {
-        guard let id = notification.userInfo?[NotificationsConstants.Excursions.UserInfoKeys.id] as? Int else {
-            return
-        }
-        guard let isLiked = notification.userInfo?[NotificationsConstants.Excursions.UserInfoKeys.isLiked] as? Bool else {
-            return
-        }
-        if let row = excursions.firstIndex(where: { $0.id == id }) {
-        }
     }
 }
 
@@ -232,6 +218,7 @@ extension ExcursionsListPresenter: ExcursionsListInteractorOutput {
     func didLoadExcursionsList(excursions: PreviewExcursions) {
         self.excursions = excursions
         view.hideErrorView() // Скрыть сообщение об ошибках
+        self.excursions.isEmpty ? view.showEmptyListView() : view.hideEmptyListView()
         view.reloadView() // Перезагрузить тейбл вью
         view.stopLoader() // Выключить анимацию лоадера
     }

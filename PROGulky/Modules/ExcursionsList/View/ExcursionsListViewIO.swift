@@ -80,4 +80,8 @@ protocol ExcursionsListViewInput: AnyObject {
     func showFilterButtonBadge(with text: String) // Показать бейдж
 
     func hideFilterButtonBadge() // Скрыть бейдж с количеством выбранных фильтров
+
+    func showEmptyListView() // Показать сообщение о том, что список пуст
+
+    func hideEmptyListView() // Скрыть сообщение о том, что список пуст
 }

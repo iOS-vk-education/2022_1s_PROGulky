@@ -357,7 +357,7 @@ extension AddExcursionViewController: PHPickerViewControllerDelegate {
 
         // Access the UIImage representation for the result
         if let itemProvider = itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
-            itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+            itemProvider.loadObject(ofClass: UIImage.self) { image, _ in
                 if let image = image as? UIImage {
                     DispatchQueue.main.async {
                         self.image = image

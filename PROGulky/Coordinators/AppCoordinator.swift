@@ -11,25 +11,39 @@ import UIKit
 // MARK: - AppCoordinator
 
 final class AppCoordinator: NSObject, CoordinatorProtocol {
+    static let shared = AppCoordinator()
+
     // MARK: Public Properties
 
     var childCoordinators = [CoordinatorProtocol]()
-    let tabBarController: UITabBarController
-    private var selectedPage = TabBarPage.excursionList
-
-    // MARK: Lifecycle
-
-    init(tabBarController: UITabBarController) {
-        self.tabBarController = tabBarController
+    var tabBarController: UITabBarController?
+    var selectedPage: TabBarPage {
+        get {
+            guard let navigationController = tabBarController?.selectedViewController as? UINavigationController else {
+                return .excursionList
+            }
+            return TabBarPage.fromNavigationController(navigationController)
+        }
+        set {
+            if selectedPage != newValue {
+                tabBarController?.selectedIndex = newValue.rawValue
+            }
+        }
     }
+
+    var navigationController: UINavigationController {
+        tabBarController?.navigationController ?? UINavigationController()
+    }
+
+    private var futurePage: TabBarPage?
 
     // MARK: Public
 
     // TODO: - PROG-17 добавить динамический цвет у таббара
     func start(animated: Bool) {
-        tabBarController.delegate = self
-        tabBarController.tabBar.tintColor = .prog.Dynamic.text
-        tabBarController.tabBar.backgroundColor = .prog.Dynamic.background
+        tabBarController?.delegate = self
+        tabBarController?.tabBar.tintColor = .prog.Dynamic.text
+        tabBarController?.tabBar.backgroundColor = .prog.Dynamic.background
 
         TabBarPage.allCases.forEach {
             getTabController($0)
@@ -39,6 +53,7 @@ final class AppCoordinator: NSObject, CoordinatorProtocol {
     // MARK: Private
 
     private func getTabController(_ page: TabBarPage) {
+        guard let tabBarController else { return }
         switch page {
         case .excursionList:
             let excursionListCoordinator = ExcursionListCoordinator(rootTabBarController: tabBarController)
@@ -65,7 +80,6 @@ extension AppCoordinator: UITabBarControllerDelegate {
         else {
             return false
         }
-        selectedPage = page
         if page == .excursionList { return true }
 
         let isLogin = UserDefaults.standard.bool(forKey: UserKeys.isLogin.rawValue)
@@ -77,7 +91,17 @@ extension AppCoordinator: UITabBarControllerDelegate {
         let loginViewController = builder.build(moduleOutput: self)
         let navigationController = UINavigationController(rootViewController: loginViewController)
         tabBarController.present(navigationController, animated: true)
+        futurePage = page
         return false
+    }
+
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        guard let navVC = viewController as? UINavigationController,
+              let page = TabBarPage(rawValue: navVC.tabBarItem.tag)
+        else {
+            return
+        }
+        selectedPage = page
     }
 }
 
@@ -85,15 +109,15 @@ extension AppCoordinator: UITabBarControllerDelegate {
 
 extension AppCoordinator: LoginModuleOutput {
     func loginModuleWantsToOpenSelectedScreen() {
-        // В переменной selectedPage сохраняется таб по которому нажал пользователь,
-        tabBarController.selectedIndex = selectedPage.rawValue // тут устанавлявается выбранным табом тот таб, по которому пользователь нажимал перед логином
-        tabBarController.dismiss(animated: true)
+        selectedPage = futurePage ?? .excursionList
+        futurePage = nil
+        tabBarController?.dismiss(animated: true)
     }
 
     func loginModuleWantsToOpenRegistrationModule() {
         let builder = RegistrationModuleBuilder()
         let regView = builder.build(moduleOutput: self)
-        guard let navVC = tabBarController.presentedViewController as? UINavigationController else { return }
+        guard let navVC = tabBarController?.presentedViewController as? UINavigationController else { return }
         navVC.pushViewController(regView, animated: true)
     }
 }
@@ -102,7 +126,14 @@ extension AppCoordinator: LoginModuleOutput {
 
 extension AppCoordinator: RegistrationModuleOutput {
     func registrationModuleWantsToOpenProfile() {
-        tabBarController.dismiss(animated: true)
-        tabBarController.selectedIndex = selectedPage.rawValue
+        selectedPage = futurePage ?? .excursionList
+        futurePage = nil
+        tabBarController?.dismiss(animated: true)
+    }
+}
+
+extension AppCoordinator {
+    func getCoordinatorForPage(_ page: TabBarPage) -> CoordinatorProtocol {
+        childCoordinators[page.rawValue]
     }
 }

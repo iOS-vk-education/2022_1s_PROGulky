@@ -7,17 +7,33 @@
 
 import UIKit
 
+// MARK: - UserInfoHeader
+
 final class UserInfoHeader: UIView {
     struct DisplayData {
         let username: String
         let status: String
     }
 
-    private let profileImageView: UIImageView = {
+    private let imagePicker = UIImagePickerController()
+    var profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-        iv.image = UIImage(systemName: "person.crop.circle")?.withTintColor(.prog.Dynamic.primary, renderingMode: .alwaysOriginal)
+
+        iv.layer.shadowOpacity = ProfileViewConstants.Header.shadowOpacity
+        iv.layer.shadowRadius = ProfileViewConstants.Header.cornerRadius
+        iv.layer.cornerRadius = ProfileViewConstants.Header.cornerRadius
+        iv.layer.shadowColor = ProfileViewConstants.Header.shadowColor.cgColor
+
+        guard let image = UserDefaults.standard.string(forKey: UserKeys.image.rawValue) else {
+            iv.image = UIImage(
+                systemName: "person.crop.circle")?.withTintColor(.prog.Dynamic.primary, renderingMode: .alwaysOriginal)
+            return iv
+        }
+
+        let imageURL = "\(ExcursionsListConstants.Api.ownerImageURL)/\(image)"
+        iv.sd_setImage(with: URL(string: imageURL), placeholderImage: UIImage(systemName: "person.crop.circle"))
 
         return iv
     }()
@@ -25,6 +41,7 @@ final class UserInfoHeader: UIView {
     private let usernameLabel: UILabel = {
         let label = UILabel()
         label.text = UserDefaults.standard.string(forKey: UserKeys.name.rawValue)
+        label.textColor = .prog.Dynamic.primary
         label.font = UIFont.systemFont(ofSize: 24)
         return label
     }()
@@ -33,13 +50,13 @@ final class UserInfoHeader: UIView {
         let label = UILabel()
         label.text = TextConstantsProfile.titleUserStatus + " - " + (UserDefaults.standard.string(forKey: UserKeys.role.rawValue) ?? "")
         label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .prog.Dynamic.textGray
+        label.textColor = .prog.Dynamic.text
         return label
     }()
 
     private enum Constants {
         static let offset: CGFloat = 10
-        static let imagesSize: CGFloat = 60
+        static let imagesSize: CGFloat = 80
     }
 
     override init(frame: CGRect) {
@@ -47,11 +64,12 @@ final class UserInfoHeader: UIView {
         addSubviews(profileImageView,
                     usernameLabel,
                     statusLabel)
+
         profileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
             make.width.equalTo(Constants.imagesSize)
-            make.height.equalTo(Constants.imagesSize + 4)
+            make.height.equalTo(Constants.imagesSize)
         }
 
         usernameLabel.snp.makeConstraints { make in
@@ -73,5 +91,13 @@ final class UserInfoHeader: UIView {
     func configure(_ displayData: DisplayData) {
         usernameLabel.text = displayData.username
         statusLabel.text = displayData.status
+    }
+}
+
+extension UserInfoHeader {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        profileImageView.layer.shadowColor = ProfileViewConstants.Header.shadowColor.cgColor
+        layer.shadowColor = UIColor.prog.Dynamic.shadow.cgColor
     }
 }

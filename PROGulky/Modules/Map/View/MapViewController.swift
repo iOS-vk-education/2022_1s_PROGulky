@@ -20,7 +20,7 @@ final class MapViewController: UIViewController {
 
     private enum Constants {
         enum Compass {
-            static let bottomOffset: CGFloat = -232
+            static let bottomOffset: CGFloat = -100
             static let heightWidth: CGFloat = 40
             static let trailingOffset: CGFloat = -24
         }
@@ -39,7 +39,6 @@ final class MapViewController: UIViewController {
 
         setupMaps()
         setupButton()
-
         output.didLoadView()
     }
 
@@ -107,17 +106,23 @@ extension MapViewController: MapViewInput {
     func routeRecieved(route: YMKMasstransitRoute, points: [YMKPoint]) {
         let mapObjects = mapView.mapWindow.map.mapObjects
         mapObjects.addPolyline(with: route.geometry)
-        mapObjects.addPlacemarks(with: points,
-                                 image: UIImage(named: "search_result")!,
-                                 style: YMKIconStyle())
+        if !points.isEmpty {
+            for (index, point) in points.enumerated() {
+                mapObjects.addPlacemark(with: point, image: MapView.pointImage(index + 1))
+            }
+        }
+        var sumPoint = points.reduce(YMKPoint(latitude: 0, longitude: 0)) { partialResult, point in
+            YMKPoint(
+                latitude: partialResult.latitude + point.latitude,
+                longitude: partialResult.longitude + point.longitude
+            )
+        }
 
         mapView.mapWindow.map.move(
             with: YMKCameraPosition(target: points[0],
                                     zoom: Constants.zoom,
                                     azimuth: 0,
-                                    tilt: 0),
-            animationType: YMKAnimation(type: YMKAnimationType.smooth,
-                                        duration: Constants.longAnimationDuration)
+                                    tilt: 0)
         )
     }
 }

@@ -8,6 +8,8 @@
 import UIKit
 import SDWebImage
 
+// MARK: - ExcursionCell
+
 final class ExcursionCell: UITableViewCell {
     private let excursionImageView = UIImageView()
     private let excursionTitleLabel = VerticalAlignedLabel()
@@ -142,7 +144,7 @@ final class ExcursionCell: UITableViewCell {
         excursionOwnerNameLabel.numberOfLines = 1
         excursionOwnerNameLabel.font = UIFont.systemFont(ofSize: ExcursionsListConstants.ExcursionCell.OwnerLabel.fontSize,
                                                          weight: ExcursionsListConstants.ExcursionCell.OwnerLabel.fontWeight)
-        excursionOwnerNameLabel.textColor = UIColor.black
+        excursionOwnerNameLabel.textColor = ExcursionsListConstants.ExcursionCell.OwnerLabel.textColor
         excursionOwnerNameLabel.textAlignment = .right
     }
 
@@ -220,5 +222,12 @@ final class ExcursionCell: UITableViewCell {
             make.right.equalToSuperview().inset(ExcursionsListConstants.ExcursionCell.contentIndent + 25)
             make.left.equalTo(excursionImageView.snp.right).offset(ExcursionsListConstants.ExcursionCell.contentIndent)
         }
+    }
+}
+
+extension ExcursionCell {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        contentView.layer.shadowColor = ExcursionsListConstants.ExcursionCell.shadowColor.cgColor
     }
 }

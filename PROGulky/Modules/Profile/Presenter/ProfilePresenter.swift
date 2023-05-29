@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // MARK: - ProfilePresenter
 
@@ -45,9 +46,34 @@ extension ProfilePresenter: ProfileViewOutput {
         interactor.logout()
 
         // Перейти на главный экран (список экскурсий) при логауте
-        moduleOutput?.profileModuleWantsToOpenScreen(with: TabBarPage.excursionList.rawValue)
+        moduleOutput?.profileModuleWantsToOpenScreen(with: .excursionList)
+    }
+
+    func deleteAccountButtonTapped() {
+        interactor.deleteAccount()
+        moduleOutput?.profileModuleWantsToOpenScreen(with: .excursionList)
+    }
+
+    func saveUserAvatar(image: UIImage) {
+        let avatar = UserImageForPost(image: image)
+        // TODO: добавить запуск лоадера
+        interactor.postUserImage(userAvater: avatar)
     }
 }
 
+// MARK: ProfileInteractorOutput
+
 extension ProfilePresenter: ProfileInteractorOutput {
+    func successSetImage() {
+        // TODO: добавить остановку лоадера
+        print("Success Set")
+    }
+
+    func successLoadImage(with fileName: String) {
+        interactor.setUserImage(with: fileName)
+    }
+
+    func gotError() {
+        view.showErrorView()
+    }
 }

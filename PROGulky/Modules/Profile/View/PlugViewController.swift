@@ -22,7 +22,7 @@ final class PlugViewController: UIViewController {
     private let moduleLabel: UILabel = {
         let label = UILabel()
         label.text = "Модуль в разработке"
-        label.textColor = .prog.Dynamic.primary
+        label.textColor = .prog.Dynamic.text
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         return label
     }()
@@ -42,27 +42,15 @@ final class PlugViewController: UIViewController {
         }
     }
 
-    private func testToken(completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
+    private func testToken(completion: @escaping (Result<AuthData, ApiCustomError>) -> Void) {
         let token = UserDefaults.standard.string(forKey: UserKeys.accessToken.rawValue)
-//        UserDefaultsManager.shared.removeUserAuthData()
-//        return
         print("[DEBUG] user isLogin: \(UserDefaultsManager.shared.isLogged)")
 
         ApiManager.shared.getMeInfo2(success: { data in
             print("[DEBUG] result: \(data)")
         }, failure: { error in
-            // TODO: тут реализуется бизнес логика на какой экран пойти пользователю, если при запросе токены протухли и хранилище с данными очистилось
             print("[DEBUG] error: \(error)")
         })
-    }
-
-    func logout() {
-        print("здесь выбрасывать на логин и чистить кэш")
-        //        UserDefaultsManager.shared.removeUserAuthData() // removeUserAuthData()
-        //        let vc = LoginViewController()
-        //        vc.modalPresentationStyle = .fullScreen
-        //        present(vc, animated: true)
-        //        output.logoutButtonTapped()
     }
 
     private func configureUI() {

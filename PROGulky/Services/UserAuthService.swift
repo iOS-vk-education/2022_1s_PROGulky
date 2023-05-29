@@ -22,7 +22,7 @@ final class UserAuthService {
     }
 
     // Регистрация с получением токенов
-    func registration(dto: RegistrationDTO, completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
+    func registration(dto: RegistrationDTO, completion: @escaping (Result<AuthData, ApiCustomError>) -> Void) {
         ApiManager.shared.registration(dto) { result in
             switch result {
             case let .success(authData):
@@ -39,7 +39,7 @@ final class UserAuthService {
     }
 
     // Получение токенов
-    func login(dto: LoginDTO, completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
+    func login(dto: LoginDTO, completion: @escaping (Result<AuthData, ApiCustomError>) -> Void) {
         ApiManager.shared.login(dto) { result in
             switch result {
             case let .success(authData):
@@ -55,12 +55,32 @@ final class UserAuthService {
         }
     }
 
-    func getMeInfo(completion: @escaping (Result<User, ApiCustomErrors>) -> Void, token: String) {
+    func getMeInfo(completion: @escaping (Result<User, ApiCustomError>) -> Void, token: String) {
         ApiManager.shared.getMeInfo(
             completion: { result in
                 switch result {
                 case let .success(user):
                     UserDefaultsManager.shared.saveUserData(user: user)
+                    DispatchQueue.main.async {
+                        completion(.success(user))
+                    }
+                case let .failure(failure):
+                    DispatchQueue.main.async {
+                        completion(.failure(failure))
+                    }
+                }
+            },
+            token: token
+        )
+    }
+
+    // Удаление аккаунта
+    func deleteAccount(completion: @escaping (Result<User, ApiCustomError>) -> Void, token: String) {
+        ApiManager.shared.deleteAccount(
+            completion: { result in
+                switch result {
+                case let .success(user):
+                    UserDefaultsManager.shared.removeUserAuthData()
                     DispatchQueue.main.async {
                         completion(.success(user))
                     }

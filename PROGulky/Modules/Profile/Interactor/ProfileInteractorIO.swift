@@ -10,11 +10,21 @@ import Foundation
 // MARK: - ProfileInteractorOutput
 
 protocol ProfileInteractorOutput: AnyObject {
+    func successLoadImage(with fileName: String)
+
+    func successSetImage()
+
+    func gotError()
 }
 
 // MARK: - ProfileInteractorInput
 
 protocol ProfileInteractorInput: AnyObject {
     func logout()
-//    func getUserInfo()
+
+    func deleteAccount()
+
+    func postUserImage(userAvater: UserImageForPost)
+
+    func setUserImage(with fileName: String) // Установить название загруженной картинки в боле image объекта user
 }

@@ -6,6 +6,20 @@
 //
 
 import Foundation
+import Combine
+import UIKit
+
+// MARK: - ApiCustomError
+
+enum ApiCustomError: String, Error {
+    case JSONParseError = "Ошибка приведения JSON"
+    case accessIsExpired = "Токен доступа истек" // 401 протух ацесс
+    case refreshIsExpired = "Токен обновления истек" // протух рефреш
+    case anotherError = "Непредвиденная ошибка" // Любая непонятная ошибка
+    case dublicateUserError = "Пользователь с таким Email уже существует" // Ошибка регистрации (юзер с такмим email уже существует)
+    case badСredentials = "Неверный Email или пароль" // Ошибка логина (ошибка в кредах)
+    case networkAccess = "Отсутствует соединение"
+}
 
 // MARK: - ApiType
 
@@ -19,11 +33,16 @@ enum ApiType {
     case getExcursion(token: String, excursionId: Int)
     case getPlaceImage(image: String)
     case getExcursionImage(image: String)
+    case rateExcursion(token: String, excursionId: Int)
 
     case login // Логин
     case getMeInfo(token: String) // получение информации о себе
     case registration // Регистрация
     case updateAccessTokenByRefresh
+    case delete(token: String)
+    case uploadFiles(userAvater: UserImageForPost) // Загрузка фото профиля
+    case setUserImage(token: String, imageName: String)
+    case uploadExcursionImage(token: String)
 
     var baseURLString: String {
         "http://37.140.195.167:5000"
@@ -43,6 +62,14 @@ enum ApiType {
             return ["Authorization": "Bearer \(token)"]
         case let .getMeInfo(token):
             return ["Authorization": "Bearer \(token)"]
+        case let .delete(token):
+            return ["Authorization": "Bearer \(token)"]
+        case let .rateExcursion(token, _):
+            return ["Authorization": "Bearer \(token)"]
+        case let .setUserImage(token, _):
+            return ["Authorization": "Bearer \(token)"]
+        case let .uploadExcursionImage(token):
+            return ["Authorization": "Bearer \(token)"]
         default:
             return [:]
         }
@@ -59,11 +86,15 @@ enum ApiType {
         case let .getExcursion(_, excursionId): return "api/v1/excursions/\(excursionId)"
         case let .getPlaceImage(image): return "images/places/\(image)"
         case let .getExcursionImage(image): return "/images/excursions/\(image)"
-
+        case .rateExcursion: return "api/v1/rating"
         case .login: return "api/v1/auth/login"
         case .registration: return "api/v1/auth/registration"
         case .getMeInfo: return "api/v1/auth/me"
         case .updateAccessTokenByRefresh: return "api/v1/auth/token/refresh"
+        case .delete: return "api/v1/auth/delete"
+        case .uploadFiles: return "api/v1/files/user"
+        case .setUserImage: return "/api/v1/users/set_image"
+        case .uploadExcursionImage: return "api/v1/files/excursion"
         }
     }
 
@@ -96,7 +127,7 @@ enum ApiType {
         case .getExcursions, .getPlaces, .getExcursion, .getPlaceImage, .getExcursionImage:
             request.httpMethod = "GET"
             return request
-        case .addFavorites:
+        case .addFavorites, .login, .registration, .updateAccessTokenByRefresh, .rateExcursion:
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
@@ -104,20 +135,23 @@ enum ApiType {
             request.httpMethod = "DELETE"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
-        case .login, .registration:
-            request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            return request
         case .getFavoritesExcursions:
             request.httpMethod = "GET"
             return request
         case .postExcursion:
             request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
         case .getMeInfo:
             request.httpMethod = "GET"
             return request
-        case .updateAccessTokenByRefresh:
+        case .delete:
+            request.httpMethod = "DELETE"
+            return request
+        case .uploadFiles, .uploadExcursionImage:
+            request.httpMethod = "POST"
+            return request
+        case .setUserImage:
             request.httpMethod = "POST"
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             return request
@@ -223,7 +257,7 @@ final class ApiManager: BaseService {
         task.resume()
     }
 
-    func login(_ loginDTO: LoginDTO, completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
+    func login(_ loginDTO: LoginDTO, completion: @escaping (Result<AuthData, ApiCustomError>) -> Void) {
         let json: [String: Any] = [
             "email": loginDTO.email,
             "password": loginDTO.password,
@@ -237,7 +271,7 @@ final class ApiManager: BaseService {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 DispatchQueue.main.async {
-                    completion(.failure(ApiCustomErrors.AnotherError))
+                    completion(.failure(ApiCustomError.anotherError))
                 }
             }
             guard let data = data else { return }
@@ -251,13 +285,13 @@ final class ApiManager: BaseService {
                     }
                 } catch _ {
                     DispatchQueue.main.async {
-                        completion(.failure(ApiCustomErrors.JSONParseError))
+                        completion(.failure(ApiCustomError.JSONParseError))
                     }
                 }
             } else if statusCode == 400 {
-                completion(.failure(ApiCustomErrors.BadСredentials))
+                completion(.failure(ApiCustomError.badСredentials))
             } else {
-                completion(.failure(ApiCustomErrors.AnotherError))
+                completion(.failure(ApiCustomError.anotherError))
             }
         }
         task.resume()
@@ -269,7 +303,7 @@ final class ApiManager: BaseService {
     // Если же обновление токенов невозможно (истек рефреш) кидает ошибку RefreshIsExpired
     func getMeInfo2(
         success: @escaping ((_ user: User) -> Void),
-        failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
+        failure: @escaping ((_ error: ApiCustomError?) -> Void)
     ) {
         let request = ApiType.getMeInfo(token: getAccessToken()).request
         callWebService(request) { data in
@@ -287,13 +321,13 @@ final class ApiManager: BaseService {
         }
     }
 
-    func getMeInfo(completion: @escaping (Result<User, ApiCustomErrors>) -> Void, token: String) {
+    func getMeInfo(completion: @escaping (Result<User, ApiCustomError>) -> Void, token: String) {
         let request = ApiType.getMeInfo(token: token).request
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
             if error != nil {
                 DispatchQueue.main.async {
-                    completion(.failure(ApiCustomErrors.AnotherError))
+                    completion(.failure(ApiCustomError.anotherError))
                 }
             }
 
@@ -310,19 +344,19 @@ final class ApiManager: BaseService {
                 } catch let jsonError {
                     DispatchQueue.main.async {
                         let error = NSError(domain: jsonError.localizedDescription, code: 0)
-                        completion(.failure(ApiCustomErrors.JSONParseError))
+                        completion(.failure(ApiCustomError.JSONParseError))
                     }
                 }
             } else {
                 DispatchQueue.main.async {
-                    completion(.failure(ApiCustomErrors.AccessIsExpired))
+                    completion(.failure(ApiCustomError.accessIsExpired))
                 }
             }
         }
         task.resume()
     }
 
-    func registration(_ registrtionDTO: RegistrationDTO, completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void) {
+    func registration(_ registrtionDTO: RegistrationDTO, completion: @escaping (Result<AuthData, ApiCustomError>) -> Void) {
         let json: [String: Any] = [
             "name": registrtionDTO.nickname,
             "email": registrtionDTO.email,
@@ -336,7 +370,7 @@ final class ApiManager: BaseService {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 DispatchQueue.main.async {
-                    completion(.failure(ApiCustomErrors.AnotherError))
+                    completion(.failure(ApiCustomError.anotherError))
                 }
             }
             guard let data = data else { return }
@@ -350,13 +384,13 @@ final class ApiManager: BaseService {
                     }
                 } catch _ {
                     DispatchQueue.main.async {
-                        completion(.failure(ApiCustomErrors.JSONParseError))
+                        completion(.failure(ApiCustomError.JSONParseError))
                     }
                 }
             } else if statusCode == 400 { // Пользвоатель с таким email уже сущевствует
-                completion(.failure(ApiCustomErrors.DublicateUserError))
+                completion(.failure(ApiCustomError.dublicateUserError))
             } else { // Непредвиденная ошибка
-                completion(.failure(ApiCustomErrors.AnotherError))
+                completion(.failure(ApiCustomError.anotherError))
             }
         }
         task.resume()
@@ -364,7 +398,7 @@ final class ApiManager: BaseService {
 
     // Запрос на ручку /refresh для обновление пары токенов по рефреш токену
     func updateAccessTokenByRefresh(
-        completion: @escaping (Result<AuthData, ApiCustomErrors>) -> Void,
+        completion: @escaping (Result<AuthData, ApiCustomError>) -> Void,
         refreshToken: String
     ) {
         let json: [String: String] = [
@@ -380,7 +414,7 @@ final class ApiManager: BaseService {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if error != nil {
                 DispatchQueue.main.async {
-                    completion(.failure(ApiCustomErrors.AnotherError))
+                    completion(.failure(ApiCustomError.anotherError))
                 }
             }
 
@@ -397,13 +431,13 @@ final class ApiManager: BaseService {
                 } catch let jsonError {
                     print("Failed decode error:", jsonError)
                     DispatchQueue.main.async {
-                        completion(.failure(ApiCustomErrors.JSONParseError))
+                        completion(.failure(ApiCustomError.JSONParseError))
                     }
                 }
             case 401: // Протух рефреш
-                completion(.failure(ApiCustomErrors.RefreshIsExpired))
+                completion(.failure(ApiCustomError.refreshIsExpired))
             default: // Непонятный статус код (непонятная ошибка)
-                completion(.failure(ApiCustomErrors.AnotherError))
+                completion(.failure(ApiCustomError.anotherError))
             }
         }
         task.resume()
@@ -434,47 +468,14 @@ final class ApiManager: BaseService {
         task.resume()
     }
 
-    func sendExcursion(excursion: ExcursionForPost, token: String, completion: @escaping (Result<ExcursionAfterPost, Error>) -> Void) {
-        var request = ApiType.postExcursion(token: token, excursion: excursion).request
-
-        let boundary = UUID().uuidString
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        var data = Data()
-
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"title\"\r\n\r\n".data(using: .utf8)!)
-        data.append("\(excursion.title)".data(using: .utf8)!)
-
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"description\"\r\n\r\n".data(using: .utf8)!)
-        data.append("\(excursion.description)".data(using: .utf8)!)
-
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(excursion.image.hashValue)\"\r\n".data(using: .utf8)!)
-        data.append("Content-Type: file\r\n\r\n".data(using: .utf8)!)
-        data.append(excursion.image.jpegData(compressionQuality: 1) ?? Data())
-
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"duration\"\r\n\r\n".data(using: .utf8)!)
-        data.append("\(excursion.duration)".data(using: .utf8)!)
-
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"distance\"\r\n\r\n".data(using: .utf8)!)
-        data.append("\(excursion.distance)".data(using: .utf8)!)
-
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"placesIds\"\r\n\r\n".data(using: .utf8)!)
-        data.append("\(excursion.placesIds)".data(using: .utf8)!)
-        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-
+    func sendExcursion(excursion: ExcursionForPost, completion: @escaping (Result<ExcursionAfterPost, Error>) -> Void) {
+        var request = ApiType.postExcursion(token: getAccessToken(), excursion: excursion).request
+        let data = try? JSONEncoder().encode(excursion)
         let task = URLSession.shared.uploadTask(with: request, from: data) { data, response, error in
             if let error {
                 DispatchQueue.main.async {
                     completion(.failure(error))
                 }
-            }
-            if let response {
-                print(response.description)
             }
             guard let data else { return }
             do {
@@ -492,37 +493,145 @@ final class ApiManager: BaseService {
         task.resume()
     }
 
-    func getExcursion(
-        excursionId: Int,
-        success: @escaping ((_ excursion: Excursion) -> Void),
-        failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
-    ) {
+    func getExcursion(excursionId: Int) -> AnyPublisher<Excursion, ApiCustomError> {
         let request = ApiType.getExcursion(token: getAccessToken(), excursionId: excursionId).request
-        callWebService(request) { data in
-            do {
-                let excursion = try JSONDecoder().decode(Excursion.self, from: data)
-                DispatchQueue.main.async {
-                    success(excursion)
+        return fetch(request)
+            .retry(3)
+            .mapError { error in
+                print(error.localizedDescription)
+                switch error {
+                case _ as URLError:
+                    return .networkAccess
+                default: return .anotherError
                 }
-            } catch let jsonError {
-                print("Failed decode error:", jsonError)
+            }
+            .eraseToAnyPublisher()
+    }
+
+    func rateExcursion(excursionId: Int, rating: Int) -> AnyPublisher<RatingResponse, Never> {
+        var request = ApiType.rateExcursion(token: getAccessToken(), excursionId: excursionId).request
+        let data = RatingRequest(excursionId: excursionId, rating: rating, comment: "")
+        do {
+            let jsonData = try JSONEncoder().encode(data)
+            request.httpBody = jsonData
+        } catch {}
+        return fetch(request)
+            .replaceNil(with: .error)
+            .replaceError(with: .error)
+            .replaceEmpty(with: .error)
+            .eraseToAnyPublisher()
+    }
+
+    func deleteAccount(completion: @escaping (Result<User, ApiCustomError>) -> Void, token: String) {
+        let request = ApiType.delete(token: token).request
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+
+            if error != nil {
+                DispatchQueue.main.async {
+                    completion(.failure(ApiCustomError.anotherError))
+                }
             }
         }
-        failure: { error in
-            failure(error)
+        task.resume()
+    }
+
+    func sendUserAvatar(
+        userAvater: UserImageForPost,
+        completion: @escaping (Result<UserImageAfterPost, ApiCustomError>) -> Void
+    ) {
+        var request = ApiType.uploadFiles(userAvater: userAvater).request
+
+        let boundary = UUID().uuidString
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        var data = Data()
+
+        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+        data.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(userAvater.image.hashValue)\"\r\n".data(using: .utf8)!)
+        data.append("Content-Type: file\r\n\r\n".data(using: .utf8)!)
+        data.append(userAvater.image.jpegData(compressionQuality: 1) ?? Data())
+        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+
+        let task = URLSession.shared.uploadTask(with: request, from: data) { data, response, error in
+            if error != nil {
+                DispatchQueue.main.async {
+                    completion(.failure(ApiCustomError.anotherError))
+                }
+            }
+            guard let data else { return }
+            do {
+                let fileName = try JSONDecoder().decode(UserImageAfterPost.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(fileName))
+                }
+            } catch _ {
+                DispatchQueue.main.async {
+                    completion(.failure(ApiCustomError.JSONParseError))
+                }
+            }
+        }
+        task.resume()
+    }
+
+    func setUserImage(
+        completion: @escaping (Result<String, ApiCustomError>) -> Void,
+        fileName: String
+    ) {
+        let json: [String: String] = [
+            "imageName": fileName
+        ]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+        var request = ApiType.setUserImage(token: getAccessToken(), imageName: fileName).request
+        request.httpBody = jsonData
+
+        callWebService(request) { _ in
+            DispatchQueue.main.async {
+                completion(.success(fileName))
+            }
+        }
+        failure: { _ in
+            DispatchQueue.main.async {
+                completion(.failure(ApiCustomError.anotherError))
+            }
         }
     }
-}
 
-// MARK: - ApiCustomErrors
+    func sendExcursionImage(
+        image: UIImage,
+        completion: @escaping (Result<UserImageAfterPost, ApiCustomError>) -> Void
+    ) {
+        var request = ApiType.uploadExcursionImage(token: getAccessToken()).request
 
-enum ApiCustomErrors: String, Error {
-    case JSONParseError = "Ошибка приведения JSON"
-    case AccessIsExpired = "Токен доступа истек" // 401 протух ацесс
-    case RefreshIsExpired = "Токен обновления истек" // протух рефреш
-    case AnotherError = "Непредвиденная ошибка" // Любая непонятная ошибка
-    case DublicateUserError = "Пользователь с таким Email уже существует" // Ошибка регистрации (юзер с такмим email уже существует)
-    case BadСredentials = "Неверный Email или пароль" // Ошибка логина (ошибка в кредах)
+        let boundary = UUID().uuidString
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        var data = Data()
+
+        data.append("\r\n--\(boundary)\r\n".data(using: .utf8) ?? Data())
+        data.append("Content-Disposition: form-data; name=\"image\"; filename=\"\(image.hashValue)\"\r\n".data(using: .utf8) ?? Data())
+        data.append("Content-Type: file\r\n\r\n".data(using: .utf8) ?? Data())
+        data.append(image.jpegData(compressionQuality: 1) ?? Data())
+        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8) ?? Data())
+
+        let task = URLSession.shared.uploadTask(with: request, from: data) { data, _, error in
+            if error != nil {
+                DispatchQueue.main.async {
+                    completion(.failure(ApiCustomError.anotherError))
+                }
+            }
+            guard let data else { return }
+            do {
+                let fileName = try JSONDecoder().decode(UserImageAfterPost.self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(fileName))
+                }
+            } catch _ {
+                DispatchQueue.main.async {
+                    completion(.failure(ApiCustomError.JSONParseError))
+                }
+            }
+        }
+        task.resume()
+    }
 }
 
 // MARK: - BaseService
@@ -533,20 +642,20 @@ class BaseService: NSObject {
     func callWebService(
         _ request: URLRequest,
         success: @escaping ((_ responseObject: Data) -> Void),
-        failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
+        failure: @escaping ((_ error: ApiCustomError?) -> Void)
     ) {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
 
             if error != nil {
                 DispatchQueue.main.async {
-                    failure(ApiCustomErrors.AnotherError)
+                    failure(ApiCustomError.anotherError)
                 }
             }
 
             guard let data = data else { return }
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return }
 
-            if statusCode == 200 { // Запрос успешный -> возвращается данные с типом Data
+            if statusCode == 200 || statusCode == 201 { // Запрос успешный -> возвращается данные с типом Data
                 success(data)
             } else if statusCode == 401 { // Истек access-токен и требуется его обновить
                 self.requestForGetNewAccessToken(
@@ -555,10 +664,29 @@ class BaseService: NSObject {
                     failure: failure
                 )
             } else { // Непредвиденная ошибка
-                failure(ApiCustomErrors.AnotherError)
+                failure(ApiCustomError.anotherError)
             }
         }
         task.resume()
+    }
+
+    func fetch<T: Decodable>(_ request: URLRequest) -> AnyPublisher<T, Error> {
+        URLSession.shared.dataTaskPublisher(for: request)
+            .map { data, response in
+                guard let statusCode = (response as? HTTPURLResponse)?.statusCode else { return data }
+                var data: Data = data
+                if statusCode == 401 {
+                    self.requestForGetNewAccessToken(request: request) { responseObj in
+                        data = responseObj
+                    } failure: { _ in
+                        print("error")
+                    }
+                }
+                return data
+            }
+
+            .decode(type: T.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
     }
 }
 
@@ -573,7 +701,7 @@ extension BaseService {
     func requestForGetNewAccessToken(
         request: URLRequest,
         success: @escaping ((_ responseObject: Data) -> Void),
-        failure: @escaping ((_ error: ApiCustomErrors?) -> Void)
+        failure: @escaping ((_ error: ApiCustomError?) -> Void)
     ) {
         let refreshToken = UserDefaults.standard.string(forKey: UserKeys.refreshToken.rawValue)
         guard let refreshToken = refreshToken else { return }

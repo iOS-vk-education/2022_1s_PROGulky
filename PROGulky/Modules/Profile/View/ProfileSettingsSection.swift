@@ -33,10 +33,11 @@ enum SettingsSection: Int, CaseIterable, CustomStringConvertible {
 // MARK: - AccountOptions
 
 enum AccountOptions: Int, CaseIterable, SectionType {
-    case personalDataSettings
-    case achievements
-    case history
+//    case personalDataSettings
+//    case achievements
+//    case history
     case beGuide
+    case changeTheme
 
     var containsSwitch: Bool {
         false
@@ -44,27 +45,31 @@ enum AccountOptions: Int, CaseIterable, SectionType {
 
     var description: String {
         switch self {
-        case .personalDataSettings:
-            return TextConstantsProfile.titlePersonalData
-        case .achievements:
-            return TextConstantsProfile.titleAchievements
-        case .history:
-            return TextConstantsProfile.titleHistory
+//        case .personalDataSettings:
+//            return TextConstantsProfile.titlePersonalData
+//        case .achievements:
+//            return TextConstantsProfile.titleAchievements
+//        case .history:
+//            return TextConstantsProfile.titleHistory
         case .beGuide:
             return TextConstantsProfile.titleBeGuide
+        case .changeTheme:
+            return TextConstantsProfile.changeTheme
         }
     }
 
     var image: String {
         switch self {
-        case .personalDataSettings:
-            return "person"
-        case .achievements:
-            return "character.book.closed"
-        case .history:
-            return "chart.bar.doc.horizontal"
+//        case .personalDataSettings:
+//            return "person"
+//        case .achievements:
+//            return "trophy"
+//        case .history:
+//            return "doc.text"
         case .beGuide:
-            return "person.badge.shield.checkmark"
+            return "person.badge.plus"
+        case .changeTheme:
+            return "cloud.sun"
         }
     }
 }

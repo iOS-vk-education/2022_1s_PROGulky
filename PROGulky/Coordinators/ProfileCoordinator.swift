@@ -17,6 +17,10 @@ final class ProfileCoordinator: CoordinatorProtocol {
     private var rootNavigationController: UINavigationController
     private let tabBarItemFactory: TabBarItemFactoryProtocol
 
+    var navigationController: UINavigationController {
+        rootNavigationController
+    }
+
     // MARK: Lifecycle
 
     init(rootTabBarController: UITabBarController) {
@@ -41,15 +45,15 @@ final class ProfileCoordinator: CoordinatorProtocol {
         let profileViewController = builder.build(self)
         viewControllers = [profileViewController]
 
-        rootNavigationController.setViewControllers(viewControllers, animated: false)
-        rootTabBarController?.setViewControllers(controllers, animated: true)
+        rootNavigationController.setViewControllers(viewControllers, animated: animated)
+        rootTabBarController?.setViewControllers(controllers, animated: animated)
     }
 }
 
 // MARK: ProfileModuleOutput
 
 extension ProfileCoordinator: ProfileModuleOutput {
-    func profileModuleWantsToOpenScreen(with tabBarIndex: Int) {
-        rootTabBarController?.selectedIndex = tabBarIndex
+    func profileModuleWantsToOpenScreen(with page: TabBarPage) {
+        AppCoordinator.shared.selectedPage = page
     }
 }
