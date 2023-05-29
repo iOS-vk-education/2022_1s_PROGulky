@@ -9,10 +9,11 @@ import UIKit
 
 final class ExcursionsDeeplinkHandler: DeeplinkHandlerProtocol {
     private weak var excursionListCoordinator: ExcursionListCoordinator?
+    private weak var appCoordinator: AppCoordinator?
 
     init() {
-        guard let coordinator = AppCoordinator.shared
-            .getCoordinatorForPage(.excursionList) as? ExcursionListCoordinator else {
+        appCoordinator = AppCoordinator.shared
+        guard let coordinator = appCoordinator?.getCoordinatorForPage(.excursionList) as? ExcursionListCoordinator else {
             return
         }
         excursionListCoordinator = coordinator
@@ -21,18 +22,21 @@ final class ExcursionsDeeplinkHandler: DeeplinkHandlerProtocol {
     func openDeeplink(_ deeplink: DeeplinkType) -> Bool {
         switch deeplink {
         case .excursions:
-            AppCoordinator.shared.selectedPage = .excursionList
-        case let .details(id):
-            guard let excursionsCoordinator = AppCoordinator.shared.getCoordinatorForPage(.excursionList) as? ExcursionListCoordinator,
-                  let tabBarController = AppCoordinator.shared.tabBarController,
-                  AppCoordinator.shared.tabBarController(tabBarController,
-                                                         shouldSelect: excursionsCoordinator.navigationController)
+            appCoordinator?.selectedPage = .excursionList
+            guard let excursionListCoordinator
             else { return false }
-            AppCoordinator.shared.selectedPage = .excursionList
-            excursionListCoordinator?.excursionsListModuleWantsToOpenDetailModule(excursionId: Int(id) ?? 0)
+            excursionListCoordinator.navigationController.popToRootViewController(animated: true)
+            excursionListCoordinator.navigationController.dismiss(animated: true)
+        case let .details(id):
+            guard let appCoordinator,
+                  let excursionListCoordinator,
+                  let excursionId = Int(id)
+            else { return false }
+            appCoordinator.selectedPage = .excursionList
+            excursionListCoordinator.excursionsListModuleWantsToOpenDetailModule(excursionId: excursionId)
             return true
         case .add:
-            AppCoordinator.shared.selectedPage = .excursionList
+            appCoordinator?.selectedPage = .excursionList
             excursionListCoordinator?.excursionsListModuleWantsToOpenAddExcursion()
         default: return false
         }
