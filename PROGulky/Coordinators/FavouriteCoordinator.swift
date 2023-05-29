@@ -46,12 +46,6 @@ final class FavouriteCoordinator: CoordinatorProtocol {
         }
         rootTabBarController?.setViewControllers(controllers, animated: animated)
     }
-
-    func restart() {
-        let builder = FavouritesExcursionsModuleBuilder()
-        let favouriteViewController = builder.build(moduleOutput: self)
-        rootNavigationController.setViewControllers([favouriteViewController], animated: false)
-    }
 }
 
 // MARK: FavouritesExcursionsModuleOutput

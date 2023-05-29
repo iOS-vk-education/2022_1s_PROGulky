@@ -47,10 +47,6 @@ final class ExcursionListCoordinator: CoordinatorProtocol {
         }
         rootTabBarController?.setViewControllers(controllers, animated: animated)
     }
-
-    func restart() {
-        rootNavigationController.popToRootViewController(animated: true)
-    }
 }
 
 // MARK: ExcursionsListModuleOutput

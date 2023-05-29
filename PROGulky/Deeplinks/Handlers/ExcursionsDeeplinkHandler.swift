@@ -25,10 +25,9 @@ final class ExcursionsDeeplinkHandler: DeeplinkHandlerProtocol {
             excursionListCoordinator?.restart()
         case let .details(id):
             guard let excursionsCoordinator = AppCoordinator.shared.getCoordinatorForPage(.excursionList) as? ExcursionListCoordinator,
-                  AppCoordinator.shared.tabBarController(
-                      AppCoordinator.shared.tabBarController ?? UITabBarController(),
-                      shouldSelect: excursionsCoordinator.navigationController
-                  )
+                  let tabBarController = AppCoordinator.shared.tabBarController,
+                  AppCoordinator.shared.tabBarController(tabBarController,
+                                                         shouldSelect: excursionsCoordinator.navigationController)
             else { return false }
             AppCoordinator.shared.selectedPage = .excursionList
             excursionListCoordinator?.excursionsListModuleWantsToOpenDetailModule(excursionId: Int(id) ?? 0)

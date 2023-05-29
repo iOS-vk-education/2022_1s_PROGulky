@@ -17,10 +17,9 @@ final class ProfileDeeplinkHandler: DeeplinkHandlerProtocol {
         switch deeplink {
         case .profile:
             guard let profileCoordinator,
-                  AppCoordinator.shared.tabBarController(
-                      AppCoordinator.shared.tabBarController ?? UITabBarController(),
-                      shouldSelect: profileCoordinator.navigationController
-                  )
+                  let tabBarController = AppCoordinator.shared.tabBarController,
+                  AppCoordinator.shared.tabBarController(tabBarController,
+                                                         shouldSelect: profileCoordinator.navigationController)
             else { return false }
             AppCoordinator.shared.selectedPage = .profile
             return true

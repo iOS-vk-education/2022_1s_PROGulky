@@ -13,10 +13,9 @@ final class FavouriteDeeplinkHandler: DeeplinkHandlerProtocol {
         switch deeplink {
         case .favourite:
             guard let favouriteCoordinator,
-                  AppCoordinator.shared.tabBarController(
-                      AppCoordinator.shared.tabBarController ?? UITabBarController(),
-                      shouldSelect: favouriteCoordinator.navigationController
-                  )
+                  let tabBarController = AppCoordinator.shared.tabBarController,
+                  AppCoordinator.shared.tabBarController(tabBarController,
+                                                         shouldSelect: favouriteCoordinator.navigationController)
             else { return false }
             AppCoordinator.shared.selectedPage = .favourite
             return true
