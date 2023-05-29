@@ -37,7 +37,6 @@ final class AppCoordinator: NSObject, CoordinatorProtocol {
 
     private var futurePage: TabBarPage?
 
-
     // MARK: Public
 
     // TODO: - PROG-17 добавить динамический цвет у таббара

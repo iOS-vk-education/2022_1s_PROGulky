@@ -22,7 +22,6 @@ final class ExcursionsDeeplinkHandler: DeeplinkHandlerProtocol {
         switch deeplink {
         case .excursions:
             AppCoordinator.shared.selectedPage = .excursionList
-            excursionListCoordinator?.restart()
         case let .details(id):
             guard let excursionsCoordinator = AppCoordinator.shared.getCoordinatorForPage(.excursionList) as? ExcursionListCoordinator,
                   let tabBarController = AppCoordinator.shared.tabBarController,
