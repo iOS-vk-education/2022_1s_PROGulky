@@ -7,7 +7,7 @@
 
 import Foundation
 
-let baseURL = "http://37.140.195.167:5000"
+let baseURL = "http://95.163.236.100:5000"
 
 // MARK: - TextConstantsProfile
 
