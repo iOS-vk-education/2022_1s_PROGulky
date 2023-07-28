@@ -45,7 +45,7 @@ enum ApiType {
     case uploadExcursionImage(token: String)
 
     var baseURLString: String {
-        "http://37.140.195.167:5000"
+        "http://95.163.236.100:5000"
     }
 
     var headers: [String: String] {

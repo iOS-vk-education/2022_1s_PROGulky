@@ -148,7 +148,7 @@ struct ExcursionsListConstants {
     }
 
     enum Api {
-        static let baseURL: String = "http://37.140.195.167:5000"
+        static let baseURL: String = "http://95.163.236.100:5000"
         static let imageURL: String = "\(baseURL)/images/excursions"
         static let ownerImageURL: String = "\(baseURL)/images/users"
     }
